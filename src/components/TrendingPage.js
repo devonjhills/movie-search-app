@@ -15,14 +15,14 @@ const TrendingPage = () => {
     getTrendingMoviesDay();
   }, []);
 
-  console.log(trending.results);
+  console.log(trending);
 
   const d = new Date();
 
   return (
     <div>
         Trending movies for {d.toDateString()}
-      {trending.results && trending.results.map(movie => (
+      {trending && trending.map(movie => (
         <MovieCard key={movie.id} movie={movie} />
       ))}
     </div>
