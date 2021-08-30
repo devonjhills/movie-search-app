@@ -1,19 +1,12 @@
-.App {
-  text-align: center;
-}
-
 .headericons {
     padding-right: 20px;
 }
 
 .poster {
     height: 400px;
+    width: auto;
 }
 
 .myrating {
   margin-left: 10px;
-}
-
-.ui.card,
-.ui.cards>.card {
 }

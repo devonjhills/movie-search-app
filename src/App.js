@@ -1,13 +1,13 @@
 import "./App.css";
 import 'semantic-ui-css/semantic.darkly.min.css'
 import MenuNavbar from "./components/MenuNavbar";
-import TrendingPage from "./components/TrendingPage";
+import MovieNewReleasesPage from "./components/MovieNewReleasesPage";
 
 function App() {
   return (
     <div className="App">
       <MenuNavbar />
-      <TrendingPage />
+      <MovieNewReleasesPage />
     </div>
   );
 }

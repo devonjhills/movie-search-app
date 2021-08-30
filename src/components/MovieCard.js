@@ -1,7 +1,29 @@
-import React from "react";
-import { Card, Image, Modal, Rating } from "semantic-ui-react";
+import React, { useState } from "react";
+import {
+  Card,
+  Dimmer,
+  Header,
+  Icon,
+  Image,
+  Modal,
+  Rating,
+} from "semantic-ui-react";
 
 const MovieCard = ({ movie }) => {
+  const [active, setActive] = useState(false);
+
+  const handleShow = () => setActive(true);
+  const handleHide = () => setActive(false);
+
+  const content = (
+    <div>
+      <Header as="h3" icon inverted color="green">
+        <Icon name="hand point up outline" />
+        Click for more info
+      </Header>
+    </div>
+  );
+
   const d = new Date(`${movie.release_date}`);
 
   return (
@@ -9,9 +31,19 @@ const MovieCard = ({ movie }) => {
       basic
       closeIcon
       size="tiny"
-      trigger={<Image bordered className="poster" src={movie.poster} />}
+      trigger={
+        <Dimmer.Dimmable
+          as={Image}
+          size="medium"
+          dimmed={active}
+          dimmer={{ active, content }}
+          onMouseEnter={handleShow}
+          onMouseLeave={handleHide}
+          src={movie.poster}
+        />
+      }
     >
-      <Card fluid color='green'>
+      <Card fluid color="green">
         <Image src={movie.backdrop} />
         <Card.Content>
           <Card.Header>{movie.title}</Card.Header>
@@ -21,10 +53,9 @@ const MovieCard = ({ movie }) => {
           <Card.Description>{movie.overview}</Card.Description>
         </Card.Content>
         <Card.Content extra textAlign="right">
-        Average user rating
+          Average user rating
           <Rating
             size="tiny"
-            icon='star'
             className="myrating"
             disabled
             defaultRating={movie.vote_average}
