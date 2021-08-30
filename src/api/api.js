@@ -5,7 +5,7 @@ const baseUrl = "https://api.themoviedb.org/3";
 const trendingMoviesDayUrl = `${baseUrl}/trending/movie/day`;
 
 //https://developers.themoviedb.org/3/getting-started/images
-const imageUrl = "https://image.tmdb.org/t/p/original";
+const imageUrl = "https://image.tmdb.org/t/p/w500";
 
 const formatResults = (movie) => {
   const {
