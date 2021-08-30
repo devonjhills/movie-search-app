@@ -1,18 +1,19 @@
 .App {
-  margin: 10px;
+  text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.headericons {
+    padding-right: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.poster {
+    height: 400px;
+}
+
+.myrating {
+  margin-left: 10px;
+}
+
+.ui.card,
+.ui.cards>.card {
 }
