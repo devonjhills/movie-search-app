@@ -16,11 +16,13 @@ const MoviePopularPage = () => {
     moviePopular();
   }, []);
 
+  const d = new Date();
+
   return (
       <Container textAlign="center">
         {" "}
-        <Header as="h1">Most Popular Movies on </Header>
-        <Image.Group>
+        <Header as="h1">Most Popular Movies On {d.toDateString()} </Header>
+        <Image.Group size='small'>
           {newMovies &&
             newMovies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />

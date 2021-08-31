@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect, useLocation } from "react-router-dom";
 import {
   Button,
   Card,
@@ -13,13 +14,25 @@ import {
 
 const MovieCard = ({ movie }) => {
   const [active, setActive] = useState(false);
-
   const handleShow = () => setActive(true);
   const handleHide = () => setActive(false);
 
+  const [redirect, setRedirect] = useState(false);
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    setRedirect(true);
+  };
+
+  const { pathname } = useLocation();
+
+  if (redirect === true) {
+    return <Redirect pathname={pathname} push to={`/${movie.id}`} />;
+  }
+
   const content = (
     <div>
-      <Header as="h3" icon inverted color="green">
+      <Header as="h4" icon inverted color="green">
         <Icon name="hand point up outline" />
         Click for more info
       </Header>
@@ -75,6 +88,7 @@ const MovieCard = ({ movie }) => {
             content="Full movie details"
             icon="right arrow"
             labelPosition="right"
+            onClick={handleClick}
           />
         </Card.Content>
       </Card>

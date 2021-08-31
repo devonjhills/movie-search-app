@@ -6,6 +6,7 @@ const moviesNowPlayingUrl = `${baseUrl}/movie/now_playing`;
 const moviesPopularUrl = `${baseUrl}/movie/popular`;
 const moviesTopUrl = `${baseUrl}/movie/top_rated`;
 const searchMoviesUrl = `${baseUrl}/search/movie`;
+const movieDetailsUrl = `${baseUrl}/movie/`;
 
 //https://developers.themoviedb.org/3/getting-started/images
 const imageUrl = "https://image.tmdb.org/t/p/w500";
@@ -31,6 +32,22 @@ const formatResults = (movie) => {
     poster: imageUrl + poster_path,
   };
 };
+
+export const fetchMovieDetails = async (movieId) => {
+  try {
+    const { data } = await axios.get(movieDetailsUrl + movieId, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        append_to_response: "videos,credits,external_ids,recommendations,similar"
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export const fetchNewMovieReleases = async () => {
   try {
