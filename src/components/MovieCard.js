@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import {
+  Button,
   Card,
   Dimmer,
   Header,
   Icon,
   Image,
   Modal,
+  Popup,
   Rating,
 } from "semantic-ui-react";
 
@@ -53,13 +55,26 @@ const MovieCard = ({ movie }) => {
           <Card.Description>{movie.overview}</Card.Description>
         </Card.Content>
         <Card.Content extra textAlign="right">
-          Average user rating
-          <Rating
-            size="tiny"
-            className="myrating"
-            disabled
-            defaultRating={movie.vote_average}
-            maxRating={10}
+          <Popup
+            trigger={
+              <Rating
+                size="tiny"
+                icon="heart"
+                className="myrating"
+                disabled
+                defaultRating={movie.vote_average}
+                maxRating={10}
+              />
+            }
+            content={`Average user rating: ${movie.vote_average}`}
+            inverted
+          />
+          <Button
+            inverted
+            color="green"
+            content="Full movie details"
+            icon="right arrow"
+            labelPosition="right"
           />
         </Card.Content>
       </Card>

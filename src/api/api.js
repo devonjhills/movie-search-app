@@ -51,12 +51,13 @@ export const fetchNewMovieReleases = async () => {
   }
 };
 
-export const fetchMovieSearchResults = async () => {
+export const fetchMovieSearchResults = async (query) => {
   try {
     const { data } = await axios.get(searchMoviesUrl, {
       params: {
         api_key: API_KEY,
         language: "en_US",
+        query: query,
         page: 1,
         include_adult: false,
       },
