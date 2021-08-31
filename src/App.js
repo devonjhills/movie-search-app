@@ -5,6 +5,7 @@ import MenuNavbar from "./components/MenuNavbar";
 import MovieHub from "./components/MovieHub";
 import TvHub from "./components/TvHub";
 import SearchPage from "./components/SearchPage";
+import MovieDetails from "./components/MovieDetails";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/" component={MovieHub} />
           <Route path="/tvhub" component={TvHub} />
           <Route path="/search" component={SearchPage} />
+          <Route path="/:id" component={MovieDetails} />
           <Route path="*" component={MovieHub} />
         </Switch>
       </div>

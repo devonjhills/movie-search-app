@@ -53,7 +53,6 @@ const MovieHub = () => {
 
   return (
     <Tab
-      menu={{ fluid: true, vertical: true }}
       panes={panes}
       defaultActiveIndex={0}
     />

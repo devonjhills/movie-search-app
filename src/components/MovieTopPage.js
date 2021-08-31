@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Image } from "semantic-ui-react";
+import { Container, Header, Image } from "semantic-ui-react";
 import { fetchTopMovies } from "../api/api";
 import MovieCard from "./MovieCard";
 
@@ -19,7 +19,8 @@ const MovieTopPage = () => {
   return (
       <Container textAlign="center">
         {" "}
-        <Image.Group>
+        <Header as="h1">Highest Rated Movies On TMDB</Header>
+        <Image.Group size='small'>
           {newMovies &&
             newMovies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />

@@ -10,8 +10,6 @@ const MenuNavbar = () => {
     setActiveItem(name);
   };
 
-  const d = new Date();
-
   return (
     <Menu inverted pointing>
       <Menu.Item header name="home">
@@ -39,12 +37,6 @@ const MenuNavbar = () => {
         <Icon className="headericons" name="video play" />
         TV Hub
       </Menu.Item>
-      <Menu.Menu position="right">
-        <Menu.Item name="date">
-          <Icon className="headericons" name="calendar alternate outline" />
-          {d.toLocaleDateString()}
-        </Menu.Item>
-      </Menu.Menu>
     </Menu>
   );
 };
