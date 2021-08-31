@@ -3,6 +3,8 @@ import { API_KEY } from "./key";
 
 const baseUrl = "https://api.themoviedb.org/3";
 const moviesNowPlayingUrl = `${baseUrl}/movie/now_playing`;
+const moviesPopularUrl = `${baseUrl}/movie/popular`;
+const moviesTopUrl = `${baseUrl}/movie/top_rated`;
 const searchMoviesUrl = `${baseUrl}/search/movie`;
 
 //https://developers.themoviedb.org/3/getting-started/images
@@ -41,7 +43,43 @@ export const fetchNewMovieReleases = async () => {
       },
     });
 
-    console.log(data.results);
+    return data.results.map((movie) => {
+      return formatResults(movie);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchPopularMovies = async () => {
+  try {
+    const { data } = await axios.get(moviesPopularUrl, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        page: 1,
+        region: "US",
+      },
+    });
+
+    return data.results.map((movie) => {
+      return formatResults(movie);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchTopMovies = async () => {
+  try {
+    const { data } = await axios.get(moviesTopUrl, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        page: 1,
+        region: "US",
+      },
+    });
 
     return data.results.map((movie) => {
       return formatResults(movie);

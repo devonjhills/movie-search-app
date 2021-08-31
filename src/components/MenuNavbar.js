@@ -30,11 +30,11 @@ const MenuNavbar = () => {
         Movie Hub
       </Menu.Item>
       <Menu.Item
-        name="search"
-        active={activeItem === "search"}
+        name="tvhub"
+        active={activeItem === "tvhub"}
         onClick={handleItemClick}
         as={NavLink}
-        to="/search"
+        to="/tvhub"
       >
         <Icon className="headericons" name="video play" />
         TV Hub

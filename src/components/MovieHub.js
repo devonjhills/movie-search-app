@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Grid, Icon, Menu, Tab } from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 import MovieNewReleasesPage from "./MovieNewReleasesPage";
+import MoviePopularPage from "./MoviePopularPage";
+import MovieTopPage from "./MovieTopPage";
 
 const MovieHub = () => {
   const panes = [
@@ -18,28 +19,36 @@ const MovieHub = () => {
     },
     {
       menuItem: {
-        key: "trending",
-        icon: "fire",
-        content: "Trending Movies",
+        key: "top",
+        icon: "star",
+        content: "Top Rated Movies",
       },
-      render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>,
+      render: () => (
+        <Tab.Pane>
+          <MovieTopPage />
+        </Tab.Pane>
+      ),
     },
     {
       menuItem: {
         key: "popular",
-        icon: "star",
+        icon: "heart outline",
         content: "Popular Movies",
       },
-      render: () => <Tab.Pane>Tab 3 Content</Tab.Pane>,
+      render: () => (
+        <Tab.Pane>
+          <MoviePopularPage />
+        </Tab.Pane>
+      ),
     },
     {
-        menuItem: {
-          key: "search",
-          icon: "search",
-          content: "Search",
-        },
-        render: () => <Tab.Pane>Tab 4 Content</Tab.Pane>,
+      menuItem: {
+        key: "search",
+        icon: "search",
+        content: "Search",
       },
+      render: () => <Tab.Pane>Tab 4 Content</Tab.Pane>,
+    },
   ];
 
   return (
