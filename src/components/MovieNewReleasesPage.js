@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Header, Image } from "semantic-ui-react";
+import { Container, Image } from "semantic-ui-react";
 import { fetchNewMovieReleases } from "../api/api";
 import MovieCard from "./MovieCard";
 
@@ -17,10 +17,6 @@ const MovieNewReleasesPage = () => {
   }, []);
 
   return (
-    <div>
-      <Header as="h1" textAlign="center">
-        In Theaters Now
-      </Header>
       <Container textAlign="center">
         {" "}
         <Image.Group>
@@ -30,7 +26,6 @@ const MovieNewReleasesPage = () => {
             ))}
         </Image.Group>
       </Container>
-    </div>
   );
 };
 
