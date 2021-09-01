@@ -1,6 +1,6 @@
 # What To Watch?
 
-A personal project to play with Axios API calls from The Movie Database (TMDB) API.
+A personal project to play with Axios API calls from The Movie Database (TMDB) RESTful API.
 
 ## Live App
 
