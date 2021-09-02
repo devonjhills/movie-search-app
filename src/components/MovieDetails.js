@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Card, Header, Image } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import { fetchMovieDetails } from "../api/api";
 
 const MovieDetails = () => {

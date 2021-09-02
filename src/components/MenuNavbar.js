@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../App.css";
-import { Button, Header, Icon, Image, Menu } from "semantic-ui-react";
+import { Icon, Image, Menu } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 
 const MenuNavbar = () => {
