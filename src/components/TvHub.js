@@ -6,7 +6,7 @@ const TvHub = () => {
     <div>
       <h1 style={{textAlign: 'center'}}>
         <Icon name="warning sign" />
-        UNDER CONSTRUCTION
+        TV HUB UNDER CONSTRUCTION
         <Icon name="warning sign" />
       </h1>
     </div>
