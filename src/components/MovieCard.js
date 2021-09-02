@@ -47,7 +47,7 @@ const MovieCard = ({ movie }) => {
       trigger={
         <Dimmer.Dimmable
           as={Image}
-          size="medium"
+          className='mydimmer'
           dimmed={active}
           dimmer={{ active, content }}
           onMouseEnter={handleShow}
@@ -58,7 +58,7 @@ const MovieCard = ({ movie }) => {
     >
       <Header>{movie.title}</Header>
       <Modal.Content image>
-        <Image size="medium" src={movie.backdrop} />
+        <Image src={movie.backdrop} />
         <Modal.Description>
           <Header inverted>
             {d.toDateString().split(" ").slice(1).join(" ")}
