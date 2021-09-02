@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Header, Image } from "semantic-ui-react";
+import { Icon, Image, Message } from "semantic-ui-react";
 import { fetchNewMovieReleases } from "../api/api";
 import MovieCard from "./MovieCard";
 
@@ -17,16 +17,23 @@ const MovieNewReleasesPage = () => {
   }, []);
 
   return (
-      <Container textAlign="center">
-        {" "}
-        <Header as="h1">Currently In Theaters</Header>
-        <Image.Group size='small'>
-          {newMovies &&
-            newMovies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
+    <div style={{ textAlign: "center" }}>
+      {newMovies ? (
+        <Image.Group>
+          {newMovies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
         </Image.Group>
-      </Container>
+      ) : (
+        <Message icon>
+          <Icon name="circle notched" loading />
+          <Message.Content>
+            <Message.Header>Just one second</Message.Header>
+            We are fetching that content for you.
+          </Message.Content>
+        </Message>
+      )}
+    </div>
   );
 };
 

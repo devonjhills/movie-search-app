@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import {
   Button,
-  Card,
   Dimmer,
   Header,
   Icon,
@@ -45,7 +44,6 @@ const MovieCard = ({ movie }) => {
     <Modal
       basic
       closeIcon
-      size="tiny"
       trigger={
         <Dimmer.Dimmable
           as={Image}
@@ -58,40 +56,39 @@ const MovieCard = ({ movie }) => {
         />
       }
     >
-      <Card fluid color="green">
-        <Image src={movie.backdrop} />
-        <Card.Content>
-          <Card.Header>{movie.title}</Card.Header>
-          <Card.Meta>
+      <Header>{movie.title}</Header>
+      <Modal.Content image>
+        <Image size="medium" src={movie.backdrop} />
+        <Modal.Description>
+          <Header inverted>
             {d.toDateString().split(" ").slice(1).join(" ")}
-          </Card.Meta>
-          <Card.Description>{movie.overview}</Card.Description>
-        </Card.Content>
-        <Card.Content extra textAlign="right">
-          <Popup
-            trigger={
-              <Rating
-                size="tiny"
-                icon="heart"
-                className="myrating"
-                disabled
-                defaultRating={movie.vote_average}
-                maxRating={10}
-              />
-            }
-            content={`Average user rating: ${movie.vote_average}`}
-            inverted
-          />
-          <Button
-            inverted
-            color="green"
-            content="Full movie details"
-            icon="right arrow"
-            labelPosition="right"
-            onClick={handleClick}
-          />
-        </Card.Content>
-      </Card>
+            <Popup
+              trigger={
+                <Rating
+                  className="mystars"
+                  icon="star"
+                  disabled
+                  defaultRating={movie.vote_average}
+                  maxRating={10}
+                />
+              }
+              content={`Average user rating: ${movie.vote_average}`}
+              inverted
+            />
+          </Header>
+          <p>{movie.overview}</p>
+        </Modal.Description>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button
+          inverted
+          color="green"
+          content="Full movie details"
+          icon="right arrow"
+          labelPosition="right"
+          onClick={handleClick}
+        />
+      </Modal.Actions>
     </Modal>
   );
 };

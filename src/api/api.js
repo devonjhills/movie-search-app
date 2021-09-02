@@ -20,6 +20,7 @@ const formatResults = (movie) => {
     release_date,
     title,
     vote_average,
+
   } = movie;
 
   return {
@@ -33,21 +34,53 @@ const formatResults = (movie) => {
   };
 };
 
+const formatResultsDetails = (movie) => {
+
+  let ratingUs = movie.release_dates.results.find((e) => e.iso_3166_1 === "US");
+  let rating = ratingUs.release_dates[0].certification;
+
+  const {
+    id,
+    backdrop_path,
+    overview,
+    poster_path,
+    release_date,
+    release_dates,
+    title,
+    vote_average,
+    runtime,
+  } = movie;
+
+  return {
+    id,
+    overview,
+    release_date,
+    release_dates,
+    title,
+    vote_average,
+    runtime,
+    rating,
+    backdrop: imageUrl + backdrop_path,
+    poster: imageUrl + poster_path,
+  };
+};
+
 export const fetchMovieDetails = async (movieId) => {
   try {
     const { data } = await axios.get(movieDetailsUrl + movieId, {
       params: {
         api_key: API_KEY,
         language: "en_US",
-        append_to_response: "videos,credits,external_ids,recommendations,similar"
+        append_to_response:
+          "videos,credits,external_ids,recommendations,similar,release_dates,reviews",
       },
     });
 
-    return data;
+    return formatResultsDetails(data);
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 export const fetchNewMovieReleases = async () => {
   try {
