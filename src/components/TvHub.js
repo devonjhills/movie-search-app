@@ -1,11 +1,16 @@
-import React from 'react'
+import React from "react";
+import { Icon } from "semantic-ui-react";
 
 const TvHub = () => {
-    return (
-        <div>
-            TV HUB
-        </div>
-    )
-}
+  return (
+    <div>
+      <h1 style={{textAlign: 'center'}}>
+        <Icon name="warning sign" />
+        UNDER CONSTRUCTION
+        <Icon name="warning sign" />
+      </h1>
+    </div>
+  );
+};
 
-export default TvHub
+export default TvHub;

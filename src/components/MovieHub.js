@@ -47,15 +47,12 @@ const MovieHub = () => {
         icon: "search",
         content: "Search",
       },
-      render: () => <Tab.Pane>Tab 4 Content</Tab.Pane>,
+      render: () => <Tab.Pane>Search Page</Tab.Pane>,
     },
   ];
 
   return (
-    <Tab
-      panes={panes}
-      defaultActiveIndex={0}
-    />
+    <Tab panes={panes} defaultActiveIndex={0} />
   );
 };
 
