@@ -5,10 +5,12 @@ import MovieCard from "./MovieCard";
 
 const MovieNewReleasesPage = () => {
   const [newMovies, setNewMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const movieNewReleases = async () => {
     await fetchNewMovieReleases().then((data) => {
       setNewMovies(data);
+      setLoading(false);
     });
   };
 
@@ -18,13 +20,7 @@ const MovieNewReleasesPage = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      {newMovies ? (
-        <Image.Group>
-          {newMovies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-        </Image.Group>
-      ) : (
+      {loading ? (
         <Message icon>
           <Icon name="circle notched" loading />
           <Message.Content>
@@ -32,6 +28,13 @@ const MovieNewReleasesPage = () => {
             We are fetching that content for you.
           </Message.Content>
         </Message>
+      ) : (
+        <Image.Group>
+          {newMovies &&
+            newMovies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+        </Image.Group>
       )}
     </div>
   );

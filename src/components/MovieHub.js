@@ -1,4 +1,4 @@
-import { Tab } from "semantic-ui-react";
+import { Container, Tab } from "semantic-ui-react";
 import MovieNewReleasesPage from "./MovieNewReleasesPage";
 import MoviePopularPage from "./MoviePopularPage";
 import MovieTopPage from "./MovieTopPage";
@@ -11,11 +11,10 @@ const MovieHub = () => {
         icon: "calendar alternate outline",
         content: "Now Playing",
       },
-      render: () => (
-        <Tab.Pane>
-          <MovieNewReleasesPage />
-        </Tab.Pane>
-      ),
+      pane: {
+        key: 'new_pane',
+        content: <MovieNewReleasesPage />,
+      }
     },
     {
       menuItem: {
@@ -23,11 +22,10 @@ const MovieHub = () => {
         icon: "star",
         content: "Top Rated Movies",
       },
-      render: () => (
-        <Tab.Pane>
-          <MovieTopPage />
-        </Tab.Pane>
-      ),
+      pane: {
+        key: 'top_pane',
+        content: <MovieTopPage />,
+      }
     },
     {
       menuItem: {
@@ -35,11 +33,10 @@ const MovieHub = () => {
         icon: "heart outline",
         content: "Popular Movies",
       },
-      render: () => (
-        <Tab.Pane>
-          <MoviePopularPage />
-        </Tab.Pane>
-      ),
+      pane: {
+        key: 'popular_pane',
+        content: <MoviePopularPage />,
+      }
     },
     {
       menuItem: {
@@ -47,12 +44,22 @@ const MovieHub = () => {
         icon: "search",
         content: "Search",
       },
-      render: () => <Tab.Pane>Search Page</Tab.Pane>,
+      pane: {
+        key: 'search_pane',
+        content: 'SEARCH PAGE UNDER CONSTRUCTION',
+      }
     },
   ];
 
   return (
-    <Tab panes={panes} defaultActiveIndex={0} />
+    <Container>
+      <Tab
+        menu={{ inverted: true, secondary: true, pointing: true  }}
+        panes={panes}
+        defaultActiveIndex={0}
+        renderActiveOnly={false}
+      />
+    </Container>
   );
 };
 
