@@ -9,7 +9,6 @@ const MovieTopPage = () => {
   const moviesTop = async () => {
     await fetchTopMovies().then((data) => {
       setTopMovies(data);
-      console.log("RENDERING TOP")
     });
   };
 

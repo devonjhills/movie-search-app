@@ -20,7 +20,7 @@ const formatResults = (movie) => {
     release_date,
     title,
     vote_average,
-
+    vote_count,
   } = movie;
 
   return {
@@ -29,15 +29,30 @@ const formatResults = (movie) => {
     release_date,
     title,
     vote_average,
+    vote_count,
     backdrop: imageUrl + backdrop_path,
     poster: imageUrl + poster_path,
   };
 };
 
 const formatResultsDetails = (movie) => {
+  let movieTrailerKey = "";
+  let officialTrailer = "";
+  let trailer = "";
 
   let ratingUs = movie.release_dates.results.find((e) => e.iso_3166_1 === "US");
   let rating = ratingUs.release_dates[0].certification;
+
+  officialTrailer = movie.videos.results.find((e) =>
+    e.name.includes("Official Trailer")
+  );
+  if (!officialTrailer) {
+    trailer = movie.videos.results.find((e) => e.name.includes("Trailer"));
+  }
+
+  officialTrailer
+    ? (movieTrailerKey = officialTrailer.key)
+    : (movieTrailerKey = trailer && trailer.key);
 
   const {
     id,
@@ -48,7 +63,9 @@ const formatResultsDetails = (movie) => {
     release_dates,
     title,
     vote_average,
+    vote_count,
     runtime,
+    tagline,
   } = movie;
 
   return {
@@ -58,8 +75,11 @@ const formatResultsDetails = (movie) => {
     release_dates,
     title,
     vote_average,
+    vote_count,
     runtime,
+    tagline,
     rating,
+    movieTrailerKey,
     backdrop: imageUrl + backdrop_path,
     poster: imageUrl + poster_path,
   };
@@ -75,6 +95,8 @@ export const fetchMovieDetails = async (movieId) => {
           "videos,credits,external_ids,recommendations,similar,release_dates,reviews",
       },
     });
+
+    console.log(data)
 
     return formatResultsDetails(data);
   } catch (error) {

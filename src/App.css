@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(57, 61, 68) !important;
+  background-color: rgb(0, 0, 0) !important;
 }
 
 .App {
@@ -25,6 +25,12 @@ body {
   min-width:200px;
 }
 
+.modalheader {
+  position: fixed;
+  bottom: 0;
+  left: 1.5em;
+}
+
 .mygradient {
   font-size:1.5em;
   margin-right: 10px;
@@ -43,8 +49,9 @@ body {
 
 .myrating {
   border: 1px solid grey;
-  border-radius: 20%;
-  padding: 2px;
+  text-align: center;
+  border-radius: 10%;
+  padding: 1px;
   margin-left: 0;
 }
 
@@ -52,4 +59,15 @@ body {
   display: flex;
   align-items:center;
   padding: 10px;
+}
+
+.react-player {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.ui.tab {
+  background-color: black !important;
+  border-color: black !important;
 }

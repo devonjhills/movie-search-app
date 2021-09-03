@@ -6,9 +6,10 @@ import {
   Header,
   Icon,
   Image,
+  Label,
+  Message,
   Modal,
   Popup,
-  Rating,
 } from "semantic-ui-react";
 
 const MovieCard = ({ movie }) => {
@@ -31,7 +32,7 @@ const MovieCard = ({ movie }) => {
 
   const content = (
     <div>
-      <Header as="h4" icon inverted color="green">
+      <Header as="h4" icon inverted>
         <Icon name="hand point up outline" />
         Click for more info
       </Header>
@@ -47,7 +48,7 @@ const MovieCard = ({ movie }) => {
       trigger={
         <Dimmer.Dimmable
           as={Image}
-          className='mydimmer'
+          className="mydimmer"
           dimmed={active}
           dimmer={{ active, content }}
           onMouseEnter={handleShow}
@@ -60,29 +61,34 @@ const MovieCard = ({ movie }) => {
       <Modal.Content image>
         <Image src={movie.backdrop} />
         <Modal.Description>
-          <Header inverted>
-            {d.toDateString().split(" ").slice(1).join(" ")}
-            <Popup
-              trigger={
-                <Rating
-                  className="mystars"
-                  icon="star"
-                  disabled
-                  defaultRating={movie.vote_average}
-                  maxRating={10}
-                />
-              }
-              content={`Average user rating: ${movie.vote_average}`}
-              inverted
+          {movie.overview ? (
+            movie.overview
+          ) : (
+            <Message
+              color="black"
+              error
+              icon="ban"
+              header="No synopsis found for this movie"
             />
-          </Header>
-          <p>{movie.overview}</p>
+          )}
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
+        <Header inverted floated="left" className="modalheader">
+          {d.toDateString().split(" ").slice(1).join(" ")}
+          <Popup
+            trigger={
+              <Label basic circular horizontal size="large">
+                <Icon name="star" color="yellow" />
+                {movie.vote_average}
+              </Label>
+            }
+            content={`${movie.vote_count.toLocaleString("en-US")} ratings`}
+            inverted
+          />
+        </Header>
         <Button
           inverted
-          color="green"
           content="Full movie details"
           icon="right arrow"
           labelPosition="right"
