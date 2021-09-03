@@ -9,7 +9,6 @@ const MoviePopularPage = () => {
   const moviePopular = async () => {
     await fetchPopularMovies().then((data) => {
       setNewMovies(data);
-      console.log("RENDERING POPULAR")
     });
   };
 
