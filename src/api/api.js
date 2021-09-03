@@ -56,6 +56,8 @@ const formatResultsDetails = (movie) => {
 
   const {
     id,
+    external_ids,
+    genres,
     backdrop_path,
     overview,
     poster_path,
@@ -66,10 +68,14 @@ const formatResultsDetails = (movie) => {
     vote_count,
     runtime,
     tagline,
+    budget,
+    revenue,
   } = movie;
 
   return {
     id,
+    external_ids,
+    genres,
     overview,
     release_date,
     release_dates,
@@ -78,6 +84,8 @@ const formatResultsDetails = (movie) => {
     vote_count,
     runtime,
     tagline,
+    budget,
+    revenue,
     rating,
     movieTrailerKey,
     backdrop: imageUrl + backdrop_path,

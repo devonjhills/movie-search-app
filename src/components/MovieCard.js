@@ -55,22 +55,23 @@ const MovieCard = ({ movie }) => {
           onMouseLeave={handleHide}
           src={movie.poster}
         />
-      }
-    >
+      }>
       <Header>{movie.title}</Header>
       <Modal.Content image>
         <Image src={movie.backdrop} />
         <Modal.Description>
-          {movie.overview ? (
-            movie.overview
-          ) : (
-            <Message
-              color="black"
-              error
-              icon="ban"
-              header="No synopsis found for this movie"
-            />
-          )}
+          <p>
+            {movie.overview ? (
+              movie.overview
+            ) : (
+              <Message
+                color="black"
+                error
+                icon="ban"
+                header="No synopsis found for this movie"
+              />
+            )}
+          </p>
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>

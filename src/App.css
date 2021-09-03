@@ -1,5 +1,10 @@
 body {
-  background-color: rgb(0, 0, 0) !important;
+  background-color: black !important;
+}
+
+p {
+  color: white;
+  font-size: larger;
 }
 
 .App {
@@ -61,11 +66,12 @@ body {
   padding: 10px;
 }
 
-.react-player {
-  position: fixed;
-  top: 0;
-  left: 0;
+.center {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
+
 
 .ui.tab {
   background-color: black !important;
