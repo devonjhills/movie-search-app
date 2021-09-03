@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Icon, Image, Message } from "semantic-ui-react";
+import { Dimmer, Image, Loader } from "semantic-ui-react";
 import { fetchNewMovieReleases } from "../api/api";
 import MovieCard from "./MovieCard";
 
@@ -19,15 +19,11 @@ const MovieNewReleasesPage = () => {
   }, []);
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <>
       {loading ? (
-        <Message icon>
-          <Icon name="circle notched" loading />
-          <Message.Content>
-            <Message.Header>Just one second</Message.Header>
-            We are fetching that content for you.
-          </Message.Content>
-        </Message>
+        <Dimmer active>
+          <Loader size="massive">Loading</Loader>
+        </Dimmer>
       ) : (
         <Image.Group>
           {newMovies &&
@@ -36,7 +32,7 @@ const MovieNewReleasesPage = () => {
             ))}
         </Image.Group>
       )}
-    </div>
+    </>
   );
 };
 
