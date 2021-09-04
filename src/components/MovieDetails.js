@@ -8,10 +8,12 @@ import {
   Embed,
   Grid,
   Header,
+  Icon,
   Image,
   List,
   Loader,
   Message,
+  Modal,
 } from "semantic-ui-react";
 import { fetchMovieDetails } from "../api/api";
 import SocialButtons from "./SocialButtons";
@@ -90,17 +92,48 @@ const MovieDetails = () => {
                         </Button>
                       );
                     })}
+                  <Divider hidden />
+
+                  <Modal
+                    basic
+                    size="large"
+                    trigger={
+                      movieDetails.movieTrailerKey !== undefined && (
+                        <Button icon labelPosition="left">
+                          <Icon name="play" />
+                          Play {movieDetails.title} Trailer
+                        </Button>
+                      )
+                    }>
+                    <Modal.Content>
+                      <Embed
+                        id={movieDetails.movieTrailerKey}
+                        source="youtube"
+                        active
+                        iframe={{
+                          allowFullScreen: true,
+                        }}
+                      />
+                    </Modal.Content>
+                  </Modal>
                 </Grid.Column>
               </Grid.Row>
-
             </Grid>
           </div>
           <Grid stackable padded>
             <Grid.Column width={4}>
               <List inverted divided size="big" relaxed>
-              <List.Item>
+                <List.Item>
                   <SocialButtons externals={movieDetails.external_ids} />
                 </List.Item>
+                {movieDetails.homepage && (
+                  <List.Item>
+                    <List.Icon inverted color="blue" name="linkify" />
+                    <List.Content as="h3">
+                      <a href={movieDetails.homepage}>Official Site</a>
+                    </List.Content>
+                  </List.Item>
+                )}
                 <List.Item>
                   <List.Icon
                     name="star"
@@ -166,32 +199,7 @@ const MovieDetails = () => {
               </List>
             </Grid.Column>
             <Grid.Column width={12}>
-              {movieDetails.movieTrailerKey !== undefined ? (
-                <Embed
-                  id={movieDetails.movieTrailerKey}
-                  source="youtube"
-                  placeholder={movieDetails.backdrop}
-                  iframe={{
-                    allowFullScreen: true,
-                    style: {
-                      padding: 1,
-                    },
-                  }}
-                />
-              ) : (
-                <>
-                  <Message
-                    color="black"
-                    error
-                    compact
-                    floating
-                    icon="ban"
-                    header="No trailer found for this movie"
-                    content="But there is no need to be upset, enjoy this instead"
-                  />
-                  <Embed active id="GJDNkVDGM_s" source="youtube" />
-                </>
-              )}
+              <p>CAST AND CREDITS</p>
             </Grid.Column>
           </Grid>
         </Container>

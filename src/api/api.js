@@ -59,6 +59,7 @@ const formatResultsDetails = (movie) => {
     id,
     external_ids,
     genres,
+    homepage,
     backdrop_path,
     overview,
     poster_path,
@@ -78,6 +79,7 @@ const formatResultsDetails = (movie) => {
     id,
     external_ids,
     genres,
+    homepage,
     overview,
     release_date,
     release_dates,
@@ -91,6 +93,7 @@ const formatResultsDetails = (movie) => {
     rating,
     status,
     movieTrailerKey,
+    backdrop_small: imageUrl + backdrop_path,
     backdrop: largeImageUrl + backdrop_path,
     poster: imageUrl + poster_path,
   };
