@@ -82,7 +82,18 @@ const MovieDetails = () => {
                   <Header inverted as="h4" style={{ fontStyle: "italic" }}>
                     {movieDetails.tagline}
                   </Header>
-                  <p>{movieDetails.overview}</p>
+                  <p>
+                    {movieDetails.overview ? (
+                      movieDetails.overview
+                    ) : (
+                      <Message
+                        color="black"
+                        error
+                        icon="ban"
+                        header="No synopsis found for this movie"
+                      />
+                    )}
+                  </p>
                   <Divider hidden />
                   {movieDetails.genres &&
                     movieDetails.genres.map((genre) => {
