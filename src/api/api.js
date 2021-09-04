@@ -10,6 +10,7 @@ const movieDetailsUrl = `${baseUrl}/movie/`;
 
 //https://developers.themoviedb.org/3/getting-started/images
 const imageUrl = "https://image.tmdb.org/t/p/w500";
+const largeImageUrl = "https://image.tmdb.org/t/p/original";
 
 const formatResults = (movie) => {
   const {
@@ -70,6 +71,7 @@ const formatResultsDetails = (movie) => {
     tagline,
     budget,
     revenue,
+    status,
   } = movie;
 
   return {
@@ -87,8 +89,9 @@ const formatResultsDetails = (movie) => {
     budget,
     revenue,
     rating,
+    status,
     movieTrailerKey,
-    backdrop: imageUrl + backdrop_path,
+    backdrop: largeImageUrl + backdrop_path,
     poster: imageUrl + poster_path,
   };
 };

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import ReactPlayer from "react-player/youtube";
 import { useParams } from "react-router-dom";
 import {
   Button,
   Container,
   Dimmer,
   Divider,
+  Embed,
   Grid,
   Header,
-  Icon,
   Image,
+  List,
   Loader,
   Message,
 } from "semantic-ui-react";
@@ -19,7 +19,6 @@ import SocialButtons from "./SocialButtons";
 const MovieDetails = () => {
   const urlId = useParams();
   const movieId = urlId.id;
-  const youtubeUrl = "https://www.youtube.com/watch?v=";
 
   const [movieDetails, setMovieDetails] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,8 +43,6 @@ const MovieDetails = () => {
 
   const d = new Date(`${movieDetails.release_date}`);
 
-  const trailerUrl = youtubeUrl + movieDetails.movieTrailerKey;
-
   return (
     <>
       {loading ? (
@@ -55,41 +52,132 @@ const MovieDetails = () => {
           </Dimmer>
         </Container>
       ) : (
-        <Grid stackable container>
-          <Grid.Row>
-            <Grid.Column floated="left" width={12}>
-              <Header as="h1" inverted>
-                {movieDetails.title}
-                <Header.Subheader>
-                  {" "}
-                  {d.toDateString().split(" ").slice(1).join(" ")} •{" "}
-                  {formatRuntime(movieDetails.runtime)} •{" "}
-                  <span className="myrating">
-                    {movieDetails.rating ? movieDetails.rating : "NR"}
-                  </span>
-                </Header.Subheader>
-              </Header>
-            </Grid.Column>
-            <Grid.Column floated="right" width={4}>
-              <Header inverted textAlign="center" floated="right">
-                <Icon name="star" color="yellow" />
-                <Header.Content>
-                  {movieDetails.vote_average} /10
-                  <Header.Subheader>
-                    {movieDetails.vote_count.toLocaleString("en-US")} Ratings
-                  </Header.Subheader>
-                </Header.Content>
-              </Header>
-            </Grid.Column>
-          </Grid.Row>
+        <Container>
+          <div
+            style={{
+              background: `linear-gradient(rgb(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+            url(${movieDetails.backdrop}) no-repeat fixed right -500px top/cover`,
+            }}>
+            <Grid stackable padded relaxed>
+              <Grid.Row>
+                <Grid.Column width={4}>
+                  <Image src={movieDetails.poster} />
+                </Grid.Column>
+                <Grid.Column width={12}>
+                  <Header as="h1" inverted>
+                    {movieDetails.title}
+                    <Divider hidden />
+                    <Header.Subheader>
+                      {" "}
+                      {d.toDateString().split(" ").slice(1).join(" ")} •{" "}
+                      {formatRuntime(movieDetails.runtime)} •{" "}
+                      <span className="myrating">
+                        {movieDetails.rating ? movieDetails.rating : "NR"}
+                      </span>
+                    </Header.Subheader>
+                  </Header>
 
-          <Grid.Row stretched>
+                  <Header inverted as="h4" style={{ fontStyle: "italic" }}>
+                    {movieDetails.tagline}
+                  </Header>
+                  <p>{movieDetails.overview}</p>
+                  <Divider hidden />
+                  {movieDetails.genres &&
+                    movieDetails.genres.map((genre) => {
+                      return (
+                        <Button key={genre.id} compact circular inverted>
+                          {genre.name}
+                        </Button>
+                      );
+                    })}
+                </Grid.Column>
+              </Grid.Row>
+
+            </Grid>
+          </div>
+          <Grid stackable padded>
             <Grid.Column width={4}>
-              <Image src={movieDetails.poster} />
+              <List inverted divided size="big" relaxed>
+              <List.Item>
+                  <SocialButtons externals={movieDetails.external_ids} />
+                </List.Item>
+                <List.Item>
+                  <List.Icon
+                    name="star"
+                    color="yellow"
+                    verticalAlign="middle"
+                  />
+                  <List.Content>
+                    <List.Header>{movieDetails.vote_average} /10</List.Header>
+                    <List.Description>
+                      {movieDetails.vote_count.toLocaleString("en-US")} Ratings
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Icon
+                    name="dollar"
+                    size="large"
+                    color="green"
+                    verticalAlign="middle"
+                  />
+                  <List.Content>
+                    <List.Header>Budget</List.Header>
+                    <List.Description>
+                      {movieDetails.budget === 0
+                        ? "---"
+                        : movieDetails.budget.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                          })}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Icon
+                    name="dollar"
+                    size="large"
+                    color="green"
+                    verticalAlign="middle"
+                  />
+                  <List.Content>
+                    <List.Header>Revenue</List.Header>
+                    <List.Description>
+                      {movieDetails.revenue === 0
+                        ? "---"
+                        : movieDetails.revenue.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                          })}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Icon
+                    name="calendar alternate outline"
+                    color="grey"
+                    verticalAlign="middle"
+                  />
+                  <List.Content>
+                    <List.Header>Status</List.Header>
+                    <List.Description>{movieDetails.status}</List.Description>
+                  </List.Content>
+                </List.Item>
+              </List>
             </Grid.Column>
             <Grid.Column width={12}>
               {movieDetails.movieTrailerKey !== undefined ? (
-                <ReactPlayer light controls width="100%" url={trailerUrl} />
+                <Embed
+                  id={movieDetails.movieTrailerKey}
+                  source="youtube"
+                  placeholder={movieDetails.backdrop}
+                  iframe={{
+                    allowFullScreen: true,
+                    style: {
+                      padding: 1,
+                    },
+                  }}
+                />
               ) : (
                 <>
                   <Message
@@ -101,57 +189,12 @@ const MovieDetails = () => {
                     header="No trailer found for this movie"
                     content="But there is no need to be upset, enjoy this instead"
                   />
-                  <ReactPlayer
-                    light
-                    width="100%"
-                    url="https://www.youtube.com/watch?v=GJDNkVDGM_s"
-                  />
+                  <Embed active id="GJDNkVDGM_s" source="youtube" />
                 </>
               )}
             </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column width="12">
-              {movieDetails.genres &&
-                movieDetails.genres.map((genre) => {
-                  return (
-                    <Button key={genre.id} compact circular inverted>
-                      {genre.name}
-                    </Button>
-                  );
-                })}
-              <Header inverted as="h4" style={{ fontStyle: "italic" }}>
-                {movieDetails.tagline}
-              </Header>
-              <p>{movieDetails.overview}</p>
-            </Grid.Column>
-            <Grid.Column floated="right" width="4">
-              <div className="center">
-                <SocialButtons externals={movieDetails.external_ids} />
-              </div>
-              <Divider />
-              <Header as="h3" inverted content="Budget" />
-              <p style={{ color: "green" }}>
-                {movieDetails.budget === 0
-                  ? "- - -"
-                  : movieDetails.budget.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    })}
-              </p>
-              <Header as="h3" inverted content="Revenue" />
-              <p style={{ color: "green" }}>
-                {movieDetails.revenue === 0
-                  ? "- - -"
-                  : movieDetails.revenue.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    })}
-              </p>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row></Grid.Row>
-        </Grid>
+          </Grid>
+        </Container>
       )}
     </>
   );
