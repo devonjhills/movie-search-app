@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 const SocialButtons = ({ externals }) => {
   let fbUrl = "https://www.facebook.com/" + externals.facebook_id;
