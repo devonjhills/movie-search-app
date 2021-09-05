@@ -38,16 +38,20 @@ const MovieCard = ({ movie }) => {
           {d.toDateString().split(" ").slice(1).join(" ")}
         </Header.Subheader>
       </Header>
-      
 
-      <Label basic circular size='medium'>
-        <Icon color='yellow' name="star" />
+      <Label basic circular size="medium">
+        <Icon color="yellow" name="star" />
         {movie.vote_average}
       </Label>
 
       <Divider hidden />
 
-      <Button>Click for full details</Button>
+      <Button compact circular animated='fade'>
+        <Button.Content visible>Click for full details</Button.Content>
+        <Button.Content hidden>
+          <Icon name="hand point up outline" />
+        </Button.Content>
+      </Button>
     </div>
   );
 

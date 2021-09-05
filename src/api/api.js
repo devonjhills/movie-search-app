@@ -9,40 +9,32 @@ const searchMoviesUrl = `${baseUrl}/search/movie`;
 const movieDetailsUrl = `${baseUrl}/movie/`;
 
 //https://developers.themoviedb.org/3/getting-started/images
-const imageUrl = "https://image.tmdb.org/t/p/w500";
-const largeImageUrl = "https://image.tmdb.org/t/p/original";
+export const imageUrl = "https://image.tmdb.org/t/p/w500";
+export const largeImageUrl = "https://image.tmdb.org/t/p/original";
 
 const formatResults = (movie) => {
   const {
     id,
-    backdrop_path,
-    overview,
     poster_path,
     release_date,
     title,
     vote_average,
-    vote_count,
   } = movie;
 
   return {
     id,
-    overview,
     release_date,
     title,
     vote_average,
-    vote_count,
-    backdrop: imageUrl + backdrop_path,
     poster: imageUrl + poster_path,
   };
 };
 
 const formatResultsDetails = (movie) => {
+  // Attempt to fetch video matching 'Official Trailer', then 'Trailer', or return undefined
   let movieTrailerKey = "";
   let officialTrailer = "";
   let trailer = "";
-
-  let ratingUs = movie.release_dates.results.find((e) => e.iso_3166_1 === "US");
-  let rating = ratingUs.release_dates[0].certification;
 
   officialTrailer = movie.videos.results.find((e) =>
     e.name.includes("Official Trailer")
@@ -55,8 +47,21 @@ const formatResultsDetails = (movie) => {
     ? (movieTrailerKey = officialTrailer.key)
     : (movieTrailerKey = trailer && trailer.key);
 
+  // fetch MPAA rating for US release
+  let ratingUs = movie.release_dates.results.find((e) => e.iso_3166_1 === "US");
+  let rating = ratingUs.release_dates[0].certification;
+
+  // fetch director(s) from crew list
+  let directors = [];
+  movie.credits.crew.forEach((crewMember) => {
+    if (crewMember.job === "Director") {
+      directors.push(crewMember);
+    }
+  });
+
   const {
     id,
+    credits,
     external_ids,
     genres,
     homepage,
@@ -77,6 +82,8 @@ const formatResultsDetails = (movie) => {
 
   return {
     id,
+    credits,
+    directors,
     external_ids,
     genres,
     homepage,
@@ -110,7 +117,7 @@ export const fetchMovieDetails = async (movieId) => {
       },
     });
 
-    console.log(data)
+    console.log(data);
 
     return formatResultsDetails(data);
   } catch (error) {

@@ -65,6 +65,13 @@ p {
   align-items: center;
 }
 
+.logo {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-right: 5px;
+}
+
 .sub-div {
   justify-content: space-evenly;
   padding-top: 5px;

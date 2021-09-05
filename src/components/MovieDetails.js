@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Button,
+  Card,
   Container,
   Dimmer,
   Divider,
@@ -15,7 +16,7 @@ import {
   Message,
   Modal,
 } from "semantic-ui-react";
-import { fetchMovieDetails } from "../api/api";
+import { fetchMovieDetails, imageUrl } from "../api/api";
 import SocialButtons from "./SocialButtons";
 
 const MovieDetails = () => {
@@ -45,6 +46,191 @@ const MovieDetails = () => {
 
   const d = new Date(`${movieDetails.release_date}`);
 
+  const MovieBanner = () => {
+    return (
+      <div
+        style={{
+          background: `linear-gradient(rgb(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+            url(${movieDetails.backdrop}) no-repeat fixed right -200px top/contain`,
+        }}>
+        <Grid stackable padded relaxed>
+          <Grid.Row>
+            <Grid.Column width={4}>
+              <Image src={movieDetails.poster} />
+            </Grid.Column>
+            <Grid.Column width={12}>
+              <Header as="h1" inverted>
+                {movieDetails.title}
+                <Divider hidden />
+                <Header.Subheader>
+                  {" "}
+                  {d.toDateString().split(" ").slice(1).join(" ")} •{" "}
+                  {formatRuntime(movieDetails.runtime)} •{" "}
+                  <span className="myrating">
+                    {movieDetails.rating ? movieDetails.rating : "NR"}
+                  </span>
+                </Header.Subheader>
+              </Header>
+
+              <Header inverted as="h4" style={{ fontStyle: "italic" }}>
+                {movieDetails.tagline}
+              </Header>
+              <p>
+                {movieDetails.overview ? (
+                  movieDetails.overview
+                ) : (
+                  <Message
+                    color="black"
+                    error
+                    icon="ban"
+                    header="No synopsis found for this movie"
+                  />
+                )}
+              </p>
+              <Divider hidden />
+              {movieDetails.genres &&
+                movieDetails.genres.map((genre) => {
+                  return (
+                    <Button key={genre.id} compact circular inverted>
+                      {genre.name}
+                    </Button>
+                  );
+                })}
+              <Divider hidden />
+
+              <Modal
+                basic
+                size="large"
+                trigger={
+                  movieDetails.movieTrailerKey !== undefined && (
+                    <Button icon labelPosition="left">
+                      <Icon name="play" />
+                      Play {movieDetails.title} Trailer
+                    </Button>
+                  )
+                }>
+                <Modal.Content>
+                  <Embed
+                    id={movieDetails.movieTrailerKey}
+                    source="youtube"
+                    active
+                    iframe={{
+                      allowFullScreen: true,
+                    }}
+                  />
+                </Modal.Content>
+              </Modal>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
+    );
+  };
+
+  const SidebarDetails = () => {
+    return (
+      <List inverted divided size="big" relaxed>
+        <List.Item>
+          <SocialButtons externals={movieDetails.external_ids} />
+        </List.Item>
+        {movieDetails.homepage && (
+          <List.Item>
+            <List.Icon inverted color="blue" name="linkify" />
+            <List.Content as="h3">
+              <a href={movieDetails.homepage}>Official Site</a>
+            </List.Content>
+          </List.Item>
+        )}
+        <List.Item>
+          <List.Icon name="star" color="yellow" verticalAlign="middle" />
+          <List.Content>
+            <List.Header>{movieDetails.vote_average} /10</List.Header>
+            <List.Description>
+              {movieDetails.vote_count.toLocaleString("en-US")} Ratings
+            </List.Description>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Icon
+            name="dollar"
+            size="large"
+            color="green"
+            verticalAlign="middle"
+          />
+          <List.Content>
+            <List.Header>Budget</List.Header>
+            <List.Description>
+              {movieDetails.budget === 0
+                ? "---"
+                : movieDetails.budget.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
+            </List.Description>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Icon
+            name="dollar"
+            size="large"
+            color="green"
+            verticalAlign="middle"
+          />
+          <List.Content>
+            <List.Header>Revenue</List.Header>
+            <List.Description>
+              {movieDetails.revenue === 0
+                ? "---"
+                : movieDetails.revenue.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
+            </List.Description>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Icon
+            name="calendar alternate outline"
+            color="grey"
+            verticalAlign="middle"
+          />
+          <List.Content>
+            <List.Header>Status</List.Header>
+            <List.Description>{movieDetails.status}</List.Description>
+          </List.Content>
+        </List.Item>
+      </List>
+    );
+  };
+
+  const directorList =
+    movieDetails.directors &&
+    movieDetails.directors.map((director) => {
+      return (
+        <List.Item key={director.id}>
+          <Image size="mini" circular src={imageUrl + director.profile_path} />
+          <List.Content>
+            <List.Header>{director.name}</List.Header>
+            <List.Description>{director.job}</List.Description>
+          </List.Content>
+        </List.Item>
+      );
+    });
+
+    const topCastList =
+    movieDetails.credits &&
+    movieDetails.credits.cast.slice(0, 10).map((actor) => {
+      return (
+        <List.Item key={actor.id}>
+          <Image size="tiny" circular src={imageUrl + actor.profile_path} />
+          <List.Content>
+            <List.Header>{actor.name}</List.Header>
+            <List.Description>{actor.character}</List.Description>
+          </List.Content>
+        </List.Item>
+      );
+    });
+
   return (
     <>
       {loading ? (
@@ -55,162 +241,18 @@ const MovieDetails = () => {
         </Container>
       ) : (
         <Container>
-          <div
-            style={{
-              background: `linear-gradient(rgb(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-            url(${movieDetails.backdrop}) no-repeat fixed right -500px top/cover`,
-            }}>
-            <Grid stackable padded relaxed>
-              <Grid.Row>
-                <Grid.Column width={4}>
-                  <Image src={movieDetails.poster} />
-                </Grid.Column>
-                <Grid.Column width={12}>
-                  <Header as="h1" inverted>
-                    {movieDetails.title}
-                    <Divider hidden />
-                    <Header.Subheader>
-                      {" "}
-                      {d.toDateString().split(" ").slice(1).join(" ")} •{" "}
-                      {formatRuntime(movieDetails.runtime)} •{" "}
-                      <span className="myrating">
-                        {movieDetails.rating ? movieDetails.rating : "NR"}
-                      </span>
-                    </Header.Subheader>
-                  </Header>
-
-                  <Header inverted as="h4" style={{ fontStyle: "italic" }}>
-                    {movieDetails.tagline}
-                  </Header>
-                  <p>
-                    {movieDetails.overview ? (
-                      movieDetails.overview
-                    ) : (
-                      <Message
-                        color="black"
-                        error
-                        icon="ban"
-                        header="No synopsis found for this movie"
-                      />
-                    )}
-                  </p>
-                  <Divider hidden />
-                  {movieDetails.genres &&
-                    movieDetails.genres.map((genre) => {
-                      return (
-                        <Button key={genre.id} compact circular inverted>
-                          {genre.name}
-                        </Button>
-                      );
-                    })}
-                  <Divider hidden />
-
-                  <Modal
-                    basic
-                    size="large"
-                    trigger={
-                      movieDetails.movieTrailerKey !== undefined && (
-                        <Button icon labelPosition="left">
-                          <Icon name="play" />
-                          Play {movieDetails.title} Trailer
-                        </Button>
-                      )
-                    }>
-                    <Modal.Content>
-                      <Embed
-                        id={movieDetails.movieTrailerKey}
-                        source="youtube"
-                        active
-                        iframe={{
-                          allowFullScreen: true,
-                        }}
-                      />
-                    </Modal.Content>
-                  </Modal>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </div>
+          <MovieBanner />
           <Grid stackable padded>
             <Grid.Column width={4}>
-              <List inverted divided size="big" relaxed>
-                <List.Item>
-                  <SocialButtons externals={movieDetails.external_ids} />
-                </List.Item>
-                {movieDetails.homepage && (
-                  <List.Item>
-                    <List.Icon inverted color="blue" name="linkify" />
-                    <List.Content as="h3">
-                      <a href={movieDetails.homepage}>Official Site</a>
-                    </List.Content>
-                  </List.Item>
-                )}
-                <List.Item>
-                  <List.Icon
-                    name="star"
-                    color="yellow"
-                    verticalAlign="middle"
-                  />
-                  <List.Content>
-                    <List.Header>{movieDetails.vote_average} /10</List.Header>
-                    <List.Description>
-                      {movieDetails.vote_count.toLocaleString("en-US")} Ratings
-                    </List.Description>
-                  </List.Content>
-                </List.Item>
-                <List.Item>
-                  <List.Icon
-                    name="dollar"
-                    size="large"
-                    color="green"
-                    verticalAlign="middle"
-                  />
-                  <List.Content>
-                    <List.Header>Budget</List.Header>
-                    <List.Description>
-                      {movieDetails.budget === 0
-                        ? "---"
-                        : movieDetails.budget.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
-                    </List.Description>
-                  </List.Content>
-                </List.Item>
-                <List.Item>
-                  <List.Icon
-                    name="dollar"
-                    size="large"
-                    color="green"
-                    verticalAlign="middle"
-                  />
-                  <List.Content>
-                    <List.Header>Revenue</List.Header>
-                    <List.Description>
-                      {movieDetails.revenue === 0
-                        ? "---"
-                        : movieDetails.revenue.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
-                    </List.Description>
-                  </List.Content>
-                </List.Item>
-                <List.Item>
-                  <List.Icon
-                    name="calendar alternate outline"
-                    color="grey"
-                    verticalAlign="middle"
-                  />
-                  <List.Content>
-                    <List.Header>Status</List.Header>
-                    <List.Description>{movieDetails.status}</List.Description>
-                  </List.Content>
-                </List.Item>
-              </List>
+              <SidebarDetails />
             </Grid.Column>
             <Grid.Column width={12}>
-              <p>CAST AND CREDITS</p>
+              <List horizontal inverted size="big">
+                {directorList}
+              </List>
+              <List inverted size="big">
+              {topCastList}
+              </List>
             </Grid.Column>
           </Grid>
         </Container>
