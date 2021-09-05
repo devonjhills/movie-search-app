@@ -1,6 +1,6 @@
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import MenuNavbar from "./components/MenuNavbar";
 import MovieHub from "./components/MovieHub";
 import TvHub from "./components/TvHub";
