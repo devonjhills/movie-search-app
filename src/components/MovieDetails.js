@@ -207,27 +207,27 @@ const MovieDetails = () => {
     movieDetails.directors &&
     movieDetails.directors.map((director) => {
       return (
-        <List.Item key={director.id}>
-          <Image size="mini" circular src={imageUrl + director.profile_path} />
-          <List.Content>
-            <List.Header>{director.name}</List.Header>
-            <List.Description>{director.job}</List.Description>
-          </List.Content>
-        </List.Item>
+        <Card key={director.id}>
+          <Image size='small' src={imageUrl + director.profile_path} />
+          <Card.Content>
+            <Card.Header>{director.name}</Card.Header>
+            <Card.Meta>{director.job}</Card.Meta>
+          </Card.Content>
+        </Card>
       );
     });
 
-    const topCastList =
+  const topCastList =
     movieDetails.credits &&
-    movieDetails.credits.cast.slice(0, 10).map((actor) => {
+    movieDetails.credits.cast.slice(0, 5).map((actor) => {
       return (
-        <List.Item key={actor.id}>
-          <Image size="tiny" circular src={imageUrl + actor.profile_path} />
-          <List.Content>
-            <List.Header>{actor.name}</List.Header>
-            <List.Description>{actor.character}</List.Description>
-          </List.Content>
-        </List.Item>
+        <Card key={actor.id}>
+          <Image size='small' src={imageUrl + actor.profile_path} />
+          <Card.Content>
+            <Card.Header>{actor.name}</Card.Header>
+            <Card.Meta>{actor.character}</Card.Meta>
+          </Card.Content>
+        </Card>
       );
     });
 
@@ -247,12 +247,10 @@ const MovieDetails = () => {
               <SidebarDetails />
             </Grid.Column>
             <Grid.Column width={12}>
-              <List horizontal inverted size="big">
+              <Card.Group centered doubling itemsPerRow='6'>
                 {directorList}
-              </List>
-              <List inverted size="big">
-              {topCastList}
-              </List>
+                {topCastList}
+              </Card.Group>
             </Grid.Column>
           </Grid>
         </Container>
