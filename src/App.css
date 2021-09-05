@@ -83,3 +83,14 @@ p {
   background-color: black !important;
   border-color: black !important;
 }
+
+.ui.card,
+.ui.cards>.card .header{
+  background-color: #202020 !important;
+  color: white !important;
+}
+
+.ui.card,
+.ui.cards>.card .meta{
+  color: rgb(131, 130, 130) !important;
+}
