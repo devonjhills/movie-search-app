@@ -1,5 +1,5 @@
 body {
-  background-color: black !important;
+  background-color: rgb(0, 0, 0) !important;
 }
 
 p {
@@ -8,8 +8,8 @@ p {
 }
 
 .App {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 0;
+  padding: 0;
 }
 
 .headericons {
@@ -34,6 +34,11 @@ p {
   position: fixed;
   bottom: 0;
   left: 1.5em;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
 }
 
 .mygradient {
@@ -93,4 +98,14 @@ p {
 .ui.card,
 .ui.cards>.card .meta{
   color: rgb(131, 130, 130) !important;
+}
+
+.wrapper {
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+}
+
+.left, .right {
+  float:left;
 }

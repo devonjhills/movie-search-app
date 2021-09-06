@@ -5,7 +5,6 @@ import {
   Card,
   Container,
   Dimmer,
-  Divider,
   Embed,
   Grid,
   Header,
@@ -46,117 +45,144 @@ const MovieDetails = () => {
 
   const d = new Date(`${movieDetails.release_date}`);
 
+  const directorList =
+    movieDetails.directors &&
+    movieDetails.directors.map((d) => d.name).join(" • ");
+
+  const writerList =
+    movieDetails.writers && movieDetails.writers.map((w) => w.name).join(" • ");
+
+  const topCastList =
+    movieDetails.credits &&
+    movieDetails.credits.cast.slice(0, 6).map((actor) => {
+      return (
+        <Card key={actor.id}>
+          {actor.profile_path !== null ? (
+            <Image src={imageUrl + actor.profile_path} />
+          ) : (
+            <Message compact size="huge" icon="user" />
+          )}
+          <Card.Content>
+            <Card.Header>{actor.name}</Card.Header>
+            <Card.Meta>{actor.character}</Card.Meta>
+          </Card.Content>
+        </Card>
+      );
+    });
+
   const MovieBanner = () => {
     return (
-      <div
-        style={{
-          background: `linear-gradient(rgb(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-            url(${movieDetails.backdrop}) no-repeat fixed right -200px top/contain`,
-        }}>
-        <Grid stackable padded relaxed>
-          <Grid.Row>
-            <Grid.Column width={4}>
-              <Image src={movieDetails.poster} />
-            </Grid.Column>
-            <Grid.Column width={12}>
-              <Header as="h1" inverted>
-                {movieDetails.title}
-                <Divider hidden />
-                <Header.Subheader>
-                  {" "}
-                  {d.toDateString().split(" ").slice(1).join(" ")} •{" "}
-                  {formatRuntime(movieDetails.runtime)} •{" "}
-                  <span className="myrating">
-                    {movieDetails.rating ? movieDetails.rating : "NR"}
-                  </span>
-                </Header.Subheader>
-              </Header>
+      <Grid.Row>
+        <Grid.Column width={5}>
+          <Image src={movieDetails.poster} />
+        </Grid.Column>
 
-              <Header inverted as="h4" style={{ fontStyle: "italic" }}>
-                {movieDetails.tagline}
-              </Header>
-              <p>
-                {movieDetails.overview ? (
-                  movieDetails.overview
-                ) : (
-                  <Message
-                    color="black"
-                    error
-                    icon="ban"
-                    header="No synopsis found for this movie"
-                  />
-                )}
-              </p>
-              <Divider hidden />
+        <Grid.Column width={11}>
+          <Header as="h1" inverted>
+            {movieDetails.title}
+            <Header.Subheader style={{ marginTop: "5px" }}>
+              <span className="myrating">
+                {movieDetails.rating ? movieDetails.rating : "NR"}
+              </span>
+              {" • "} {d.toDateString().split(" ").slice(1).join(" ")} {" • "}
+              {formatRuntime(movieDetails.runtime)}
+              {" • "}
               {movieDetails.genres &&
                 movieDetails.genres.map((genre) => {
                   return (
-                    <Button key={genre.id} compact circular inverted>
+                    <Button
+                      color="grey"
+                      size="mini"
+                      key={genre.id}
+                      compact
+                      circular>
                       {genre.name}
                     </Button>
                   );
                 })}
-              <Divider hidden />
+            </Header.Subheader>
+          </Header>
 
-              <Modal
-                basic
-                size="large"
-                trigger={
-                  movieDetails.movieTrailerKey !== undefined && (
-                    <Button icon labelPosition="left">
-                      <Icon name="play" />
-                      Play {movieDetails.title} Trailer
-                    </Button>
-                  )
-                }>
-                <Modal.Content>
-                  <Embed
-                    id={movieDetails.movieTrailerKey}
-                    source="youtube"
-                    active
-                    iframe={{
-                      allowFullScreen: true,
-                    }}
-                  />
-                </Modal.Content>
-              </Modal>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
+          <Header inverted as="h4" style={{ fontStyle: "italic" }}>
+            {movieDetails.tagline}
+          </Header>
+          <p>
+            {movieDetails.overview ? (
+              movieDetails.overview
+            ) : (
+              <Message
+                color="black"
+                error
+                icon="ban"
+                header="No synopsis found for this movie"
+              />
+            )}
+          </p>
+
+          <List inverted relaxed size="large">
+            <List.Item>
+              <List.Icon inverted name="video" />
+              <List.Content>
+                <List.Header>
+                  {movieDetails.directors.length > 1 ? "Directors" : "Director"}
+                </List.Header>
+                <List.Description>{directorList}</List.Description>
+              </List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Icon inverted name="pencil" />
+              <List.Content>
+                <List.Header>
+                  {movieDetails.writers.length > 1 ? "Writers" : "Writer"}
+                </List.Header>
+                <List.Description>{writerList}</List.Description>
+              </List.Content>
+            </List.Item>
+          </List>
+
+          <Modal
+            basic
+            size="large"
+            trigger={
+              movieDetails.movieTrailerKey !== undefined && (
+                <Button inverted color="black">
+                  <Icon name="play" />
+                  {movieDetails.title} Trailer
+                </Button>
+              )
+            }>
+            <Modal.Content>
+              <Embed
+                id={movieDetails.movieTrailerKey}
+                source="youtube"
+                active
+                iframe={{
+                  allowFullScreen: true,
+                }}
+              />
+            </Modal.Content>
+          </Modal>
+
+        </Grid.Column>
+      </Grid.Row>
     );
   };
 
   const SidebarDetails = () => {
     return (
-      <List inverted divided size="big" relaxed>
+      <List size="huge" inverted relaxed divided>
         <List.Item>
-          <SocialButtons externals={movieDetails.external_ids} />
-        </List.Item>
-        {movieDetails.homepage && (
-          <List.Item>
-            <List.Icon inverted color="blue" name="linkify" />
-            <List.Content as="h3">
-              <a href={movieDetails.homepage}>Official Site</a>
-            </List.Content>
-          </List.Item>
-        )}
-        <List.Item>
-          <List.Icon name="star" color="yellow" verticalAlign="middle" />
           <List.Content>
-            <List.Header>{movieDetails.vote_average} /10</List.Header>
+            <List.Header>
+              <Icon name="star" color="yellow" />
+              {movieDetails.vote_average} /10
+            </List.Header>
             <List.Description>
               {movieDetails.vote_count.toLocaleString("en-US")} Ratings
             </List.Description>
           </List.Content>
         </List.Item>
         <List.Item>
-          <List.Icon
-            name="dollar"
-            size="large"
-            color="green"
-            verticalAlign="middle"
-          />
           <List.Content>
             <List.Header>Budget</List.Header>
             <List.Description>
@@ -170,12 +196,6 @@ const MovieDetails = () => {
           </List.Content>
         </List.Item>
         <List.Item>
-          <List.Icon
-            name="dollar"
-            size="large"
-            color="green"
-            verticalAlign="middle"
-          />
           <List.Content>
             <List.Header>Revenue</List.Header>
             <List.Description>
@@ -189,47 +209,20 @@ const MovieDetails = () => {
           </List.Content>
         </List.Item>
         <List.Item>
-          <List.Icon
-            name="calendar alternate outline"
-            color="grey"
-            verticalAlign="middle"
-          />
           <List.Content>
             <List.Header>Status</List.Header>
             <List.Description>{movieDetails.status}</List.Description>
           </List.Content>
         </List.Item>
+        <List.Item>
+      <SocialButtons
+            externals={movieDetails.external_ids}
+            homepage={movieDetails.homepage}
+          />
+          </List.Item>
       </List>
     );
   };
-
-  const directorList =
-    movieDetails.directors &&
-    movieDetails.directors.map((director) => {
-      return (
-        <Card key={director.id}>
-          <Image size='small' src={imageUrl + director.profile_path} />
-          <Card.Content>
-            <Card.Header>{director.name}</Card.Header>
-            <Card.Meta>{director.job}</Card.Meta>
-          </Card.Content>
-        </Card>
-      );
-    });
-
-  const topCastList =
-    movieDetails.credits &&
-    movieDetails.credits.cast.slice(0, 5).map((actor) => {
-      return (
-        <Card key={actor.id}>
-          <Image size='small' src={imageUrl + actor.profile_path} />
-          <Card.Content>
-            <Card.Header>{actor.name}</Card.Header>
-            <Card.Meta>{actor.character}</Card.Meta>
-          </Card.Content>
-        </Card>
-      );
-    });
 
   return (
     <>
@@ -240,20 +233,36 @@ const MovieDetails = () => {
           </Dimmer>
         </Container>
       ) : (
-        <Container>
-          <MovieBanner />
-          <Grid stackable padded>
-            <Grid.Column width={4}>
-              <SidebarDetails />
-            </Grid.Column>
-            <Grid.Column width={12}>
-              <Card.Group centered doubling itemsPerRow='6'>
-                {directorList}
-                {topCastList}
-              </Card.Group>
-            </Grid.Column>
-          </Grid>
-        </Container>
+        <>
+          <div
+            style={{
+              background: `linear-gradient(rgb(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url(${movieDetails.backdrop}) no-repeat fixed right top/contain`,
+            }}>
+            <Container>
+              <Grid verticalAlign="middle" stackable padded relaxed>
+                <MovieBanner />
+              </Grid>
+            </Container>
+          </div>
+
+          <Container>
+            <Grid stackable padded relaxed verticalAlign='bottom'>
+              <Grid.Row>
+                <Grid.Column width={13}>
+                  <Header as='h3' inverted>Top Cast</Header>
+                  <Card.Group doubling itemsPerRow="6">
+                    {topCastList}
+                  </Card.Group>
+                </Grid.Column>
+
+                <Grid.Column width={3}>
+                <SidebarDetails />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Container>
+        </>
       )}
     </>
   );
