@@ -12,7 +12,7 @@ const movieDetailsUrl = `${baseUrl}/movie/`;
 export const imageUrl = "https://image.tmdb.org/t/p/w500";
 export const largeImageUrl = "https://image.tmdb.org/t/p/original";
 
-const formatResults = (movie) => {
+export const formatResults = (movie) => {
   const { id, poster_path, release_date, title, vote_average } = movie;
 
   return {
@@ -56,7 +56,11 @@ const formatResultsDetails = (movie) => {
   // fetch writer(s) from crew list
   let writers = [];
   movie.credits.crew.forEach((crewMember) => {
-    if (crewMember.job === "Writer" || crewMember.job === "Screenplay") {
+    if (
+      crewMember.job === "Writer" ||
+      crewMember.job === "Screenplay" ||
+      crewMember.job === "Novel"
+    ) {
       writers.push(crewMember);
     }
   });
@@ -103,6 +107,7 @@ const formatResultsDetails = (movie) => {
     status,
     writers,
     movieTrailerKey,
+    recommended: movie.recommendations.results,
     backdrop_small: imageUrl + backdrop_path,
     backdrop: largeImageUrl + backdrop_path,
     poster: imageUrl + poster_path,
@@ -116,11 +121,12 @@ export const fetchMovieDetails = async (movieId) => {
         api_key: API_KEY,
         language: "en_US",
         append_to_response:
-          "videos,credits,external_ids,recommendations,similar,release_dates,reviews",
+          "videos,credits,external_ids,recommendations,release_dates,reviews",
       },
     });
 
-    console.log(data);
+    console.log(formatResultsDetails(data));
+    //console.log(data)
 
     return formatResultsDetails(data);
   } catch (error) {

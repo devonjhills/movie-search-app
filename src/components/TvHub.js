@@ -5,9 +5,8 @@ const TvHub = () => {
   return (
     <div>
       <h1 style={{textAlign: 'center'}}>
-        <Icon name="warning sign" />
-        TV HUB UNDER CONSTRUCTION
-        <Icon name="warning sign" />
+        <Icon inverted name="warning sign" />
+        <p>TV HUB UNDER CONSTRUCTION</p>
       </h1>
     </div>
   );
