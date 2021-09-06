@@ -5,6 +5,7 @@ import {
   Card,
   Container,
   Dimmer,
+  Divider,
   Embed,
   Grid,
   Header,
@@ -15,7 +16,8 @@ import {
   Message,
   Modal,
 } from "semantic-ui-react";
-import { fetchMovieDetails, imageUrl } from "../api/api";
+import { fetchMovieDetails, formatResults, imageUrl } from "../api/api";
+import MovieCard from "./MovieCard";
 import SocialButtons from "./SocialButtons";
 
 const MovieDetails = () => {
@@ -50,7 +52,8 @@ const MovieDetails = () => {
     movieDetails.directors.map((d) => d.name).join(" • ");
 
   const writerList =
-    movieDetails.writers && movieDetails.writers.map((w) => w.name).join(" • ");
+    movieDetails.writers &&
+    movieDetails.writers.map((w) => `${w.name} (${w.job})`).join(" • ");
 
   const topCastList =
     movieDetails.credits &&
@@ -91,7 +94,7 @@ const MovieDetails = () => {
                 movieDetails.genres.map((genre) => {
                   return (
                     <Button
-                      color="grey"
+                      secondary
                       size="mini"
                       key={genre.id}
                       compact
@@ -145,7 +148,7 @@ const MovieDetails = () => {
             size="large"
             trigger={
               movieDetails.movieTrailerKey !== undefined && (
-                <Button inverted color="black">
+                <Button secondary>
                   <Icon name="play" />
                   {movieDetails.title} Trailer
                 </Button>
@@ -162,7 +165,6 @@ const MovieDetails = () => {
               />
             </Modal.Content>
           </Modal>
-
         </Grid.Column>
       </Grid.Row>
     );
@@ -215,14 +217,22 @@ const MovieDetails = () => {
           </List.Content>
         </List.Item>
         <List.Item>
-      <SocialButtons
+          <SocialButtons
             externals={movieDetails.external_ids}
             homepage={movieDetails.homepage}
           />
-          </List.Item>
+        </List.Item>
       </List>
     );
   };
+
+  const recommended =
+    movieDetails.recommended &&
+    movieDetails.recommended.slice(0, 15).map((movie) => {
+      return formatResults(movie);
+    });
+
+  console.log(recommended);
 
   return (
     <>
@@ -247,17 +257,42 @@ const MovieDetails = () => {
           </div>
 
           <Container>
-            <Grid stackable padded relaxed verticalAlign='bottom'>
+            <Grid stackable padded relaxed verticalAlign="bottom">
               <Grid.Row>
                 <Grid.Column width={13}>
-                  <Header as='h3' inverted>Top Cast</Header>
+                  <Grid.Row>
+                    <Header floated="left" size="large" inverted>
+                      Top Cast
+                    </Header>
+
+                    <Header floated="right" inverted size="small">
+                      Full Cast & Crew
+                      <Icon name="right arrow" />
+                    </Header>
+                  </Grid.Row>
                   <Card.Group doubling itemsPerRow="6">
                     {topCastList}
                   </Card.Group>
                 </Grid.Column>
 
                 <Grid.Column width={3}>
-                <SidebarDetails />
+                  <SidebarDetails />
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Column width={16}>
+                  {recommended && (
+                    <Header size="large" inverted>
+                      Recommended
+                    </Header>
+                  )}
+                  <Image.Group>
+                    {recommended &&
+                      recommended.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
+                      ))}
+                  </Image.Group>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
