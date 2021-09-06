@@ -7,7 +7,6 @@ import {
   Header,
   Icon,
   Image,
-  Label,
 } from "semantic-ui-react";
 
 const MovieCard = ({ movie }) => {
@@ -38,11 +37,6 @@ const MovieCard = ({ movie }) => {
           {d.toDateString().split(" ").slice(1).join(" ")}
         </Header.Subheader>
       </Header>
-
-      <Label basic circular size="medium">
-        <Icon color="yellow" name="star" />
-        {movie.vote_average}
-      </Label>
 
       <Divider hidden />
 
