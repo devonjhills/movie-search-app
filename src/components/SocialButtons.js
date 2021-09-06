@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "semantic-ui-react";
 
-const SocialButtons = ({ externals }) => {
+const SocialButtons = ({ externals, homepage }) => {
   let fbUrl = "https://www.facebook.com/" + externals.facebook_id;
   let imdbUrl = "https://www.imdb.com/title/" + externals.imdb_id;
   let igUrl = "https://www.instagram.com/" + externals.instagram_id;
@@ -11,22 +11,27 @@ const SocialButtons = ({ externals }) => {
     <div className='center'>
       {externals.facebook_id && (
         <a href={fbUrl}>
-          <Icon size='big' color="blue" name="facebook" link />
+          <Icon size='large' color="blue" name="facebook" link />
         </a>
       )}
       {externals.twitter_id && (
         <a href={twitterUrl}>
-          <Icon size='big' color="teal" name="twitter" link />
+          <Icon size='large' color="teal" name="twitter" link />
         </a>
       )}
       {externals.instagram_id && (
         <a href={igUrl}>
-          <Icon size='big' color="violet" name="instagram" link />
+          <Icon size='large' color="violet" name="instagram" link />
         </a>
       )}
       {externals.imdb_id && (
         <a href={imdbUrl}>
-          <Icon size='big' color="yellow" name="imdb" link />
+          <Icon size='large' color="yellow" name="imdb" link />
+        </a>
+      )}
+      {homepage && (
+        <a href={homepage}>
+        <Icon size='large' color="blue" name="linkify" link />
         </a>
       )}
     </div>

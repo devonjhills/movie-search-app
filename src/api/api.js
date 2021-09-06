@@ -13,13 +13,7 @@ export const imageUrl = "https://image.tmdb.org/t/p/w500";
 export const largeImageUrl = "https://image.tmdb.org/t/p/original";
 
 const formatResults = (movie) => {
-  const {
-    id,
-    poster_path,
-    release_date,
-    title,
-    vote_average,
-  } = movie;
+  const { id, poster_path, release_date, title, vote_average } = movie;
 
   return {
     id,
@@ -56,6 +50,14 @@ const formatResultsDetails = (movie) => {
   movie.credits.crew.forEach((crewMember) => {
     if (crewMember.job === "Director") {
       directors.push(crewMember);
+    }
+  });
+
+  // fetch writer(s) from crew list
+  let writers = [];
+  movie.credits.crew.forEach((crewMember) => {
+    if (crewMember.job === "Writer" || crewMember.job === "Screenplay") {
+      writers.push(crewMember);
     }
   });
 
@@ -99,6 +101,7 @@ const formatResultsDetails = (movie) => {
     revenue,
     rating,
     status,
+    writers,
     movieTrailerKey,
     backdrop_small: imageUrl + backdrop_path,
     backdrop: largeImageUrl + backdrop_path,
