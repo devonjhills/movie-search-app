@@ -5,7 +5,6 @@ import {
   Card,
   Container,
   Dimmer,
-  Divider,
   Embed,
   Grid,
   Header,
