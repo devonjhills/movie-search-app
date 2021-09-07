@@ -245,8 +245,10 @@ const MovieDetails = () => {
         <>
           <div
             style={{
-              background: `linear-gradient(rgb(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-      url(${movieDetails.backdrop}) no-repeat fixed right top/contain`,
+              background: `linear-gradient(to left, rgb(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)),
+      url(${movieDetails.backdrop}) no-repeat right -200px top/cover`,
+              width: '100%',
+              position: 'relative',
             }}>
             <Container>
               <Grid verticalAlign="middle" stackable padded relaxed>
