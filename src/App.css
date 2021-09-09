@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(0, 0, 0) !important;
+  background-color: rgb(35, 37, 49) !important;
 }
 
 p {
@@ -16,11 +16,6 @@ p {
   padding-right: 20px;
 }
 
-.poster {
-  height: 400px;
-  width: auto;
-}
-
 .mystars {
   margin-left: 20px;
 }
@@ -28,6 +23,10 @@ p {
 .mydimmer {
   width: 19%;
   min-width: 200px;
+}
+
+.persondimmer {
+  min-width: 130px
 }
 
 .modalheader {
@@ -77,6 +76,16 @@ p {
   margin-right: 5px;
 }
 
+.no-user {
+  display:flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  width: 150px;
+  height: 190px;
+}
+
 .sub-div {
   justify-content: space-evenly;
   padding-top: 5px;
@@ -89,23 +98,8 @@ p {
   border-color: black !important;
 }
 
-.ui.card,
-.ui.cards>.card .header{
-  background-color: #202020 !important;
-  color: white !important;
-}
-
-.ui.card,
-.ui.cards>.card .meta{
-  color: rgb(131, 130, 130) !important;
-}
-
-.wrapper {
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-}
-
-.left, .right {
-  float:left;
+.ui.card {
+  background-color: #24262b !important;
+  font-size: smaller;
+  border: 2px solid aqua;
 }

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
+import { useParams, Redirect } from "react-router-dom";
 import {
   Button,
   Card,
   Container,
   Dimmer,
+  Divider,
   Embed,
   Grid,
   Header,
@@ -14,27 +16,45 @@ import {
   Loader,
   Message,
   Modal,
+  Segment,
 } from "semantic-ui-react";
 import { fetchMovieDetails, formatResults, imageUrl } from "../api/api";
 import MovieCard from "./MovieCard";
+import PersonCard from "./PersonCard";
+import ScrollToTop from "./ScrollToTop";
 import SocialButtons from "./SocialButtons";
 
 const MovieDetails = () => {
   const urlId = useParams();
-  const movieId = urlId.id;
+  const movieId = urlId.movieId;
 
   const [movieDetails, setMovieDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
+    //https://stackoverflow.com/questions/53949393/
+    //cant-perform-a-react-state-update-on-an-unmounted-component
+    let isMounted = true;
+
     const getMovieDetails = async () => {
       await fetchMovieDetails(movieId).then((data) => {
-        setMovieDetails(data);
-        setLoading(false);
+        if (data === undefined) {
+          console.log("404!!!!");
+          setRedirect(true);
+        }
+
+        if (isMounted) {
+          setMovieDetails(data);
+          setLoading(false);
+        }
       });
     };
 
     getMovieDetails();
+    return () => {
+      isMounted = false;
+    };
   }, [movieId]);
 
   const formatRuntime = (runtime) => {
@@ -54,23 +74,21 @@ const MovieDetails = () => {
     movieDetails.writers &&
     movieDetails.writers.map((w) => `${w.name} (${w.job})`).join(" • ");
 
+  const recommended =
+    movieDetails.recommended &&
+    movieDetails.recommended.map((movie) => {
+      return formatResults(movie);
+    });
+
   const topCastList =
     movieDetails.credits &&
-    movieDetails.credits.cast.slice(0, 6).map((actor) => {
-      return (
-        <Card key={actor.id}>
-          {actor.profile_path !== null ? (
-            <Image src={imageUrl + actor.profile_path} />
-          ) : (
-            <Message compact size="huge" icon="user" />
-          )}
-          <Card.Content>
-            <Card.Header>{actor.name}</Card.Header>
-            <Card.Meta>{actor.character}</Card.Meta>
-          </Card.Content>
-        </Card>
-      );
-    });
+    movieDetails.credits.cast
+      .slice(0, 10)
+      .map((person) => <PersonCard key={person.id} person={person} />);
+
+  const recommendedList =
+    recommended &&
+    recommended.map((movie) => <MovieCard key={movie.id} movie={movie} />);
 
   const MovieBanner = () => {
     return (
@@ -108,18 +126,17 @@ const MovieDetails = () => {
           <Header inverted as="h4" style={{ fontStyle: "italic" }}>
             {movieDetails.tagline}
           </Header>
-          <p>
-            {movieDetails.overview ? (
-              movieDetails.overview
-            ) : (
-              <Message
-                color="black"
-                error
-                icon="ban"
-                header="No synopsis found for this movie"
-              />
-            )}
-          </p>
+
+          {movieDetails.overview ? (
+            <p>{movieDetails.overview}</p>
+          ) : (
+            <Message
+              color="black"
+              error
+              icon="ban"
+              header="No synopsis found for this movie"
+            />
+          )}
 
           <List inverted relaxed size="large">
             <List.Item>
@@ -141,6 +158,8 @@ const MovieDetails = () => {
               </List.Content>
             </List.Item>
           </List>
+
+          <Divider hidden />
 
           <Modal
             basic
@@ -171,7 +190,7 @@ const MovieDetails = () => {
 
   const SidebarDetails = () => {
     return (
-      <List size="huge" inverted relaxed divided>
+      <List size="big" inverted relaxed divided>
         <List.Item>
           <List.Content>
             <List.Header>
@@ -225,16 +244,31 @@ const MovieDetails = () => {
     );
   };
 
-  const recommended =
-    movieDetails.recommended &&
-    movieDetails.recommended.slice(0, 15).map((movie) => {
-      return formatResults(movie);
-    });
+  const Arrow = ({ icon }) => {
+    return (
+      <Button
+        style={{
+          height: '200px',
+          width: '20px',
+          margin: 'auto',
+          marginLeft: '5px',
+          marginRight: '5px',
+        }}
+        size="tiny"
+        compact
+        inverted
+        color="black">
+        <Icon size='big' name={icon} />
+      </Button>
+    );
+  };
 
-  console.log(recommended);
+  const ArrowLeft = Arrow({ icon: "caret left" });
+  const ArrowRight = Arrow({ icon: "caret right" });
 
   return (
     <>
+      <ScrollToTop />
       {loading ? (
         <Container>
           <Dimmer active>
@@ -245,10 +279,10 @@ const MovieDetails = () => {
         <>
           <div
             style={{
-              background: `linear-gradient(to left, rgb(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)),
+              background: `linear-gradient(to left, rgb(0, 0, 0, 0.4), rgba(0, 0, 0, 8.0)),
       url(${movieDetails.backdrop}) no-repeat right -200px top/cover`,
-              width: '100%',
-              position: 'relative',
+              width: "100%",
+              position: "relative",
             }}>
             <Container>
               <Grid verticalAlign="middle" stackable padded relaxed>
@@ -258,22 +292,12 @@ const MovieDetails = () => {
           </div>
 
           <Container>
-            <Grid stackable padded relaxed verticalAlign="bottom">
+            <Grid stackable padded relaxed>
               <Grid.Row>
                 <Grid.Column width={13}>
-                  <Grid.Row>
-                    <Header floated="left" size="large" inverted>
-                      Top Cast
-                    </Header>
-
-                    <Header floated="right" inverted size="small">
-                      Full Cast & Crew
-                      <Icon name="right arrow" />
-                    </Header>
-                  </Grid.Row>
-                  <Card.Group doubling itemsPerRow="6">
+                  <ScrollMenu LeftArrow={ArrowLeft} RightArrow={ArrowRight}>
                     {topCastList}
-                  </Card.Group>
+                  </ScrollMenu>
                 </Grid.Column>
 
                 <Grid.Column width={3}>
@@ -283,17 +307,13 @@ const MovieDetails = () => {
 
               <Grid.Row>
                 <Grid.Column width={16}>
-                  {recommended && (
-                    <Header size="large" inverted>
-                      Recommended
-                    </Header>
+                  {recommended.length !== 0 && (
+                    <Image.Group>
+                      <ScrollMenu LeftArrow={ArrowLeft} RightArrow={ArrowRight}>
+                        {recommendedList}
+                      </ScrollMenu>
+                    </Image.Group>
                   )}
-                  <Image.Group>
-                    {recommended &&
-                      recommended.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
-                      ))}
-                  </Image.Group>
                 </Grid.Column>
               </Grid.Row>
             </Grid>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Redirect } from "react-router";
 import { API_KEY } from "./key";
 
 const baseUrl = "https://api.themoviedb.org/3";
@@ -10,6 +11,8 @@ const movieDetailsUrl = `${baseUrl}/movie/`;
 
 //https://developers.themoviedb.org/3/getting-started/images
 export const imageUrl = "https://image.tmdb.org/t/p/w500";
+export const personThumbnailUrl =
+  "https://image.tmdb.org/t/p/w138_and_h175_face";
 export const largeImageUrl = "https://image.tmdb.org/t/p/original";
 
 export const formatResults = (movie) => {
@@ -59,7 +62,8 @@ const formatResultsDetails = (movie) => {
     if (
       crewMember.job === "Writer" ||
       crewMember.job === "Screenplay" ||
-      crewMember.job === "Novel"
+      crewMember.job === "Novel" ||
+      crewMember.job === "Characters"
     ) {
       writers.push(crewMember);
     }
@@ -124,10 +128,8 @@ export const fetchMovieDetails = async (movieId) => {
           "videos,credits,external_ids,recommendations,release_dates,reviews",
       },
     });
-
-    console.log(formatResultsDetails(data));
-    //console.log(data)
-
+    //console.log(formatResultsDetails(data));
+    //console.dir("DATA HERE ", data)
     return formatResultsDetails(data);
   } catch (error) {
     console.error(error);
