@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(35, 37, 49) !important;
+  background-color: rgb(0, 0, 0) !important;
 }
 
 p {
@@ -82,9 +82,32 @@ p {
   justify-content: center;
   align-items: center;
   background-color: grey;
-  width: 150px;
-  height: 190px;
+  width: 132px;
+  height: 167px;
 }
+
+.person {
+  display:block;
+  text-align: center;
+  width: 138px;
+  height: 100%;
+  margin-right: 5px;
+  border: 2px inset rgb(31, 31, 31);
+  background-color: rgba(0, 0, 0, 0.521);
+  padding: 1px;
+}
+
+.person h4 {
+  margin: 0;
+  color: whitesmoke;
+}
+
+.person p {
+  margin-top: 2px;
+  font-size: small;
+  color: grey;
+}
+
 
 .sub-div {
   justify-content: space-evenly;

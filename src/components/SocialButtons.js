@@ -29,11 +29,6 @@ const SocialButtons = ({ externals, homepage }) => {
           <Icon size='large' color="yellow" name="imdb" link />
         </a>
       )}
-      {homepage && (
-        <a href={homepage}>
-        <Icon size='large' color="blue" name="linkify" link />
-        </a>
-      )}
     </div>
   );
 };

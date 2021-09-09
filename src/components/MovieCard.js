@@ -5,7 +5,6 @@ import {
   Dimmer,
   Divider,
   Header,
-  Icon,
   Image,
 } from "semantic-ui-react";
 
@@ -40,11 +39,8 @@ const MovieCard = ({ movie }) => {
 
       <Divider hidden />
 
-      <Button compact circular animated='fade'>
-        <Button.Content visible>Click for full details</Button.Content>
-        <Button.Content hidden>
-          <Icon name="hand point up outline" />
-        </Button.Content>
+      <Button compact circular inverted>
+        <Button.Content>Click for full details</Button.Content>
       </Button>
     </div>
   );
