@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Redirect } from "react-router";
 import { API_KEY } from "./key";
 
 const baseUrl = "https://api.themoviedb.org/3";
@@ -112,7 +111,6 @@ const formatResultsDetails = (movie) => {
     writers,
     movieTrailerKey,
     recommended: movie.recommendations.results,
-    backdrop_small: imageUrl + backdrop_path,
     backdrop: largeImageUrl + backdrop_path,
     poster: imageUrl + poster_path,
   };

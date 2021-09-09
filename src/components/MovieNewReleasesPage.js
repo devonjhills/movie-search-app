@@ -19,7 +19,7 @@ const MovieNewReleasesPage = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ textAlign: "center" }}>
       {loading ? (
         <Dimmer active>
           <Loader size="massive">Loading</Loader>
@@ -32,7 +32,7 @@ const MovieNewReleasesPage = () => {
             ))}
         </Image.Group>
       )}
-    </>
+    </div>
   );
 };
 

@@ -11,7 +11,7 @@ const MenuNavbar = () => {
   };
 
   return (
-    <Menu inverted pointing>
+    <Menu size='tiny' inverted pointing>
       <Menu.Item header name="home">
         <Icon className="headericons" name="film" size="big" />
         What To Watch?
