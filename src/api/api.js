@@ -137,6 +137,22 @@ export const fetchMovieDetails = async (movieId) => {
   }
 };
 
+export const fetchPersonDetails = async (personId) => {
+  try {
+    const { data } = await axios.get(personUrl + personId, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        append_to_response:
+          "combined_credits,external_ids,images",
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const fetchNewMovieReleases = async () => {
   try {
     const { data } = await axios.get(moviesNowPlayingUrl, {
@@ -209,21 +225,6 @@ export const fetchMovieSearchResults = async (query) => {
     return data.results.map((movie) => {
       return formatResults(movie);
     });
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const fetchPerson = async () => {
-  try {
-    const { data } = await axios.get(personUrl, {
-      params: {
-        api_key: API_KEY,
-        language: "en_US",
-      },
-    });
-
-    return data;
   } catch (error) {
     console.error(error);
   }

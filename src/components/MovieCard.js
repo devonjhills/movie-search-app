@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
-import {
-  Button,
-  Dimmer,
-  Divider,
-  Header,
-  Image,
-} from "semantic-ui-react";
+import { Button, Dimmer, Divider, Header, Image } from "semantic-ui-react";
 
 const MovieCard = ({ movie }) => {
   const [active, setActive] = useState(false);
@@ -39,7 +33,7 @@ const MovieCard = ({ movie }) => {
 
       <Divider hidden />
 
-      <Button compact circular inverted>
+      <Button circular inverted basic color='green'>
         <Button.Content>Click for full details</Button.Content>
       </Button>
     </div>
@@ -47,7 +41,7 @@ const MovieCard = ({ movie }) => {
 
   return (
     <Dimmer.Dimmable
-      style={{marginRight: '5px'}}
+      style={{ marginRight: "5px" }}
       as={Image}
       className="mydimmer"
       dimmed={active}

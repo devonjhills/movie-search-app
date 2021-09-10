@@ -14,7 +14,6 @@ import {
   List,
   Loader,
   Modal,
-  Segment,
 } from "semantic-ui-react";
 import { fetchMovieDetails, formatResults } from "../api/api";
 import MovieCard from "./MovieCard";
@@ -97,11 +96,12 @@ const MovieDetails = () => {
           <Header className="body-headers" as="h1" color="green" inverted>
             {movieDetails.title}
             <Header.Subheader style={{ marginTop: "5px" }}>
+              {d.toDateString().split(" ").slice(1).join(" ")} {" • "}
+              {formatRuntime(movieDetails.runtime)}
+              {" • "}
               <span className="myrating">
                 {movieDetails.rating ? movieDetails.rating : "NR"}
               </span>
-              {" • "} {d.toDateString().split(" ").slice(1).join(" ")} {" • "}
-              {formatRuntime(movieDetails.runtime)}
               {" • "}
               {movieDetails.genres &&
                 movieDetails.genres.map((genre) => {
@@ -254,19 +254,22 @@ const MovieDetails = () => {
         <>
           <div
             style={{
-              background: `linear-gradient(to right, rgb(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
+              background: `linear-gradient(to right, rgb(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)),
               url(${movieDetails.backdrop}) no-repeat center/cover`,
               position: "relative",
+              width: "100vw",
             }}>
             <Container>
-              <Grid verticalAlign="middle" stackable padded relaxed>
+              <Grid verticalAlign="middle" stackable relaxed padded>
                 <MovieBanner />
               </Grid>
             </Container>
           </div>
 
+          <Divider hidden />
+
           <Container>
-            <Grid stackable padded relaxed>
+            <Grid stackable relaxed>
               <Grid.Row>
                 <Grid.Column width={13}>
                   <Header className="body-headers" color="green" inverted>
@@ -278,9 +281,7 @@ const MovieDetails = () => {
                 </Grid.Column>
 
                 <Grid.Column width={3}>
-                  <Segment basic>
-                    <SidebarDetails />
-                  </Segment>
+                  <SidebarDetails />
                 </Grid.Column>
               </Grid.Row>
 
@@ -302,12 +303,12 @@ const MovieDetails = () => {
                   <Header className="body-headers" color="green" inverted>
                     Keywords
                   </Header>
-                  <Button.Group vertical>
+                  <Button.Group fluid vertical>
                     {movieDetails.keywords &&
                       movieDetails.keywords.slice(0, 9).map((keyword) => {
                         return (
                           <Button
-                            style={{ margin: "1px" }}
+                            style={{ marginBottom: "1px" }}
                             basic
                             inverted
                             color="green"
