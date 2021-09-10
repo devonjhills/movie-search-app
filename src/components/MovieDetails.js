@@ -94,7 +94,7 @@ const MovieDetails = () => {
         </Grid.Column>
 
         <Grid.Column width={11}>
-          <Header as="h1" inverted>
+          <Header className="body-headers" as="h1" color="green" inverted>
             {movieDetails.title}
             <Header.Subheader style={{ marginTop: "5px" }}>
               <span className="myrating">
@@ -107,7 +107,9 @@ const MovieDetails = () => {
                 movieDetails.genres.map((genre) => {
                   return (
                     <Button
-                      secondary
+                      basic
+                      inverted
+                      color="green"
                       size="mini"
                       key={genre.id}
                       compact
@@ -157,7 +159,11 @@ const MovieDetails = () => {
             size="large"
             trigger={
               movieDetails.movieTrailerKey !== undefined && (
-                <Button secondary>
+                <Button
+                  basic
+                  style={{ borderRadius: "9999px" }}
+                  inverted
+                  color="green">
                   <Icon name="play" />
                   {movieDetails.title} Trailer
                 </Button>
@@ -245,7 +251,7 @@ const MovieDetails = () => {
           </Dimmer>
         </Container>
       ) : (
-
+        <>
           <div
             style={{
               background: `linear-gradient(to right, rgb(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
@@ -257,37 +263,66 @@ const MovieDetails = () => {
                 <MovieBanner />
               </Grid>
             </Container>
-
-            <Container>
-              <Grid stackable padded relaxed>
-                <Grid.Row>
-                  <Grid.Column width={13}>
-                    <Header inverted>Top Cast</Header>
-                    <ScrollMenu>{topCastList}</ScrollMenu>
-                  </Grid.Column>
-
-                  <Grid.Column width={3}>
-                    <Segment basic>
-                      <SidebarDetails />
-                    </Segment>
-                  </Grid.Column>
-                </Grid.Row>
-
-                <Grid.Row>
-                  <Grid.Column width={16}>
-                    {recommended.length !== 0 && (
-                      <>
-                        <Header inverted>Recommended</Header>
-                        <Image.Group>
-                          <ScrollMenu>{recommendedList}</ScrollMenu>
-                        </Image.Group>
-                      </>
-                    )}
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Container>
           </div>
+
+          <Container>
+            <Grid stackable padded relaxed>
+              <Grid.Row>
+                <Grid.Column width={13}>
+                  <Header className="body-headers" color="green" inverted>
+                    Top Cast
+                  </Header>
+                  <div className="scroll-container">
+                    <ScrollMenu>{topCastList}</ScrollMenu>
+                  </div>
+                </Grid.Column>
+
+                <Grid.Column width={3}>
+                  <Segment basic>
+                    <SidebarDetails />
+                  </Segment>
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Column width={13}>
+                  {recommended.length !== 0 && (
+                    <>
+                      <Header className="body-headers" color="green" inverted>
+                        Recommended
+                      </Header>
+                      <div className="scroll-container">
+                        <ScrollMenu>{recommendedList}</ScrollMenu>
+                      </div>
+                    </>
+                  )}
+                </Grid.Column>
+
+                <Grid.Column width={3}>
+                  <Header className="body-headers" color="green" inverted>
+                    Keywords
+                  </Header>
+                  <Button.Group vertical>
+                    {movieDetails.keywords &&
+                      movieDetails.keywords.slice(0, 9).map((keyword) => {
+                        return (
+                          <Button
+                            style={{ margin: "1px" }}
+                            basic
+                            inverted
+                            color="green"
+                            key={keyword.id}
+                            compact>
+                            {keyword.name}
+                          </Button>
+                        );
+                      })}
+                  </Button.Group>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Container>
+        </>
       )}
     </>
   );
