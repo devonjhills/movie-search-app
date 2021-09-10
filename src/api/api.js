@@ -7,6 +7,7 @@ const moviesPopularUrl = `${baseUrl}/movie/popular`;
 const moviesTopUrl = `${baseUrl}/movie/top_rated`;
 const searchMoviesUrl = `${baseUrl}/search/movie`;
 const movieDetailsUrl = `${baseUrl}/movie/`;
+const personUrl = `${baseUrl}/person/`;
 
 //https://developers.themoviedb.org/3/getting-started/images
 export const imageUrl = "https://image.tmdb.org/t/p/w500";
@@ -74,6 +75,7 @@ const formatResultsDetails = (movie) => {
     external_ids,
     genres,
     homepage,
+    keywords,
     backdrop_path,
     overview,
     poster_path,
@@ -96,6 +98,7 @@ const formatResultsDetails = (movie) => {
     external_ids,
     genres,
     homepage,
+    keywords: keywords.keywords,
     overview,
     release_date,
     release_dates,
@@ -123,7 +126,7 @@ export const fetchMovieDetails = async (movieId) => {
         api_key: API_KEY,
         language: "en_US",
         append_to_response:
-          "videos,credits,external_ids,recommendations,release_dates,reviews",
+          "videos,credits,external_ids,recommendations,release_dates,reviews,keywords",
       },
     });
     //console.log(formatResultsDetails(data));
@@ -206,6 +209,21 @@ export const fetchMovieSearchResults = async (query) => {
     return data.results.map((movie) => {
       return formatResults(movie);
     });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchPerson = async () => {
+  try {
+    const { data } = await axios.get(personUrl, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+      },
+    });
+
+    return data;
   } catch (error) {
     console.error(error);
   }

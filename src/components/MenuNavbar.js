@@ -11,9 +11,9 @@ const MenuNavbar = () => {
   };
 
   return (
-    <Menu size='tiny' inverted pointing>
+    <Menu size='small' inverted pointing>
       <Menu.Item header name="home">
-        <Icon className="headericons" name="film" size="big" />
+        <Icon className="headericons" color='green' name="film" size="big" />
         What To Watch?
       </Menu.Item>
       <Menu.Item
@@ -24,7 +24,7 @@ const MenuNavbar = () => {
         to="/"
         exact
       >
-        <Icon className="headericons" name="video" />
+        <Icon className="headericons" color='green' name="video" />
         Movie Hub
       </Menu.Item>
       <Menu.Item
@@ -34,7 +34,7 @@ const MenuNavbar = () => {
         as={NavLink}
         to="/tvhub"
       >
-        <Icon className="headericons" name="video play" />
+        <Icon className="headericons" color='green' name="video play" />
         TV Hub
       </Menu.Item>
       <Menu.Menu position="right">

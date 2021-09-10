@@ -9,12 +9,10 @@ const PersonCard = ({ person }) => {
   const { pathname } = useLocation();
 
   if (redirect === true) {
-    console.log('PERSON REDIRECT?')
-    return <Redirect pathname={pathname} push to={`/${person.id}`} />;
+    return <Redirect pathname={pathname} push to={`/person/${person.id}`} />;
   }
 
   const clicky = () => {
-    console.log('PERSON REDIRECT?')
     setRedirect(true);
   }
 

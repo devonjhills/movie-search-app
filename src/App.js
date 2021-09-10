@@ -7,6 +7,7 @@ import TvHub from "./components/TvHub";
 import SearchPage from "./components/SearchPage";
 import MovieDetails from "./components/MovieDetails";
 import FourOhFour from "./components/FourOhFour";
+import PersonDetails from "./components/PersonDetails";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/" component={MovieHub} />
           <Route exact path="/tvhub" component={TvHub} />
           <Route exact path="/:movieId" component={MovieDetails} />
+          <Route exact path="/person/:personId" component={PersonDetails} />
           <Route exact path="/search" component={SearchPage} />
           <Route component={FourOhFour} />
         </Switch>

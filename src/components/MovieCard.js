@@ -47,6 +47,7 @@ const MovieCard = ({ movie }) => {
 
   return (
     <Dimmer.Dimmable
+      style={{marginRight: '5px'}}
       as={Image}
       className="mydimmer"
       dimmed={active}
