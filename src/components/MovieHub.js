@@ -1,64 +1,98 @@
-import { Container, Tab } from "semantic-ui-react";
-import MovieNewReleasesPage from "./MovieNewReleasesPage";
-import MoviePopularPage from "./MoviePopularPage";
-import MovieTopPage from "./MovieTopPage";
+import { useEffect, useState } from "react";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import { Container, Dimmer, Grid, Header, Loader } from "semantic-ui-react";
+import {
+  fetchNewMovieReleases,
+  fetchPopularMovies,
+  fetchTopMovies,
+} from "../api/api";
+import MovieCard from "./MovieCard";
 
 const MovieHub = () => {
-  const panes = [
-    {
-      menuItem: {
-        key: "nowplaying",
-        icon: "calendar alternate outline",
-        content: "Now Playing",
-      },
-      pane: {
-        key: 'new_pane',
-        content: <MovieNewReleasesPage />,
-      }
-    },
-    {
-      menuItem: {
-        key: "top",
-        icon: "star",
-        content: "Top Rated Movies",
-      },
-      pane: {
-        key: 'top_pane',
-        content: <MovieTopPage />,
-      }
-    },
-    {
-      menuItem: {
-        key: "popular",
-        icon: "heart outline",
-        content: "Popular Movies",
-      },
-      pane: {
-        key: 'popular_pane',
-        content: <MoviePopularPage />,
-      }
-    },
-    {
-      menuItem: {
-        key: "search",
-        icon: "search",
-        content: "Search",
-      },
-      pane: {
-        key: 'search_pane',
-        content: 'SEARCH PAGE UNDER CONSTRUCTION',
-      }
-    },
-  ];
+  const [newMovies, setNewMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [topMovies, setTopMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const movieNewReleases = async () => {
+    await fetchNewMovieReleases().then((data) => {
+      setNewMovies(data);
+      setLoading(false);
+    });
+  };
+
+  const moviePopular = async () => {
+    await fetchPopularMovies().then((data) => {
+      setPopularMovies(data);
+    });
+  };
+
+  const moviesTop = async () => {
+    await fetchTopMovies().then((data) => {
+      setTopMovies(data);
+    });
+  };
+
+  useEffect(() => {
+    movieNewReleases();
+    moviePopular();
+    moviesTop();
+  }, []);
 
   return (
     <Container>
-      <Tab
-        menu={{ inverted: true, secondary: true, pointing: true  }}
-        panes={panes}
-        defaultActiveIndex={0}
-        renderActiveOnly={false}
-      />
+      {loading ? (
+        <Dimmer active>
+          <Loader size="massive">Loading</Loader>
+        </Dimmer>
+      ) : (
+        <Grid stackable relaxed>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Header className="body-headers" color="green" inverted>
+                New Releases
+              </Header>
+              <div className="scroll-container">
+                <ScrollMenu>
+                  {newMovies.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                  ))}
+                </ScrollMenu>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Header className="body-headers" color="green" inverted>
+                Today's Popular Movies
+              </Header>
+              <div className="scroll-container">
+                <ScrollMenu>
+                  {popularMovies.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                  ))}
+                </ScrollMenu>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Header className="body-headers" color="green" inverted>
+                Top Rated
+              </Header>
+              <div className="scroll-container">
+                <ScrollMenu>
+                  {topMovies.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                  ))}
+                </ScrollMenu>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      )}
     </Container>
   );
 };

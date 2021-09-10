@@ -303,7 +303,7 @@ const MovieDetails = () => {
                   <Header className="body-headers" color="green" inverted>
                     Keywords
                   </Header>
-                  <Button.Group fluid vertical>
+                  <Button.Group vertical>
                     {movieDetails.keywords &&
                       movieDetails.keywords.slice(0, 9).map((keyword) => {
                         return (
