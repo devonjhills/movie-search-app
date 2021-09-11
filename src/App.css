@@ -1,5 +1,6 @@
 body {
-  background-color: rgb(0, 0, 0) !important;
+  background-color: rgb(27,28,29) !important;
+  margin: 0;
 }
 
 p {
@@ -7,9 +8,40 @@ p {
   font-size: 1.1em;
 }
 
-.App {
-  margin: 0;
-  padding: 0;
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  flex: 1;
+  padding-bottom: 20px;
+}
+
+.footer {
+  background-color: rgb(0, 0, 0);
+  padding: 1em;
+  position: relative;
+  bottom: 0;
+  width: 100vw;
+  height: 55px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+}
+
+.footer-stuff {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  margin-left: 15px;
 }
 
 .headericons {
@@ -23,6 +55,13 @@ p {
 .mydimmer {
   width: 19%;
   min-width: 200px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: transform 500ms;
+}
+
+.mydimmer:hover {
+  transform: translate(5px,-5px);
   cursor: pointer;
 }
 
@@ -70,13 +109,6 @@ p {
   align-items: center;
 }
 
-.logo {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-right: 5px;
-}
-
 .no-user {
   display: flex;
   text-align: center;
@@ -100,7 +132,7 @@ p {
 }
 
 .person:hover {
-  transform: scale(1.1) translateY(-10px);
+  transform: rotateY(20deg);
   cursor: pointer;
 }
 
@@ -187,8 +219,9 @@ p {
   background-image: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 0%,
-    rgb(0, 0, 0) 100%
+    rgb(27,28,29) 100%
   );
   will-change: opacity;
   pointer-events: none;
 }
+

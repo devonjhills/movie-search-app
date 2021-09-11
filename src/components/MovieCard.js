@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { Redirect, useLocation } from "react-router-dom";
-import { Button, Dimmer, Divider, Header, Image } from "semantic-ui-react";
+import { Header, Icon, Image, Label, Popup } from "semantic-ui-react";
 
 const MovieCard = ({ movie }) => {
-  const [active, setActive] = useState(false);
-  const handleShow = () => setActive(true);
-  const handleHide = () => setActive(false);
-
   const [redirect, setRedirect] = useState(false);
 
   const handleClick = (event) => {
@@ -24,32 +20,35 @@ const MovieCard = ({ movie }) => {
 
   const content = (
     <div>
-      <Header as="h3" inverted>
+      <Header as="h4" inverted>
         {movie.title}
         <Header.Subheader>
           {d.toDateString().split(" ").slice(1).join(" ")}
         </Header.Subheader>
       </Header>
-
-      <Divider hidden />
-
-      <Button circular inverted basic color='green'>
-        <Button.Content>Click for full details</Button.Content>
-      </Button>
+      <Label>
+        <Icon name="star" color="yellow" /> {movie.vote_average}
+      </Label>
     </div>
   );
 
+  const style = {
+    borderRadius: "25px",
+    backgroundColor: "black",
+  };
+
   return (
-    <Dimmer.Dimmable
-      style={{ marginRight: "5px" }}
-      as={Image}
-      className="mydimmer"
-      dimmed={active}
-      dimmer={{ active, content }}
-      onMouseEnter={handleShow}
-      onMouseLeave={handleHide}
-      onClick={handleClick}
-      src={movie.poster}
+    <Popup
+      trigger={
+        <div className="mydimmer" onClick={handleClick}>
+          <Image src={movie.poster} />
+        </div>
+      }
+      inverted
+      basic
+      content={content}
+      style={style}
+      position="top center"
     />
   );
 };

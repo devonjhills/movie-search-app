@@ -9,7 +9,7 @@ const SocialButtons = ({ externals }) => {
   let twitterUrl = "https://www.twitter.com/" + externals.twitter_id;
   let imdbUrl = "";
 
-  externals.imdb_id.includes("nm")
+  externals.imdb_id && externals.imdb_id.includes("nm")
     ? (imdbUrl = imdbPersonUrl)
     : (imdbUrl = imdbMovieUrl);
 
