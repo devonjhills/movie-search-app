@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { Container, Dimmer, Grid, Header, Loader } from "semantic-ui-react";
+import {
+  Container,
+  Dimmer,
+  Grid,
+  Header,
+  Loader,
+  Segment,
+} from "semantic-ui-react";
 import {
   fetchNewMovieReleases,
   fetchPopularMovies,
@@ -40,60 +47,66 @@ const MovieHub = () => {
   }, []);
 
   return (
-    <Container>
+    <>
       {loading ? (
-        <Dimmer active>
-          <Loader size="massive">Loading</Loader>
-        </Dimmer>
+        <Container>
+          <Dimmer active>
+            <Loader size="massive">Loading</Loader>
+          </Dimmer>
+        </Container>
       ) : (
-        <Grid stackable relaxed>
-          <Grid.Row>
-            <Grid.Column width={16}>
-              <Header className="body-headers" color="green" inverted>
-                New Releases
-              </Header>
-              <div className="scroll-container">
-                <ScrollMenu>
-                  {newMovies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                  ))}
-                </ScrollMenu>
-              </div>
-            </Grid.Column>
-          </Grid.Row>
+        <Container>
+        <Segment inverted>
+          <Grid stackable relaxed>
+            <Grid.Row>
+              <Grid.Column width={16}>
+                <Header className="body-headers" color="green" inverted>
+                  New Releases
+                </Header>
+                <div className="scroll-container">
+                  <ScrollMenu>
+                    {newMovies.map((movie) => (
+                      <MovieCard key={movie.id} movie={movie} />
+                    ))}
+                  </ScrollMenu>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column width={16}>
-              <Header className="body-headers" color="green" inverted>
-                Today's Popular Movies
-              </Header>
-              <div className="scroll-container">
-                <ScrollMenu>
-                  {popularMovies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                  ))}
-                </ScrollMenu>
-              </div>
-            </Grid.Column>
-          </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={16}>
+                <Header className="body-headers" color="green" inverted>
+                  Today's Popular Movies
+                </Header>
+                <div className="scroll-container">
+                  <ScrollMenu>
+                    {popularMovies.map((movie) => (
+                      <MovieCard key={movie.id} movie={movie} />
+                    ))}
+                  </ScrollMenu>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column width={16}>
-              <Header className="body-headers" color="green" inverted>
-                Top Rated
-              </Header>
-              <div className="scroll-container">
-                <ScrollMenu>
-                  {topMovies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                  ))}
-                </ScrollMenu>
-              </div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+            <Grid.Row>
+              <Grid.Column width={16}>
+                <Header className="body-headers" color="green" inverted>
+                  Top Rated
+                </Header>
+                <div className="scroll-container">
+                  <ScrollMenu>
+                    {topMovies.map((movie) => (
+                      <MovieCard key={movie.id} movie={movie} />
+                    ))}
+                  </ScrollMenu>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          </Segment>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 

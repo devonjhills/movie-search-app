@@ -271,6 +271,9 @@ const MovieDetails = () => {
           <Container>
             <Grid stackable relaxed>
               <Grid.Row>
+                <Grid.Column width={3}>
+                  <SidebarDetails />
+                </Grid.Column>
                 <Grid.Column width={13}>
                   <Header className="body-headers" color="green" inverted>
                     Top Cast
@@ -279,26 +282,9 @@ const MovieDetails = () => {
                     <ScrollMenu>{topCastList}</ScrollMenu>
                   </div>
                 </Grid.Column>
-
-                <Grid.Column width={3}>
-                  <SidebarDetails />
-                </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
-                <Grid.Column width={13}>
-                  {recommended.length !== 0 && (
-                    <>
-                      <Header className="body-headers" color="green" inverted>
-                        Recommended
-                      </Header>
-                      <div className="scroll-container">
-                        <ScrollMenu>{recommendedList}</ScrollMenu>
-                      </div>
-                    </>
-                  )}
-                </Grid.Column>
-
                 <Grid.Column width={3}>
                   <Header className="body-headers" color="green" inverted>
                     Keywords
@@ -319,6 +305,18 @@ const MovieDetails = () => {
                         );
                       })}
                   </Button.Group>
+                </Grid.Column>
+                <Grid.Column width={13}>
+                  {recommended.length !== 0 && (
+                    <>
+                      <Header className="body-headers" color="green" inverted>
+                        Recommended
+                      </Header>
+                      <div className="scroll-container">
+                        <ScrollMenu>{recommendedList}</ScrollMenu>
+                      </div>
+                    </>
+                  )}
                 </Grid.Column>
               </Grid.Row>
             </Grid>
