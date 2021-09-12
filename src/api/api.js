@@ -5,7 +5,7 @@ const baseUrl = "https://api.themoviedb.org/3";
 const moviesNowPlayingUrl = `${baseUrl}/movie/now_playing`;
 const moviesPopularUrl = `${baseUrl}/movie/popular`;
 const moviesTopUrl = `${baseUrl}/movie/top_rated`;
-const searchMoviesUrl = `${baseUrl}/search/movie`;
+const searchUrl = `${baseUrl}/search/multi`;
 const movieDetailsUrl = `${baseUrl}/movie/`;
 const personUrl = `${baseUrl}/person/`;
 
@@ -143,8 +143,7 @@ export const fetchPersonDetails = async (personId) => {
       params: {
         api_key: API_KEY,
         language: "en_US",
-        append_to_response:
-          "combined_credits,external_ids,images",
+        append_to_response: "combined_credits,external_ids,images",
       },
     });
     return data;
@@ -210,21 +209,41 @@ export const fetchTopMovies = async () => {
   }
 };
 
-export const fetchMovieSearchResults = async (query) => {
+export const fetchSearchResults = async (query) => {
   try {
-    const { data } = await axios.get(searchMoviesUrl, {
+    const { data } = await axios.get(searchUrl, {
       params: {
         api_key: API_KEY,
         language: "en_US",
         query: query,
         page: 1,
-        include_adult: false,
       },
     });
 
-    return data.results.map((movie) => {
-      return formatResults(movie);
-    });
+    let movieResults = [];
+    let tvResults = [];
+    let peopleResults = [];
+
+    data.results.map((result) => {
+      if (result.media_type === "movie") {
+        movieResults.push(result);
+      }
+    
+      if (result.media_type === "tv") {
+        tvResults.push(result);
+      }
+    
+      if (result.media_type === "person") {
+        peopleResults.push(result);
+      }
+    })
+
+    return {
+      movieResults,
+      tvResults,
+      peopleResults
+    }
+
   } catch (error) {
     console.error(error);
   }

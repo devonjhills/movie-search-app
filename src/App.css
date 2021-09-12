@@ -132,7 +132,7 @@ p {
 }
 
 .person:hover {
-  transform: rotateY(20deg);
+  transform: translate(5px,-5px);
   cursor: pointer;
 }
 
