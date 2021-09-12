@@ -19,7 +19,7 @@ function App() {
 
           <Switch>
             <Route exact path="/" component={MovieHub} />
-            <Route exact path="/search" component={SearchPage} />
+            <Route exact path="/results" component={SearchPage} />
             <Route exact path="/tvhub" component={TvHub} />
             <Route exact path="/:movieId" component={MovieDetails} />
             <Route exact path="/person/:personId" component={PersonDetails} />
