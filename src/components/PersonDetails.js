@@ -6,6 +6,7 @@ import {
   Divider,
   Grid,
   Header,
+  Icon,
   Image,
   Loader,
 } from "semantic-ui-react";
@@ -44,8 +45,6 @@ const PersonDetails = () => {
     };
   }, [personId]);
 
-  console.dir(personDetails);
-
   return (
     <>
       <ScrollToTop />
@@ -60,7 +59,13 @@ const PersonDetails = () => {
           <Grid verticalAlign="middle" stackable relaxed padded>
             <Grid.Row>
               <Grid.Column width={5}>
-                <Image src={imageUrl + personDetails.profile_path} />
+                {personDetails.profile_path ? (
+                  <Image src={imageUrl + personDetails.profile_path} />
+                ) : (
+                  <div className="no-search-image">
+                    <Icon size="massive" name="user circle" color="grey" />
+                  </div>
+                )}
 
                 <Divider hidden />
 
@@ -75,7 +80,7 @@ const PersonDetails = () => {
                 {personDetails.biography ? (
                   <p>{personDetails.biography}</p>
                 ) : (
-                  <p>~~No biography found for this movie~~</p>
+                  <p>~~No biography found for this person~~</p>
                 )}
               </Grid.Column>
             </Grid.Row>

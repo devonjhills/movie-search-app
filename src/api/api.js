@@ -11,6 +11,7 @@ const personUrl = `${baseUrl}/person/`;
 
 //https://developers.themoviedb.org/3/getting-started/images
 export const imageUrl = "https://image.tmdb.org/t/p/w500";
+export const searchResultUrl = "https://image.tmdb.org/t/p/w154"
 export const personThumbnailUrl =
   "https://image.tmdb.org/t/p/w138_and_h175_face";
 export const largeImageUrl = "https://image.tmdb.org/t/p/original";
@@ -113,6 +114,7 @@ const formatResultsDetails = (movie) => {
     status,
     writers,
     movieTrailerKey,
+    poster_path,
     recommended: movie.recommendations.results,
     backdrop: largeImageUrl + backdrop_path,
     poster: imageUrl + poster_path,
@@ -217,6 +219,7 @@ export const fetchSearchResults = async (query) => {
         language: "en_US",
         query: query,
         page: 1,
+        include_adult: false,
       },
     });
 

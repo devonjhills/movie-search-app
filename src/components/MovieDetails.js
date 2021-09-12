@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, Redirect } from "react-router-dom";
 import {
   Button,
   Container,
@@ -27,6 +27,7 @@ const MovieDetails = () => {
 
   const [movieDetails, setMovieDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     //https://stackoverflow.com/questions/53949393/
@@ -36,7 +37,8 @@ const MovieDetails = () => {
     const getMovieDetails = async () => {
       await fetchMovieDetails(movieId).then((data) => {
         if (data === undefined) {
-          console.log("404!!!!");
+          console.log("UNDEFINED MOVIE DATA");
+          setRedirect(true);
         }
 
         if (isMounted) {
@@ -52,44 +54,50 @@ const MovieDetails = () => {
     };
   }, [movieId]);
 
-  const formatRuntime = (runtime) => {
-    let hours = (runtime / 60).toFixed(0);
-    let minutes = runtime % 60;
-
-    return `${hours}h ${minutes}min`;
-  };
-
-  const d = new Date(`${movieDetails.release_date}`);
-
-  const directorList =
-    movieDetails.directors &&
-    movieDetails.directors.map((d) => d.name).join(" • ");
-
-  const writerList =
-    movieDetails.writers &&
-    movieDetails.writers.map((w) => `${w.name} (${w.job})`).join(" • ");
-
   const recommended =
-    movieDetails.recommended &&
-    movieDetails.recommended.map((movie) => {
+    movieDetails?.recommended &&
+    movieDetails?.recommended.map((movie) => {
       return formatResults(movie);
     });
 
   const topCastList =
-    movieDetails.credits &&
-    movieDetails.credits.cast
+    movieDetails?.credits &&
+    movieDetails?.credits.cast
       .slice(0, 10)
       .map((person) => <PersonCard key={person.id} person={person} />);
 
-  const recommendedList =
-    recommended &&
-    recommended.map((movie) => <MovieCard key={movie.id} movie={movie} />);
+  const recommendedList = recommended?.map((movie) => (
+    <MovieCard key={movie.id} movie={movie} />
+  ));
 
   const MovieBanner = () => {
+    const formatRuntime = (runtime) => {
+      let hours = (runtime / 60).toFixed(0);
+      let minutes = runtime % 60;
+
+      return `${hours}h ${minutes}min`;
+    };
+
+    const d = new Date(`${movieDetails.release_date}`);
+
+    const directorList =
+      movieDetails.directors &&
+      movieDetails.directors.map((d) => d.name).join(" • ");
+
+    const writerList =
+      movieDetails.writers &&
+      movieDetails.writers.map((w) => `${w.name} (${w.job})`).join(" • ");
+
     return (
       <Grid.Row>
         <Grid.Column width={5}>
-          <Image src={movieDetails.poster} />
+          {movieDetails.poster_path ? (
+            <Image src={movieDetails.poster} />
+          ) : (
+            <div className="no-search-image">
+              <Icon size="massive" name="image outline" color="grey" />
+            </div>
+          )}
         </Grid.Column>
 
         <Grid.Column width={11}>
@@ -240,6 +248,13 @@ const MovieDetails = () => {
       </List>
     );
   };
+
+  const { pathname } = useLocation();
+
+  if (redirect) {
+    console.log(pathname)
+    return <Redirect push to="/fourohfour" />;
+  }
 
   return (
     <>

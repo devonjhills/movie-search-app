@@ -23,6 +23,7 @@ function App() {
             <Route exact path="/tvhub" component={TvHub} />
             <Route exact path="/:movieId" component={MovieDetails} />
             <Route exact path="/person/:personId" component={PersonDetails} />
+            <Route exact path='/fourohfour' component={FourOhFour} />
             <Route component={FourOhFour} />
           </Switch>
         </Router>
