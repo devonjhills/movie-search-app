@@ -224,7 +224,7 @@ export const fetchSearchResults = async (query) => {
     let tvResults = [];
     let peopleResults = [];
 
-    data.results.map((result) => {
+    data.results.forEach((result) => {
       if (result.media_type === "movie") {
         movieResults.push(result);
       }
