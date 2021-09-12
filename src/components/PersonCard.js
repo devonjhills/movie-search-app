@@ -1,33 +1,23 @@
-import React, { useState } from "react";
-import { Redirect, useLocation } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Icon, Image } from "semantic-ui-react";
 import { personThumbnailUrl } from "../api/api";
 
 const PersonCard = ({ person }) => {
-  const [redirect, setRedirect] = useState(false);
-
-  const { pathname } = useLocation();
-
-  if (redirect === true) {
-    return <Redirect pathname={pathname} push to={`/person/${person.id}`} />;
-  }
-
-  const clicky = () => {
-    setRedirect(true);
-  }
-
   return (
-    <div className="person" onClick={clicky}>
-      {person.profile_path !== null ? (
-        <Image src={personThumbnailUrl + person.profile_path} />
-      ) : (
-        <div className="no-user">
-          <Icon size="massive" name="user circle" color="black" />
-        </div>
-      )}
-      <h4>{person.name}</h4>
-      <p>{person.character}</p>
-    </div>
+    <Link to={`/person/${person.id}`}>
+      <div className="person">
+        {person.profile_path !== null ? (
+          <Image src={personThumbnailUrl + person.profile_path} />
+        ) : (
+          <div className="no-user">
+            <Icon size="massive" name="user circle" color="black" />
+          </div>
+        )}
+        <h4>{person.name}</h4>
+        <p>{person.character}</p>
+      </div>
+    </Link>
   );
 };
 

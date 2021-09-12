@@ -1,21 +1,8 @@
-import React, { useState } from "react";
-import { Redirect, useLocation } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Header, Icon, Image, Label, Popup } from "semantic-ui-react";
 
 const MovieCard = ({ movie }) => {
-  const [redirect, setRedirect] = useState(false);
-
-  const handleClick = (event) => {
-    event.preventDefault();
-    setRedirect(true);
-  };
-
-  const { pathname } = useLocation();
-
-  if (redirect === true) {
-    return <Redirect pathname={pathname} push to={`/${movie.id}`} />;
-  }
-
   const d = new Date(`${movie.release_date}`);
 
   const content = (
@@ -32,22 +19,17 @@ const MovieCard = ({ movie }) => {
     </div>
   );
 
-  const style = {
-    borderRadius: "25px",
-    backgroundColor: "black",
-  };
-
   return (
     <Popup
       trigger={
-        <div className="mydimmer" onClick={handleClick}>
-          <Image src={movie.poster} />
-        </div>
+        <Link to={`/${movie.id}`}>
+          <div className="mydimmer">
+            <Image src={movie.poster} />
+          </div>
+        </Link>
       }
-      inverted
-      basic
       content={content}
-      style={style}
+      inverted
       position="top center"
     />
   );

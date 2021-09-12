@@ -120,6 +120,16 @@ p {
   border-radius: 25px;
 }
 
+.no-search-image {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 120px;
+  margin-right: 2em;
+}
+
 .person {
   display: block;
   text-align: center;
@@ -154,10 +164,7 @@ p {
   bottom: 1em;
 }
 
-.ui.tab {
-  background-color: black !important;
-  border-color: black !important;
-}
+
 
 .ui.card {
   background-color: #24262b !important;
@@ -166,6 +173,10 @@ p {
 }
 
 .ui.image {
+  border-radius: 25px !important;
+}
+
+.ui.items>.item>.image>img {
   border-radius: 25px !important;
 }
 
@@ -223,5 +234,13 @@ p {
   );
   will-change: opacity;
   pointer-events: none;
+}
+
+.search-text {
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 

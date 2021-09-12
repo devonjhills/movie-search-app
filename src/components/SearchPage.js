@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { fetchSearchResults } from "../api/api";
 import { useLocation } from "react-router";
-import { Container, Dimmer, Loader } from "semantic-ui-react";
+import {
+  Container,
+  Dimmer,
+  Item,
+  Label,
+  Loader,
+  Menu,
+  Tab,
+} from "semantic-ui-react";
+import SearchResultsMovies from "./SearchResultsMovies";
+import SearchResultsTV from "./SearchResultsTV";
+import SearchResultsPeople from "./SearchResultsPeople";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(true);
@@ -35,7 +46,56 @@ const SearchPage = () => {
     };
   }, [search]);
 
-  console.dir(queryResults);
+  const panes = [
+    {
+      menuItem: (
+        <Menu.Item key="movies">
+          Movies<Label>{queryResults?.movieResults?.length}</Label>
+        </Menu.Item>
+      ),
+      render: () => (
+        <Tab.Pane>
+          <Item.Group divided relaxed>
+            {queryResults?.movieResults?.map((movie) => (
+              <SearchResultsMovies key={movie.id} movie={movie} />
+            ))}
+          </Item.Group>
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: (
+        <Menu.Item key="tv">
+          Television<Label>{queryResults?.tvResults?.length}</Label>
+        </Menu.Item>
+      ),
+      render: () => (
+        <Tab.Pane>
+          <Item.Group divided relaxed>
+            {queryResults?.tvResults?.map((show) => (
+              <SearchResultsTV key={show.id} show={show} />
+            ))}
+          </Item.Group>
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: (
+        <Menu.Item key="people">
+          People<Label>{queryResults?.peopleResults?.length}</Label>
+        </Menu.Item>
+      ),
+      render: () => (
+        <Tab.Pane>
+          <Item.Group divided relaxed>
+            {queryResults?.peopleResults?.map((person) => (
+              <SearchResultsPeople key={person.id} person={person} />
+            ))}
+          </Item.Group>
+        </Tab.Pane>
+      ),
+    },
+  ];
 
   return (
     <div>
@@ -47,9 +107,11 @@ const SearchPage = () => {
         </Container>
       ) : (
         <Container>
-        <p>{queryResults.movieResults.length}</p>
-        <p>{queryResults.tvResults.length}</p>
-        <p>{queryResults.peopleResults.length}</p>
+          <Tab
+            menu={{ fluid: true, vertical: true }}
+            menuPosition="left"
+            panes={panes}
+          />
         </Container>
       )}
     </div>

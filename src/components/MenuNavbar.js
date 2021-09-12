@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "../App.css";
-import { Button, Icon, Input, Menu } from "semantic-ui-react";
+import { Icon, Menu, Form } from "semantic-ui-react";
 import { NavLink, useHistory } from "react-router-dom";
 
 const MenuNavbar = () => {
   const [activeItem, setActiveItem] = useState("");
   const [query, setQuery] = useState("");
-  
+
   const history = useHistory();
 
   const handleItemClick = (e, { name }) => {
@@ -49,25 +49,25 @@ const MenuNavbar = () => {
       </Menu.Item>
       <Menu.Menu position="right">
         <Menu.Item>
-          <Input
-            id="queryInput"
-            inverted
-            type="text"
-            size="large"
-            placeholder="Movie/TV/Person..."
-            value={query}
-            onChange={handleInputChange}
-            label={
-              <Button
-                type="submit"
-                onClick={handleSearch}
+          <Form size='small' inverted onSubmit={handleSearch} >
+            <Form.Group style={{marginBottom: 0}}>
+              <Form.Input
                 inverted
-                color="green"
-                disabled={query.length === 0}>
-                Search
-              </Button>
-            }
-            labelPosition="right"></Input>
+                type="text"
+                name='search'
+                placeholder="Movie/TV/Person..."
+                value={query}
+                onChange={handleInputChange}>
+              </Form.Input>
+              <Form.Button
+                  type="submit"
+                  inverted
+                  color="green"
+                  disabled={query.length === 0}>
+                  Search
+                </Form.Button>
+            </Form.Group>
+          </Form>
         </Menu.Item>
       </Menu.Menu>
     </Menu>
