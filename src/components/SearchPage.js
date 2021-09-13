@@ -55,11 +55,15 @@ const SearchPage = () => {
       ),
       render: () => (
         <Tab.Pane>
-          <Item.Group divided relaxed>
-            {queryResults?.movieResults?.map((movie) => (
-              <SearchResultsMovies key={movie.id} movie={movie} />
-            ))}
-          </Item.Group>
+          {queryResults?.movieResults?.length > 0 ? (
+            <Item.Group divided relaxed>
+              {queryResults?.movieResults?.map((movie) => (
+                <SearchResultsMovies key={movie.id} movie={movie} />
+              ))}
+            </Item.Group>
+          ) : (
+            <p>No Results</p>
+          )}
         </Tab.Pane>
       ),
     },
@@ -71,11 +75,15 @@ const SearchPage = () => {
       ),
       render: () => (
         <Tab.Pane>
-          <Item.Group divided relaxed>
-            {queryResults?.tvResults?.map((show) => (
-              <SearchResultsTV key={show.id} show={show} />
-            ))}
-          </Item.Group>
+          {queryResults?.tvResults?.length > 0 ? (
+            <Item.Group divided relaxed>
+              {queryResults?.tvResults?.map((show) => (
+                <SearchResultsTV key={show.id} show={show} />
+              ))}
+            </Item.Group>
+          ) : (
+            <p>No Results</p>
+          )}
         </Tab.Pane>
       ),
     },
@@ -87,11 +95,15 @@ const SearchPage = () => {
       ),
       render: () => (
         <Tab.Pane>
-          <Item.Group divided relaxed>
-            {queryResults?.peopleResults?.map((person) => (
-              <SearchResultsPeople key={person.id} person={person} />
-            ))}
-          </Item.Group>
+          {queryResults?.peopleResults?.length > 0 ? (
+            <Item.Group divided relaxed>
+              {queryResults?.peopleResults?.map((person) => (
+                <SearchResultsPeople key={person.id} person={person} />
+              ))}
+            </Item.Group>
+          ) : (
+            <p>No Results</p>
+          )}
         </Tab.Pane>
       ),
     },

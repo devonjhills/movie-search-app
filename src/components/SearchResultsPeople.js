@@ -15,7 +15,7 @@ const SearchResultsPeople = ({ person }) => {
         />
       ) : (
         <div className='no-search-image'>
-          <Icon size="huge" name="user circle" color="black" />
+          <Icon size="huge" name="user circle" color="grey" />
         </div>
       )}
 

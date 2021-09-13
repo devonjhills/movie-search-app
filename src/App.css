@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(27,28,29) !important;
+  background-color: rgb(0, 0, 0) !important;
   margin: 0;
 }
 
@@ -20,7 +20,7 @@ p {
 }
 
 .footer {
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(27,28,29);
   padding: 1em;
   position: relative;
   bottom: 0;
@@ -164,8 +164,6 @@ p {
   bottom: 1em;
 }
 
-
-
 .ui.card {
   background-color: #24262b !important;
   font-size: smaller;
@@ -178,6 +176,48 @@ p {
 
 .ui.items>.item>.image>img {
   border-radius: 25px !important;
+}
+
+.ui.menu {
+  background-color: rgb(27,28,29) !important;
+  color: white !important;
+}
+
+.ui.menu .item {
+  color: white !important;
+}
+
+.ui.menu .active.item {
+  background-color: rgb(83, 83, 83) !important;
+}
+
+.ui.tab {
+  background-color: rgb(27,28,29) !important;
+}
+
+.ui.items>.item>.content>.header {
+  color: white !important;
+}
+
+.ui.items>.item .meta {
+  color: gray !important;
+  font-style: italic !important;
+}
+
+.ui.items>.item>.content>.description {
+  color: white !important;
+}
+
+.ui.link.list .item {
+  color: white !important;
+}
+
+.ui.divided.items>.item {
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.ui.divided.items>.item:first-child {
+  border-top: none !important;
 }
 
 .body-headers::before {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { useParams, useLocation, Redirect } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   Button,
   Container,
@@ -14,6 +14,7 @@ import {
   List,
   Loader,
   Modal,
+  Segment,
 } from "semantic-ui-react";
 import { fetchMovieDetails, formatResults } from "../api/api";
 import MovieCard from "./MovieCard";
@@ -27,7 +28,7 @@ const MovieDetails = () => {
 
   const [movieDetails, setMovieDetails] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [redirect, setRedirect] = useState(false);
+  const [noData, setNoData] = useState(false);
 
   useEffect(() => {
     //https://stackoverflow.com/questions/53949393/
@@ -38,7 +39,7 @@ const MovieDetails = () => {
       await fetchMovieDetails(movieId).then((data) => {
         if (data === undefined) {
           console.log("UNDEFINED MOVIE DATA");
-          setRedirect(true);
+          setNoData(true);
         }
 
         if (isMounted) {
@@ -82,11 +83,19 @@ const MovieDetails = () => {
 
     const directorList =
       movieDetails.directors &&
-      movieDetails.directors.map((d) => d.name).join(" • ");
+      movieDetails.directors.map((d) => (
+        <List.Item key={d.id} as={Link} to={`/person/${d.id}`}>
+          {d.name}
+        </List.Item>
+      ));
 
     const writerList =
       movieDetails.writers &&
-      movieDetails.writers.map((w) => `${w.name} (${w.job})`).join(" • ");
+      movieDetails.writers.map((w) => (
+        <List.Item key={w.id} as={Link} to={`/person/${w.id}`}>
+          {`${w.name} (${w.job})`}
+        </List.Item>
+      ));
 
     return (
       <Grid.Row>
@@ -146,7 +155,11 @@ const MovieDetails = () => {
                 <List.Header>
                   {movieDetails.directors.length > 1 ? "Directors" : "Director"}
                 </List.Header>
-                <List.Description>{directorList}</List.Description>
+                <List.Description>
+                  <List horizontal divided>
+                    {directorList}
+                  </List>
+                </List.Description>
               </List.Content>
             </List.Item>
             <List.Item>
@@ -155,7 +168,11 @@ const MovieDetails = () => {
                 <List.Header>
                   {movieDetails.writers.length > 1 ? "Writers" : "Writer"}
                 </List.Header>
-                <List.Description>{writerList}</List.Description>
+                <List.Description>
+                  <List horizontal divided>
+                    {writerList}
+                  </List>
+                </List.Description>
               </List.Content>
             </List.Item>
           </List>
@@ -249,13 +266,6 @@ const MovieDetails = () => {
     );
   };
 
-  const { pathname } = useLocation();
-
-  if (redirect) {
-    console.log(pathname)
-    return <Redirect push to="/fourohfour" />;
-  }
-
   return (
     <>
       <ScrollToTop />
@@ -265,6 +275,8 @@ const MovieDetails = () => {
             <Loader size="massive">Loading</Loader>
           </Dimmer>
         </Container>
+      ) : noData ? (
+        <Header>NO MOVIE FOUND</Header>
       ) : (
         <>
           <div
@@ -281,26 +293,31 @@ const MovieDetails = () => {
             </Container>
           </div>
 
-          <Divider hidden />
+         <Divider hidden />
 
           <Container>
             <Grid stackable relaxed>
               <Grid.Row>
                 <Grid.Column width={3}>
+                <Segment inverted>
                   <SidebarDetails />
+                  </Segment>
                 </Grid.Column>
                 <Grid.Column width={13}>
+                <Segment inverted>
                   <Header className="body-headers" color="green" inverted>
                     Top Cast
                   </Header>
                   <div className="scroll-container">
                     <ScrollMenu>{topCastList}</ScrollMenu>
                   </div>
+                  </Segment>
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.Column width={3}>
+                <Segment inverted>
                   <Header className="body-headers" color="green" inverted>
                     Keywords
                   </Header>
@@ -320,8 +337,10 @@ const MovieDetails = () => {
                         );
                       })}
                   </Button.Group>
+                  </Segment>
                 </Grid.Column>
                 <Grid.Column width={13}>
+                <Segment inverted>
                   {recommended.length !== 0 && (
                     <>
                       <Header className="body-headers" color="green" inverted>
@@ -332,6 +351,7 @@ const MovieDetails = () => {
                       </div>
                     </>
                   )}
+                  </Segment>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
