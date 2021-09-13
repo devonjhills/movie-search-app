@@ -11,7 +11,7 @@ const SearchResultsTV = ({ show }) => {
         <Item.Image size="tiny" src={searchResultUrl + show.poster_path} />
       ) : (
         <div className="no-search-image">
-          <Icon size="huge" name="image outline" color="black" />
+          <Icon size="huge" name="image outline" color="grey" />
         </div>
       )}
 

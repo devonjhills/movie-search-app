@@ -56,54 +56,58 @@ const MovieHub = () => {
         </Container>
       ) : (
         <Container>
-        <Segment inverted>
           <Grid stackable relaxed>
             <Grid.Row>
               <Grid.Column width={16}>
-                <Header className="body-headers" color="green" inverted>
-                  New Releases
-                </Header>
-                <div className="scroll-container">
-                  <ScrollMenu>
-                    {newMovies.map((movie) => (
-                      <MovieCard key={movie.id} movie={movie} />
-                    ))}
-                  </ScrollMenu>
-                </div>
+                <Segment inverted>
+                  <Header className="body-headers" color="green" inverted>
+                    New Releases
+                  </Header>
+                  <div className="scroll-container">
+                    <ScrollMenu>
+                      {newMovies.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
+                      ))}
+                    </ScrollMenu>
+                  </div>
+                </Segment>
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column width={16}>
-                <Header className="body-headers" color="green" inverted>
-                  Today's Popular Movies
-                </Header>
-                <div className="scroll-container">
-                  <ScrollMenu>
-                    {popularMovies.map((movie) => (
-                      <MovieCard key={movie.id} movie={movie} />
-                    ))}
-                  </ScrollMenu>
-                </div>
+                <Segment inverted>
+                  <Header className="body-headers" color="green" inverted>
+                    Today's Popular Movies
+                  </Header>
+                  <div className="scroll-container">
+                    <ScrollMenu>
+                      {popularMovies.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
+                      ))}
+                    </ScrollMenu>
+                  </div>
+                </Segment>
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column width={16}>
-                <Header className="body-headers" color="green" inverted>
-                  Top Rated
-                </Header>
-                <div className="scroll-container">
-                  <ScrollMenu>
-                    {topMovies.map((movie) => (
-                      <MovieCard key={movie.id} movie={movie} />
-                    ))}
-                  </ScrollMenu>
-                </div>
+                <Segment inverted>
+                  <Header className="body-headers" color="green" inverted>
+                    Top Rated
+                  </Header>
+                  <div className="scroll-container">
+                    <ScrollMenu>
+                      {topMovies.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
+                      ))}
+                    </ScrollMenu>
+                  </div>
+                </Segment>
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          </Segment>
         </Container>
       )}
     </>

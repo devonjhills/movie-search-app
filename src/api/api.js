@@ -131,8 +131,8 @@ export const fetchMovieDetails = async (movieId) => {
           "videos,credits,external_ids,recommendations,release_dates,reviews,keywords",
       },
     });
-    //console.log(formatResultsDetails(data));
-    //console.dir("DATA HERE ", data)
+    console.dir(formatResultsDetails(data));
+    console.dir(data)
     return formatResultsDetails(data);
   } catch (error) {
     console.error(error);
