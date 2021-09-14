@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon, Item } from "semantic-ui-react";
-import { searchResultUrl } from "../api/api";
+import { searchResultUrl } from "../api/constants";
 
 const SearchResultsMovies = ({ movie }) => {
   const d = new Date(`${movie.release_date}`);

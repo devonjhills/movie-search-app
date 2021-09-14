@@ -10,7 +10,8 @@ import {
   Image,
   Loader,
 } from "semantic-ui-react";
-import { fetchPersonDetails, imageUrl } from "../api/api";
+import { fetchPersonDetails } from "../api/api";
+import { imageUrl } from "../api/constants";
 import ScrollToTop from "./ScrollToTop";
 import SocialButtons from "./SocialButtons";
 
@@ -29,7 +30,7 @@ const PersonDetails = () => {
     const getPersonDetails = async () => {
       await fetchPersonDetails(personId).then((data) => {
         if (data === undefined) {
-          console.log("404!!!!");
+          console.log("Person Details not found");
         }
 
         if (isMounted) {

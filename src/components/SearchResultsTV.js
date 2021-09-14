@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon, Item } from "semantic-ui-react";
-import { searchResultUrl } from "../api/api";
+import { searchResultUrl } from "../api/constants";
 
 const SearchResultsTV = ({ show }) => {
   const d = new Date(`${show.first_air_date}`);

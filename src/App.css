@@ -125,8 +125,6 @@ p {
   text-align: center;
   justify-content: center;
   align-items: center;
-  width: 80px;
-  height: 120px;
   margin-right: 2em;
 }
 
@@ -136,7 +134,7 @@ p {
   width: 138px;
   height: 100%;
   margin-right: 5px;
-  border: 2px solid rgb(37, 37, 37);
+  border: 1px solid rgb(0, 0, 0);
   border-radius: 25px;
   transition: transform 500ms;
 }
@@ -157,13 +155,25 @@ p {
   color: grey;
 }
 
-.sub-div {
-  justify-content: space-evenly;
-  padding-top: 5px;
-  position: absolute;
-  bottom: 1em;
+.moviecard {
+  display: block;
+  text-align: center;
+  width: 185px;
+  height: 100%;
+  margin-right: 5px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 25px;
+  transition: transform 500ms;
 }
 
+.moviecard:hover {
+  transform: translate(5px,-5px);
+  cursor: pointer;
+}
+
+/*
+* Semantic UI overrides
+*/
 .ui.card {
   background-color: #24262b !important;
   font-size: smaller;
@@ -270,7 +280,7 @@ p {
   background-image: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 0%,
-    rgb(27,28,29) 100%
+    rgb(0, 0, 0) 100%
   );
   will-change: opacity;
   pointer-events: none;
