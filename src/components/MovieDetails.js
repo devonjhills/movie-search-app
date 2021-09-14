@@ -17,6 +17,8 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { fetchMovieDetails, formatResults } from "../api/api";
+import { imageUrl, largeImageUrl } from "../api/constants";
+import { getMovieDirectors, getMovieRating, getMovieTrailer, getMovieWriters } from "../api/helpers";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
 import ScrollToTop from "./ScrollToTop";
@@ -27,6 +29,10 @@ const MovieDetails = () => {
   const movieId = urlId.movieId;
 
   const [movieDetails, setMovieDetails] = useState([]);
+  const [directors, setDirectors] = useState([]);
+  const [writers, setWriters] = useState([]);
+  const [rating, setRating] = useState("");
+  const [trailer, setTrailer] = useState("");
   const [loading, setLoading] = useState(true);
   const [noData, setNoData] = useState(false);
 
@@ -44,6 +50,10 @@ const MovieDetails = () => {
 
         if (isMounted) {
           setMovieDetails(data);
+          setDirectors(getMovieDirectors(data));
+          setWriters(getMovieWriters(data));
+          setRating(getMovieRating(data));
+          setTrailer(getMovieTrailer(data));
           setLoading(false);
         }
       });
@@ -55,9 +65,11 @@ const MovieDetails = () => {
     };
   }, [movieId]);
 
+  const keywords = movieDetails?.keywords?.keywords;
+
   const recommended =
-    movieDetails?.recommended &&
-    movieDetails?.recommended.map((movie) => {
+    movieDetails?.recommendations?.results &&
+    movieDetails.recommendations.results.map((movie) => {
       return formatResults(movie);
     });
 
@@ -82,16 +94,16 @@ const MovieDetails = () => {
     const d = new Date(`${movieDetails.release_date}`);
 
     const directorList =
-      movieDetails.directors &&
-      movieDetails.directors.map((d) => (
+      directors &&
+      directors.map((d) => (
         <List.Item key={d.id} as={Link} to={`/person/${d.id}`}>
           {d.name}
         </List.Item>
       ));
 
     const writerList =
-      movieDetails.writers &&
-      movieDetails.writers.map((w) => (
+      writers &&
+      writers.map((w) => (
         <List.Item key={w.id} as={Link} to={`/person/${w.id}`}>
           {`${w.name} (${w.job})`}
         </List.Item>
@@ -101,7 +113,7 @@ const MovieDetails = () => {
       <Grid.Row>
         <Grid.Column width={5}>
           {movieDetails.poster_path ? (
-            <Image src={movieDetails.poster} />
+            <Image src={imageUrl + movieDetails.poster_path} />
           ) : (
             <div className="no-search-image">
               <Icon size="massive" name="image outline" color="grey" />
@@ -117,7 +129,7 @@ const MovieDetails = () => {
               {formatRuntime(movieDetails.runtime)}
               {" • "}
               <span className="myrating">
-                {movieDetails.rating ? movieDetails.rating : "NR"}
+                {rating ? rating : "NR"}
               </span>
               {" • "}
               {movieDetails.genres &&
@@ -153,7 +165,7 @@ const MovieDetails = () => {
               <List.Icon inverted name="video" />
               <List.Content>
                 <List.Header>
-                  {movieDetails.directors.length > 1 ? "Directors" : "Director"}
+                  {directors?.length > 1 ? "Directors" : "Director"}
                 </List.Header>
                 <List.Description>
                   <List horizontal divided>
@@ -166,7 +178,7 @@ const MovieDetails = () => {
               <List.Icon inverted name="pencil" />
               <List.Content>
                 <List.Header>
-                  {movieDetails.writers.length > 1 ? "Writers" : "Writer"}
+                  {writers?.length > 1 ? "Writers" : "Writer"}
                 </List.Header>
                 <List.Description>
                   <List horizontal divided>
@@ -183,7 +195,7 @@ const MovieDetails = () => {
             basic
             size="large"
             trigger={
-              movieDetails.movieTrailerKey !== undefined && (
+              trailer !== undefined && (
                 <Button
                   basic
                   style={{ borderRadius: "9999px" }}
@@ -196,7 +208,7 @@ const MovieDetails = () => {
             }>
             <Modal.Content>
               <Embed
-                id={movieDetails.movieTrailerKey}
+                id={trailer}
                 source="youtube"
                 active
                 iframe={{
@@ -282,7 +294,7 @@ const MovieDetails = () => {
           <div
             style={{
               background: `linear-gradient(to right, rgb(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)),
-              url(${movieDetails.backdrop}) no-repeat center/cover`,
+              url(${largeImageUrl + movieDetails.backdrop_path}) no-repeat center/cover`,
               position: "relative",
               width: "100vw",
             }}>
@@ -293,65 +305,69 @@ const MovieDetails = () => {
             </Container>
           </div>
 
-         <Divider hidden />
+          <Divider hidden />
 
           <Container>
-            <Grid stackable relaxed>
+            <Grid stackable >
               <Grid.Row>
                 <Grid.Column width={3}>
-                <Segment inverted>
-                  <SidebarDetails />
+                  <Segment basic>
+                    <SidebarDetails />
                   </Segment>
                 </Grid.Column>
                 <Grid.Column width={13}>
-                <Segment inverted>
-                  <Header className="body-headers" color="green" inverted>
-                    Top Cast
-                  </Header>
-                  <div className="scroll-container">
-                    <ScrollMenu>{topCastList}</ScrollMenu>
-                  </div>
-                  </Segment>
+                  {topCastList.length !== 0 && (
+                    <Segment basic>
+                      <Header className="body-headers" color="green" inverted>
+                        Top Cast
+                      </Header>
+                      <div className="scroll-container">
+                        <ScrollMenu>{topCastList}</ScrollMenu>
+                      </div>
+                    </Segment>
+                  )}
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.Column width={3}>
-                <Segment inverted>
-                  <Header className="body-headers" color="green" inverted>
-                    Keywords
-                  </Header>
-                  <Button.Group vertical>
-                    {movieDetails.keywords &&
-                      movieDetails.keywords.slice(0, 9).map((keyword) => {
-                        return (
-                          <Button
-                            style={{ marginBottom: "1px" }}
-                            basic
-                            inverted
-                            color="green"
-                            key={keyword.id}
-                            compact>
-                            {keyword.name}
-                          </Button>
-                        );
-                      })}
-                  </Button.Group>
-                  </Segment>
-                </Grid.Column>
-                <Grid.Column width={13}>
-                <Segment inverted>
-                  {recommended.length !== 0 && (
-                    <>
+                  {keywords.length !== 0 && (
+                    <Segment basic>
                       <Header className="body-headers" color="green" inverted>
-                        Recommended
+                        Keywords
                       </Header>
-                      <div className="scroll-container">
-                        <ScrollMenu>{recommendedList}</ScrollMenu>
-                      </div>
-                    </>
+                      <Button.Group vertical>
+                        {keywords.slice(0, 9).map((keyword) => {
+                          return (
+                            <Button
+                              style={{ marginBottom: "1px" }}
+                              basic
+                              inverted
+                              color="green"
+                              key={keyword.id}
+                              compact>
+                              {keyword.name}
+                            </Button>
+                          );
+                        })}
+                      </Button.Group>
+                    </Segment>
                   )}
-                  </Segment>
+                </Grid.Column>
+
+                <Grid.Column width={13}>
+                  {recommended.length !== 0 && (
+                    <Segment basic>
+                      <>
+                        <Header className="body-headers" color="green" inverted>
+                          Recommended
+                        </Header>
+                        <div className="scroll-container">
+                          <ScrollMenu>{recommendedList}</ScrollMenu>
+                        </div>
+                      </>
+                    </Segment>
+                  )}
                 </Grid.Column>
               </Grid.Row>
             </Grid>

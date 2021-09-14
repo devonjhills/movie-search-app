@@ -1,20 +1,14 @@
 import axios from "axios";
+import {
+  imageUrl,
+  movieDetailsUrl,
+  moviesNowPlayingUrl,
+  moviesPopularUrl,
+  moviesTopUrl,
+  personUrl,
+  searchUrl,
+} from "./constants";
 import { API_KEY } from "./key";
-
-const baseUrl = "https://api.themoviedb.org/3";
-const moviesNowPlayingUrl = `${baseUrl}/movie/now_playing`;
-const moviesPopularUrl = `${baseUrl}/movie/popular`;
-const moviesTopUrl = `${baseUrl}/movie/top_rated`;
-const searchUrl = `${baseUrl}/search/multi`;
-const movieDetailsUrl = `${baseUrl}/movie/`;
-const personUrl = `${baseUrl}/person/`;
-
-//https://developers.themoviedb.org/3/getting-started/images
-export const imageUrl = "https://image.tmdb.org/t/p/w500";
-export const searchResultUrl = "https://image.tmdb.org/t/p/w154"
-export const personThumbnailUrl =
-  "https://image.tmdb.org/t/p/w138_and_h175_face";
-export const largeImageUrl = "https://image.tmdb.org/t/p/original";
 
 export const formatResults = (movie) => {
   const { id, poster_path, release_date, title, vote_average } = movie;
@@ -24,99 +18,7 @@ export const formatResults = (movie) => {
     release_date,
     title,
     vote_average,
-    poster: imageUrl + poster_path,
-  };
-};
-
-const formatResultsDetails = (movie) => {
-  // Attempt to fetch video matching 'Official Trailer', then 'Trailer', or return undefined
-  let movieTrailerKey = "";
-  let officialTrailer = "";
-  let trailer = "";
-
-  officialTrailer = movie.videos.results.find((e) =>
-    e.name.includes("Official Trailer")
-  );
-  if (!officialTrailer) {
-    trailer = movie.videos.results.find((e) => e.name.includes("Trailer"));
-  }
-
-  officialTrailer
-    ? (movieTrailerKey = officialTrailer.key)
-    : (movieTrailerKey = trailer && trailer.key);
-
-  // fetch MPAA rating for US release
-  let ratingUs = movie.release_dates.results.find((e) => e.iso_3166_1 === "US");
-  let rating = ratingUs.release_dates[0].certification;
-
-  // fetch director(s) from crew list
-  let directors = [];
-  movie.credits.crew.forEach((crewMember) => {
-    if (crewMember.job === "Director") {
-      directors.push(crewMember);
-    }
-  });
-
-  // fetch writer(s) from crew list
-  let writers = [];
-  movie.credits.crew.forEach((crewMember) => {
-    if (
-      crewMember.job === "Writer" ||
-      crewMember.job === "Screenplay" ||
-      crewMember.job === "Novel" ||
-      crewMember.job === "Characters"
-    ) {
-      writers.push(crewMember);
-    }
-  });
-
-  const {
-    id,
-    credits,
-    external_ids,
-    genres,
-    homepage,
-    keywords,
-    backdrop_path,
-    overview,
     poster_path,
-    release_date,
-    release_dates,
-    title,
-    vote_average,
-    vote_count,
-    runtime,
-    tagline,
-    budget,
-    revenue,
-    status,
-  } = movie;
-
-  return {
-    id,
-    credits,
-    directors,
-    external_ids,
-    genres,
-    homepage,
-    keywords: keywords.keywords,
-    overview,
-    release_date,
-    release_dates,
-    title,
-    vote_average,
-    vote_count,
-    runtime,
-    tagline,
-    budget,
-    revenue,
-    rating,
-    status,
-    writers,
-    movieTrailerKey,
-    poster_path,
-    recommended: movie.recommendations.results,
-    backdrop: largeImageUrl + backdrop_path,
     poster: imageUrl + poster_path,
   };
 };
@@ -131,9 +33,8 @@ export const fetchMovieDetails = async (movieId) => {
           "videos,credits,external_ids,recommendations,release_dates,reviews,keywords",
       },
     });
-    console.dir(formatResultsDetails(data));
-    console.dir(data)
-    return formatResultsDetails(data);
+    console.dir(data);
+    return data;
   } catch (error) {
     console.error(error);
   }
@@ -231,22 +132,21 @@ export const fetchSearchResults = async (query) => {
       if (result.media_type === "movie") {
         movieResults.push(result);
       }
-    
+
       if (result.media_type === "tv") {
         tvResults.push(result);
       }
-    
+
       if (result.media_type === "person") {
         peopleResults.push(result);
       }
-    })
+    });
 
     return {
       movieResults,
       tvResults,
-      peopleResults
-    }
-
+      peopleResults,
+    };
   } catch (error) {
     console.error(error);
   }
