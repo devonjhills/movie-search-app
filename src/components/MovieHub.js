@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import {
-  Container,
-  Dimmer,
-  Grid,
-  Header,
-  Loader,
-  Segment,
-} from "semantic-ui-react";
+import { Container, Dimmer, Item, Loader, Tab } from "semantic-ui-react";
 import {
   fetchNewMovieReleases,
   fetchPopularMovies,
   fetchTopMovies,
 } from "../api/api";
-import MovieCard from "./MovieCard";
+import SearchResultsMovies from "./SearchResultsMovies";
 
 const MovieHub = () => {
   const [newMovies, setNewMovies] = useState([]);
@@ -46,6 +38,51 @@ const MovieHub = () => {
     moviesTop();
   }, []);
 
+  const panes = [
+    {
+      menuItem: { key: 'new', icon: 'calendar check outline', content: 'New Releases' },
+      pane: (
+        <Tab.Pane key='new-pane'>
+          <div className="my-scroll">
+            <Item.Group divided relaxed>
+              {newMovies.map((movie) => (
+                <SearchResultsMovies key={movie.id} movie={movie} />
+              ))}
+            </Item.Group>
+          </div>
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: { key: 'popular', icon: 'fire', content: 'Popular Today' },
+      pane: (
+        <Tab.Pane key='popular-pane'>
+          <div className="my-scroll">
+            <Item.Group divided relaxed>
+              {popularMovies.map((movie) => (
+                <SearchResultsMovies key={movie.id} movie={movie} />
+              ))}
+            </Item.Group>
+          </div>
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: { key: 'top', icon: 'star outline', content: 'Top Rated' },
+      pane: (
+        <Tab.Pane key='top-pane'>
+          <div className="my-scroll">
+            <Item.Group divided relaxed>
+              {topMovies.map((movie) => (
+                <SearchResultsMovies key={movie.id} movie={movie} />
+              ))}
+            </Item.Group>
+          </div>
+        </Tab.Pane>
+      ),
+    },
+  ];
+
   return (
     <>
       {loading ? (
@@ -56,58 +93,7 @@ const MovieHub = () => {
         </Container>
       ) : (
         <Container>
-          <Grid stackable relaxed>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Segment inverted>
-                  <Header className="body-headers" color="green" inverted>
-                    New Releases
-                  </Header>
-                  <div className="scroll-container">
-                    <ScrollMenu>
-                      {newMovies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
-                      ))}
-                    </ScrollMenu>
-                  </div>
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Segment inverted>
-                  <Header className="body-headers" color="green" inverted>
-                    Today's Popular Movies
-                  </Header>
-                  <div className="scroll-container">
-                    <ScrollMenu>
-                      {popularMovies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
-                      ))}
-                    </ScrollMenu>
-                  </div>
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Segment inverted>
-                  <Header className="body-headers" color="green" inverted>
-                    Top Rated
-                  </Header>
-                  <div className="scroll-container">
-                    <ScrollMenu>
-                      {topMovies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
-                      ))}
-                    </ScrollMenu>
-                  </div>
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          <Tab panes={panes} renderActiveOnly={false} />
         </Container>
       )}
     </>

@@ -54,17 +54,19 @@ const SearchPage = () => {
         </Menu.Item>
       ),
       render: () => (
-        <Tab.Pane>
-          {queryResults?.movieResults?.length > 0 ? (
-            <Item.Group divided relaxed>
-              {queryResults?.movieResults?.map((movie) => (
-                <SearchResultsMovies key={movie.id} movie={movie} />
-              ))}
-            </Item.Group>
-          ) : (
-            <p>No Results</p>
-          )}
-        </Tab.Pane>
+        <div className="my-scroll">
+          <Tab.Pane>
+            {queryResults?.movieResults?.length > 0 ? (
+              <Item.Group divided relaxed>
+                {queryResults?.movieResults?.map((movie) => (
+                  <SearchResultsMovies key={movie.id} movie={movie} />
+                ))}
+              </Item.Group>
+            ) : (
+              <p>No Results</p>
+            )}
+          </Tab.Pane>
+        </div>
       ),
     },
     {
@@ -74,6 +76,7 @@ const SearchPage = () => {
         </Menu.Item>
       ),
       render: () => (
+        <div className="my-scroll">
         <Tab.Pane>
           {queryResults?.tvResults?.length > 0 ? (
             <Item.Group divided relaxed>
@@ -85,6 +88,7 @@ const SearchPage = () => {
             <p>No Results</p>
           )}
         </Tab.Pane>
+        </div>
       ),
     },
     {
@@ -94,6 +98,7 @@ const SearchPage = () => {
         </Menu.Item>
       ),
       render: () => (
+        <div className="my-scroll">
         <Tab.Pane>
           {queryResults?.peopleResults?.length > 0 ? (
             <Item.Group divided relaxed>
@@ -105,6 +110,7 @@ const SearchPage = () => {
             <p>No Results</p>
           )}
         </Tab.Pane>
+        </div>
       ),
     },
   ];
