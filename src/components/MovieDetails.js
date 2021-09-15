@@ -18,7 +18,12 @@ import {
 } from "semantic-ui-react";
 import { fetchMovieDetails, formatResults } from "../api/api";
 import { imageUrl, largeImageUrl } from "../api/constants";
-import { getMovieDirectors, getMovieRating, getMovieTrailer, getMovieWriters } from "../api/helpers";
+import {
+  getMovieDirectors,
+  getMovieRating,
+  getMovieTrailer,
+  getMovieWriters,
+} from "../api/helpers";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
 import ScrollToTop from "./ScrollToTop";
@@ -122,15 +127,13 @@ const MovieDetails = () => {
         </Grid.Column>
 
         <Grid.Column width={11}>
-          <Header className="body-headers" as="h1" color="green" inverted>
-            {movieDetails.title}
+          <Header as="h1" inverted>
+            <span className="mygradient">{movieDetails.title}</span>
             <Header.Subheader style={{ marginTop: "5px" }}>
               {d.toDateString().split(" ").slice(1).join(" ")} {" • "}
               {formatRuntime(movieDetails.runtime)}
               {" • "}
-              <span className="myrating">
-                {rating ? rating : "NR"}
-              </span>
+              <span className="myrating">{rating ? rating : "NR"}</span>
               {" • "}
               {movieDetails.genres &&
                 movieDetails.genres.map((genre) => {
@@ -294,7 +297,9 @@ const MovieDetails = () => {
           <div
             style={{
               background: `linear-gradient(to right, rgb(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)),
-              url(${largeImageUrl + movieDetails.backdrop_path}) no-repeat center/cover`,
+              url(${
+                largeImageUrl + movieDetails.backdrop_path
+              }) no-repeat center/cover`,
               position: "relative",
               width: "100vw",
             }}>
@@ -308,7 +313,7 @@ const MovieDetails = () => {
           <Divider hidden />
 
           <Container>
-            <Grid stackable >
+            <Grid stackable>
               <Grid.Row>
                 <Grid.Column width={3}>
                   <Segment basic>
@@ -318,8 +323,8 @@ const MovieDetails = () => {
                 <Grid.Column width={13}>
                   {topCastList.length !== 0 && (
                     <Segment basic>
-                      <Header className="body-headers" color="green" inverted>
-                        Top Cast
+                      <Header inverted>
+                        <span className="mygradient"> Top Cast </span>
                       </Header>
                       <div className="scroll-container">
                         <ScrollMenu>{topCastList}</ScrollMenu>
@@ -333,8 +338,8 @@ const MovieDetails = () => {
                 <Grid.Column width={3}>
                   {keywords.length !== 0 && (
                     <Segment basic>
-                      <Header className="body-headers" color="green" inverted>
-                        Keywords
+                      <Header inverted>
+                        <span className="mygradient">Keywords</span>
                       </Header>
                       <Button.Group vertical>
                         {keywords.slice(0, 9).map((keyword) => {
@@ -359,8 +364,8 @@ const MovieDetails = () => {
                   {recommended.length !== 0 && (
                     <Segment basic>
                       <>
-                        <Header className="body-headers" color="green" inverted>
-                          Recommended
+                        <Header inverted>
+                          <span className="mygradient">Recommended</span>
                         </Header>
                         <div className="scroll-container">
                           <ScrollMenu>{recommendedList}</ScrollMenu>

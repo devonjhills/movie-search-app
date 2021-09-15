@@ -11,7 +11,7 @@ import {
 import { API_KEY } from "./key";
 
 export const formatResults = (movie) => {
-  const { id, poster_path, release_date, title, vote_average } = movie;
+  const { id, poster_path, release_date, title, vote_average, overview } = movie;
 
   return {
     id,
@@ -19,6 +19,7 @@ export const formatResults = (movie) => {
     title,
     vote_average,
     poster_path,
+    overview,
     poster: imageUrl + poster_path,
   };
 };

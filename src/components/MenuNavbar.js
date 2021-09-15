@@ -20,19 +20,19 @@ const MenuNavbar = () => {
   return (
     <Menu size="small" inverted secondary stackable>
       <Menu.Item header name="home" style={{marginLeft: '10px'}}>
-        <Icon className="headericons" color="green" name="film" size="big" />
-        What To Watch?
+        <Icon className="headericons" name="film" size="big" />
+        <span className='mygradient'>What To Watch?</span>
       </Menu.Item>
       <Menu.Item>
-        <Button as={Link} to="/" inverted color="green" basic>
-          <Icon className="headericons" color="green" name="video" />
-          Movie Hub
+        <Button as={Link} to="/" inverted basic>
+          <Icon className="headericons" name="video" />
+          <span className='mygradient'>Movie Hub</span>
         </Button>
       </Menu.Item>
       <Menu.Item>
-      <Button as={Link} to="/tvhub" inverted color="green" basic>
-          <Icon className="headericons" color="green" name="tv" />
-          TV Hub
+      <Button as={Link} to="/tvhub" inverted basic>
+          <Icon className="headericons" name="tv" />
+          <span className='mygradient'>TV Hub</span>
         </Button>
       </Menu.Item>
       <Menu.Menu position="right">
@@ -49,7 +49,6 @@ const MenuNavbar = () => {
               <Form.Button
                 type="submit"
                 inverted
-                color="green"
                 disabled={query.length === 0}>
                 Search
               </Form.Button>
