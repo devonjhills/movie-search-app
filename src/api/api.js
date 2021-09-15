@@ -7,11 +7,15 @@ import {
   moviesTopUrl,
   personUrl,
   searchUrl,
+  tvNowPlayingUrl,
+  tvPopularUrl,
+  tvTopUrl,
 } from "./constants";
 import { API_KEY } from "./key";
 
 export const formatResults = (movie) => {
-  const { id, poster_path, release_date, title, vote_average, overview } = movie;
+  const { id, poster_path, release_date, title, vote_average, overview } =
+    movie;
 
   return {
     id,
@@ -75,6 +79,22 @@ export const fetchNewMovieReleases = async () => {
   }
 };
 
+export const fetchNewTv = async () => {
+  try {
+    const { data } = await axios.get(tvNowPlayingUrl, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        page: 1,
+      },
+    });
+
+    return data.results;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const fetchPopularMovies = async () => {
   try {
     const { data } = await axios.get(moviesPopularUrl, {
@@ -94,6 +114,22 @@ export const fetchPopularMovies = async () => {
   }
 };
 
+export const fetchPopularTv = async () => {
+  try {
+    const { data } = await axios.get(tvPopularUrl, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        page: 1,
+      },
+    });
+
+    return data.results;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const fetchTopMovies = async () => {
   try {
     const { data } = await axios.get(moviesTopUrl, {
@@ -108,6 +144,22 @@ export const fetchTopMovies = async () => {
     return data.results.map((movie) => {
       return formatResults(movie);
     });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchTopTv = async () => {
+  try {
+    const { data } = await axios.get(tvTopUrl, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        page: 1,
+      },
+    });
+
+    return data.results;
   } catch (error) {
     console.error(error);
   }

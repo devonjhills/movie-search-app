@@ -12,12 +12,14 @@ const SearchResultsMovies = ({ movie }) => {
         <Item.Image size="tiny" src={searchResultUrl + movie.poster_path} />
       ) : (
         <div className="no-search-image">
-          <Icon size="huge" name="image outline" color="grey" />
+          <Icon size="huge" name="image outline" S color="grey" />
         </div>
       )}
 
       <Item.Content>
-        <Item.Header>{movie.title}</Item.Header>
+        <Item.Header>
+          <span className="link-hover">{movie.title}</span>
+        </Item.Header>
         <Item.Meta>{d.toDateString().split(" ").slice(1).join(" ")}</Item.Meta>
         <Item.Description className="search-text">
           {movie.overview}

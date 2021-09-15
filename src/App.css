@@ -20,7 +20,7 @@ p {
 }
 
 .footer {
-  background-color: rgb(27,28,29);
+  background-color: rgb(27, 28, 29);
   padding: 1em;
   position: relative;
   bottom: 0;
@@ -61,7 +61,7 @@ p {
 }
 
 .mydimmer:hover {
-  transform: translate(5px,-5px);
+  transform: translate(5px, -5px);
   cursor: pointer;
 }
 
@@ -84,6 +84,18 @@ p {
   font-size: 1.1em;
   font-weight: bold;
   line-height: normal;
+  background-image: linear-gradient(
+    30deg,
+    #90cea1 0%,
+    #01b4e4 46%,
+    #2a6070 100%
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.link-hover:hover {
   background-image: linear-gradient(
     30deg,
     #90cea1 0%,
@@ -139,7 +151,7 @@ p {
 }
 
 .person:hover {
-  transform: translate(5px,-5px);
+  transform: translate(5px, -5px);
   cursor: pointer;
 }
 
@@ -166,7 +178,7 @@ p {
 }
 
 .moviecard:hover {
-  transform: translate(5px,-5px);
+  transform: translate(5px, -5px);
   cursor: pointer;
 }
 
@@ -183,12 +195,12 @@ p {
   border-radius: 25px !important;
 }
 
-.ui.items>.item>.image>img {
+.ui.items > .item > .image > img {
   border-radius: 25px !important;
 }
 
 .ui.menu {
-  background-color: rgb(27,28,29) !important;
+  background-color: rgb(27, 28, 29) !important;
   color: white !important;
 }
 
@@ -201,28 +213,28 @@ p {
 }
 
 .ui.tab {
-  background-color: rgb(27,28,29) !important;
-  border-color: #0E1C2E !important;
+  background-color: rgb(27, 28, 29) !important;
+  border-color: #0e1c2e !important;
 }
 
 .ui.tabular.menu {
-  border-bottom: 1px solid #0E1C2E !important;
+  border-bottom: 1px solid #0e1c2e !important;
 }
 
 .ui.tabular.menu .active.item {
-  border-color: #0E1C2E !important;
+  border-color: #0e1c2e !important;
 }
 
-.ui.items>.item>.content>.header {
+.ui.items > .item > .content > .header {
   color: white !important;
 }
 
-.ui.items>.item .meta {
+.ui.items > .item .meta {
   color: gray !important;
   font-style: italic !important;
 }
 
-.ui.items>.item>.content>.description {
+.ui.items > .item > .content > .description {
   color: white !important;
 }
 
@@ -230,11 +242,11 @@ p {
   color: white !important;
 }
 
-.ui.divided.items>.item {
+.ui.divided.items > .item {
   border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
-.ui.divided.items>.item:first-child {
+.ui.divided.items > .item:first-child {
   border-top: none !important;
 }
 /*
@@ -326,4 +338,3 @@ p {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
