@@ -14,7 +14,6 @@ import {
   List,
   Loader,
   Modal,
-  Segment,
 } from "semantic-ui-react";
 import { fetchMovieDetails, formatResults } from "../api/api";
 import { imageUrl, largeImageUrl } from "../api/constants";
@@ -313,65 +312,55 @@ const MovieDetails = () => {
           <Divider hidden />
 
           <Container>
-            <Grid stackable>
+            <Grid stackable relaxed>
               <Grid.Row>
-                <Grid.Column width={3}>
-                  <Segment basic>
-                    <SidebarDetails />
-                  </Segment>
-                </Grid.Column>
-                <Grid.Column width={13}>
+                <Grid.Column width={12}>
                   {topCastList.length !== 0 && (
-                    <Segment basic>
+                    <>
                       <Header inverted>
                         <span className="mygradient"> Top Cast </span>
                       </Header>
                       <div className="scroll-container">
                         <ScrollMenu>{topCastList}</ScrollMenu>
                       </div>
-                    </Segment>
+                    </>
                   )}
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  <SidebarDetails />
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
-                <Grid.Column width={3}>
+                <Grid.Column width={12}>
+                  {recommended.length !== 0 && (
+                    <>
+                      <Header inverted>
+                        <span className="mygradient">Recommended</span>
+                      </Header>
+                      <div className="scroll-container">
+                        <ScrollMenu>{recommendedList}</ScrollMenu>
+                      </div>
+                    </>
+                  )}
+                </Grid.Column>
+                <Grid.Column width={4}>
                   {keywords.length !== 0 && (
-                    <Segment basic>
+                    <>
                       <Header inverted>
                         <span className="mygradient">Keywords</span>
                       </Header>
-                      <Button.Group vertical>
-                        {keywords.slice(0, 9).map((keyword) => {
+                      {keywords
+                        .slice(0, 10)
+                        .sort((a, b) => a.name.length - b.name.length)
+                        .map((keyword) => {
                           return (
-                            <Button
-                              style={{ marginBottom: "1px" }}
-                              basic
-                              inverted
-                              color="green"
-                              key={keyword.id}
-                              compact>
+                            <div key={keyword.id} className="chip">
                               {keyword.name}
-                            </Button>
+                            </div>
                           );
                         })}
-                      </Button.Group>
-                    </Segment>
-                  )}
-                </Grid.Column>
-
-                <Grid.Column width={13}>
-                  {recommended.length !== 0 && (
-                    <Segment basic>
-                      <>
-                        <Header inverted>
-                          <span className="mygradient">Recommended</span>
-                        </Header>
-                        <div className="scroll-container">
-                          <ScrollMenu>{recommendedList}</ScrollMenu>
-                        </div>
-                      </>
-                    </Segment>
+                    </>
                   )}
                 </Grid.Column>
               </Grid.Row>

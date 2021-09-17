@@ -145,8 +145,8 @@ p {
   width: 138px;
   height: 100%;
   margin-right: 5px;
-  border: 1px solid rgb(0, 0, 0);
   border-radius: 25px;
+  background-color: #24262b;
   transition: transform 500ms;
 }
 
@@ -166,13 +166,33 @@ p {
   color: grey;
 }
 
+.chip {
+  display:inline-flex;
+  align-items: center;
+  padding:0rem .3rem;
+  height:1.5rem;
+  line-height:1rem;
+  border-radius:9999px;
+  margin: .3rem;
+  font-weight: bolder;
+  width:max-content;
+  color: antiquewhite;
+  box-shadow: 0.2rem  0.25rem 0.1875rem 0 rgba(0, 0, 0, 0.527);
+  background-color: #3a587081;
+}
+
+.chip:hover {
+  background-color: antiquewhite;
+  color:#3a5870;
+  cursor: pointer;
+}
+
 .moviecard {
   display: block;
   text-align: center;
-  width: 185px;
+  width: 138px;
   height: 100%;
   margin-right: 5px;
-  border: 1px solid rgb(0, 0, 0);
   border-radius: 25px;
   transition: transform 500ms;
 }
