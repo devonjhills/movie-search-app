@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { useParams, Link } from "react-router-dom";
 import {
-  Button,
   Container,
   Dimmer,
   Divider,
@@ -14,6 +13,7 @@ import {
   List,
   Loader,
   Modal,
+  Segment,
 } from "semantic-ui-react";
 import { fetchMovieDetails, formatResults } from "../api/api";
 import { imageUrl, largeImageUrl } from "../api/constants";
@@ -100,17 +100,21 @@ const MovieDetails = () => {
     const directorList =
       directors &&
       directors.map((d) => (
-        <List.Item key={d.id} as={Link} to={`/person/${d.id}`}>
-          {d.name}
-        </List.Item>
+        <Link to={`/person/${d.id}`}>
+          <div key={d.id} className="chip">
+            {d.name}
+          </div>
+        </Link>
       ));
 
     const writerList =
       writers &&
       writers.map((w) => (
-        <List.Item key={w.id} as={Link} to={`/person/${w.id}`}>
-          {`${w.name} (${w.job})`}
-        </List.Item>
+        <Link to={`/person/${w.id}`}>
+          <div key={w.id} className="chip">
+            {`${w.name} (${w.job})`}
+          </div>
+        </Link>
       ));
 
     return (
@@ -128,6 +132,7 @@ const MovieDetails = () => {
         <Grid.Column width={11}>
           <Header as="h1" inverted>
             <span className="mygradient">{movieDetails.title}</span>
+
             <Header.Subheader style={{ marginTop: "5px" }}>
               {d.toDateString().split(" ").slice(1).join(" ")} {" • "}
               {formatRuntime(movieDetails.runtime)}
@@ -137,16 +142,9 @@ const MovieDetails = () => {
               {movieDetails.genres &&
                 movieDetails.genres.map((genre) => {
                   return (
-                    <Button
-                      basic
-                      inverted
-                      color="green"
-                      size="mini"
-                      key={genre.id}
-                      compact
-                      circular>
+                    <div key={genre.id} className="chip">
                       {genre.name}
-                    </Button>
+                    </div>
                   );
                 })}
             </Header.Subheader>
@@ -159,66 +157,53 @@ const MovieDetails = () => {
           {movieDetails.overview ? (
             <p>{movieDetails.overview}</p>
           ) : (
-            <p>~~No synopsis found for this movie~~</p>
+            <p>No synopsis found for this movie</p>
           )}
 
-          <List inverted relaxed size="large">
-            <List.Item>
-              <List.Icon inverted name="video" />
-              <List.Content>
-                <List.Header>
-                  {directors?.length > 1 ? "Directors" : "Director"}
-                </List.Header>
-                <List.Description>
-                  <List horizontal divided>
-                    {directorList}
-                  </List>
-                </List.Description>
-              </List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Icon inverted name="pencil" />
-              <List.Content>
-                <List.Header>
-                  {writers?.length > 1 ? "Writers" : "Writer"}
-                </List.Header>
-                <List.Description>
-                  <List horizontal divided>
-                    {writerList}
-                  </List>
-                </List.Description>
-              </List.Content>
-            </List.Item>
-          </List>
+          <Header inverted as="h5">
+            <Icon inverted name="video" />
+            <Header.Content>
+              {directors?.length > 1 ? "Directors" : "Director"}
+              <Header.Subheader>{directorList}</Header.Subheader>
+            </Header.Content>
+          </Header>
+
+          <Header inverted as="h5">
+            <Icon inverted name="pencil" />
+            <Header.Content>
+              {writers?.length > 1 ? "Writers" : "Writer"}
+              <Header.Subheader>{writerList}</Header.Subheader>
+            </Header.Content>
+          </Header>
 
           <Divider hidden />
 
-          <Modal
-            basic
-            size="large"
-            trigger={
-              trailer !== undefined && (
-                <Button
+          {trailer && (
+            <Header inverted as="h5">
+              <Icon inverted name="play" />
+              <Header.Content>
+                <Modal
                   basic
-                  style={{ borderRadius: "9999px" }}
-                  inverted
-                  color="green">
-                  <Icon name="play" />
-                  {movieDetails.title} Trailer
-                </Button>
-              )
-            }>
-            <Modal.Content>
-              <Embed
-                id={trailer}
-                source="youtube"
-                active
-                iframe={{
-                  allowFullScreen: true,
-                }}
-              />
-            </Modal.Content>
-          </Modal>
+                  size="large"
+                  trigger={
+                    trailer !== undefined && (
+                      <div className="chip">{movieDetails.title} Trailer</div>
+                    )
+                  }>
+                  <Modal.Content>
+                    <Embed
+                      id={trailer}
+                      source="youtube"
+                      active
+                      iframe={{
+                        allowFullScreen: true,
+                      }}
+                    />
+                  </Modal.Content>
+                </Modal>
+              </Header.Content>
+            </Header>
+          )}
         </Grid.Column>
       </Grid.Row>
     );
@@ -292,22 +277,20 @@ const MovieDetails = () => {
       ) : noData ? (
         <Header>NO MOVIE FOUND</Header>
       ) : (
-        <>
-          <div
-            style={{
-              background: `linear-gradient(to right, rgb(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)),
+        <div
+          style={{
+            background: `linear-gradient(to right, rgb(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)),
               url(${
                 largeImageUrl + movieDetails.backdrop_path
               }) no-repeat center/cover`,
-              position: "relative",
-              width: "100vw",
-            }}>
-            <Container>
-              <Grid verticalAlign="middle" stackable relaxed padded>
-                <MovieBanner />
-              </Grid>
-            </Container>
-          </div>
+            position: "relative",
+            width: "100vw",
+          }}>
+          <Container>
+            <Grid verticalAlign="middle" stackable relaxed padded>
+              <MovieBanner />
+            </Grid>
+          </Container>
 
           <Divider hidden />
 
@@ -327,7 +310,9 @@ const MovieDetails = () => {
                   )}
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <SidebarDetails />
+                  <Segment basic>
+                    <SidebarDetails />
+                  </Segment>
                 </Grid.Column>
               </Grid.Row>
 
@@ -351,7 +336,7 @@ const MovieDetails = () => {
                         <span className="mygradient">Keywords</span>
                       </Header>
                       {keywords
-                        .slice(0, 10)
+                        .slice(0, 15)
                         .sort((a, b) => a.name.length - b.name.length)
                         .map((keyword) => {
                           return (
@@ -366,7 +351,7 @@ const MovieDetails = () => {
               </Grid.Row>
             </Grid>
           </Container>
-        </>
+        </div>
       )}
     </>
   );
