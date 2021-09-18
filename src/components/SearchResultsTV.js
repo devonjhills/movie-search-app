@@ -17,7 +17,12 @@ const SearchResultsTV = ({ show }) => {
 
       <Item.Content>
         <Item.Header>{show.name}</Item.Header>
-        <Item.Meta>First Aired - {d.toDateString().split(" ").slice(1).join(" ")}</Item.Meta>
+        <Item.Meta>
+          First Aired -{" "}
+          {show.first_air_date
+            ? d.toDateString().split(" ").slice(1).join(" ")
+            : "Date Not Found"}
+        </Item.Meta>
         <Item.Description className="search-text">
           {show.overview}
         </Item.Description>

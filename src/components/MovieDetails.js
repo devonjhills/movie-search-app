@@ -100,20 +100,16 @@ const MovieDetails = () => {
     const directorList =
       directors &&
       directors.map((d) => (
-        <Link to={`/person/${d.id}`}>
-          <div key={d.id} className="chip">
-            {d.name}
-          </div>
+        <Link key={d.id} to={`/person/${d.id}`}>
+          <div className="chip">{d.name}</div>
         </Link>
       ));
 
     const writerList =
       writers &&
       writers.map((w) => (
-        <Link to={`/person/${w.id}`}>
-          <div key={w.id} className="chip">
-            {`${w.name} (${w.job})`}
-          </div>
+        <Link key={w.id} to={`/person/${w.id}`}>
+          <div className="chip">{`${w.name} (${w.job})`}</div>
         </Link>
       ));
 
@@ -160,21 +156,25 @@ const MovieDetails = () => {
             <p>No synopsis found for this movie</p>
           )}
 
-          <Header inverted as="h5">
-            <Icon inverted name="video" />
-            <Header.Content>
-              {directors?.length > 1 ? "Directors" : "Director"}
-              <Header.Subheader>{directorList}</Header.Subheader>
-            </Header.Content>
-          </Header>
+          {directors?.length > 1 && (
+            <Header inverted as="h5">
+              <Icon inverted name="video" />
+              <Header.Content>
+                {directors?.length > 1 ? "Directors" : "Director"}
+                <Header.Subheader>{directorList}</Header.Subheader>
+              </Header.Content>
+            </Header>
+          )}
 
-          <Header inverted as="h5">
-            <Icon inverted name="pencil" />
-            <Header.Content>
-              {writers?.length > 1 ? "Writers" : "Writer"}
-              <Header.Subheader>{writerList}</Header.Subheader>
-            </Header.Content>
-          </Header>
+          {writers?.length > 1 && (
+            <Header inverted as="h5">
+              <Icon inverted name="pencil" />
+              <Header.Content>
+                {writers.length > 1 ? "Writers" : "Writer"}
+                <Header.Subheader>{writerList}</Header.Subheader>
+              </Header.Content>
+            </Header>
+          )}
 
           <Divider hidden />
 

@@ -12,7 +12,7 @@ const SearchResultsMovies = ({ movie }) => {
         <Item.Image size="tiny" src={searchResultUrl + movie.poster_path} />
       ) : (
         <div className="no-search-image">
-          <Icon size="huge" name="image outline" S color="grey" />
+          <Icon size="huge" name="image outline" color="grey" />
         </div>
       )}
 
