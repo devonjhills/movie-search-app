@@ -81,7 +81,7 @@ const PersonDetails = () => {
                 {personDetails.biography ? (
                   <p>{personDetails.biography}</p>
                 ) : (
-                  <p>~~No biography found for this person~~</p>
+                  <p>No biography found for this person</p>
                 )}
               </Grid.Column>
             </Grid.Row>

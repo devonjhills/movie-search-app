@@ -146,7 +146,7 @@ p {
   height: 100%;
   margin-right: 5px;
   border-radius: 25px;
-  background-color: #24262b;
+  background-color: rgb(14, 28, 46);
   transition: transform 500ms;
 }
 
@@ -169,21 +169,21 @@ p {
 .chip {
   display:inline-flex;
   align-items: center;
-  padding:0rem .3rem;
-  height:1.5rem;
-  line-height:1rem;
+  padding:.5em;
+  height:1.5em;
+  line-height:1em;
   border-radius:9999px;
-  margin: .3rem;
+  margin: .3em;
   font-weight: bolder;
   width:max-content;
   color: antiquewhite;
-  box-shadow: 0.2rem  0.25rem 0.1875rem 0 rgba(0, 0, 0, 0.527);
-  background-color: #3a587081;
+  box-shadow: 0.2em  0.25em 0.1875em 0 rgba(0, 0, 0, 0.527);
+  background-color: rgba(14, 28, 46, 0.719);
 }
 
 .chip:hover {
   background-color: antiquewhite;
-  color:#3a5870;
+  color:rgb(14, 28, 46);
   cursor: pointer;
 }
 
@@ -314,15 +314,15 @@ p {
 
 .scroll-container::after {
   content: "";
-  width: 10em;
+  width: 5em;
   height: 100%;
   position: absolute;
   top: 0;
   right: 0;
   background-image: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgb(14, 28, 46) 100%
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.062) 100%
   );
   will-change: opacity;
   pointer-events: none;
