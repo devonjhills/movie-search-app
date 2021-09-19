@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { useParams, Link, useHistory } from "react-router-dom";
+import { Fragment } from "react/cjs/react.production.min";
 import {
   Container,
   Dimmer,
@@ -137,7 +138,7 @@ const MovieDetails = () => {
 
         <Grid.Column width={11}>
           <Header as="h1" inverted>
-            <span className="mygradient">{movieDetails.title.toUpperCase()}</span>
+            {movieDetails.title.toUpperCase()}
 
             <Header.Subheader style={{ marginTop: "5px" }}>
               {d.toDateString().split(" ").slice(1).join(" ")} {" • "}
@@ -148,7 +149,10 @@ const MovieDetails = () => {
               {movieDetails.genres &&
                 movieDetails.genres.map((genre) => {
                   return (
-                    <div key={genre.id} className="chip" onClick={() => onGenreClick(genre)}>
+                    <div
+                      key={genre.id}
+                      className="chip"
+                      onClick={() => onGenreClick(genre)}>
                       {genre.name}
                     </div>
                   );
@@ -287,80 +291,80 @@ const MovieDetails = () => {
       ) : noData ? (
         <Header>NO MOVIE FOUND</Header>
       ) : (
-        <Container
+        <div
           style={{
-            background: `linear-gradient(to right, rgb(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)),
+            background: `linear-gradient(to right, rgb(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)),
               url(${
                 largeImageUrl + movieDetails.backdrop_path
               }) no-repeat center/cover`,
           }}>
-          <Grid verticalAlign="middle" stackable relaxed padded>
-            <MovieBanner />
-          </Grid>
+          <Container>
+            <Segment basic>
+              <Grid verticalAlign="middle" stackable relaxed padded>
+                <MovieBanner />
+              </Grid>
 
-          <Divider hidden />
+              <Grid stackable relaxed padded>
+                <Grid.Row className="mysegment">
+                  <Grid.Column width={12}>
+                    {topCastList.length !== 0 && (
+                      <>
+                        <Header inverted>
+                          Top Cast
+                        </Header>
+                        <div className="scroll-container">
+                          <ScrollMenu>{topCastList}</ScrollMenu>
+                        </div>
+                      </>
+                    )}
+                  </Grid.Column>
+                  <Grid.Column width={4}>
+                    <Segment basic>
+                      <SidebarDetails />
+                    </Segment>
+                  </Grid.Column>
+                </Grid.Row>
 
-          <Grid stackable relaxed padded>
-            <Grid.Row className="mysegment">
-              <Grid.Column width={12}>
-                {topCastList.length !== 0 && (
-                  <>
-                    <Header inverted>
-                      <span className="mygradient"> Top Cast </span>
-                    </Header>
-                    <div className="scroll-container">
-                      <ScrollMenu>{topCastList}</ScrollMenu>
-                    </div>
-                  </>
-                )}
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <Segment basic>
-                  <SidebarDetails />
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
-
-            <Divider hidden />
-
-            <Grid.Row className="mysegment">
-              <Grid.Column width={12}>
-                {recommended.length !== 0 && (
-                  <>
-                    <Header inverted>
-                      <span className="mygradient">Recommended</span>
-                    </Header>
-                    <div className="scroll-container">
-                      <ScrollMenu>{recommendedList}</ScrollMenu>
-                    </div>
-                  </>
-                )}
-              </Grid.Column>
-              <Grid.Column width={4}>
-                {keywords.length !== 0 && (
-                  <>
-                    <Header inverted>
-                      <span className="mygradient">Keywords</span>
-                    </Header>
-                    {keywords
-                      .slice(0, 15)
-                      .sort((a, b) => a.name.length - b.name.length)
-                      .map((keyword) => {
-                        return (
-                          <div
-                            key={keyword.id}
-                            className="chip"
-                            onClick={() => onKeywordClick(keyword)}>
-                            {keyword.name}
-                          </div>
-                        );
-                      })}
-                  </>
-                )}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
+                <Grid.Row className="mysegment">
+                  <Grid.Column width={12}>
+                    {recommended.length !== 0 && (
+                      <>
+                        <Header inverted>
+                          Recommended
+                        </Header>
+                        <div className="scroll-container">
+                          <ScrollMenu>{recommendedList}</ScrollMenu>
+                        </div>
+                      </>
+                    )}
+                  </Grid.Column>
+                  <Grid.Column width={4}>
+                    {keywords.length !== 0 && (
+                      <>
+                        <Header inverted>
+                         Keywords
+                        </Header>
+                        {keywords
+                          .slice(0, 15)
+                          .sort((a, b) => a.name.length - b.name.length)
+                          .map((keyword) => {
+                            return (
+                              <div
+                                key={keyword.id}
+                                className="chip"
+                                onClick={() => onKeywordClick(keyword)}>
+                                {keyword.name}
+                              </div>
+                            );
+                          })}
+                      </>
+                    )}
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Segment>
+          </Container>
+        </div>
       )}
     </>
   );

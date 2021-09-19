@@ -74,8 +74,8 @@ const PersonDetails = () => {
               </Grid.Column>
 
               <Grid.Column width={11}>
-                <Header className="body-headers" as="h1" color="green" inverted>
-                <span className="mygradient">{personDetails.name.toUpperCase()}</span>
+                <Header className="body-headers" as="h1" inverted>
+                {personDetails.name.toUpperCase()}
                 </Header>
 
                 {personDetails.biography ? (

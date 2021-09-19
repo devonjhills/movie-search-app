@@ -21,18 +21,18 @@ const MenuNavbar = () => {
     <Menu size="small" inverted secondary stackable>
       <Menu.Item header name="home" style={{marginLeft: '10px'}}>
         <Icon className="headericons" name="film" size="big" />
-        <span className='mygradient'>What To Watch?</span>
+        What To Watch?
       </Menu.Item>
       <Menu.Item>
         <Button as={Link} to="/" inverted basic>
           <Icon className="headericons" name="video" />
-          <span className='mygradient'>Movie Hub</span>
+          Movie Hub
         </Button>
       </Menu.Item>
       <Menu.Item>
       <Button as={Link} to="/tvhub" inverted basic>
           <Icon className="headericons" name="tv" />
-          <span className='mygradient'>TV Hub</span>
+          TV Hub
         </Button>
       </Menu.Item>
       <Menu.Menu position="right">
