@@ -333,3 +333,16 @@ p {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.mykeyword {
+  display:inline-flex;
+  align-items: center;
+  padding:.5em;
+  height:1.5em;
+  border-radius:9999px;
+  margin-left: .2em;
+  font-weight: bolder;
+  color: antiquewhite;
+  box-shadow: 0.2em  0.25em 0.1875em 0 rgba(0, 0, 0, 0.527);
+  background-color: rgba(14, 28, 46, 0.719);
+}

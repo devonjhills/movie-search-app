@@ -87,6 +87,12 @@ const MovieDetails = () => {
     <MovieCard key={movie.id} movie={movie} />
   ));
 
+  const history = useHistory();
+
+  const onKeywordClick = (keyword) => {
+    history.push(`/keyword?query=${keyword.name}&id=${keyword.id}`);
+  };
+
   const MovieBanner = () => {
     const formatRuntime = (runtime) => {
       let hours = (runtime / 60).toFixed(0);
@@ -127,7 +133,7 @@ const MovieDetails = () => {
 
         <Grid.Column width={11}>
           <Header as="h1" inverted>
-            <span className="mygradient">{movieDetails.title}</span>
+            <span className="mygradient">{movieDetails.title.toUpperCase()}</span>
 
             <Header.Subheader style={{ marginTop: "5px" }}>
               {d.toDateString().split(" ").slice(1).join(" ")} {" • "}
@@ -265,12 +271,6 @@ const MovieDetails = () => {
     );
   };
 
-  const history = useHistory();
-
-  const onKeywordClick = (keyword) => {
-    history.push("/keyword?query=" + keyword);
-  };
-
   return (
     <>
       <ScrollToTop />
@@ -346,7 +346,7 @@ const MovieDetails = () => {
                           <div
                             key={keyword.id}
                             className="chip"
-                            onClick={() => onKeywordClick(keyword.id)}>
+                            onClick={() => onKeywordClick(keyword)}>
                             {keyword.name}
                           </div>
                         );
