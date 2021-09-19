@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   imageUrl,
   movieDetailsUrl,
+  movieDiscoverUrl,
   moviesNowPlayingUrl,
   moviesPopularUrl,
   moviesTopUrl,
@@ -160,6 +161,27 @@ export const fetchTopTv = async () => {
     });
 
     return data.results;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const discoverMovies = async (keyword) => {
+  try {
+    const { data } = await axios.get(movieDiscoverUrl, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        region: "US",
+        sort_by: "popularity.desc",
+        page: 1,
+        with_keywords: keyword,
+      },
+    });
+
+    return data.results.map((movie) => {
+      return formatResults(movie);
+    });
   } catch (error) {
     console.error(error);
   }

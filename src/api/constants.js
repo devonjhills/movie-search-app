@@ -14,6 +14,9 @@ export const tvTopUrl = `${baseUrl}/tv/top_rated`;
 
 export const searchUrl = `${baseUrl}/search/multi`;
 
+export const movieDiscoverUrl = `${baseUrl}/discover/movie`;
+export const tvDiscoverUrl = `${baseUrl}/discover/tv`;
+
 //https://developers.themoviedb.org/3/getting-started/images
 export const imageUrl = "https://image.tmdb.org/t/p/w500";
 export const posterCardUrl = "https://image.tmdb.org/t/p/w185";
