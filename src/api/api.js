@@ -166,7 +166,7 @@ export const fetchTopTv = async () => {
   }
 };
 
-export const discoverMovies = async (keyword) => {
+export const discoverMovies = async (id, genre, keyword) => {
   try {
     const { data } = await axios.get(movieDiscoverUrl, {
       params: {
@@ -175,7 +175,8 @@ export const discoverMovies = async (keyword) => {
         region: "US",
         sort_by: "popularity.desc",
         page: 1,
-        with_keywords: keyword,
+        ...(genre ? {with_genres: id} : {}),
+        ...(keyword ? {with_keywords: id} : {}),
       },
     });
 
