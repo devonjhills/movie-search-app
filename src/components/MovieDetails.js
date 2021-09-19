@@ -90,7 +90,11 @@ const MovieDetails = () => {
   const history = useHistory();
 
   const onKeywordClick = (keyword) => {
-    history.push(`/keyword?query=${keyword.name}&id=${keyword.id}`);
+    history.push(`/discover?keyword=${keyword.name}&id=${keyword.id}`);
+  };
+
+  const onGenreClick = (genre) => {
+    history.push(`/discover?genre=${genre.name}&id=${genre.id}`);
   };
 
   const MovieBanner = () => {
@@ -144,7 +148,7 @@ const MovieDetails = () => {
               {movieDetails.genres &&
                 movieDetails.genres.map((genre) => {
                   return (
-                    <div key={genre.id} className="chip">
+                    <div key={genre.id} className="chip" onClick={() => onGenreClick(genre)}>
                       {genre.name}
                     </div>
                   );
