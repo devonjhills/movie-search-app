@@ -58,7 +58,7 @@ const PersonDetails = () => {
       ) : (
         <Container>
           <Grid verticalAlign="middle" stackable relaxed padded>
-            <Grid.Row>
+            <Grid.Row className='mysegment'>
               <Grid.Column width={5}>
                 {personDetails.profile_path ? (
                   <Image src={imageUrl + personDetails.profile_path} />
@@ -75,7 +75,7 @@ const PersonDetails = () => {
 
               <Grid.Column width={11}>
                 <Header className="body-headers" as="h1" color="green" inverted>
-                  {personDetails.name}
+                <span className="mygradient">{personDetails.name}</span>
                 </Header>
 
                 {personDetails.biography ? (

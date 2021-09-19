@@ -16,7 +16,7 @@ p {
 
 .content-wrap {
   flex: 1;
-  padding-bottom: 20px;
+  padding-bottom: .5em;
 }
 
 .footer {
@@ -46,27 +46,6 @@ p {
 
 .headericons {
   padding-right: 20px;
-}
-
-.mystars {
-  margin-left: 20px;
-}
-
-.mydimmer {
-  width: 19%;
-  min-width: 200px;
-  margin-right: 5px;
-  cursor: pointer;
-  transition: transform 500ms;
-}
-
-.mydimmer:hover {
-  transform: translate(5px, -5px);
-  cursor: pointer;
-}
-
-.persondimmer {
-  min-width: 130px;
 }
 
 .modalheader {
@@ -187,6 +166,10 @@ p {
   cursor: pointer;
 }
 
+.mysegment {
+  background-color: rgba(0, 0, 0, 0.555);
+}
+
 .moviecard {
   display: block;
   text-align: center;
@@ -264,28 +247,20 @@ p {
 
 .ui.divided.items > .item {
   border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+
 }
 
 .ui.divided.items > .item:first-child {
   border-top: none !important;
 }
+
+
 /*
-*  END Semantic UI overrides
+*  Custom Scrollbar 
 */
-
-.body-headers::before {
-  content: "";
-  background: rgb(255, 255, 255);
-  margin-left: -0.75rem;
-  align-self: flex-start;
-  position: absolute;
-  width: 4px;
-  height: 1.5em;
-  box-sizing: border-box;
-}
-
 ::-webkit-scrollbar {
   color: rgba(0, 0, 0, 0.507);
+  width: .8em;
 }
 
 ::-webkit-scrollbar-track {
@@ -321,15 +296,15 @@ p {
   right: 0;
   background-image: linear-gradient(
     to right,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.062) 100%
+    #00000000 0%,
+    rgba(0, 0, 0, 0) 100%
   );
   will-change: opacity;
   pointer-events: none;
 }
 
 .my-scroll {
-  max-height: 85vh;
+  max-height: 80vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
