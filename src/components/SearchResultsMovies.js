@@ -7,7 +7,7 @@ const SearchResultsMovies = ({ movie }) => {
   const d = new Date(`${movie.release_date}`);
 
   return (
-    <Item as={Link} to={`/${movie.id}`}>
+    <Item as={Link} to={`/${movie.id}`} >
       {movie.poster_path ? (
         <Item.Image size="tiny" src={searchResultUrl + movie.poster_path} />
       ) : (

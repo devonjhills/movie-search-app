@@ -58,11 +58,11 @@ const DiscoverPage = () => {
         </Container>
       ) : (
         <Container>
-          <Header size="large" inverted attached="top">
+          <Header attached="top" inverted >
             {`Other movies with ${keywordName ? 'keyword' : 'genre'}`}
             <span className="mykeyword">{`${keywordName ?? genreName}`}</span>
           </Header>
-          <Segment inverted attached>
+          <Segment attached inverted>
             <div className="my-scroll">
               {keywordMovies?.length > 0 ? (
                 <Item.Group divided relaxed>

@@ -1,6 +1,5 @@
 body {
-  background-color: rgb(14, 28, 46) !important;
-  margin: 0;
+  background-color: rgb(0, 0, 0) !important;
 }
 
 p {
@@ -30,6 +29,8 @@ p {
 
 .logo {
   display: flex;
+  color: white;
+  font-weight: bold;
   align-items: center;
   position: absolute;
   right: 0;
@@ -54,36 +55,8 @@ p {
   left: 1.5em;
 }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.mygradient {
-  font-size: 1.1em;
-  font-weight: bold;
-  line-height: normal;
-  background-image: linear-gradient(
-    30deg,
-    #90cea1 0%,
-    #01b4e4 46%,
-    #2a6070 100%
-  );
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
 .link-hover:hover {
-  background-image: linear-gradient(
-    30deg,
-    #90cea1 0%,
-    #01b4e4 46%,
-    #2a6070 100%
-  );
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: rgba(53, 103, 136, 0.541);
 }
 
 .myrating {
@@ -125,7 +98,7 @@ p {
   height: 100%;
   margin-right: 5px;
   border-radius: 25px;
-  background-color: rgb(14, 28, 46);
+  background-color: rgb(0, 0, 0);
   transition: transform 500ms;
 }
 
@@ -155,19 +128,32 @@ p {
   margin: .3em;
   font-weight: bolder;
   width:max-content;
-  color: antiquewhite;
-  box-shadow: 0.2em  0.25em 0.1875em 0 rgba(0, 0, 0, 0.527);
-  background-color: rgba(14, 28, 46, 0.719);
+  color: rgb(0, 0, 0);
+  box-shadow: 0.2em  0.25em 0.1875em 0 rgba(126, 126, 126, 0.288);
+  background-color: rgba(255, 255, 255, 0.719);
 }
 
 .chip:hover {
-  background-color: antiquewhite;
-  color:rgb(14, 28, 46);
+  background-color: rgb(0, 0, 0);
+  color: rgba(255, 255, 255, 0.719);
   cursor: pointer;
 }
 
+.mykeyword {
+  display:inline-flex;
+  align-items: center;
+  padding:.5em;
+  height:1.5em;
+  border-radius:9999px;
+  margin-left: .3em;
+  font-weight: bolder;
+  color: rgb(0, 0, 0);
+  box-shadow: 0.2em  0.25em 0.1875em 0 rgba(0, 0, 0, 0.527);
+  background-color: rgba(255, 255, 255, 0.719);
+}
+
 .mysegment {
-  background-color: rgba(0, 0, 0, 0.555);
+  background-color: rgba(0, 0, 0, 0.665);
 }
 
 .moviecard {
@@ -217,16 +203,8 @@ p {
 
 .ui.tab {
   background-color: rgb(27, 28, 29) !important;
-  border-color: #0e1c2e !important;
 }
 
-.ui.tabular.menu {
-  border-bottom: 1px solid #0e1c2e !important;
-}
-
-.ui.tabular.menu .active.item {
-  border-color: #0e1c2e !important;
-}
 
 .ui.items > .item > .content > .header {
   color: white !important;
@@ -287,22 +265,6 @@ p {
   width: 100%;
 }
 
-.scroll-container::after {
-  content: "";
-  width: 5em;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-image: linear-gradient(
-    to right,
-    #00000000 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  will-change: opacity;
-  pointer-events: none;
-}
-
 .my-scroll {
   max-height: 80vh;
   overflow-x: hidden;
@@ -320,7 +282,7 @@ p {
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0) 0%,
-    rgb(14, 28, 46) 100%
+    rgb(0, 0, 0) 100%
   );
   will-change: opacity;
   pointer-events: none;
@@ -334,15 +296,3 @@ p {
   overflow: hidden;
 }
 
-.mykeyword {
-  display:inline-flex;
-  align-items: center;
-  padding:.5em;
-  height:1.5em;
-  border-radius:9999px;
-  margin-left: .3em;
-  font-weight: bolder;
-  color: antiquewhite;
-  box-shadow: 0.2em  0.25em 0.1875em 0 rgba(0, 0, 0, 0.527);
-  background-color: rgba(14, 28, 46, 0.719);
-}
