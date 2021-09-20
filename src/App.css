@@ -126,7 +126,8 @@ p {
   height:1.5em;
   line-height:1em;
   border-radius:9999px;
-  margin: .3em;
+  margin-right: .3em;
+  margin-bottom: .3em;
   font-weight: bolder;
   width:max-content;
   color: rgb(0, 0, 0);

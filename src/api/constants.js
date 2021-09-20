@@ -18,9 +18,11 @@ export const movieDiscoverUrl = `${baseUrl}/discover/movie`;
 export const tvDiscoverUrl = `${baseUrl}/discover/tv`;
 
 //https://developers.themoviedb.org/3/getting-started/images
+//https://www.themoviedb.org/talk/53c11d4ec3a3684cf4006400
 export const imageUrl = "https://image.tmdb.org/t/p/w500";
 export const posterCardUrl = "https://image.tmdb.org/t/p/w185";
 export const searchResultUrl = "https://image.tmdb.org/t/p/w300";
 export const personThumbnailUrl =
   "https://image.tmdb.org/t/p/w138_and_h175_face";
 export const largeImageUrl = "https://image.tmdb.org/t/p/original";
+export const logoUrl = "https://image.tmdb.org/t/p/w92";
