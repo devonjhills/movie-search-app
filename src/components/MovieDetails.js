@@ -111,7 +111,7 @@ const MovieDetails = () => {
     const directorList =
       directors &&
       directors.map((d) => (
-        <Link key={d.id} to={`/person/${d.id}`}>
+        <Link key={d.credit_id} to={`/person/${d.id}`}>
           <div className="chip">{d.name}</div>
         </Link>
       ));
@@ -119,7 +119,7 @@ const MovieDetails = () => {
     const writerList =
       writers &&
       writers.map((w) => (
-        <Link key={w.id} to={`/person/${w.id}`}>
+        <Link key={w.credit_id} to={`/person/${w.id}`}>
           <div className="chip">{`${w.name} (${w.job})`}</div>
         </Link>
       ));

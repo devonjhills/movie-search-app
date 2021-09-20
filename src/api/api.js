@@ -8,6 +8,7 @@ import {
   moviesTopUrl,
   personUrl,
   searchUrl,
+  tvDetailsUrl,
   tvNowPlayingUrl,
   tvPopularUrl,
   tvTopUrl,
@@ -37,6 +38,23 @@ export const fetchMovieDetails = async (movieId) => {
         language: "en_US",
         append_to_response:
           "videos,credits,external_ids,recommendations,release_dates,reviews,keywords",
+      },
+    });
+    console.dir(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchTvDetails = async (tvId) => {
+  try {
+    const { data } = await axios.get(tvDetailsUrl + tvId, {
+      params: {
+        api_key: API_KEY,
+        language: "en_US",
+        append_to_response:
+          "videos,credits,external_ids,recommendations,reviews,keywords",
       },
     });
     console.dir(data);
