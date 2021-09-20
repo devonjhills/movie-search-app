@@ -10,6 +10,7 @@ import FourOhFour from "./components/FourOhFour";
 import PersonDetails from "./components/PersonDetails";
 import Footer from "./components/Footer";
 import DiscoverPage from "./components/DiscoverPage";
+import TvDetails from "./components/TvDetails";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route exact path="/results" component={SearchPage} />
             <Route exact path="/discover" component={DiscoverPage} />
             <Route exact path="/tvhub" component={TvHub} />
+            <Route exact path="/tvhub/:tvId" component={TvDetails} />
             <Route exact path="/:movieId" component={MovieDetails} />
             <Route exact path="/person/:personId" component={PersonDetails} />
             <Route exact path='/fourohfour' component={FourOhFour} />

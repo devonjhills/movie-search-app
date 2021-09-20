@@ -14,13 +14,15 @@ export const getMovieTrailer = (movie) => {
   officialTrailer
     ? (movieTrailerKey = officialTrailer.key)
     : (movieTrailerKey = trailer && trailer.key);
-    
+
   return movieTrailerKey;
 };
 
 export const getMovieRating = (movie) => {
   // fetch MPAA rating for US release
-  let ratingUs = movie.release_dates?.results?.find((e) => e.iso_3166_1 === "US");
+  let ratingUs = movie.release_dates?.results?.find(
+    (e) => e.iso_3166_1 === "US"
+  );
   let rating = ratingUs?.release_dates[0].certification;
 
   return rating;
@@ -28,29 +30,23 @@ export const getMovieRating = (movie) => {
 
 export const getMovieDirectors = (movie) => {
   // fetch director(s) from crew list
-  let directors = [];
-  movie.credits.crew.forEach((crewMember) => {
-    if (crewMember.job === "Director") {
-      directors.push(crewMember);
-    }
-  });
+  let directors = movie.credits.crew.filter(
+    (crewMember) => crewMember.job === "Director"
+  );
 
   return directors;
 };
 
 export const getMovieWriters = (movie) => {
   // fetch writer(s) from crew list
-  let writers = [];
-  movie.credits.crew.forEach((crewMember) => {
-    if (
+  let writers = movie.credits.crew.filter(
+    (crewMember) =>
       crewMember.job === "Writer" ||
       crewMember.job === "Screenplay" ||
       crewMember.job === "Novel" ||
       crewMember.job === "Characters"
-    ) {
-      writers.push(crewMember);
-    }
-  });
+  );
 
+  console.log(writers);
   return writers;
 };

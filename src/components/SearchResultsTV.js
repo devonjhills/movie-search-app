@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Icon, Item } from "semantic-ui-react";
 import { searchResultUrl } from "../api/constants";
 
@@ -6,7 +7,7 @@ const SearchResultsTV = ({ show }) => {
   const d = new Date(`${show.first_air_date}`);
 
   return (
-    <Item>
+    <Item as={Link} to={`/tvhub/${show.id}`}>
       {show.poster_path ? (
         <Item.Image size="tiny" src={searchResultUrl + show.poster_path} />
       ) : (
@@ -16,7 +17,9 @@ const SearchResultsTV = ({ show }) => {
       )}
 
       <Item.Content>
-        <Item.Header>{show.name}</Item.Header>
+        <Item.Header>
+          <span className="link-hover">{show.name}</span>
+        </Item.Header>
         <Item.Meta>
           First Aired -{" "}
           {show.first_air_date
