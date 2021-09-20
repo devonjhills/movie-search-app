@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -19,7 +19,7 @@ import {
 import { fetchTvDetails } from "../api/api";
 import { imageUrl, largeImageUrl, logoUrl } from "../api/constants";
 import { getShowTrailer } from "../api/helpers";
-import MovieCard from "./MovieCard";
+import MediaCard from "./MediaCard";
 import PersonCard from "./PersonCard";
 import ScrollToTop from "./ScrollToTop";
 import SocialButtons from "./SocialButtons";
@@ -62,10 +62,20 @@ const TvDetails = () => {
       .map((person) => <PersonCard key={person.id} person={person} />);
 
   const recommendedList = tvDetails?.recommendations?.results.map((show) => (
-    <MovieCard key={show.id} movie={show} />
+    <MediaCard key={show.id} media={show} mediaType='tv' />
   ));
 
   const keywords = tvDetails?.keywords?.results;
+
+  const history = useHistory();
+
+  const onKeywordClick = (keyword) => {
+    history.push(`/discover?media=tv&keyword=${keyword.name}&id=${keyword.id}`);
+  };
+
+  const onGenreClick = (genre) => {
+    history.push(`/discover?media=tv&genre=${genre.name}&id=${genre.id}`);
+  };
 
   const TvBanner = () => {
     const creatorsList =
@@ -104,7 +114,10 @@ const TvDetails = () => {
               {tvDetails.genres &&
                 tvDetails.genres.map((genre) => {
                   return (
-                    <div key={genre.id} className="chip">
+                    <div
+                      key={genre.id}
+                      className="chip"
+                      onClick={() => onGenreClick(genre)}>
                       {genre.name}
                     </div>
                   );
@@ -268,7 +281,10 @@ const TvDetails = () => {
                           .sort((a, b) => a.name.length - b.name.length)
                           .map((keyword) => {
                             return (
-                              <div key={keyword.id} className="chip">
+                              <div
+                                key={keyword.id}
+                                className="chip"
+                                onClick={() => onKeywordClick(keyword)}>
                                 {keyword.name}
                               </div>
                             );

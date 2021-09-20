@@ -9,6 +9,7 @@ import {
   personUrl,
   searchUrl,
   tvDetailsUrl,
+  tvDiscoverUrl,
   tvNowPlayingUrl,
   tvPopularUrl,
   tvTopUrl,
@@ -184,23 +185,30 @@ export const fetchTopTv = async () => {
   }
 };
 
-export const discoverMovies = async (id, genre, keyword) => {
+export const discoverMedia = async (id, genre, keyword, media) => {
+  let mediaUrl = (media) => {
+    if (media === "movie") {
+      return movieDiscoverUrl;
+    } else if (media === "tv") {
+      return tvDiscoverUrl;
+    }
+  };
+
   try {
-    const { data } = await axios.get(movieDiscoverUrl, {
+    const { data } = await axios.get(mediaUrl(media), {
       params: {
         api_key: API_KEY,
         language: "en_US",
         region: "US",
         sort_by: "popularity.desc",
         page: 1,
-        ...(genre ? {with_genres: id} : {}),
-        ...(keyword ? {with_keywords: id} : {}),
+        ...(genre ? { with_genres: id } : {}),
+        ...(keyword ? { with_keywords: id } : {}),
       },
     });
 
-    return data.results.map((movie) => {
-      return formatResults(movie);
-    });
+    return data.results;
+    
   } catch (error) {
     console.error(error);
   }

@@ -24,7 +24,7 @@ import {
   getMovieTrailer,
   getMovieWriters,
 } from "../api/helpers";
-import MovieCard from "./MovieCard";
+import MediaCard from "./MediaCard";
 import PersonCard from "./PersonCard";
 import ScrollToTop from "./ScrollToTop";
 import SocialButtons from "./SocialButtons";
@@ -85,17 +85,17 @@ const MovieDetails = () => {
       .map((person) => <PersonCard key={person.id} person={person} />);
 
   const recommendedList = recommended?.map((movie) => (
-    <MovieCard key={movie.id} movie={movie} />
+    <MediaCard key={movie.id} media={movie} mediaType='movie' />
   ));
 
   const history = useHistory();
 
   const onKeywordClick = (keyword) => {
-    history.push(`/discover?keyword=${keyword.name}&id=${keyword.id}`);
+    history.push(`/discover?media=movie&keyword=${keyword.name}&id=${keyword.id}`);
   };
 
   const onGenreClick = (genre) => {
-    history.push(`/discover?genre=${genre.name}&id=${genre.id}`);
+    history.push(`/discover?media=movie&genre=${genre.name}&id=${genre.id}`);
   };
 
   const MovieBanner = () => {

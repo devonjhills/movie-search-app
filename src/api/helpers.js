@@ -59,6 +59,5 @@ export const getMovieWriters = (movie) => {
       crewMember.job === "Characters"
   );
 
-  console.log(writers);
   return writers;
 };

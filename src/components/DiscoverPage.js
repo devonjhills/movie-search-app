@@ -8,13 +8,15 @@ import {
   Loader,
   Segment,
 } from "semantic-ui-react";
-import { discoverMovies } from "../api/api";
+import { discoverMedia } from "../api/api";
 import SearchResultsMovies from "./SearchResultsMovies";
+import SearchResultsTV from "./SearchResultsTV";
 
 const DiscoverPage = () => {
-  const [keywordMovies, setKeywordMovies] = useState([]);
+  const [matchingResults, setMatchingResults] = useState([]);
   const [keywordName, setKeywordName] = useState("");
   const [genreName, setGenreName] = useState("");
+  const [mediaType, setMediaType] = useState("");
   const [loading, setLoading] = useState(true);
 
   const { search } = useLocation();
@@ -26,19 +28,23 @@ const DiscoverPage = () => {
     const id = params.get("id");
     const keywordString = params.get("keyword");
     const genreString = params.get("genre");
-    
+    const mediaString = params.get("media");
+
     const moviesByKeyword = async () => {
-      await discoverMovies(id, genreString, keywordString).then((data) => {
-        if (data === undefined) {
-          console.log("fetch keyword results error");
+      await discoverMedia(id, genreString, keywordString, mediaString).then(
+        (data) => {
+          if (data === undefined) {
+            console.log("fetch keyword results error");
+          }
+          if (isMounted) {
+            setMatchingResults(data);
+            setKeywordName(keywordString);
+            setGenreName(genreString);
+            setMediaType(mediaString);
+            setLoading(false);
+          }
         }
-        if (isMounted) {
-          setKeywordMovies(data);
-          setKeywordName(keywordString);
-          setGenreName(genreString);
-          setLoading(false);
-        }
-      });
+      );
     };
 
     moviesByKeyword();
@@ -58,17 +64,23 @@ const DiscoverPage = () => {
         </Container>
       ) : (
         <Container>
-          <Header attached="top" inverted >
-            {`Other movies with ${keywordName ? 'keyword' : 'genre'}`}
+          <Header attached="top" inverted>
+            {`Other ${mediaType === "movie" ? "movies" : "shows"} with ${
+              keywordName ? "keyword" : "genre"
+            }`}
             <span className="mykeyword">{`${keywordName ?? genreName}`}</span>
           </Header>
           <Segment attached inverted>
             <div className="my-scroll">
-              {keywordMovies?.length > 0 ? (
+              {matchingResults?.length > 0 ? (
                 <Item.Group divided relaxed>
-                  {keywordMovies?.map((movie) => (
-                    <SearchResultsMovies key={movie.id} movie={movie} />
-                  ))}
+                  {matchingResults?.map((media) =>
+                    mediaType === "movie" ? (
+                      <SearchResultsMovies key={media.id} movie={media} />
+                    ) : (
+                      <SearchResultsTV key={media.id} show={media} />
+                    )
+                  )}
                 </Item.Group>
               ) : (
                 <p>No Results</p>
