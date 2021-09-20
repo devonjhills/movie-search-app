@@ -18,6 +18,18 @@ export const getMovieTrailer = (movie) => {
   return movieTrailerKey;
 };
 
+export const getShowTrailer = (show) => {
+  // Attempt to fetch video matching 'Official Trailer', then 'Trailer', or return undefined
+  let trailerKey = "";
+  let trailer = "";
+
+  trailer = show.videos.results.find((e) => e.name.includes("Trailer"));
+
+  trailerKey = trailer && trailer.key;
+
+  return trailerKey;
+};
+
 export const getMovieRating = (movie) => {
   // fetch MPAA rating for US release
   let ratingUs = movie.release_dates?.results?.find(

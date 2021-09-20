@@ -21,9 +21,8 @@ const SearchResultsTV = ({ show }) => {
           <span className="link-hover">{show.name}</span>
         </Item.Header>
         <Item.Meta>
-          First Aired -{" "}
           {show.first_air_date
-            ? d.toDateString().split(" ").slice(1).join(" ")
+            ? d.getFullYear()
             : "Date Not Found"}
         </Item.Meta>
         <Item.Description className="search-text">

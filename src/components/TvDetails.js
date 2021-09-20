@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import {
   Container,
   Dimmer,
   Divider,
+  Embed,
   Grid,
   Header,
   Icon,
   Image,
+  List,
   Loader,
+  Modal,
   Segment,
 } from "semantic-ui-react";
 import { fetchTvDetails } from "../api/api";
-import { imageUrl, largeImageUrl } from "../api/constants";
+import { imageUrl, largeImageUrl, logoUrl } from "../api/constants";
+import { getShowTrailer } from "../api/helpers";
+import MovieCard from "./MovieCard";
+import PersonCard from "./PersonCard";
 import ScrollToTop from "./ScrollToTop";
+import SocialButtons from "./SocialButtons";
 
 const TvDetails = () => {
   const urlId = useParams();
   const tvId = urlId.tvId;
 
   const [tvDetails, setTvDetails] = useState([]);
+  const [trailer, setTrailer] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +41,7 @@ const TvDetails = () => {
       await fetchTvDetails(tvId).then((data) => {
         if (isMounted) {
           setTvDetails(data);
+          setTrailer(getShowTrailer(data));
           setLoading(false);
         }
       });
@@ -42,6 +52,20 @@ const TvDetails = () => {
       isMounted = false;
     };
   }, [tvId]);
+
+  const d = new Date(`${tvDetails.first_air_date}`);
+
+  const topCastList =
+    tvDetails?.credits &&
+    tvDetails?.credits.cast
+      .slice(0, 10)
+      .map((person) => <PersonCard key={person.id} person={person} />);
+
+  const recommendedList = tvDetails?.recommendations?.results.map((show) => (
+    <MovieCard key={show.id} movie={show} />
+  ));
+
+  const keywords = tvDetails?.keywords?.results;
 
   const TvBanner = () => {
     const creatorsList =
@@ -69,6 +93,8 @@ const TvDetails = () => {
             {tvDetails.name.toUpperCase()}
 
             <Header.Subheader style={{ marginTop: "5px" }}>
+              {tvDetails.first_air_date && d.getFullYear()}
+              {" • "}
               {tvDetails.number_of_seasons &&
                 `${tvDetails.number_of_seasons} Seasons`}
               {" • "}
@@ -107,8 +133,79 @@ const TvDetails = () => {
           )}
 
           <Divider hidden />
+
+          {trailer && (
+            <Header inverted as="h5">
+              <Icon inverted name="play" />
+              <Header.Content>
+                <Modal
+                  basic
+                  size="large"
+                  trigger={
+                    trailer !== undefined && (
+                      <div className="chip">{tvDetails.name} Trailer</div>
+                    )
+                  }>
+                  <Modal.Content>
+                    <Embed
+                      id={trailer}
+                      source="youtube"
+                      active
+                      iframe={{
+                        allowFullScreen: true,
+                      }}
+                    />
+                  </Modal.Content>
+                </Modal>
+              </Header.Content>
+            </Header>
+          )}
         </Grid.Column>
       </Grid.Row>
+    );
+  };
+
+  const SidebarDetails = () => {
+    return (
+      <List size="big" inverted relaxed divided>
+        <List.Item>
+          <List.Content>
+            <List.Header>
+              <Icon name="star" color="yellow" />
+              {tvDetails.vote_average} /10
+            </List.Header>
+            <List.Description>
+              {tvDetails.vote_count.toLocaleString("en-US")} Ratings
+            </List.Description>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Content>
+            <List.Header>Network</List.Header>
+            <List.Description>
+              <Image
+                style={{ marginTop: ".2em" }}
+                src={logoUrl + tvDetails.networks[0].logo_path}
+              />
+            </List.Description>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Content>
+            <List.Header>Type</List.Header>
+            <List.Description>{tvDetails.type}</List.Description>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <List.Content>
+            <List.Header>Status</List.Header>
+            <List.Description>{tvDetails.status}</List.Description>
+          </List.Content>
+        </List.Item>
+        <List.Item>
+          <SocialButtons externals={tvDetails.external_ids} />
+        </List.Item>
+      </List>
     );
   };
 
@@ -133,6 +230,53 @@ const TvDetails = () => {
             <Segment basic>
               <Grid verticalAlign="middle" stackable relaxed padded>
                 <TvBanner />
+
+                <Grid.Row className="mysegment">
+                  <Grid.Column width={12}>
+                    {topCastList.length !== 0 && (
+                      <>
+                        <Header inverted>Top Cast</Header>
+                        <div className="scroll-container">
+                          <ScrollMenu>{topCastList}</ScrollMenu>
+                        </div>
+                      </>
+                    )}
+                  </Grid.Column>
+                  <Grid.Column width={4}>
+                    <Segment basic>
+                      <SidebarDetails />
+                    </Segment>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row className="mysegment">
+                  <Grid.Column width={12}>
+                    {tvDetails?.recommendations?.results?.length !== 0 && (
+                      <>
+                        <Header inverted>Recommended</Header>
+                        <div className="scroll-container">
+                          <ScrollMenu>{recommendedList}</ScrollMenu>
+                        </div>
+                      </>
+                    )}
+                  </Grid.Column>
+                  <Grid.Column width={4}>
+                    {keywords.length !== 0 && (
+                      <>
+                        <Header inverted>Keywords</Header>
+                        {keywords
+                          .slice(0, 15)
+                          .sort((a, b) => a.name.length - b.name.length)
+                          .map((keyword) => {
+                            return (
+                              <div key={keyword.id} className="chip">
+                                {keyword.name}
+                              </div>
+                            );
+                          })}
+                      </>
+                    )}
+                  </Grid.Column>
+                </Grid.Row>
               </Grid>
             </Segment>
           </Container>
