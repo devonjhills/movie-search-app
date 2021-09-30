@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Dimmer, Item, Loader, Tab } from "semantic-ui-react";
+import { Container, Dimmer, Header, Item, Loader, Tab } from "semantic-ui-react";
 import { fetchNewTv, fetchPopularTv, fetchTopTv } from "../api/api";
 import SearchResultsTV from "./SearchResultsTV";
 
@@ -90,6 +90,9 @@ const TvHub = () => {
         </Container>
       ) : (
         <Container>
+        <Header size="huge" attached="top" textAlign="center" inverted color='green'>
+            TV Hub
+          </Header>
           <Tab panes={panes} renderActiveOnly={false} />
         </Container>
       )}

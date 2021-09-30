@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { useParams, Link, useHistory } from "react-router-dom";
-import { Fragment } from "react/cjs/react.production.min";
 import {
   Container,
   Dimmer,
@@ -16,7 +15,7 @@ import {
   Modal,
   Segment,
 } from "semantic-ui-react";
-import { fetchMovieDetails, formatResults } from "../api/api";
+import { fetchMovieDetails } from "../api/api";
 import { imageUrl, largeImageUrl } from "../api/constants";
 import {
   getMovieDirectors,
@@ -72,26 +71,22 @@ const MovieDetails = () => {
 
   const keywords = movieDetails?.keywords?.keywords;
 
-  const recommended =
-    movieDetails?.recommendations?.results &&
-    movieDetails.recommendations.results.map((movie) => {
-      return formatResults(movie);
-    });
-
   const topCastList =
     movieDetails?.credits &&
     movieDetails?.credits.cast
       .slice(0, 10)
       .map((person) => <PersonCard key={person.id} person={person} />);
 
-  const recommendedList = recommended?.map((movie) => (
-    <MediaCard key={movie.id} media={movie} mediaType='movie' />
+  const recommendedList = movieDetails?.recommendations?.results.map((movie) => (
+    <MediaCard key={movie.id} id={movie.id} poster={movie.poster_path} mediaType="movie" />
   ));
 
   const history = useHistory();
 
   const onKeywordClick = (keyword) => {
-    history.push(`/discover?media=movie&keyword=${keyword.name}&id=${keyword.id}`);
+    history.push(
+      `/discover?media=movie&keyword=${keyword.name}&id=${keyword.id}`
+    );
   };
 
   const onGenreClick = (genre) => {
@@ -128,7 +123,10 @@ const MovieDetails = () => {
       <Grid.Row className="mysegment">
         <Grid.Column width={5}>
           {movieDetails.poster_path ? (
-            <Image src={imageUrl + movieDetails.poster_path} />
+            <Image
+              style={{ borderRadius: "10px" }}
+              src={imageUrl + movieDetails.poster_path}
+            />
           ) : (
             <div className="no-search-image">
               <Icon size="massive" name="image outline" color="grey" />
@@ -309,9 +307,7 @@ const MovieDetails = () => {
                   <Grid.Column width={12}>
                     {topCastList.length !== 0 && (
                       <>
-                        <Header inverted>
-                          Top Cast
-                        </Header>
+                        <Header inverted>Top Cast</Header>
                         <div className="scroll-container">
                           <ScrollMenu>{topCastList}</ScrollMenu>
                         </div>
@@ -327,11 +323,9 @@ const MovieDetails = () => {
 
                 <Grid.Row className="mysegment">
                   <Grid.Column width={12}>
-                    {recommended.length !== 0 && (
+                    {recommendedList.length !== 0 && (
                       <>
-                        <Header inverted>
-                          Recommended
-                        </Header>
+                        <Header inverted>Recommended</Header>
                         <div className="scroll-container">
                           <ScrollMenu>{recommendedList}</ScrollMenu>
                         </div>
@@ -341,9 +335,7 @@ const MovieDetails = () => {
                   <Grid.Column width={4}>
                     {keywords.length !== 0 && (
                       <>
-                        <Header inverted>
-                         Keywords
-                        </Header>
+                        <Header inverted>Keywords</Header>
                         {keywords
                           .slice(0, 15)
                           .sort((a, b) => a.name.length - b.name.length)
