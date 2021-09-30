@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Container, Dimmer, Item, Loader, Tab } from "semantic-ui-react";
+import {
+  Container,
+  Dimmer,
+  Header,
+  Item,
+  Loader,
+  Tab,
+} from "semantic-ui-react";
 import {
   fetchNewMovieReleases,
   fetchPopularMovies,
@@ -40,9 +47,13 @@ const MovieHub = () => {
 
   const panes = [
     {
-      menuItem: { key: 'new', icon: 'calendar check outline', content: 'New Releases' },
+      menuItem: {
+        key: "new",
+        icon: "calendar check outline",
+        content: "New Releases",
+      },
       pane: (
-        <Tab.Pane key='new-pane'>
+        <Tab.Pane key="new-pane">
           <div className="my-scroll">
             <Item.Group divided relaxed>
               {newMovies.map((movie) => (
@@ -54,9 +65,9 @@ const MovieHub = () => {
       ),
     },
     {
-      menuItem: { key: 'popular', icon: 'fire', content: 'Popular Today' },
+      menuItem: { key: "popular", icon: "fire", content: "Popular Today" },
       pane: (
-        <Tab.Pane key='popular-pane'>
+        <Tab.Pane key="popular-pane">
           <div className="my-scroll">
             <Item.Group divided relaxed>
               {popularMovies.map((movie) => (
@@ -68,9 +79,9 @@ const MovieHub = () => {
       ),
     },
     {
-      menuItem: { key: 'top', icon: 'star outline', content: 'Top Rated' },
+      menuItem: { key: "top", icon: "star outline", content: "Top Rated" },
       pane: (
-        <Tab.Pane key='top-pane'>
+        <Tab.Pane key="top-pane">
           <div className="my-scroll">
             <Item.Group divided relaxed>
               {topMovies.map((movie) => (
@@ -93,6 +104,9 @@ const MovieHub = () => {
         </Container>
       ) : (
         <Container>
+          <Header size="huge" attached="top" textAlign="center" inverted color='blue'>
+            Movie Hub
+          </Header>
           <Tab panes={panes} renderActiveOnly={false} />
         </Container>
       )}
