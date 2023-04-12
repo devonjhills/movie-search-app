@@ -1,16 +1,5 @@
 import { useEffect, useState } from "react";
-<<<<<<< HEAD:src/components/media/movie/MovieHub.js
 import { Container, Dimmer, Header, Item, Loader, Tab } from "semantic-ui-react";
-=======
-import {
-  Container,
-  Dimmer,
-  Header,
-  Item,
-  Loader,
-  Tab,
-} from "semantic-ui-react";
->>>>>>> 9775346ddeaab67334e4cf426d35461c6d778419:src/components/MovieHub.js
 import {
   fetchNewMovieReleases,
   fetchPopularMovies,
@@ -108,15 +97,9 @@ const MovieHub = () => {
         </Container>
       ) : (
         <Container>
-<<<<<<< HEAD:src/components/media/movie/MovieHub.js
         <Header size='huge' textAlign='center' attached='top' inverted color='blue'>
           Movie Hub
         </Header>
-=======
-          <Header size="huge" attached="top" textAlign="center" inverted color='blue'>
-            Movie Hub
-          </Header>
->>>>>>> 9775346ddeaab67334e4cf426d35461c6d778419:src/components/MovieHub.js
           <Tab panes={panes} renderActiveOnly={false} />
         </Container>
       )}

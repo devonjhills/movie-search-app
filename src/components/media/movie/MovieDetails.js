@@ -15,13 +15,8 @@ import {
   Modal,
   Segment,
 } from "semantic-ui-react";
-<<<<<<< HEAD:src/components/media/movie/MovieDetails.js
 import { fetchMovieDetails, formatResults } from "../../../api/api";
 import { imageUrl, largeImageUrl } from "../../../api/constants";
-=======
-import { fetchMovieDetails } from "../api/api";
-import { imageUrl, largeImageUrl } from "../api/constants";
->>>>>>> 9775346ddeaab67334e4cf426d35461c6d778419:src/components/MovieDetails.js
 import {
   getMovieDirectors,
   getMovieRating,
