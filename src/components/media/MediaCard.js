@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { Icon, Image } from "semantic-ui-react";
 import { posterCardUrl } from "../../api/constants";
 
-const MediaCard = ({ media, mediaType }) => {
+const MediaCard = ({ id, poster, mediaType }) => {
 
   const url = () => {
     if (mediaType === 'movie') {
-      return `/${media.id}`
+      return `/${id}`
     } else if (mediaType === 'tv') {
-      return `/tvhub/${media.id}`
+      return `/tvhub/${id}`
     }
   }
   
@@ -17,8 +17,8 @@ const MediaCard = ({ media, mediaType }) => {
   return (
     <Link to={url}>
       <div className="moviecard">
-        {media.poster_path !== null ? (
-          <Image src={posterCardUrl + media.poster_path} />
+        {poster !== null ? (
+          <Image style={{borderRadius: '10px'}} src={posterCardUrl + poster} />
         ) : (
           <div className="no-user">
             <Icon size="massive" name="image outline" color="black" />
