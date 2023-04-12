@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../App.css";
 import { Icon, Menu, Form, Button } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 

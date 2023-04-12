@@ -10,10 +10,10 @@ import {
   Image,
   Loader,
 } from "semantic-ui-react";
-import { fetchPersonDetails } from "../api/api";
-import { imageUrl } from "../api/constants";
-import ScrollToTop from "./ScrollToTop";
-import SocialButtons from "./SocialButtons";
+import { fetchPersonDetails } from "../../../api/api";
+import { imageUrl } from "../../../api/constants";
+import ScrollToTop from "../../utils/ScrollToTop";
+import SocialButtons from "../SocialButtons";
 
 const PersonDetails = () => {
   const urlId = useParams();

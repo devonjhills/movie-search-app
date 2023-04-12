@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Container, Dimmer, Item, Loader, Tab } from "semantic-ui-react";
+import { Container, Dimmer, Header, Item, Loader, Tab } from "semantic-ui-react";
 import {
   fetchNewMovieReleases,
   fetchPopularMovies,
   fetchTopMovies,
-} from "../api/api";
-import SearchResultsMovies from "./SearchResultsMovies";
+} from "../../../api/api";
+import SearchResultsMovies from "../../searches/SearchResultsMovies";
 
 const MovieHub = () => {
   const [newMovies, setNewMovies] = useState([]);
@@ -93,6 +93,9 @@ const MovieHub = () => {
         </Container>
       ) : (
         <Container>
+        <Header size='huge' textAlign='center' attached='top' inverted color='blue'>
+          Movie Hub
+        </Header>
           <Tab panes={panes} renderActiveOnly={false} />
         </Container>
       )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchSearchResults } from "../api/api";
+import { fetchSearchResults } from "../../api/api";
 import { useLocation } from "react-router";
 import {
   Container,

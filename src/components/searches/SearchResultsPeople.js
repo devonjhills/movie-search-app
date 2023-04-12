@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon, Item, List } from "semantic-ui-react";
-import { searchResultUrl } from "../api/constants";
+import { searchResultUrl } from "../../api/constants";
 
 const SearchResultsPeople = ({ person }) => {
   return (

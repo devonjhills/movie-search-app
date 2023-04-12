@@ -16,13 +16,13 @@ import {
   Modal,
   Segment,
 } from "semantic-ui-react";
-import { fetchTvDetails } from "../api/api";
-import { imageUrl, largeImageUrl, logoUrl } from "../api/constants";
-import { getShowTrailer } from "../api/helpers";
-import MediaCard from "./MediaCard";
-import PersonCard from "./PersonCard";
-import ScrollToTop from "./ScrollToTop";
-import SocialButtons from "./SocialButtons";
+import { fetchTvDetails } from "../../../api/api";
+import { imageUrl, largeImageUrl, logoUrl } from "../../../api/constants";
+import { getShowTrailer } from "../../../api/helpers";
+import MediaCard from "../MediaCard";
+import PersonCard from "../person/PersonCard";
+import ScrollToTop from "../../utils/ScrollToTop";
+import SocialButtons from "../SocialButtons";
 
 const TvDetails = () => {
   const urlId = useParams();
