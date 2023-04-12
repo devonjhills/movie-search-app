@@ -8,7 +8,7 @@ const PersonCard = ({ person }) => {
     <Link to={`/person/${person.id}`}>
       <div className="person">
         {person.profile_path !== null ? (
-          <Image src={personThumbnailUrl + person.profile_path} />
+          <Image style={{borderRadius: '10px'}} src={personThumbnailUrl + person.profile_path} />
         ) : (
           <div className="no-user">
             <Icon size="massive" name="user circle" color="black" />

@@ -182,10 +182,6 @@ p {
   border: 2px solid aqua;
 }
 
-.ui.image {
-  border-radius: 10px !important;
-}
-
 .ui.items > .item > .image > img {
   border-radius: 10px !important;
 }

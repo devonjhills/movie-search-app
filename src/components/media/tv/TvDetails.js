@@ -3,6 +3,7 @@ import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import {
+  Button,
   Container,
   Dimmer,
   Divider,
@@ -62,7 +63,12 @@ const TvDetails = () => {
       .map((person) => <PersonCard key={person.id} person={person} />);
 
   const recommendedList = tvDetails?.recommendations?.results.map((show) => (
-    <MediaCard key={show.id} media={show} mediaType='tv' />
+    <MediaCard
+      key={show.id}
+      id={show.id}
+      poster={show.poster_path}
+      mediaType="tv"
+    />
   ));
 
   const keywords = tvDetails?.keywords?.results;
@@ -193,15 +199,20 @@ const TvDetails = () => {
           </List.Content>
         </List.Item>
         <List.Item>
-          <List.Content>
-            <List.Header>Network</List.Header>
-            <List.Description>
-              <Image
-                style={{ marginTop: ".2em" }}
-                src={logoUrl + tvDetails.networks[0].logo_path}
-              />
-            </List.Description>
-          </List.Content>
+          {tvDetails.networks.length !== 0 && (
+            <List.Content>
+              <List.Header>Network</List.Header>
+              <List.Description>
+                <Button
+                  compact
+                  disabled
+                  color="grey"
+                  style={{ marginTop: ".2em" }}>
+                  <Image src={logoUrl + tvDetails.networks[0].logo_path} />
+                </Button>
+              </List.Description>
+            </List.Content>
+          )}
         </List.Item>
         <List.Item>
           <List.Content>
