@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon, Image } from "semantic-ui-react";
-import { personThumbnailUrl } from "../api/constants";
+import { personThumbnailUrl } from "../../../api/constants";
 
 const PersonCard = ({ person }) => {
   return (

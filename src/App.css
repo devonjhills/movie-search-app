@@ -268,7 +268,7 @@ p {
 }
 
 .my-scroll {
-  max-height: 80vh;
+  max-height: 75vh;
   overflow-x: hidden;
   overflow-y: auto;
 }

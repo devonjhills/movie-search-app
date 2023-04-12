@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon, Image } from "semantic-ui-react";
-import { posterCardUrl } from "../api/constants";
+import { posterCardUrl } from "../../api/constants";
 
 const MediaCard = ({ media, mediaType }) => {
 

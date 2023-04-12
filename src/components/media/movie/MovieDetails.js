@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { useParams, Link, useHistory } from "react-router-dom";
-import { Fragment } from "react/cjs/react.production.min";
 import {
   Container,
   Dimmer,
@@ -16,18 +15,18 @@ import {
   Modal,
   Segment,
 } from "semantic-ui-react";
-import { fetchMovieDetails, formatResults } from "../api/api";
-import { imageUrl, largeImageUrl } from "../api/constants";
+import { fetchMovieDetails, formatResults } from "../../../api/api";
+import { imageUrl, largeImageUrl } from "../../../api/constants";
 import {
   getMovieDirectors,
   getMovieRating,
   getMovieTrailer,
   getMovieWriters,
-} from "../api/helpers";
-import MediaCard from "./MediaCard";
-import PersonCard from "./PersonCard";
-import ScrollToTop from "./ScrollToTop";
-import SocialButtons from "./SocialButtons";
+} from "../../../api/helpers";
+import MediaCard from "../MediaCard";
+import PersonCard from "../person/PersonCard";
+import ScrollToTop from "../../utils/ScrollToTop";
+import SocialButtons from "../SocialButtons";
 
 const MovieDetails = () => {
   const urlId = useParams();

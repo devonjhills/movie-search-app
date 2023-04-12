@@ -8,7 +8,7 @@ import {
   Loader,
   Segment,
 } from "semantic-ui-react";
-import { discoverMedia } from "../api/api";
+import { discoverMedia } from "../../api/api";
 import SearchResultsMovies from "./SearchResultsMovies";
 import SearchResultsTV from "./SearchResultsTV";
 
