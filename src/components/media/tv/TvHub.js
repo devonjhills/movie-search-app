@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Dimmer, Header, Item, Loader, Tab } from "semantic-ui-react";
-<<<<<<< HEAD:src/components/media/tv/TvHub.js
 import { fetchNewTv, fetchPopularTv, fetchTopTv } from "../../../api/api";
 import SearchResultsTV from "../../searches/SearchResultsTV";
-=======
-import { fetchNewTv, fetchPopularTv, fetchTopTv } from "../api/api";
-import SearchResultsTV from "./SearchResultsTV";
->>>>>>> 9775346ddeaab67334e4cf426d35461c6d778419:src/components/TvHub.js
 
 const TvHub = () => {
 
@@ -95,15 +90,9 @@ const TvHub = () => {
         </Container>
       ) : (
         <Container>
-<<<<<<< HEAD:src/components/media/tv/TvHub.js
         <Header size='huge' textAlign='center' attached='top' inverted color='green'>
           TV Hub
         </Header>
-=======
-        <Header size="huge" attached="top" textAlign="center" inverted color='green'>
-            TV Hub
-          </Header>
->>>>>>> 9775346ddeaab67334e4cf426d35461c6d778419:src/components/TvHub.js
           <Tab panes={panes} renderActiveOnly={false} />
         </Container>
       )}
