@@ -4,7 +4,7 @@
 
 A production-ready, responsive movie and TV discovery platform built with cutting-edge technologies. This project demonstrates proficiency in Next.js 15, TypeScript, modern React patterns, and responsive design principles.
 
-🔗 **[Live Demo](https://your-deployed-app.vercel.app)** | 📱 **Mobile Optimized** | 🌙 **Dark Mode Ready**
+🔗 **[Live Demo](https://movie-search-app-rho-ten.vercel.app/)** | 📱 **Mobile Optimized** | 🌙 **Dark Mode Ready**
 
 ## ✨ Portfolio Highlights
 
