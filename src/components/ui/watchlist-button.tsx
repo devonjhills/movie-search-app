@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { useSession } from 'next-auth/react'
+import Link from 'next/link'
+import { useAuth } from '@/components/providers/auth-provider'
 import { BookmarkIcon } from '@heroicons/react/24/outline'
 import { BookmarkIcon as BookmarkSolidIcon } from '@heroicons/react/24/solid'
 import { useWatchlist } from '@/lib/hooks/use-watchlist'
@@ -16,7 +17,7 @@ interface WatchlistButtonProps {
 }
 
 export function WatchlistButton({ item, mediaType, className, variant = 'default' }: WatchlistButtonProps) {
-  const { data: session } = useSession()
+  const { user } = useAuth()
   const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -25,11 +26,6 @@ export function WatchlistButton({ item, mediaType, className, variant = 'default
   const releaseDate = mediaType === 'movie' ? item.release_date : item.first_air_date
 
   const handleClick = async () => {
-    if (!session?.user) {
-      // Redirect to sign in or show sign in modal
-      window.location.href = '/api/auth/signin'
-      return
-    }
 
     setIsLoading(true)
     try {
@@ -52,6 +48,42 @@ export function WatchlistButton({ item, mediaType, className, variant = 'default
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (!user) {
+    if (variant === 'hero') {
+      return (
+        <Link
+          href="/auth/signin"
+          className={cn(
+            'inline-flex items-center space-x-2 px-6 py-3 rounded-lg',
+            'border border-white/30 text-white bg-white/10 backdrop-blur-sm',
+            'hover:bg-white/20 transition-colors',
+            'focus:outline-none focus:ring-2 focus:ring-white/50',
+            className
+          )}
+        >
+          <BookmarkIcon className="h-5 w-5" />
+          <span>Sign In to Add to Watchlist</span>
+        </Link>
+      )
+    }
+
+    return (
+      <Link
+        href="/auth/signin"
+        className={cn(
+          'inline-flex items-center justify-center p-2 rounded-lg',
+          'bg-black/20 backdrop-blur-sm border border-white/20',
+          'hover:bg-black/30 transition-colors',
+          'focus:outline-none focus:ring-2 focus:ring-white/50',
+          className
+        )}
+        title="Sign in to add to watchlist"
+      >
+        <BookmarkIcon className="h-5 w-5 text-white" />
+      </Link>
+    )
   }
 
   if (variant === 'hero') {

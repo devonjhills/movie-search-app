@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
-import { useSession, signIn, signOut } from 'next-auth/react';
-import { MagnifyingGlassIcon, MoonIcon, SunIcon, UserIcon, BookmarkIcon } from '@heroicons/react/24/outline';
+import { useAuth } from '@/components/providers/auth-provider';
+import { MagnifyingGlassIcon, MoonIcon, SunIcon, ArrowRightStartOnRectangleIcon, BookmarkIcon } from '@heroicons/react/24/outline';
 import { FilmIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
 
@@ -13,7 +13,7 @@ export function Navigation() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   const { theme, setTheme } = useTheme();
-  const { data: session } = useSession();
+  const { user, signOut } = useAuth();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ export function Navigation() {
             >
               Discover
             </Link>
-            {session?.user && (
+            {user && (
               <Link
                 href="/watchlist"
                 className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
@@ -89,8 +89,11 @@ export function Navigation() {
             </form>
 
             {/* Auth and Theme Toggle */}
-            {session?.user ? (
+            {user ? (
               <div className="flex items-center space-x-2">
+                <span className="hidden md:block text-sm text-foreground/80 mr-2">
+                  {user.email}
+                </span>
                 <Link
                   href="/watchlist"
                   className={cn(
@@ -111,12 +114,12 @@ export function Navigation() {
                   )}
                   title="Sign Out"
                 >
-                  <UserIcon className="h-5 w-5" />
+                  <ArrowRightStartOnRectangleIcon className="h-5 w-5" />
                 </button>
               </div>
             ) : (
-              <button
-                onClick={() => signIn()}
+              <Link
+                href="/auth/signin"
                 className={cn(
                   "rounded-lg px-3 py-1.5 text-sm font-medium",
                   "bg-primary text-primary-foreground",
@@ -125,7 +128,7 @@ export function Navigation() {
                 )}
               >
                 Sign In
-              </button>
+              </Link>
             )}
 
             <button
