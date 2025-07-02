@@ -60,8 +60,8 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
     return null;
   }
 
-  const { flatrate, buy, rent, link } = providers;
-  const hasProviders = flatrate?.length || buy?.length || rent?.length;
+  const { flatrate, buy, rent, ads, link } = providers;
+  const hasProviders = flatrate?.length || buy?.length || rent?.length || ads?.length;
 
   if (!hasProviders) {
     return (
@@ -101,6 +101,14 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
           <ProviderSection
             title="Stream"
             providers={flatrate}
+            onProviderClick={handleProviderClick}
+          />
+        )}
+
+        {ads && ads.length > 0 && (
+          <ProviderSection
+            title="Free with Ads"
+            providers={ads}
             onProviderClick={handleProviderClick}
           />
         )}
