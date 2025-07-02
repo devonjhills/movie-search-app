@@ -65,7 +65,7 @@ export default function SignInPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-input rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-colors"
+              className="w-full p-3 border border-input rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 cursor-text hover:border-primary/50"
               placeholder="Enter your email"
               required
             />
@@ -80,7 +80,7 @@ export default function SignInPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-input rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-colors"
+              className="w-full p-3 border border-input rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 cursor-text hover:border-primary/50"
               placeholder="Enter your password"
               required
               minLength={6}
