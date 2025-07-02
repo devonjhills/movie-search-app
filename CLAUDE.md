@@ -6,71 +6,91 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Start development server:**
 ```bash
-npm start
+npm run dev
 ```
-Note: Uses `--openssl-legacy-provider` flag for compatibility with legacy OpenSSL.
+Note: Uses Turbopack for faster development builds.
 
 **Build for production:**
 ```bash
 npm run build
 ```
 
-**Run tests:**
+**Run production server:**
 ```bash
-npm test
+npm start
 ```
 
 **Linting:**
-Uses ESLint with `react-app` configuration (automatically runs during build).
+```bash
+npm run lint
+```
 
 ## Project Architecture
 
-This is a React-based movie and TV show search application using The Movie Database (TMDB) API.
+This is a modern Next.js-based movie and TV show discovery application using The Movie Database (TMDB) API.
 
 ### Technology Stack
-- **React 17.0.2** with functional components and hooks
-- **React Router DOM 5.2.1** using HashRouter
-- **Semantic UI React 2.0.3** for UI components
-- **Axios 0.21.1** for API requests
-- **Create React App** for build toolchain
+- **Next.js 15** with App Router and TypeScript
+- **React 19** with functional components and hooks
+- **Tailwind CSS v4** for styling with custom design system
+- **SWR** for data fetching and caching
+- **Headless UI + Heroicons** for UI components
+- **next-themes** for dark/light mode support
 
 ### Key Architecture Patterns
 
-**API Layer (`src/api/`):**
-- Centralized API functions in `api.js`
-- Constants for endpoints in `constants.js`
-- API key management in `key.js` (reads from `REACT_APP_MOVIE_API_KEY` env var)
-- Helper utilities in `helpers.js`
+**App Router Structure (`src/app/`):**
+- Modern Next.js App Router with file-based routing
+- Dynamic routes: `/movie/[id]`, `/tv/[id]`, `/person/[id]`
+- Layouts: Root layout with navigation and theme provider
+- Loading states, error boundaries, and not-found pages
 
-**Component Structure:**
-- Feature-based organization: `media/`, `menus/`, `searches/`, `utils/`
-- Movie components: `media/movie/MovieHub.js`, `media/movie/MovieDetails.js`
-- TV components: `media/tv/TvHub.js`, `media/tv/TvDetails.js`
-- Person components: `media/person/PersonDetails.js`, `media/person/PersonCard.js`
-- Search components: `searches/SearchPage.js`, `searches/DiscoverPage.js`
+**API Layer (`src/lib/`):**
+- Modern data fetching with SWR hooks in `api.ts`
+- Comprehensive TypeScript types in `types.ts`
+- Constants and configuration in `constants.ts`
+- Utility functions in `utils.ts`
 
-**Routing Configuration (`src/App.js`):**
-- Uses HashRouter for client-side routing
-- Route patterns: `/` (home), `/results` (search), `/discover`, `/tvhub`, `/:movieId`, `/person/:personId`
+**Component Structure (`src/components/`):**
+- Feature-based organization: `movie/`, `tv/`, `person/`, `search/`, `discover/`
+- Base UI components in `ui/` (cards, buttons, skeletons, etc.)
+- Layout components in `layout/` (navigation, footer)
+- Provider components in `providers/` (theme provider)
+
+**Modern Features:**
+- TypeScript for full type safety
+- SWR for efficient data fetching with caching
+- Dark/light mode with system preference detection
+- Responsive design with mobile-first approach
+- Loading skeletons and error boundaries
+- SEO optimized with proper meta tags
 
 ### State Management
+- SWR for server state management and caching
 - Local component state with `useState`
 - URL-based state for search queries and navigation
-- No global state management (Redux/Context)
+- Theme state managed by next-themes
 
 ### API Integration
-- All TMDB API calls go through `src/api/api.js`
-- Functions for movies, TV shows, people, search, and discovery
-- Comprehensive data fetching with `append_to_response` for detailed views
-- Error handling with console logging
+- All TMDB API calls use modern fetch with SWR hooks
+- Comprehensive error handling and loading states
+- TypeScript interfaces for all API responses
+- Image optimization with Next.js Image component
 
 ### Environment Variables
-- `REACT_APP_MOVIE_API_KEY` - Required TMDB API key (stored in `.env`)
+- `NEXT_PUBLIC_MOVIE_API_KEY` - Required TMDB API key (stored in `.env.local`)
+
+### Routing
+- Uses Next.js App Router with clean URLs
+- Server components where possible for better performance
+- Dynamic metadata generation for SEO
+- Proper error handling and not-found pages
 
 ## Important Notes
 
-- Uses HashRouter instead of BrowserRouter (affects URL structure)
-- API responses are logged to console with `console.dir()`
-- No TypeScript - uses JavaScript with PropTypes where present
-- Semantic UI provides most styling and responsive behavior
-- Testing setup exists but no tests are currently implemented
+- Uses modern Next.js App Router (not Pages Router)
+- All components are TypeScript with proper type definitions
+- Tailwind CSS with custom design system and CSS variables
+- SWR provides automatic caching and revalidation
+- Image optimization configured for TMDB and YouTube domains
+- Vercel deployment ready with proper configuration
