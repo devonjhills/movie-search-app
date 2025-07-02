@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PlayIcon, StarIcon, CalendarIcon } from '@heroicons/react/24/solid';
 import { cn, formatYear, formatVoteAverage, truncateText } from '@/lib/utils';
 import { getImageUrl } from '@/lib/api';
+import { WatchlistButton } from '@/components/ui/watchlist-button';
 import type { Movie, FormattedMovie } from '@/lib/types';
 
 interface HeroSectionProps {
@@ -108,16 +109,11 @@ export function HeroSection({ movie, className }: HeroSectionProps) {
                 <span>View Details</span>
               </Link>
 
-              <button
-                className={cn(
-                  'inline-flex items-center space-x-2 px-6 py-3 rounded-lg',
-                  'border border-white/30 text-white bg-white/10 backdrop-blur-sm',
-                  'hover:bg-white/20 transition-colors',
-                  'focus:outline-none focus:ring-2 focus:ring-white/50'
-                )}
-              >
-                <span>Add to Watchlist</span>
-              </button>
+              <WatchlistButton 
+                item={movie} 
+                mediaType="movie" 
+                variant="hero"
+              />
             </div>
           </div>
         </div>
