@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/components/providers/auth-provider';
 import { MagnifyingGlassIcon, MoonIcon, SunIcon, ArrowRightStartOnRectangleIcon, BookmarkIcon } from '@heroicons/react/24/outline';
@@ -11,9 +11,14 @@ import { cn } from '@/lib/utils';
 
 export function Navigation() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const { user, signOut } = useAuth();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,26 +46,26 @@ export function Navigation() {
           <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/"
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
             >
               Movies
             </Link>
             <Link
               href="/tv"
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
             >
               TV Shows
             </Link>
             <Link
               href="/discover"
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
             >
               Discover
             </Link>
             {user && (
               <Link
                 href="/watchlist"
-                className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
               >
                 Watchlist
               </Link>
@@ -80,9 +85,9 @@ export function Navigation() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className={cn(
                     "w-64 rounded-lg border border-input bg-background pl-9 pr-3 py-2 text-sm",
-                    "placeholder:text-muted-foreground",
+                    "placeholder:text-muted-foreground cursor-text",
                     "focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20",
-                    "transition-colors"
+                    "hover:border-ring/50 transition-all duration-200"
                   )}
                 />
               </div>
@@ -97,9 +102,10 @@ export function Navigation() {
                 <Link
                   href="/watchlist"
                   className={cn(
-                    "rounded-lg p-2 text-foreground/80 transition-colors",
-                    "hover:bg-accent hover:text-accent-foreground",
-                    "focus:outline-none focus:ring-2 focus:ring-ring/20"
+                    "rounded-lg p-2 text-foreground/80 transition-all duration-200",
+                    "hover:bg-accent hover:text-accent-foreground hover:scale-105",
+                    "focus:outline-none focus:ring-2 focus:ring-ring/20",
+                    "cursor-pointer active:scale-95"
                   )}
                   title="My Watchlist"
                 >
@@ -108,9 +114,10 @@ export function Navigation() {
                 <button
                   onClick={() => signOut()}
                   className={cn(
-                    "rounded-lg p-2 text-foreground/80 transition-colors",
-                    "hover:bg-accent hover:text-accent-foreground",
-                    "focus:outline-none focus:ring-2 focus:ring-ring/20"
+                    "rounded-lg p-2 text-foreground/80 transition-all duration-200",
+                    "hover:bg-accent hover:text-accent-foreground hover:scale-105",
+                    "focus:outline-none focus:ring-2 focus:ring-ring/20",
+                    "cursor-pointer active:scale-95"
                   )}
                   title="Sign Out"
                 >
@@ -123,8 +130,9 @@ export function Navigation() {
                 className={cn(
                   "rounded-lg px-3 py-1.5 text-sm font-medium",
                   "bg-primary text-primary-foreground",
-                  "hover:bg-primary/90 transition-colors",
-                  "focus:outline-none focus:ring-2 focus:ring-ring/20"
+                  "hover:bg-primary/90 hover:scale-105 hover:shadow-md transition-all duration-200",
+                  "focus:outline-none focus:ring-2 focus:ring-ring/20",
+                  "cursor-pointer active:scale-95"
                 )}
               >
                 Sign In
@@ -134,13 +142,17 @@ export function Navigation() {
             <button
               onClick={toggleTheme}
               className={cn(
-                "rounded-lg p-2 text-foreground/80 transition-colors",
-                "hover:bg-accent hover:text-accent-foreground",
-                "focus:outline-none focus:ring-2 focus:ring-ring/20"
+                "rounded-lg p-2 text-foreground/80 transition-all duration-200",
+                "hover:bg-accent hover:text-accent-foreground hover:scale-105",
+                "focus:outline-none focus:ring-2 focus:ring-ring/20",
+                "cursor-pointer active:scale-95"
               )}
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? (
+              {!mounted ? (
+                // Show a neutral icon during SSR to prevent hydration mismatch
+                <div className="h-5 w-5" />
+              ) : theme === 'dark' ? (
                 <SunIcon className="h-5 w-5" />
               ) : (
                 <MoonIcon className="h-5 w-5" />
@@ -153,22 +165,30 @@ export function Navigation() {
         <div className="flex md:hidden items-center space-x-6 pb-4">
           <Link
             href="/"
-            className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
           >
             Movies
           </Link>
           <Link
             href="/tv"
-            className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
           >
             TV Shows
           </Link>
           <Link
             href="/discover"
-            className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
           >
             Discover
           </Link>
+          {user && (
+            <Link
+              href="/watchlist"
+              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
+            >
+              Watchlist
+            </Link>
+          )}
         </div>
       </div>
     </nav>

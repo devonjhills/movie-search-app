@@ -58,8 +58,9 @@ export function WatchlistButton({ item, mediaType, className, variant = 'default
           className={cn(
             'inline-flex items-center space-x-2 px-6 py-3 rounded-lg',
             'border border-white/30 text-white bg-white/10 backdrop-blur-sm',
-            'hover:bg-white/20 transition-colors',
+            'hover:bg-white/20 hover:scale-105 hover:shadow-lg transition-all duration-200',
             'focus:outline-none focus:ring-2 focus:ring-white/50',
+            'cursor-pointer active:scale-95',
             className
           )}
         >
@@ -75,8 +76,9 @@ export function WatchlistButton({ item, mediaType, className, variant = 'default
         className={cn(
           'inline-flex items-center justify-center p-2 rounded-lg',
           'bg-black/20 backdrop-blur-sm border border-white/20',
-          'hover:bg-black/30 transition-colors',
+          'hover:bg-black/30 hover:scale-110 hover:shadow-lg transition-all duration-200',
           'focus:outline-none focus:ring-2 focus:ring-white/50',
+          'cursor-pointer active:scale-95',
           className
         )}
         title="Sign in to add to watchlist"
@@ -94,9 +96,10 @@ export function WatchlistButton({ item, mediaType, className, variant = 'default
         className={cn(
           'inline-flex items-center space-x-2 px-6 py-3 rounded-lg',
           'border border-white/30 text-white bg-white/10 backdrop-blur-sm',
-          'hover:bg-white/20 transition-colors',
+          'hover:bg-white/20 hover:scale-105 hover:shadow-lg transition-all duration-200',
           'focus:outline-none focus:ring-2 focus:ring-white/50',
           'disabled:opacity-50 disabled:cursor-not-allowed',
+          'cursor-pointer active:scale-95',
           className
         )}
       >
@@ -117,9 +120,10 @@ export function WatchlistButton({ item, mediaType, className, variant = 'default
       className={cn(
         'inline-flex items-center justify-center p-2 rounded-lg',
         'bg-black/20 backdrop-blur-sm border border-white/20',
-        'hover:bg-black/30 transition-colors',
+        'hover:bg-black/30 hover:scale-110 hover:shadow-lg transition-all duration-200',
         'focus:outline-none focus:ring-2 focus:ring-white/50',
         'disabled:opacity-50 disabled:cursor-not-allowed',
+        'cursor-pointer active:scale-95',
         className
       )}
       title={inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
