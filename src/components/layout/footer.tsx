@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FilmIcon } from '@heroicons/react/24/solid';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -9,7 +9,14 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-3">
             <div className="flex items-center space-x-2">
-              <FilmIcon className="h-6 w-6 text-primary" />
+              <div className="relative h-6 w-6">
+                <Image
+                  src="/logo.png"
+                  alt="What To Watch? Logo"
+                  fill
+                  className="object-contain"
+                />
+              </div>
               <span className="text-lg font-semibold">What To Watch?</span>
             </div>
             <p className="text-sm text-muted-foreground">

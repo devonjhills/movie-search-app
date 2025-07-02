@@ -10,6 +10,7 @@ export const ENDPOINTS = {
   moviesPopular: `${TMDB_BASE_URL}/movie/popular`,
   moviesTopRated: `${TMDB_BASE_URL}/movie/top_rated`,
   movieDiscover: `${TMDB_BASE_URL}/discover/movie`,
+  movieWatchProviders: (id: number) => `${TMDB_BASE_URL}/movie/${id}/watch/providers`,
   
   // TV endpoints
   tvDetails: (id: number) => `${TMDB_BASE_URL}/tv/${id}`,
@@ -17,6 +18,7 @@ export const ENDPOINTS = {
   tvPopular: `${TMDB_BASE_URL}/tv/popular`,
   tvTopRated: `${TMDB_BASE_URL}/tv/top_rated`,
   tvDiscover: `${TMDB_BASE_URL}/discover/tv`,
+  tvWatchProviders: (id: number) => `${TMDB_BASE_URL}/tv/${id}/watch/providers`,
   
   // Person endpoints
   personDetails: (id: number) => `${TMDB_BASE_URL}/person/${id}`,

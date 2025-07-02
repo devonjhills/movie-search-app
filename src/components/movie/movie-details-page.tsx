@@ -12,8 +12,9 @@ import {
   BookmarkIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
-import { useMovieDetails, getImageUrl } from '@/lib/api';
+import { useMovieDetails, useMovieWatchProviders, getImageUrl } from '@/lib/api';
 import { WatchlistButton } from '@/components/ui/watchlist-button';
+import { WatchProviders } from '@/components/ui/watch-providers';
 import { 
   formatDate, 
   formatRuntime, 
@@ -69,6 +70,7 @@ function MovieDetailsSkeleton() {
 
 export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
   const { movie, isLoading, isError } = useMovieDetails(movieId);
+  const { watchProviders, isLoading: isWatchProvidersLoading } = useMovieWatchProviders(movieId);
 
   if (isLoading) {
     return <MovieDetailsSkeleton />;
@@ -366,6 +368,14 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                   )}
                 </CardContent>
               </Card>
+            )}
+
+            {/* Watch Providers */}
+            {watchProviders?.results?.US && (
+              <WatchProviders
+                providers={watchProviders.results.US}
+                className="w-full"
+              />
             )}
           </div>
         </div>

@@ -424,3 +424,25 @@ export interface WatchlistResponse {
   items: WatchlistItem[];
   total: number;
 }
+
+// Watch Provider types (JustWatch integration)
+export interface WatchProvider {
+  display_priority: number;
+  logo_path: string;
+  provider_id: number;
+  provider_name: string;
+}
+
+export interface WatchProviderRegion {
+  buy?: WatchProvider[];
+  flatrate?: WatchProvider[];
+  rent?: WatchProvider[];
+  link: string;
+}
+
+export interface WatchProvidersResponse {
+  id: number;
+  results: {
+    [countryCode: string]: WatchProviderRegion;
+  };
+}
