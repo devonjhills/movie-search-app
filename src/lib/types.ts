@@ -403,3 +403,24 @@ export type APIResponse<T> = {
   success: false;
   error: TMDBError | Error;
 };
+
+// Watchlist types
+export interface WatchlistItem {
+  id: string;
+  user_id: string;
+  tmdb_id: number;
+  media_type: 'movie' | 'tv';
+  title: string;
+  poster_path: string | null;
+  overview: string;
+  release_date: string;
+  vote_average: number;
+  added_at: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WatchlistResponse {
+  items: WatchlistItem[];
+  total: number;
+}

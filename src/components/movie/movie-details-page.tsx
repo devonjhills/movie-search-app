@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 import { useMovieDetails, getImageUrl } from '@/lib/api';
+import { WatchlistButton } from '@/components/ui/watchlist-button';
 import { 
   formatDate, 
   formatRuntime, 
@@ -206,10 +207,11 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                     </a>
                   )}
                   
-                  <button className="inline-flex items-center space-x-2 px-6 py-3 border border-white/30 text-white bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors">
-                    <BookmarkIcon className="h-5 w-5" />
-                    <span>Watchlist</span>
-                  </button>
+                  <WatchlistButton 
+                    item={movie} 
+                    mediaType="movie" 
+                    variant="hero"
+                  />
                   
                   <button className="inline-flex items-center space-x-2 px-6 py-3 border border-white/30 text-white bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors">
                     <ShareIcon className="h-5 w-5" />

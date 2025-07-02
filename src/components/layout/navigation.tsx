@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
-import { MagnifyingGlassIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import { MagnifyingGlassIcon, MoonIcon, SunIcon, UserIcon, BookmarkIcon } from '@heroicons/react/24/outline';
 import { FilmIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +13,7 @@ export function Navigation() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const { data: session } = useSession();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +57,14 @@ export function Navigation() {
             >
               Discover
             </Link>
+            {session?.user && (
+              <Link
+                href="/watchlist"
+                className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              >
+                Watchlist
+              </Link>
+            )}
           </div>
 
           {/* Search and Theme Toggle */}
@@ -78,7 +88,46 @@ export function Navigation() {
               </div>
             </form>
 
-            {/* Theme Toggle */}
+            {/* Auth and Theme Toggle */}
+            {session?.user ? (
+              <div className="flex items-center space-x-2">
+                <Link
+                  href="/watchlist"
+                  className={cn(
+                    "rounded-lg p-2 text-foreground/80 transition-colors",
+                    "hover:bg-accent hover:text-accent-foreground",
+                    "focus:outline-none focus:ring-2 focus:ring-ring/20"
+                  )}
+                  title="My Watchlist"
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </Link>
+                <button
+                  onClick={() => signOut()}
+                  className={cn(
+                    "rounded-lg p-2 text-foreground/80 transition-colors",
+                    "hover:bg-accent hover:text-accent-foreground",
+                    "focus:outline-none focus:ring-2 focus:ring-ring/20"
+                  )}
+                  title="Sign Out"
+                >
+                  <UserIcon className="h-5 w-5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => signIn()}
+                className={cn(
+                  "rounded-lg px-3 py-1.5 text-sm font-medium",
+                  "bg-primary text-primary-foreground",
+                  "hover:bg-primary/90 transition-colors",
+                  "focus:outline-none focus:ring-2 focus:ring-ring/20"
+                )}
+              >
+                Sign In
+              </button>
+            )}
+
             <button
               onClick={toggleTheme}
               className={cn(
