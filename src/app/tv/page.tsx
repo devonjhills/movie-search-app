@@ -25,6 +25,7 @@ export default function TVPage() {
             original_title: heroTVShow.original_name,
             video: false,
           } as any} 
+          mediaType="tv"
           className="mb-12" 
         />
       )}

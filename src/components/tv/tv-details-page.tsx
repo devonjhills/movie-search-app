@@ -6,7 +6,6 @@ import {
   StarIcon, 
   CalendarIcon, 
   PlayIcon,
-  ShareIcon,
   BookmarkIcon,
   TvIcon
 } from '@heroicons/react/24/outline';
@@ -14,6 +13,7 @@ import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 import { useTVDetails, useTVWatchProviders, getImageUrl } from '@/lib/api';
 import { WatchlistButton } from '@/components/ui/watchlist-button';
 import { WatchProviders } from '@/components/ui/watch-providers';
+import { ShareButton } from '@/components/ui/share-button';
 import { 
   formatDate, 
   formatVoteAverage, 
@@ -211,10 +211,11 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                     variant="hero"
                   />
                   
-                  <button className="inline-flex items-center space-x-2 px-6 py-3 border border-white/30 text-white bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors">
-                    <ShareIcon className="h-5 w-5" />
-                    <span>Share</span>
-                  </button>
+                  <ShareButton 
+                    title={`${tvShow.name} - TV Show Details`}
+                    text={`Check out "${tvShow.name}" on this movie app!`}
+                    variant="hero"
+                  />
                 </div>
               </div>
             </div>

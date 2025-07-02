@@ -43,6 +43,14 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        // Movie-themed colors
+        cinema: {
+          gold: 'hsl(43, 74%, 49%)',
+          silver: 'hsl(0, 0%, 75%)',
+          velvet: 'hsl(0, 45%, 25%)',
+          spotlight: 'hsl(45, 100%, 85%)',
+          curtain: 'hsl(0, 30%, 15%)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -9,9 +9,10 @@ import type { Movie, FormattedMovie } from '@/lib/types';
 interface HeroSectionProps {
   movie: Movie | FormattedMovie | any;
   className?: string;
+  mediaType?: 'movie' | 'tv';
 }
 
-export function HeroSection({ movie, className }: HeroSectionProps) {
+export function HeroSection({ movie, className, mediaType = 'movie' }: HeroSectionProps) {
   const backdropUrl = getImageUrl(movie.backdrop_path || movie.poster_path, 'backdrop', 'original');
   const posterUrl = getImageUrl(movie.poster_path, 'poster', 'w342');
   const rating = formatVoteAverage(movie.vote_average);
@@ -97,7 +98,7 @@ export function HeroSection({ movie, className }: HeroSectionProps) {
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href={`/movie/${movie.id}`}
+                href={`/${mediaType}/${movie.id}`}
                 className={cn(
                   'inline-flex items-center space-x-2 px-6 py-3 rounded-lg',
                   'bg-white text-black font-semibold',
@@ -111,7 +112,7 @@ export function HeroSection({ movie, className }: HeroSectionProps) {
 
               <WatchlistButton 
                 item={movie} 
-                mediaType="movie" 
+                mediaType={mediaType} 
                 variant="hero"
               />
             </div>

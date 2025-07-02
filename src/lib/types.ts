@@ -437,6 +437,7 @@ export interface WatchProviderRegion {
   buy?: WatchProvider[];
   flatrate?: WatchProvider[];
   rent?: WatchProvider[];
+  ads?: WatchProvider[];
   link: string;
 }
 

@@ -8,13 +8,13 @@ import {
   ClockIcon,
   FilmIcon,
   PlayIcon,
-  ShareIcon,
   BookmarkIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 import { useMovieDetails, useMovieWatchProviders, getImageUrl } from '@/lib/api';
 import { WatchlistButton } from '@/components/ui/watchlist-button';
 import { WatchProviders } from '@/components/ui/watch-providers';
+import { ShareButton } from '@/components/ui/share-button';
 import { 
   formatDate, 
   formatRuntime, 
@@ -215,10 +215,11 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                     variant="hero"
                   />
                   
-                  <button className="inline-flex items-center space-x-2 px-6 py-3 border border-white/30 text-white bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors">
-                    <ShareIcon className="h-5 w-5" />
-                    <span>Share</span>
-                  </button>
+                  <ShareButton 
+                    title={`${movie.title} - Movie Details`}
+                    text={`Check out "${movie.title}" on this movie app!`}
+                    variant="hero"
+                  />
                 </div>
               </div>
             </div>
