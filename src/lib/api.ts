@@ -361,7 +361,7 @@ export const useDiscoverTVShows = (params: {
 export const getImageUrl = (
   path: string | null,
   type: 'poster' | 'backdrop' | 'profile' | 'logo' = 'poster',
-  size: keyof typeof IMAGE_URLS.poster = 'w500'
+  size: string = 'w500'
 ): string => {
   if (!path) return '';
   
