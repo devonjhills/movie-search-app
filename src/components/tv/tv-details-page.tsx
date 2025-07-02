@@ -11,8 +11,9 @@ import {
   TvIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
-import { useTVDetails, getImageUrl } from '@/lib/api';
+import { useTVDetails, useTVWatchProviders, getImageUrl } from '@/lib/api';
 import { WatchlistButton } from '@/components/ui/watchlist-button';
+import { WatchProviders } from '@/components/ui/watch-providers';
 import { 
   formatDate, 
   formatVoteAverage, 
@@ -66,6 +67,7 @@ function TVDetailsSkeleton() {
 
 export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   const { tvShow, isLoading, isError } = useTVDetails(tvId);
+  const { watchProviders, isLoading: isWatchProvidersLoading } = useTVWatchProviders(tvId);
 
   if (isLoading) {
     return <TVDetailsSkeleton />;
@@ -418,6 +420,14 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                   )}
                 </CardContent>
               </Card>
+            )}
+
+            {/* Watch Providers */}
+            {watchProviders?.results?.US && (
+              <WatchProviders
+                providers={watchProviders.results.US}
+                className="w-full"
+              />
             )}
           </div>
         </div>

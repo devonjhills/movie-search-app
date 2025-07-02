@@ -11,6 +11,7 @@ import type {
   FormattedMovie,
   APIResponse,
   TMDBError,
+  WatchProvidersResponse,
 } from './types';
 import { ENDPOINTS, API_CONFIG, SWR_CONFIG, IMAGE_URLS } from './constants';
 
@@ -381,4 +382,33 @@ export const getImageUrl = (
 // Error boundary helper
 export const isAPIError = (error: any): error is TMDBError => {
   return error && typeof error.status_code === 'number' && typeof error.status_message === 'string';
+};
+
+// Watch Provider API Functions
+export const useMovieWatchProviders = (movieId: number) => {
+  const { data, error, isLoading } = useSWR<WatchProvidersResponse>(
+    movieId ? `${ENDPOINTS.movieWatchProviders(movieId)}` : null,
+    fetcher,
+    SWR_CONFIG
+  );
+
+  return {
+    watchProviders: data,
+    isLoading,
+    isError: error,
+  };
+};
+
+export const useTVWatchProviders = (tvId: number) => {
+  const { data, error, isLoading } = useSWR<WatchProvidersResponse>(
+    tvId ? `${ENDPOINTS.tvWatchProviders(tvId)}` : null,
+    fetcher,
+    SWR_CONFIG
+  );
+
+  return {
+    watchProviders: data,
+    isLoading,
+    isError: error,
+  };
 };

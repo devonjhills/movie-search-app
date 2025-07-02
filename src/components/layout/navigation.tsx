@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/components/providers/auth-provider';
 import { MagnifyingGlassIcon, MoonIcon, SunIcon, ArrowRightStartOnRectangleIcon, BookmarkIcon } from '@heroicons/react/24/outline';
-import { FilmIcon } from '@heroicons/react/24/solid';
 import { cn } from '@/lib/utils';
 
 export function Navigation() {
@@ -38,7 +38,15 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo and Brand */}
           <Link href="/" className="flex items-center space-x-2">
-            <FilmIcon className="h-8 w-8 text-primary" />
+            <div className="relative h-8 w-8">
+              <Image
+                src="/logo.png"
+                alt="What To Watch? Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
             <span className="text-xl font-bold">What To Watch?</span>
           </Link>
 
