@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { SessionProvider } from "@/components/providers/session-provider";
+import { AuthProvider } from "@/components/providers/auth-provider";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
 
@@ -43,7 +43,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
-        <SessionProvider>
+        <AuthProvider>
           <ThemeProvider
             attribute="data-theme"
             defaultTheme="system"
@@ -56,7 +56,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </ThemeProvider>
-        </SessionProvider>
+        </AuthProvider>
       </body>
     </html>
   );

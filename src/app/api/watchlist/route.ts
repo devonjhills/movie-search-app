@@ -1,20 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@/auth'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 import { WatchlistItem } from '@/lib/types'
 
 export async function GET() {
   try {
-    const session = await auth()
+    const supabase = await createClient()
     
-    if (!session?.user?.id) {
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    
+    if (userError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const { data, error } = await supabase
       .from('watchlist')
       .select('*')
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false })
 
     if (error) {
@@ -31,9 +32,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
     
-    if (!session?.user?.id) {
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    
+    if (userError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -48,7 +51,7 @@ export async function POST(request: NextRequest) {
     const { data: existing } = await supabase
       .from('watchlist')
       .select('id')
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
       .eq('tmdb_id', tmdb_id)
       .eq('media_type', media_type)
       .single()
@@ -58,7 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     const watchlistItem: Omit<WatchlistItem, 'id' | 'created_at' | 'updated_at'> = {
-      user_id: session.user.id,
+      user_id: user.id,
       tmdb_id,
       media_type,
       title,
@@ -89,9 +92,11 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
     
-    if (!session?.user?.id) {
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    
+    if (userError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -106,7 +111,7 @@ export async function DELETE(request: NextRequest) {
     const { error } = await supabase
       .from('watchlist')
       .delete()
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
       .eq('tmdb_id', parseInt(tmdb_id))
       .eq('media_type', media_type)
 

@@ -1,14 +1,14 @@
 import useSWR from 'swr'
-import { useSession } from 'next-auth/react'
+import { useAuth } from '@/components/providers/auth-provider'
 import { WatchlistResponse, WatchlistItem } from '@/lib/types'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export function useWatchlist() {
-  const { data: session } = useSession()
+  const { user } = useAuth()
   
   const { data, error, mutate } = useSWR<WatchlistResponse>(
-    session?.user ? '/api/watchlist' : null,
+    user ? '/api/watchlist' : null,
     fetcher
   )
 
@@ -21,7 +21,7 @@ export function useWatchlist() {
     release_date?: string
     vote_average?: number
   }) => {
-    if (!session?.user) {
+    if (!user) {
       throw new Error('User not authenticated')
     }
 
@@ -35,6 +35,7 @@ export function useWatchlist() {
 
     if (!response.ok) {
       const errorData = await response.json()
+      console.error('API Error:', response.status, errorData)
       throw new Error(errorData.error || 'Failed to add to watchlist')
     }
 
@@ -43,7 +44,7 @@ export function useWatchlist() {
   }
 
   const removeFromWatchlist = async (tmdb_id: number, media_type: 'movie' | 'tv') => {
-    if (!session?.user) {
+    if (!user) {
       throw new Error('User not authenticated')
     }
 
@@ -68,7 +69,7 @@ export function useWatchlist() {
   return {
     watchlist: data?.items || [],
     total: data?.total || 0,
-    isLoading: !error && !data && !!session?.user,
+    isLoading: !error && !data && !!user,
     error,
     addToWatchlist,
     removeFromWatchlist,

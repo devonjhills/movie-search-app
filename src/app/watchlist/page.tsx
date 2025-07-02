@@ -1,16 +1,17 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
+import Link from 'next/link'
+import { useAuth } from '@/components/providers/auth-provider'
 import { useWatchlist } from '@/lib/hooks/use-watchlist'
 import { WatchlistGrid } from '@/components/watchlist/watchlist-grid'
 import { Button } from '@/components/ui/button'
 import { BookmarkIcon } from '@heroicons/react/24/outline'
 
 export default function WatchlistPage() {
-  const { data: session } = useSession()
+  const { user } = useAuth()
   const { watchlist, total, isLoading, error } = useWatchlist()
 
-  if (!session?.user) {
+  if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -19,9 +20,9 @@ export default function WatchlistPage() {
           <p className="text-muted-foreground">
             Create an account to save your favorite movies and TV shows.
           </p>
-          <Button onClick={() => window.location.href = '/api/auth/signin'}>
-            Sign In
-          </Button>
+          <Link href="/auth/signin">
+            <Button>Sign In</Button>
+          </Link>
         </div>
       </div>
     )
