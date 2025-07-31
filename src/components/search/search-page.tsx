@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useMultiSearch } from '@/lib/api';
-import { debounce } from '@/lib/utils';
-import { SearchResults } from './search-results';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useMultiSearch } from "@/lib/api";
+import { debounce } from "@/lib/utils";
+import { SearchResults } from "./search-results";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface SearchPageProps {
   initialQuery?: string;
 }
 
-export function SearchPage({ initialQuery = '' }: SearchPageProps) {
+export function SearchPage({ initialQuery = "" }: SearchPageProps) {
   const [query, setQuery] = useState(initialQuery);
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
   const router = useRouter();
@@ -25,15 +25,15 @@ export function SearchPage({ initialQuery = '' }: SearchPageProps) {
       // Update URL without triggering a navigation
       if (searchQuery) {
         const url = new URL(window.location.href);
-        url.searchParams.set('q', searchQuery);
-        window.history.replaceState({}, '', url.toString());
+        url.searchParams.set("q", searchQuery);
+        window.history.replaceState({}, "", url.toString());
       } else {
         const url = new URL(window.location.href);
-        url.searchParams.delete('q');
-        window.history.replaceState({}, '', url.toString());
+        url.searchParams.delete("q");
+        window.history.replaceState({}, "", url.toString());
       }
     }, 500),
-    []
+    [],
   );
 
   // Update debounced query when query changes
@@ -45,13 +45,13 @@ export function SearchPage({ initialQuery = '' }: SearchPageProps) {
   const { results, isLoading, isError } = useMultiSearch(debouncedQuery);
 
   const handleClearSearch = () => {
-    setQuery('');
-    setDebouncedQuery('');
+    setQuery("");
+    setDebouncedQuery("");
   };
 
-  const totalResults = 
-    (results?.movieResults?.length || 0) + 
-    (results?.tvResults?.length || 0) + 
+  const totalResults =
+    (results?.movieResults?.length || 0) +
+    (results?.tvResults?.length || 0) +
     (results?.peopleResults?.length || 0);
 
   return (
@@ -78,7 +78,7 @@ export function SearchPage({ initialQuery = '' }: SearchPageProps) {
                 "w-full rounded-lg border border-input bg-background pl-12 pr-12 py-4 text-lg",
                 "placeholder:text-muted-foreground",
                 "focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20",
-                "transition-colors"
+                "transition-colors",
               )}
               autoFocus
             />
@@ -141,7 +141,7 @@ export function SearchPage({ initialQuery = '' }: SearchPageProps) {
               Search Results for "{debouncedQuery}"
             </h2>
             <p className="text-sm text-muted-foreground">
-              {totalResults} result{totalResults !== 1 ? 's' : ''} found
+              {totalResults} result{totalResults !== 1 ? "s" : ""} found
             </p>
           </div>
 

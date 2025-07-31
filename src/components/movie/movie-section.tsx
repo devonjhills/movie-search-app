@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import { MovieGrid } from './movie-grid';
-import { cn } from '@/lib/utils';
-import type { Movie, FormattedMovie } from '@/lib/types';
+import { useState } from "react";
+import Link from "next/link";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { MovieGrid } from "./movie-grid";
+import { cn } from "@/lib/utils";
+import type { Movie, FormattedMovie } from "@/lib/types";
 
 interface MovieSectionProps {
   title: string;
@@ -29,15 +29,15 @@ export function MovieSection({
   limit = 12,
 }: MovieSectionProps) {
   const [showAll, setShowAll] = useState(false);
-  
+
   const displayMovies = showAll ? movies : movies.slice(0, limit);
 
   return (
-    <section className={cn('space-y-6', className)}>
+    <section className={cn("space-y-6", className)}>
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-        
+
         <div className="flex items-center space-x-4">
           {/* Show More/Less Toggle */}
           {movies.length > limit && (
@@ -45,10 +45,10 @@ export function MovieSection({
               onClick={() => setShowAll(!showAll)}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              {showAll ? 'Show Less' : `Show All (${movies.length})`}
+              {showAll ? "Show Less" : `Show All (${movies.length})`}
             </button>
           )}
-          
+
           {/* View All Link */}
           {href && showViewAll && (
             <Link

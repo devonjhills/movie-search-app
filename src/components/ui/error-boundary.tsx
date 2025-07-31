@@ -1,8 +1,11 @@
-'use client';
+"use client";
 
-import { Component, ReactNode } from 'react';
-import { ExclamationTriangleIcon as AlertTriangleIcon, ArrowPathIcon as RefreshCwIcon } from '@heroicons/react/24/outline';
-import { Card, CardContent, CardHeader, CardTitle } from './card';
+import { Component, ReactNode } from "react";
+import {
+  ExclamationTriangleIcon as AlertTriangleIcon,
+  ArrowPathIcon as RefreshCwIcon,
+} from "@heroicons/react/24/outline";
+import { Card, CardContent, CardHeader, CardTitle } from "./card";
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -15,7 +18,10 @@ interface ErrorBoundaryProps {
   onError?: (error: Error, errorInfo: any) => void;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
@@ -26,7 +32,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: any) {
-    console.error('Error caught by boundary:', error, errorInfo);
+    console.error("Error caught by boundary:", error, errorInfo);
     this.props.onError?.(error, errorInfo);
   }
 
@@ -44,20 +50,22 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         <Card className="mx-auto max-w-md">
           <CardHeader className="text-center">
             <AlertTriangleIcon className="h-12 w-12 text-destructive mx-auto mb-4" />
-            <CardTitle className="text-destructive">Something went wrong</CardTitle>
+            <CardTitle className="text-destructive">
+              Something went wrong
+            </CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-sm text-muted-foreground">
               An unexpected error occurred while loading this content.
             </p>
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {process.env.NODE_ENV === "development" && this.state.error && (
               <details className="text-left">
                 <summary className="cursor-pointer text-sm font-medium">
                   Error details
                 </summary>
                 <pre className="mt-2 text-xs bg-muted p-2 rounded overflow-auto">
                   {this.state.error.message}
-                  {this.state.error.stack && '\n' + this.state.error.stack}
+                  {this.state.error.stack && "\n" + this.state.error.stack}
                 </pre>
               </details>
             )}
@@ -80,7 +88,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 // Hook version for functional components
 export function withErrorBoundary<P extends object>(
   Component: React.ComponentType<P>,
-  errorFallback?: ReactNode
+  errorFallback?: ReactNode,
 ) {
   return function WrappedComponent(props: P) {
     return (

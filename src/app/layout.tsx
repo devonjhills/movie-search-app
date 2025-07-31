@@ -13,19 +13,30 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "What To Watch? - Discover Movies and TV Shows",
-  description: "Discover your next favorite movie or TV show with our comprehensive database powered by The Movie Database (TMDB).",
-  keywords: ["movies", "tv shows", "entertainment", "watch", "discover", "film", "television"],
+  description:
+    "Discover your next favorite movie or TV show with our comprehensive database powered by The Movie Database (TMDB).",
+  keywords: [
+    "movies",
+    "tv shows",
+    "entertainment",
+    "watch",
+    "discover",
+    "film",
+    "television",
+  ],
   authors: [{ name: "What To Watch?" }],
   openGraph: {
     title: "What To Watch? - Discover Movies and TV Shows",
-    description: "Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.",
+    description:
+      "Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "What To Watch? - Discover Movies and TV Shows",
-    description: "Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.",
+    description:
+      "Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.",
   },
   robots: {
     index: true,
@@ -51,9 +62,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Navigation />
-            <main className="flex-1">
-              {children}
-            </main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </ThemeProvider>
         </AuthProvider>

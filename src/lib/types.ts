@@ -51,7 +51,7 @@ export interface Movie {
   vote_count: number;
 }
 
-export interface MovieDetails extends Omit<Movie, 'genre_ids'> {
+export interface MovieDetails extends Omit<Movie, "genre_ids"> {
   belongs_to_collection: {
     id: number;
     name: string;
@@ -95,7 +95,7 @@ export interface TVShow {
   vote_count: number;
 }
 
-export interface TVShowDetails extends Omit<TVShow, 'genre_ids'> {
+export interface TVShowDetails extends Omit<TVShow, "genre_ids"> {
   created_by: {
     id: number;
     credit_id: string;
@@ -319,18 +319,20 @@ export interface TVKeywordsResponse {
 
 // Combined credits for person
 export interface CombinedCredits {
-  cast: (Movie & TVShow & {
-    character: string;
-    credit_id: string;
-    order?: number;
-    media_type: 'movie' | 'tv';
-  })[];
-  crew: (Movie & TVShow & {
-    credit_id: string;
-    department: string;
-    job: string;
-    media_type: 'movie' | 'tv';
-  })[];
+  cast: (Movie &
+    TVShow & {
+      character: string;
+      credit_id: string;
+      order?: number;
+      media_type: "movie" | "tv";
+    })[];
+  crew: (Movie &
+    TVShow & {
+      credit_id: string;
+      department: string;
+      job: string;
+      media_type: "movie" | "tv";
+    })[];
   id: number;
 }
 
@@ -356,8 +358,11 @@ export interface MultiSearchResult {
 }
 
 // Search result item with media type
-export interface SearchResultItem extends Partial<Movie>, Partial<TVShow>, Partial<Person> {
-  media_type: 'movie' | 'tv' | 'person';
+export interface SearchResultItem
+  extends Partial<Movie>,
+    Partial<TVShow>,
+    Partial<Person> {
+  media_type: "movie" | "tv" | "person";
 }
 
 // Formatted movie result (from the original formatResults function)
@@ -386,7 +391,14 @@ export interface TMDBConfig {
 }
 
 // Image URL helpers type
-export type ImageSize = 'w92' | 'w154' | 'w185' | 'w300' | 'w500' | 'w780' | 'original';
+export type ImageSize =
+  | "w92"
+  | "w154"
+  | "w185"
+  | "w300"
+  | "w500"
+  | "w780"
+  | "original";
 
 // Error types
 export interface TMDBError {
@@ -396,20 +408,22 @@ export interface TMDBError {
 }
 
 // Utility types for API responses
-export type APIResponse<T> = {
-  success: true;
-  data: T;
-} | {
-  success: false;
-  error: TMDBError | Error;
-};
+export type APIResponse<T> =
+  | {
+      success: true;
+      data: T;
+    }
+  | {
+      success: false;
+      error: TMDBError | Error;
+    };
 
 // Watchlist types
 export interface WatchlistItem {
   id: string;
   user_id: string;
   tmdb_id: number;
-  media_type: 'movie' | 'tv';
+  media_type: "movie" | "tv";
   title: string;
   poster_path: string | null;
   overview: string;

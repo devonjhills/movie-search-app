@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -20,7 +20,8 @@ export function Footer() {
               <span className="text-lg font-semibold">What To Watch?</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.
+              Discover your next favorite movie or TV show with our
+              comprehensive database powered by TMDB.
             </p>
           </div>
 
@@ -28,13 +29,22 @@ export function Footer() {
           <div className="space-y-3">
             <h3 className="text-sm font-semibold">Movies</h3>
             <div className="space-y-2">
-              <Link href="/" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Popular Movies
               </Link>
-              <Link href="/" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Top Rated
               </Link>
-              <Link href="/" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Now Playing
               </Link>
             </div>
@@ -44,13 +54,22 @@ export function Footer() {
           <div className="space-y-3">
             <h3 className="text-sm font-semibold">TV Shows</h3>
             <div className="space-y-2">
-              <Link href="/tv" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/tv"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Popular Shows
               </Link>
-              <Link href="/tv" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/tv"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Top Rated
               </Link>
-              <Link href="/tv" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/tv"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 On The Air
               </Link>
             </div>
@@ -60,13 +79,22 @@ export function Footer() {
           <div className="space-y-3">
             <h3 className="text-sm font-semibold">Discover</h3>
             <div className="space-y-2">
-              <Link href="/discover" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/discover"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Browse by Genre
               </Link>
-              <Link href="/discover" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/discover"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Trending
               </Link>
-              <Link href="/search" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/search"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Advanced Search
               </Link>
             </div>

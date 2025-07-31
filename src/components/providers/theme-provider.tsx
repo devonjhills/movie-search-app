@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { ThemeProvider as NextThemeProvider } from 'next-themes';
-import { ReactNode } from 'react';
+import { ThemeProvider as NextThemeProvider } from "next-themes";
+import { ReactNode } from "react";
 
 interface ThemeProviderProps {
   children: ReactNode;
-  attribute?: 'class' | 'data-theme';
+  attribute?: "class" | "data-theme";
   defaultTheme?: string;
   enableSystem?: boolean;
   disableTransitionOnChange?: boolean;

@@ -1,13 +1,29 @@
-'use client';
+"use client";
 
-import { HeroSection } from '@/components/ui/hero-section';
-import { TVSection } from '@/components/tv/tv-section';
-import { usePopularTVShows, useTopRatedTVShows, useOnTheAirTVShows } from '@/lib/api';
+import { HeroSection } from "@/components/ui/hero-section";
+import { TVSection } from "@/components/tv/tv-section";
+import {
+  usePopularTVShows,
+  useTopRatedTVShows,
+  useOnTheAirTVShows,
+} from "@/lib/api";
 
 export default function TVPage() {
-  const { tvShows: popularTVShows, isLoading: popularLoading, isError: popularError } = usePopularTVShows();
-  const { tvShows: topRatedTVShows, isLoading: topRatedLoading, isError: topRatedError } = useTopRatedTVShows();
-  const { tvShows: onTheAirTVShows, isLoading: onTheAirLoading, isError: onTheAirError } = useOnTheAirTVShows();
+  const {
+    tvShows: popularTVShows,
+    isLoading: popularLoading,
+    isError: popularError,
+  } = usePopularTVShows();
+  const {
+    tvShows: topRatedTVShows,
+    isLoading: topRatedLoading,
+    isError: topRatedError,
+  } = useTopRatedTVShows();
+  const {
+    tvShows: onTheAirTVShows,
+    isLoading: onTheAirLoading,
+    isError: onTheAirError,
+  } = useOnTheAirTVShows();
 
   // Use the first popular TV show as hero if available
   const heroTVShow = popularTVShows[0];
@@ -16,17 +32,19 @@ export default function TVPage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       {heroTVShow && !popularLoading && (
-        <HeroSection 
-          movie={{
-            ...heroTVShow,
-            title: heroTVShow.name,
-            release_date: heroTVShow.first_air_date,
-            adult: false,
-            original_title: heroTVShow.original_name,
-            video: false,
-          } as any} 
+        <HeroSection
+          movie={
+            {
+              ...heroTVShow,
+              title: heroTVShow.name,
+              release_date: heroTVShow.first_air_date,
+              adult: false,
+              original_title: heroTVShow.original_name,
+              video: false,
+            } as any
+          }
           mediaType="tv"
-          className="mb-12" 
+          className="mb-12"
         />
       )}
 

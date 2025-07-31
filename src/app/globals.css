@@ -63,7 +63,7 @@
 }
 
 @layer components {
-  /* Custom scrollbar for webkit browsers */
+  /* Custom scrollbar using semantic colors */
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -73,57 +73,22 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground rounded;
-    transition: background 0.2s ease;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-foreground;
+    @apply bg-muted-foreground/60 rounded hover:bg-muted-foreground;
+    transition: background-color 0.2s ease;
   }
 }
 
-/* Smooth cursor transitions */
-* {
-  cursor: inherit;
-}
+/* Focus and interaction styles using Tailwind utilities */
+@layer utilities {
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
 
-/* Better focus states */
-button:focus-visible,
-input:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
+  .interactive {
+    @apply cursor-pointer transition-colors duration-200;
+  }
 
-/* Improve link interactions */
-a {
-  cursor: pointer;
-}
-
-/* Button cursor states */
-button {
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-}
-
-/* Input cursor states */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="search"],
-textarea {
-  cursor: text;
-}
-
-/* Loading states */
-.loading {
-  cursor: wait;
-}
-
-/* Interactive elements */
-.interactive {
-  cursor: pointer;
+  .loading {
+    @apply cursor-wait;
+  }
 }

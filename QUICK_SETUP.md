@@ -60,14 +60,17 @@ CREATE INDEX IF NOT EXISTS idx_watchlist_user_tmdb ON watchlist(user_id, tmdb_id
 ## Troubleshooting
 
 **"Failed to add to watchlist":**
+
 - Check browser console for more details
 - Make sure you created the database table above
 - Verify environment variables are set correctly
 
 **"User not authenticated":**
+
 - Make sure you're signed in
 - Check that SUPABASE_URL and ANON_KEY are correct
 
 **Email not confirming:**
+
 - Check spam folder
 - In Supabase → Authentication → Settings, you can disable email confirmation for testing

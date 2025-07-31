@@ -9,6 +9,7 @@ A production-ready, responsive movie and TV discovery platform built with cuttin
 ## ✨ Portfolio Highlights
 
 ### 🎯 Technical Excellence
+
 - **Next.js 15 App Router**: Server-side rendering, route optimization, and modern React patterns
 - **TypeScript Integration**: 100% type-safe codebase with comprehensive API typing
 - **Advanced State Management**: SWR for efficient data fetching, caching, and real-time updates
@@ -17,6 +18,7 @@ A production-ready, responsive movie and TV discovery platform built with cuttin
 - **Performance Optimization**: Image optimization, lazy loading, and code splitting
 
 ### 🎨 User Experience Design
+
 - **Responsive Design**: Mobile-first approach with seamless cross-device experience
 - **Accessibility**: WCAG compliant with proper ARIA labels and keyboard navigation
 - **Dark/Light Mode**: Intelligent theme switching with system preference detection and hydration-safe implementation
@@ -24,6 +26,7 @@ A production-ready, responsive movie and TV discovery platform built with cuttin
 - **Error Boundaries**: Comprehensive error handling with user-friendly fallbacks
 
 ### 🚀 Full-Stack Features
+
 - **User Authentication**: Secure sign-up/sign-in with Supabase Auth
 - **Personal Watchlist**: Authenticated users can save and manage their favorite content
 - **Movie Discovery**: Browse popular, top-rated, and now-playing movies with advanced filtering
@@ -49,6 +52,7 @@ A production-ready, responsive movie and TV discovery platform built with cuttin
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+ and npm
 - TMDB API key (free from [themoviedb.org](https://www.themoviedb.org/settings/api))
 - Supabase project (free at [supabase.com](https://supabase.com))
@@ -56,21 +60,26 @@ A production-ready, responsive movie and TV discovery platform built with cuttin
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/movie-search-app.git
    cd movie-search-app
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.local.example .env.local
    ```
+
    Add your API keys to `.env.local`:
+
    ```
    NEXT_PUBLIC_MOVIE_API_KEY=your_tmdb_api_key_here
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
@@ -82,6 +91,7 @@ A production-ready, responsive movie and TV discovery platform built with cuttin
    - Enable Row Level Security and create appropriate policies
 
 5. **Run the development server**
+
    ```bash
    npm run dev
    ```
@@ -131,20 +141,24 @@ src/
 ## 🔧 Configuration
 
 ### Environment Variables
+
 - `NEXT_PUBLIC_MOVIE_API_KEY`: Your TMDB API key (required)
 - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL (required)
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous key (required)
 
 ### API Configuration
+
 The app integrates with multiple APIs:
 
 **TMDB API v3**:
+
 - Movies: Popular, top-rated, now-playing, details, search
 - TV Shows: Popular, top-rated, on-the-air, details, search
 - People: Details, combined credits, search
 - Multi-search: Combined search across all media types
 
 **Supabase**:
+
 - Authentication: User sign-up, sign-in, session management
 - Database: Watchlist storage with user-specific data
 - Real-time: Live updates for watchlist changes
@@ -152,6 +166,7 @@ The app integrates with multiple APIs:
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
+
 1. Connect your repository to Vercel
 2. Add environment variables:
    - `NEXT_PUBLIC_MOVIE_API_KEY`
@@ -160,6 +175,7 @@ The app integrates with multiple APIs:
 3. Deploy automatically with git pushes
 
 ### Manual Deployment
+
 ```bash
 npm run build
 npm start
@@ -168,6 +184,7 @@ npm start
 ## 🎨 Design System
 
 The app uses a custom design system built on Tailwind CSS with:
+
 - **Colors**: Semantic color variables for light/dark themes
 - **Typography**: Inter font with consistent sizing scale
 - **Spacing**: 8px-based spacing system
@@ -177,12 +194,14 @@ The app uses a custom design system built on Tailwind CSS with:
 ## 🧪 Development
 
 ### Available Scripts
+
 - `npm run dev`: Start development server with Turbopack
 - `npm run build`: Build for production
 - `npm start`: Start production server
 - `npm run lint`: Run ESLint
 
 ### Code Organization
+
 - **Components**: Organized by feature (movie, tv, person, etc.)
 - **Types**: Comprehensive TypeScript definitions for all API responses
 - **API Layer**: Centralized data fetching with SWR hooks
@@ -191,6 +210,7 @@ The app uses a custom design system built on Tailwind CSS with:
 ## 📱 Responsive Design
 
 The application is fully responsive with:
+
 - **Mobile-first approach**: Optimized for small screens
 - **Breakpoints**: Tailored layouts for tablet and desktop
 - **Touch-friendly**: Proper touch targets and interactions
@@ -209,18 +229,21 @@ The application is fully responsive with:
 This project demonstrates several key software engineering competencies:
 
 ### Architecture & Design Patterns
+
 - **Component Architecture**: Modular, reusable components with clear separation of concerns
 - **Custom Hooks**: Abstracted data fetching logic with SWR integration
 - **Error Boundaries**: Graceful error handling throughout the application
 - **Type Safety**: Comprehensive TypeScript implementation with strict mode
 
 ### Performance & Optimization
+
 - **Image Optimization**: Next.js Image component with responsive sizing
 - **Code Splitting**: Automatic route-based splitting with Next.js App Router
 - **Caching Strategy**: SWR cache invalidation and background updates
 - **Bundle Optimization**: Tree shaking and production optimizations
 
 ### Development Practices
+
 - **Modern React**: Latest patterns including Server Components and App Router
 - **Responsive Design**: Mobile-first CSS with breakpoint-specific optimizations
 - **Accessibility**: Semantic HTML, ARIA labels, and keyboard navigation

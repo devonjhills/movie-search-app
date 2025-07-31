@@ -24,8 +24,9 @@ cp .env.local.example .env.local
 Email authentication is enabled by default in Supabase! No additional configuration needed.
 
 **Features:**
+
 - ✅ Sign up with email/password
-- ✅ Sign in with email/password  
+- ✅ Sign in with email/password
 - ✅ Email confirmation (optional)
 - ✅ Password reset (built-in)
 

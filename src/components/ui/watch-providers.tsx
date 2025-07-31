@@ -1,29 +1,35 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
-import { getImageUrl } from '@/lib/api';
-import type { WatchProviderRegion, WatchProvider } from '@/lib/types';
+import Image from "next/image";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { getImageUrl } from "@/lib/api";
+import type { WatchProviderRegion, WatchProvider } from "@/lib/types";
 
 interface WatchProvidersProps {
   providers?: WatchProviderRegion;
   className?: string;
 }
 
-const ProviderLogo = ({ provider, onClick }: { provider: WatchProvider; onClick?: () => void }) => (
+const ProviderLogo = ({
+  provider,
+  onClick,
+}: {
+  provider: WatchProvider;
+  onClick?: () => void;
+}) => (
   <div
     className={cn(
       "relative w-12 h-12 rounded-lg overflow-hidden",
       "border border-border/50 bg-card shadow-sm",
       "hover:scale-105 hover:shadow-md transition-all duration-200",
-      onClick && "cursor-pointer"
+      onClick && "cursor-pointer",
     )}
     onClick={onClick}
     title={provider.provider_name}
   >
     <Image
-      src={getImageUrl(provider.logo_path, 'logo', 'w92')}
+      src={getImageUrl(provider.logo_path, "logo", "w92")}
       alt={provider.provider_name}
       fill
       className="object-cover"
@@ -32,13 +38,13 @@ const ProviderLogo = ({ provider, onClick }: { provider: WatchProvider; onClick?
   </div>
 );
 
-const ProviderSection = ({ 
-  title, 
-  providers, 
-  onProviderClick 
-}: { 
-  title: string; 
-  providers: WatchProvider[]; 
+const ProviderSection = ({
+  title,
+  providers,
+  onProviderClick,
+}: {
+  title: string;
+  providers: WatchProvider[];
   onProviderClick?: (provider: WatchProvider) => void;
 }) => (
   <div className="space-y-2">
@@ -61,11 +67,17 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
   }
 
   const { flatrate, buy, rent, ads, link } = providers;
-  const hasProviders = flatrate?.length || buy?.length || rent?.length || ads?.length;
+  const hasProviders =
+    flatrate?.length || buy?.length || rent?.length || ads?.length;
 
   if (!hasProviders) {
     return (
-      <div className={cn("p-4 rounded-lg border border-border/50 bg-card/50", className)}>
+      <div
+        className={cn(
+          "p-4 rounded-lg border border-border/50 bg-card/50",
+          className,
+        )}
+      >
         <div className="text-center text-muted-foreground">
           <p className="text-sm">No streaming information available</p>
         </div>
@@ -76,12 +88,17 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
   const handleProviderClick = (provider: WatchProvider) => {
     // Open TMDB link if available, or search for the provider
     if (link) {
-      window.open(link, '_blank', 'noopener,noreferrer');
+      window.open(link, "_blank", "noopener,noreferrer");
     }
   };
 
   return (
-    <div className={cn("space-y-4 p-4 rounded-lg border border-border/50 bg-card/50", className)}>
+    <div
+      className={cn(
+        "space-y-4 p-4 rounded-lg border border-border/50 bg-card/50",
+        className,
+      )}
+    >
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">Where to Watch</h3>
         {link && (
@@ -132,7 +149,7 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
 
       <div className="pt-2 border-t border-border/50">
         <p className="text-xs text-muted-foreground">
-          Streaming data provided by{' '}
+          Streaming data provided by{" "}
           <Link
             href="https://www.justwatch.com"
             target="_blank"
@@ -148,7 +165,10 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
 }
 
 // Compact version for cards
-export function WatchProvidersCompact({ providers, className }: WatchProvidersProps) {
+export function WatchProvidersCompact({
+  providers,
+  className,
+}: WatchProvidersProps) {
   if (!providers?.flatrate?.length) {
     return null;
   }
@@ -162,7 +182,7 @@ export function WatchProvidersCompact({ providers, className }: WatchProvidersPr
           title={provider.provider_name}
         >
           <Image
-            src={getImageUrl(provider.logo_path, 'logo', 'w45')}
+            src={getImageUrl(provider.logo_path, "logo", "w45")}
             alt={provider.provider_name}
             fill
             className="object-cover"

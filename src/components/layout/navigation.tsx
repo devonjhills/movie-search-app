@@ -1,16 +1,22 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
-import { useAuth } from '@/components/providers/auth-provider';
-import { MagnifyingGlassIcon, MoonIcon, SunIcon, ArrowRightStartOnRectangleIcon, BookmarkIcon } from '@heroicons/react/24/outline';
-import { cn } from '@/lib/utils';
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import { useAuth } from "@/components/providers/auth-provider";
+import {
+  MagnifyingGlassIcon,
+  MoonIcon,
+  SunIcon,
+  ArrowRightStartOnRectangleIcon,
+  BookmarkIcon,
+} from "@heroicons/react/24/outline";
+import { cn } from "@/lib/utils";
 
 export function Navigation() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { theme, setTheme } = useTheme();
@@ -24,12 +30,12 @@ export function Navigation() {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery('');
+      setSearchQuery("");
     }
   };
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -95,7 +101,7 @@ export function Navigation() {
                     "w-64 rounded-lg border border-input bg-background pl-9 pr-3 py-2 text-sm",
                     "placeholder:text-muted-foreground cursor-text",
                     "focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20",
-                    "hover:border-ring/50 transition-all duration-200"
+                    "hover:border-ring/50 transition-all duration-200",
                   )}
                 />
               </div>
@@ -113,7 +119,7 @@ export function Navigation() {
                     "rounded-lg p-2 text-foreground/80 transition-all duration-200",
                     "hover:bg-accent hover:text-accent-foreground hover:scale-105",
                     "focus:outline-none focus:ring-2 focus:ring-ring/20",
-                    "cursor-pointer active:scale-95"
+                    "cursor-pointer active:scale-95",
                   )}
                   title="My Watchlist"
                 >
@@ -125,7 +131,7 @@ export function Navigation() {
                     "rounded-lg p-2 text-foreground/80 transition-all duration-200",
                     "hover:bg-accent hover:text-accent-foreground hover:scale-105",
                     "focus:outline-none focus:ring-2 focus:ring-ring/20",
-                    "cursor-pointer active:scale-95"
+                    "cursor-pointer active:scale-95",
                   )}
                   title="Sign Out"
                 >
@@ -140,7 +146,7 @@ export function Navigation() {
                   "bg-primary text-primary-foreground",
                   "hover:bg-primary/90 hover:scale-105 hover:shadow-md transition-all duration-200",
                   "focus:outline-none focus:ring-2 focus:ring-ring/20",
-                  "cursor-pointer active:scale-95"
+                  "cursor-pointer active:scale-95",
                 )}
               >
                 Sign In
@@ -153,14 +159,14 @@ export function Navigation() {
                 "rounded-lg p-2 text-foreground/80 transition-all duration-200",
                 "hover:bg-accent hover:text-accent-foreground hover:scale-105",
                 "focus:outline-none focus:ring-2 focus:ring-ring/20",
-                "cursor-pointer active:scale-95"
+                "cursor-pointer active:scale-95",
               )}
               aria-label="Toggle theme"
             >
               {!mounted ? (
                 // Show a neutral icon during SSR to prevent hydration mismatch
                 <div className="h-5 w-5" />
-              ) : theme === 'dark' ? (
+              ) : theme === "dark" ? (
                 <SunIcon className="h-5 w-5" />
               ) : (
                 <MoonIcon className="h-5 w-5" />

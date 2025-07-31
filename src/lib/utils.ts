@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 // Utility function to merge Tailwind classes
 export function cn(...inputs: ClassValue[]) {
@@ -8,137 +8,145 @@ export function cn(...inputs: ClassValue[]) {
 
 // Format date to readable string
 export function formatDate(dateString: string | null | undefined): string {
-  if (!dateString) return 'TBA';
-  
+  if (!dateString) return "TBA";
+
   try {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   } catch (error) {
-    return 'Invalid Date';
+    return "Invalid Date";
   }
 }
 
 // Format year from date string
 export function formatYear(dateString: string | null | undefined): string {
-  if (!dateString) return '';
-  
+  if (!dateString) return "";
+
   try {
     const date = new Date(dateString);
     return date.getFullYear().toString();
   } catch (error) {
-    return '';
+    return "";
   }
 }
 
 // Format runtime in minutes to hours and minutes
 export function formatRuntime(minutes: number | null | undefined): string {
-  if (!minutes || minutes <= 0) return '';
-  
+  if (!minutes || minutes <= 0) return "";
+
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
-  
+
   if (hours === 0) {
     return `${remainingMinutes}m`;
   }
-  
+
   if (remainingMinutes === 0) {
     return `${hours}h`;
   }
-  
+
   return `${hours}h ${remainingMinutes}m`;
 }
 
 // Format vote average to one decimal place
-export function formatVoteAverage(voteAverage: number | null | undefined): string {
-  if (!voteAverage && voteAverage !== 0) return 'N/A';
+export function formatVoteAverage(
+  voteAverage: number | null | undefined,
+): string {
+  if (!voteAverage && voteAverage !== 0) return "N/A";
   return voteAverage.toFixed(1);
 }
 
 // Format large numbers (for vote count, revenue, etc.)
 export function formatNumber(num: number | null | undefined): string {
-  if (!num && num !== 0) return 'N/A';
-  
+  if (!num && num !== 0) return "N/A";
+
   if (num >= 1000000000) {
-    return (num / 1000000000).toFixed(1) + 'B';
+    return (num / 1000000000).toFixed(1) + "B";
   }
   if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M';
+    return (num / 1000000).toFixed(1) + "M";
   }
   if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'K';
+    return (num / 1000).toFixed(1) + "K";
   }
   return num.toString();
 }
 
 // Format currency
 export function formatCurrency(amount: number | null | undefined): string {
-  if (!amount && amount !== 0) return 'N/A';
-  
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  if (!amount && amount !== 0) return "N/A";
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);
 }
 
 // Truncate text to specified length
-export function truncateText(text: string | null | undefined, maxLength: number): string {
-  if (!text) return '';
-  
+export function truncateText(
+  text: string | null | undefined,
+  maxLength: number,
+): string {
+  if (!text) return "";
+
   if (text.length <= maxLength) return text;
-  
-  return text.substring(0, maxLength).trim() + '...';
+
+  return text.substring(0, maxLength).trim() + "...";
 }
 
 // Get rating color based on vote average
 export function getRatingColor(voteAverage: number | null | undefined): string {
-  if (!voteAverage && voteAverage !== 0) return 'text-muted-foreground';
-  
-  if (voteAverage >= 7) return 'text-green-500';
-  if (voteAverage >= 5) return 'text-yellow-500';
-  return 'text-red-500';
+  if (!voteAverage && voteAverage !== 0) return "text-muted-foreground";
+
+  if (voteAverage >= 7) return "text-green-500";
+  if (voteAverage >= 5) return "text-yellow-500";
+  return "text-red-500";
 }
 
 // Extract YouTube video ID from URL or return the key if it's already an ID
 export function getYouTubeVideoId(urlOrId: string): string | null {
   if (!urlOrId) return null;
-  
+
   // If it's already just an ID (11 characters, alphanumeric with dashes and underscores)
   if (/^[a-zA-Z0-9_-]{11}$/.test(urlOrId)) {
     return urlOrId;
   }
-  
+
   // Extract from various YouTube URL formats
   const patterns = [
     /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
     /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
   ];
-  
+
   for (const pattern of patterns) {
     const match = urlOrId.match(pattern);
     if (match) return match[1];
   }
-  
+
   return null;
 }
 
 // Build YouTube thumbnail URL
-export function getYouTubeThumbnail(videoId: string, quality: 'default' | 'hqdefault' | 'maxresdefault' = 'hqdefault'): string {
+export function getYouTubeThumbnail(
+  videoId: string,
+  quality: "default" | "hqdefault" | "maxresdefault" = "hqdefault",
+): string {
   return `https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
 }
 
 // Debounce function for search
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -151,11 +159,11 @@ export function slugify(text: string): string {
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 }
 
 // Check if a string is a valid URL
@@ -175,26 +183,30 @@ export function generateId(): string {
 
 // Capitalize first letter of each word
 export function capitalizeWords(text: string): string {
-  return text.replace(/\w\S*/g, (txt) => 
-    txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+  return text.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase(),
   );
 }
 
 // Calculate age from birth date
-export function calculateAge(birthDate: string | null | undefined, deathDate?: string | null): number | null {
+export function calculateAge(
+  birthDate: string | null | undefined,
+  deathDate?: string | null,
+): number | null {
   if (!birthDate) return null;
-  
+
   try {
     const birth = new Date(birthDate);
     const end = deathDate ? new Date(deathDate) : new Date();
-    
+
     let age = end.getFullYear() - birth.getFullYear();
     const monthDiff = end.getMonth() - birth.getMonth();
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && end.getDate() < birth.getDate())) {
       age--;
     }
-    
+
     return age;
   } catch (error) {
     return null;
@@ -210,7 +222,7 @@ export function sortBy<T>(
     for (const criterion of criteria) {
       const aValue = criterion(a);
       const bValue = criterion(b);
-      
+
       if (aValue < bValue) return -1;
       if (aValue > bValue) return 1;
     }
@@ -221,11 +233,14 @@ export function sortBy<T>(
 // Group array by key
 export function groupBy<T, K extends keyof any>(
   array: T[],
-  getKey: (item: T) => K
+  getKey: (item: T) => K,
 ): Record<K, T[]> {
-  return array.reduce((groups, item) => {
-    const key = getKey(item);
-    (groups[key] = groups[key] || []).push(item);
-    return groups;
-  }, {} as Record<K, T[]>);
+  return array.reduce(
+    (groups, item) => {
+      const key = getKey(item);
+      (groups[key] = groups[key] || []).push(item);
+      return groups;
+    },
+    {} as Record<K, T[]>,
+  );
 }

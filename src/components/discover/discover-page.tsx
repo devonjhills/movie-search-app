@@ -1,17 +1,23 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Listbox } from '@headlessui/react';
-import { ChevronUpDownIcon, CheckIcon } from '@heroicons/react/24/outline';
-import { useDiscoverMovies, useDiscoverTVShows } from '@/lib/api';
-import { MovieGrid } from '@/components/movie/movie-grid';
-import { TVGrid } from '@/components/tv/tv-grid';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MOVIE_GENRES, TV_GENRES } from '@/lib/constants';
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+import { Listbox } from "@headlessui/react";
+import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { useDiscoverMovies, useDiscoverTVShows } from "@/lib/api";
+import { MovieGrid } from "@/components/movie/movie-grid";
+import { TVGrid } from "@/components/tv/tv-grid";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MOVIE_GENRES, TV_GENRES } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
-type MediaType = 'movie' | 'tv';
-type SortOption = 'popularity.desc' | 'popularity.asc' | 'vote_average.desc' | 'vote_average.asc' | 'release_date.desc' | 'release_date.asc';
+type MediaType = "movie" | "tv";
+type SortOption =
+  | "popularity.desc"
+  | "popularity.asc"
+  | "vote_average.desc"
+  | "vote_average.asc"
+  | "release_date.desc"
+  | "release_date.asc";
 
 interface GenreOption {
   id: number | null;
@@ -24,63 +30,63 @@ interface SortOptionType {
 }
 
 const movieGenres: GenreOption[] = [
-  { id: null, name: 'All Genres' },
-  { id: MOVIE_GENRES.ACTION, name: 'Action' },
-  { id: MOVIE_GENRES.ADVENTURE, name: 'Adventure' },
-  { id: MOVIE_GENRES.ANIMATION, name: 'Animation' },
-  { id: MOVIE_GENRES.COMEDY, name: 'Comedy' },
-  { id: MOVIE_GENRES.CRIME, name: 'Crime' },
-  { id: MOVIE_GENRES.DOCUMENTARY, name: 'Documentary' },
-  { id: MOVIE_GENRES.DRAMA, name: 'Drama' },
-  { id: MOVIE_GENRES.FAMILY, name: 'Family' },
-  { id: MOVIE_GENRES.FANTASY, name: 'Fantasy' },
-  { id: MOVIE_GENRES.HISTORY, name: 'History' },
-  { id: MOVIE_GENRES.HORROR, name: 'Horror' },
-  { id: MOVIE_GENRES.MUSIC, name: 'Music' },
-  { id: MOVIE_GENRES.MYSTERY, name: 'Mystery' },
-  { id: MOVIE_GENRES.ROMANCE, name: 'Romance' },
-  { id: MOVIE_GENRES.SCIENCE_FICTION, name: 'Science Fiction' },
-  { id: MOVIE_GENRES.THRILLER, name: 'Thriller' },
-  { id: MOVIE_GENRES.WAR, name: 'War' },
-  { id: MOVIE_GENRES.WESTERN, name: 'Western' },
+  { id: null, name: "All Genres" },
+  { id: MOVIE_GENRES.ACTION, name: "Action" },
+  { id: MOVIE_GENRES.ADVENTURE, name: "Adventure" },
+  { id: MOVIE_GENRES.ANIMATION, name: "Animation" },
+  { id: MOVIE_GENRES.COMEDY, name: "Comedy" },
+  { id: MOVIE_GENRES.CRIME, name: "Crime" },
+  { id: MOVIE_GENRES.DOCUMENTARY, name: "Documentary" },
+  { id: MOVIE_GENRES.DRAMA, name: "Drama" },
+  { id: MOVIE_GENRES.FAMILY, name: "Family" },
+  { id: MOVIE_GENRES.FANTASY, name: "Fantasy" },
+  { id: MOVIE_GENRES.HISTORY, name: "History" },
+  { id: MOVIE_GENRES.HORROR, name: "Horror" },
+  { id: MOVIE_GENRES.MUSIC, name: "Music" },
+  { id: MOVIE_GENRES.MYSTERY, name: "Mystery" },
+  { id: MOVIE_GENRES.ROMANCE, name: "Romance" },
+  { id: MOVIE_GENRES.SCIENCE_FICTION, name: "Science Fiction" },
+  { id: MOVIE_GENRES.THRILLER, name: "Thriller" },
+  { id: MOVIE_GENRES.WAR, name: "War" },
+  { id: MOVIE_GENRES.WESTERN, name: "Western" },
 ];
 
 const tvGenres: GenreOption[] = [
-  { id: null, name: 'All Genres' },
-  { id: TV_GENRES.ACTION_ADVENTURE, name: 'Action & Adventure' },
-  { id: TV_GENRES.ANIMATION, name: 'Animation' },
-  { id: TV_GENRES.COMEDY, name: 'Comedy' },
-  { id: TV_GENRES.CRIME, name: 'Crime' },
-  { id: TV_GENRES.DOCUMENTARY, name: 'Documentary' },
-  { id: TV_GENRES.DRAMA, name: 'Drama' },
-  { id: TV_GENRES.FAMILY, name: 'Family' },
-  { id: TV_GENRES.KIDS, name: 'Kids' },
-  { id: TV_GENRES.MYSTERY, name: 'Mystery' },
-  { id: TV_GENRES.NEWS, name: 'News' },
-  { id: TV_GENRES.REALITY, name: 'Reality' },
-  { id: TV_GENRES.SCIENCE_FICTION, name: 'Sci-Fi & Fantasy' },
-  { id: TV_GENRES.SOAP, name: 'Soap' },
-  { id: TV_GENRES.TALK, name: 'Talk' },
-  { id: TV_GENRES.WAR_POLITICS, name: 'War & Politics' },
-  { id: TV_GENRES.WESTERN, name: 'Western' },
+  { id: null, name: "All Genres" },
+  { id: TV_GENRES.ACTION_ADVENTURE, name: "Action & Adventure" },
+  { id: TV_GENRES.ANIMATION, name: "Animation" },
+  { id: TV_GENRES.COMEDY, name: "Comedy" },
+  { id: TV_GENRES.CRIME, name: "Crime" },
+  { id: TV_GENRES.DOCUMENTARY, name: "Documentary" },
+  { id: TV_GENRES.DRAMA, name: "Drama" },
+  { id: TV_GENRES.FAMILY, name: "Family" },
+  { id: TV_GENRES.KIDS, name: "Kids" },
+  { id: TV_GENRES.MYSTERY, name: "Mystery" },
+  { id: TV_GENRES.NEWS, name: "News" },
+  { id: TV_GENRES.REALITY, name: "Reality" },
+  { id: TV_GENRES.SCIENCE_FICTION, name: "Sci-Fi & Fantasy" },
+  { id: TV_GENRES.SOAP, name: "Soap" },
+  { id: TV_GENRES.TALK, name: "Talk" },
+  { id: TV_GENRES.WAR_POLITICS, name: "War & Politics" },
+  { id: TV_GENRES.WESTERN, name: "Western" },
 ];
 
 const sortOptions: SortOptionType[] = [
-  { value: 'popularity.desc', label: 'Most Popular' },
-  { value: 'popularity.asc', label: 'Least Popular' },
-  { value: 'vote_average.desc', label: 'Highest Rated' },
-  { value: 'vote_average.asc', label: 'Lowest Rated' },
-  { value: 'release_date.desc', label: 'Newest First' },
-  { value: 'release_date.asc', label: 'Oldest First' },
+  { value: "popularity.desc", label: "Most Popular" },
+  { value: "popularity.asc", label: "Least Popular" },
+  { value: "vote_average.desc", label: "Highest Rated" },
+  { value: "vote_average.asc", label: "Lowest Rated" },
+  { value: "release_date.desc", label: "Newest First" },
+  { value: "release_date.asc", label: "Oldest First" },
 ];
 
-function Select<T>({ 
-  value, 
-  onChange, 
-  options, 
-  getLabel, 
-  getValue, 
-  placeholder = "Select option"
+function Select<T>({
+  value,
+  onChange,
+  options,
+  getLabel,
+  getValue,
+  placeholder = "Select option",
 }: {
   value: T;
   onChange: (value: T) => void;
@@ -107,8 +113,10 @@ function Select<T>({
               key={getValue(option)}
               className={({ active }) =>
                 cn(
-                  'relative cursor-default select-none py-2 pl-10 pr-4',
-                  active ? 'bg-accent text-accent-foreground' : 'text-foreground'
+                  "relative cursor-default select-none py-2 pl-10 pr-4",
+                  active
+                    ? "bg-accent text-accent-foreground"
+                    : "text-foreground",
                 )
               }
               value={option}
@@ -117,8 +125,8 @@ function Select<T>({
                 <>
                   <span
                     className={cn(
-                      'block truncate',
-                      selected ? 'font-medium' : 'font-normal'
+                      "block truncate",
+                      selected ? "font-medium" : "font-normal",
                     )}
                   >
                     {getLabel(option)}
@@ -139,38 +147,40 @@ function Select<T>({
 }
 
 export function DiscoverPage() {
-  const [mediaType, setMediaType] = useState<MediaType>('movie');
-  const [selectedGenre, setSelectedGenre] = useState<GenreOption>(movieGenres[0]);
+  const [mediaType, setMediaType] = useState<MediaType>("movie");
+  const [selectedGenre, setSelectedGenre] = useState<GenreOption>(
+    movieGenres[0],
+  );
   const [sortBy, setSortBy] = useState<SortOptionType>(sortOptions[0]);
 
   // Update genre when media type changes
   const handleMediaTypeChange = (newMediaType: MediaType) => {
     setMediaType(newMediaType);
-    setSelectedGenre(newMediaType === 'movie' ? movieGenres[0] : tvGenres[0]);
+    setSelectedGenre(newMediaType === "movie" ? movieGenres[0] : tvGenres[0]);
   };
 
   // Fetch discover results
-  const { 
-    movies, 
-    isLoading: moviesLoading, 
-    isError: moviesError 
+  const {
+    movies,
+    isLoading: moviesLoading,
+    isError: moviesError,
   } = useDiscoverMovies({
     genre: selectedGenre.id || undefined,
     sortBy: sortBy.value,
   });
 
-  const { 
-    tvShows, 
-    isLoading: tvLoading, 
-    isError: tvError 
+  const {
+    tvShows,
+    isLoading: tvLoading,
+    isError: tvError,
   } = useDiscoverTVShows({
     genre: selectedGenre.id || undefined,
     sortBy: sortBy.value,
   });
 
-  const currentGenres = mediaType === 'movie' ? movieGenres : tvGenres;
-  const isLoading = mediaType === 'movie' ? moviesLoading : tvLoading;
-  const error = mediaType === 'movie' ? moviesError : tvError;
+  const currentGenres = mediaType === "movie" ? movieGenres : tvGenres;
+  const isLoading = mediaType === "movie" ? moviesLoading : tvLoading;
+  const error = mediaType === "movie" ? moviesError : tvError;
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-8">
@@ -194,23 +204,23 @@ export function DiscoverPage() {
               <label className="text-sm font-medium">Media Type</label>
               <div className="flex rounded-lg border border-input p-1">
                 <button
-                  onClick={() => handleMediaTypeChange('movie')}
+                  onClick={() => handleMediaTypeChange("movie")}
                   className={cn(
-                    'flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                    mediaType === 'movie'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'hover:bg-muted'
+                    "flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    mediaType === "movie"
+                      ? "bg-primary text-primary-foreground"
+                      : "hover:bg-muted",
                   )}
                 >
                   Movies
                 </button>
                 <button
-                  onClick={() => handleMediaTypeChange('tv')}
+                  onClick={() => handleMediaTypeChange("tv")}
                   className={cn(
-                    'flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                    mediaType === 'tv'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'hover:bg-muted'
+                    "flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    mediaType === "tv"
+                      ? "bg-primary text-primary-foreground"
+                      : "hover:bg-muted",
                   )}
                 >
                   TV Shows
@@ -226,7 +236,7 @@ export function DiscoverPage() {
                 onChange={setSelectedGenre}
                 options={currentGenres}
                 getLabel={(genre) => genre.name}
-                getValue={(genre) => genre.id?.toString() || 'all'}
+                getValue={(genre) => genre.id?.toString() || "all"}
               />
             </div>
 
@@ -249,7 +259,7 @@ export function DiscoverPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">
-            {mediaType === 'movie' ? 'Movies' : 'TV Shows'}
+            {mediaType === "movie" ? "Movies" : "TV Shows"}
             {selectedGenre.id && ` - ${selectedGenre.name}`}
           </h2>
           <p className="text-sm text-muted-foreground">
@@ -257,7 +267,7 @@ export function DiscoverPage() {
           </p>
         </div>
 
-        {mediaType === 'movie' ? (
+        {mediaType === "movie" ? (
           <MovieGrid
             movies={movies}
             isLoading={isLoading}

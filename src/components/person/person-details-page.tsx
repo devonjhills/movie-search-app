@@ -1,24 +1,19 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { 
+import Image from "next/image";
+import Link from "next/link";
+import {
   UserIcon,
   CalendarIcon,
   MapPinIcon,
   LinkIcon,
-  FilmIcon
-} from '@heroicons/react/24/outline';
-import { usePersonDetails, getImageUrl } from '@/lib/api';
-import { 
-  formatDate, 
-  calculateAge,
-  truncateText,
-  sortBy
-} from '@/lib/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
+  FilmIcon,
+} from "@heroicons/react/24/outline";
+import { usePersonDetails, getImageUrl } from "@/lib/api";
+import { formatDate, calculateAge, truncateText, sortBy } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 interface PersonDetailsPageProps {
   personId: number;
@@ -38,7 +33,7 @@ function PersonDetailsSkeleton() {
               <Skeleton className="h-20 w-full" />
             </div>
           </div>
-          
+
           {/* Content Skeleton */}
           <div className="lg:col-span-2 space-y-6">
             <Skeleton className="h-32 w-full" />
@@ -78,26 +73,32 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
     );
   }
 
-  const profileUrl = getImageUrl(person.profile_path, 'profile', 'original');
+  const profileUrl = getImageUrl(person.profile_path, "profile", "original");
   const birthDate = formatDate(person.birthday);
   const deathDate = formatDate(person.deathday);
   const age = calculateAge(person.birthday, person.deathday);
 
   // Sort and organize credits
-  const movieCredits = person.combined_credits?.cast?.filter(credit => credit.media_type === 'movie') || [];
-  const tvCredits = person.combined_credits?.cast?.filter(credit => credit.media_type === 'tv') || [];
-  
+  const movieCredits =
+    person.combined_credits?.cast?.filter(
+      (credit) => credit.media_type === "movie",
+    ) || [];
+  const tvCredits =
+    person.combined_credits?.cast?.filter(
+      (credit) => credit.media_type === "tv",
+    ) || [];
+
   // Sort by popularity and release date
   const sortedMovieCredits = sortBy(
     movieCredits,
     (credit) => -(credit.popularity || 0),
-    (credit) => -(new Date(credit.release_date || '').getTime() || 0)
+    (credit) => -(new Date(credit.release_date || "").getTime() || 0),
   );
-  
+
   const sortedTVCredits = sortBy(
     tvCredits,
     (credit) => -(credit.popularity || 0),
-    (credit) => -(new Date(credit.first_air_date || '').getTime() || 0)
+    (credit) => -(new Date(credit.first_air_date || "").getTime() || 0),
   );
 
   // Get most popular/recent credits for display
@@ -135,20 +136,26 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
               <CardContent className="space-y-4">
                 {person.known_for_department && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Known For</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Known For
+                    </h4>
                     <p className="text-sm">{person.known_for_department}</p>
                   </div>
                 )}
 
                 {person.birthday && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Born</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Born
+                    </h4>
                     <div className="text-sm space-y-1">
                       <div className="flex items-center space-x-1">
                         <CalendarIcon className="h-4 w-4 text-muted-foreground" />
                         <span>{birthDate}</span>
                         {age !== null && !person.deathday && (
-                          <span className="text-muted-foreground">({age} years old)</span>
+                          <span className="text-muted-foreground">
+                            ({age} years old)
+                          </span>
                         )}
                       </div>
                       {person.place_of_birth && (
@@ -163,13 +170,17 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
 
                 {person.deathday && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Died</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Died
+                    </h4>
                     <div className="text-sm">
                       <div className="flex items-center space-x-1">
                         <CalendarIcon className="h-4 w-4 text-muted-foreground" />
                         <span>{deathDate}</span>
                         {age !== null && (
-                          <span className="text-muted-foreground">(aged {age})</span>
+                          <span className="text-muted-foreground">
+                            (aged {age})
+                          </span>
                         )}
                       </div>
                     </div>
@@ -178,7 +189,9 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
 
                 {person.also_known_as && person.also_known_as.length > 0 && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Also Known As</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Also Known As
+                    </h4>
                     <div className="text-sm space-y-1">
                       {person.also_known_as.slice(0, 3).map((name, index) => (
                         <p key={index}>{name}</p>
@@ -240,7 +253,9 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             <div className="space-y-2">
               <h1 className="text-4xl md:text-5xl font-bold">{person.name}</h1>
               {person.known_for_department && (
-                <p className="text-xl text-muted-foreground">{person.known_for_department}</p>
+                <p className="text-xl text-muted-foreground">
+                  {person.known_for_department}
+                </p>
               )}
             </div>
 
@@ -252,7 +267,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="prose prose-sm max-w-none text-foreground/90">
-                    {person.biography.split('\n\n').map((paragraph, index) => (
+                    {person.biography.split("\n\n").map((paragraph, index) => (
                       <p key={index} className="mb-4 last:mb-0">
                         {paragraph}
                       </p>
@@ -276,7 +291,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {featuredMovies.map(movie => (
+                    {featuredMovies.map((movie) => (
                       <Link
                         key={`${movie.id}-${movie.credit_id}`}
                         href={`/movie/${movie.id}`}
@@ -285,8 +300,12 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                         <div className="relative w-12 h-18 flex-shrink-0">
                           {movie.poster_path ? (
                             <Image
-                              src={getImageUrl(movie.poster_path, 'poster', 'w185')}
-                              alt={movie.title || ''}
+                              src={getImageUrl(
+                                movie.poster_path,
+                                "poster",
+                                "w185",
+                              )}
+                              alt={movie.title || ""}
                               fill
                               className="object-cover rounded"
                             />
@@ -315,7 +334,8 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                   {movieCredits.length > 6 && (
                     <div className="mt-4 text-center">
                       <p className="text-sm text-muted-foreground">
-                        Showing {featuredMovies.length} of {movieCredits.length} movie credits
+                        Showing {featuredMovies.length} of {movieCredits.length}{" "}
+                        movie credits
                       </p>
                     </div>
                   )}
@@ -328,8 +348,18 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
                     </svg>
                     <span>TV Credits</span>
                     <span className="text-sm font-normal text-muted-foreground">
@@ -339,7 +369,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {featuredTV.map(show => (
+                    {featuredTV.map((show) => (
                       <Link
                         key={`${show.id}-${show.credit_id}`}
                         href={`/tv/${show.id}`}
@@ -348,15 +378,29 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                         <div className="relative w-12 h-18 flex-shrink-0">
                           {show.poster_path ? (
                             <Image
-                              src={getImageUrl(show.poster_path, 'poster', 'w185')}
-                              alt={show.name || ''}
+                              src={getImageUrl(
+                                show.poster_path,
+                                "poster",
+                                "w185",
+                              )}
+                              alt={show.name || ""}
                               fill
                               className="object-cover rounded"
                             />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center bg-muted rounded">
-                              <svg className="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              <svg
+                                className="h-4 w-4 text-muted-foreground"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                />
                               </svg>
                             </div>
                           )}
@@ -380,7 +424,8 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                   {tvCredits.length > 6 && (
                     <div className="mt-4 text-center">
                       <p className="text-sm text-muted-foreground">
-                        Showing {featuredTV.length} of {tvCredits.length} TV credits
+                        Showing {featuredTV.length} of {tvCredits.length} TV
+                        credits
                       </p>
                     </div>
                   )}

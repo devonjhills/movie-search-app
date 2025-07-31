@@ -1,6 +1,6 @@
 // TMDB API Base Configuration
-export const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-export const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
+export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+export const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
 
 // API Endpoints
 export const ENDPOINTS = {
@@ -10,8 +10,9 @@ export const ENDPOINTS = {
   moviesPopular: `${TMDB_BASE_URL}/movie/popular`,
   moviesTopRated: `${TMDB_BASE_URL}/movie/top_rated`,
   movieDiscover: `${TMDB_BASE_URL}/discover/movie`,
-  movieWatchProviders: (id: number) => `${TMDB_BASE_URL}/movie/${id}/watch/providers`,
-  
+  movieWatchProviders: (id: number) =>
+    `${TMDB_BASE_URL}/movie/${id}/watch/providers`,
+
   // TV endpoints
   tvDetails: (id: number) => `${TMDB_BASE_URL}/tv/${id}`,
   tvOnTheAir: `${TMDB_BASE_URL}/tv/on_the_air`,
@@ -19,10 +20,10 @@ export const ENDPOINTS = {
   tvTopRated: `${TMDB_BASE_URL}/tv/top_rated`,
   tvDiscover: `${TMDB_BASE_URL}/discover/tv`,
   tvWatchProviders: (id: number) => `${TMDB_BASE_URL}/tv/${id}/watch/providers`,
-  
+
   // Person endpoints
   personDetails: (id: number) => `${TMDB_BASE_URL}/person/${id}`,
-  
+
   // Search endpoints
   searchMulti: `${TMDB_BASE_URL}/search/multi`,
   searchMovie: `${TMDB_BASE_URL}/search/movie`,
@@ -42,7 +43,7 @@ export const IMAGE_URLS = {
     w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`,
     original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`,
   },
-  
+
   // Backdrop sizes
   backdrop: {
     w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`,
@@ -50,7 +51,7 @@ export const IMAGE_URLS = {
     w1280: (path: string) => `${TMDB_IMAGE_BASE_URL}/w1280${path}`,
     original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`,
   },
-  
+
   // Profile sizes (for person images)
   profile: {
     w45: (path: string) => `${TMDB_IMAGE_BASE_URL}/w45${path}`,
@@ -58,7 +59,7 @@ export const IMAGE_URLS = {
     h632: (path: string) => `${TMDB_IMAGE_BASE_URL}/h632${path}`,
     original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`,
   },
-  
+
   // Logo sizes
   logo: {
     w45: (path: string) => `${TMDB_IMAGE_BASE_URL}/w45${path}`,
@@ -73,20 +74,21 @@ export const IMAGE_URLS = {
 
 // Default image URLs for fallbacks
 export const DEFAULT_IMAGES = {
-  poster: '/images/default-poster.svg',
-  backdrop: '/images/default-backdrop.svg',
-  person: '/images/default-person.svg',
+  poster: "/images/default-poster.svg",
+  backdrop: "/images/default-backdrop.svg",
+  person: "/images/default-person.svg",
 } as const;
 
 // API Configuration
 export const API_CONFIG = {
-  language: 'en-US',
-  region: 'US',
+  language: "en-US",
+  region: "US",
   include_adult: false,
   append_to_response: {
-    movie: 'videos,credits,external_ids,recommendations,release_dates,reviews,keywords',
-    tv: 'videos,credits,external_ids,recommendations,reviews,keywords',
-    person: 'combined_credits,external_ids,images',
+    movie:
+      "videos,credits,external_ids,recommendations,release_dates,reviews,keywords",
+    tv: "videos,credits,external_ids,recommendations,reviews,keywords",
+    person: "combined_credits,external_ids,images",
   },
 } as const;
 
@@ -102,9 +104,9 @@ export const SWR_CONFIG = {
 
 // Media types
 export const MEDIA_TYPES = {
-  MOVIE: 'movie',
-  TV: 'tv',
-  PERSON: 'person',
+  MOVIE: "movie",
+  TV: "tv",
+  PERSON: "person",
 } as const;
 
 // Genre mappings (commonly used ones)

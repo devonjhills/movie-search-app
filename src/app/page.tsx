@@ -1,16 +1,32 @@
-'use client';
+"use client";
 
-import { HeroSection } from '@/components/ui/hero-section';
-import { MovieSection } from '@/components/movie/movie-section';
-import { usePopularMovies, useTopRatedMovies, useNowPlayingMovies } from '@/lib/api';
+import { HeroSection } from "@/components/ui/hero-section";
+import { MovieSection } from "@/components/movie/movie-section";
+import {
+  usePopularMovies,
+  useTopRatedMovies,
+  useNowPlayingMovies,
+} from "@/lib/api";
 
 export default function Home() {
-  const { movies: popularMovies, isLoading: popularLoading, isError: popularError } = usePopularMovies();
-  const { movies: topRatedMovies, isLoading: topRatedLoading, isError: topRatedError } = useTopRatedMovies();
-  const { movies: nowPlayingMovies, isLoading: nowPlayingLoading, isError: nowPlayingError } = useNowPlayingMovies();
+  const {
+    movies: popularMovies,
+    isLoading: popularLoading,
+    isError: popularError,
+  } = usePopularMovies();
+  const {
+    movies: topRatedMovies,
+    isLoading: topRatedLoading,
+    isError: topRatedError,
+  } = useTopRatedMovies();
+  const {
+    movies: nowPlayingMovies,
+    isLoading: nowPlayingLoading,
+    isError: nowPlayingError,
+  } = useNowPlayingMovies();
 
   // Use the first popular movie as hero if available
-  const heroMovie = popularMovies[0];
+  const heroMovie = nowPlayingMovies[0];
 
   return (
     <div className="min-h-screen">

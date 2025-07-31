@@ -1,25 +1,34 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { PlayIcon, StarIcon, CalendarIcon } from '@heroicons/react/24/solid';
-import { cn, formatYear, formatVoteAverage, truncateText } from '@/lib/utils';
-import { getImageUrl } from '@/lib/api';
-import { WatchlistButton } from '@/components/ui/watchlist-button';
-import type { Movie, FormattedMovie } from '@/lib/types';
+import Image from "next/image";
+import Link from "next/link";
+import { StarIcon, CalendarIcon } from "@heroicons/react/24/solid";
+import { cn, formatYear, formatVoteAverage, truncateText } from "@/lib/utils";
+import { getImageUrl } from "@/lib/api";
+import { WatchlistButton } from "@/components/ui/watchlist-button";
+import type { Movie, FormattedMovie } from "@/lib/types";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 interface HeroSectionProps {
   movie: Movie | FormattedMovie | any;
   className?: string;
-  mediaType?: 'movie' | 'tv';
+  mediaType?: "movie" | "tv";
 }
 
-export function HeroSection({ movie, className, mediaType = 'movie' }: HeroSectionProps) {
-  const backdropUrl = getImageUrl(movie.backdrop_path || movie.poster_path, 'backdrop', 'original');
-  const posterUrl = getImageUrl(movie.poster_path, 'poster', 'w342');
+export function HeroSection({
+  movie,
+  className,
+  mediaType = "movie",
+}: HeroSectionProps) {
+  const backdropUrl = getImageUrl(
+    movie.backdrop_path || movie.poster_path,
+    "backdrop",
+    "original"
+  );
+  const posterUrl = getImageUrl(movie.poster_path, "poster", "w342");
   const rating = formatVoteAverage(movie.vote_average);
   const year = formatYear(movie.release_date);
 
   return (
-    <section className={cn('relative overflow-hidden', className)}>
+    <section className={cn("relative overflow-hidden", className)}>
       {/* Background Image */}
       <div className="absolute inset-0">
         {backdropUrl ? (
@@ -34,8 +43,8 @@ export function HeroSection({ movie, className, mediaType = 'movie' }: HeroSecti
         ) : (
           <div className="h-full w-full bg-gradient-to-br from-primary/20 to-primary/5" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        {/* Theme-aware gradient overlay like movie details page */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
       </div>
 
       {/* Content */}
@@ -53,7 +62,7 @@ export function HeroSection({ movie, className, mediaType = 'movie' }: HeroSecti
                   sizes="(max-width: 768px) 300px, 400px"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-muted/20 text-white/60 rounded-lg">
+                <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground rounded-lg">
                   <span className="text-sm">No Image</span>
                 </div>
               )}
@@ -61,16 +70,16 @@ export function HeroSection({ movie, className, mediaType = 'movie' }: HeroSecti
           </div>
 
           {/* Movie Details */}
-          <div className="md:col-span-9 lg:col-span-10 space-y-6 text-white">
+          <div className="md:col-span-9 lg:col-span-10 space-y-6 text-foreground relative z-10">
             {/* Title and Year */}
             <div className="space-y-2">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight drop-shadow-lg">
                 {movie.title}
               </h1>
               {year && (
-                <div className="flex items-center space-x-2 text-white/80">
+                <div className="flex items-center space-x-2 text-foreground/80">
                   <CalendarIcon className="h-5 w-5" />
-                  <span className="text-lg">{year}</span>
+                  <span className="text-lg drop-shadow-md">{year}</span>
                 </div>
               )}
             </div>
@@ -78,19 +87,16 @@ export function HeroSection({ movie, className, mediaType = 'movie' }: HeroSecti
             {/* Rating */}
             {movie.vote_average > 0 && (
               <div className="flex items-center space-x-2">
-                <div className="flex items-center space-x-1 bg-yellow-500 text-black px-3 py-1 rounded-full font-semibold">
+                <div className="flex items-center space-x-1 bg-amber-500 text-amber-950 px-3 py-1 rounded-full font-semibold shadow-lg">
                   <StarIcon className="h-4 w-4" />
                   <span>{rating}</span>
                 </div>
-                <span className="text-white/60">
-                  {movie.vote_count ? `(${movie.vote_count.toLocaleString()} votes)` : ''}
-                </span>
               </div>
             )}
 
             {/* Overview */}
             {movie.overview && (
-              <p className="text-lg md:text-xl leading-relaxed text-white/90 max-w-3xl">
+              <p className="text-lg md:text-xl leading-relaxed text-foreground/90 max-w-3xl drop-shadow-md">
                 {truncateText(movie.overview, 300)}
               </p>
             )}
@@ -100,19 +106,18 @@ export function HeroSection({ movie, className, mediaType = 'movie' }: HeroSecti
               <Link
                 href={`/${mediaType}/${movie.id}`}
                 className={cn(
-                  'inline-flex items-center space-x-2 px-6 py-3 rounded-lg',
-                  'bg-white text-black font-semibold',
-                  'hover:bg-white/90 transition-colors',
-                  'focus:outline-none focus:ring-2 focus:ring-white/50'
-                )}
-              >
-                <PlayIcon className="h-5 w-5" />
+                  "inline-flex items-center space-x-2 px-6 py-3 rounded-lg",
+                  "bg-primary text-primary-foreground font-semibold shadow-lg",
+                  "hover:bg-primary/90 transition-all duration-200",
+                  "focus:outline-none focus:ring-2 focus:ring-ring"
+                )}>
+                <InformationCircleIcon className="h-5 w-5" />
                 <span>View Details</span>
               </Link>
 
-              <WatchlistButton 
-                item={movie} 
-                mediaType={mediaType} 
+              <WatchlistButton
+                item={movie}
+                mediaType={mediaType}
                 variant="hero"
               />
             </div>

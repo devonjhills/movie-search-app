@@ -1,31 +1,25 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { 
-  StarIcon, 
-  CalendarIcon, 
-  ClockIcon,
-  FilmIcon,
-  PlayIcon,
-  BookmarkIcon
-} from '@heroicons/react/24/outline';
-import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
-import { useMovieDetails, useMovieWatchProviders, getImageUrl } from '@/lib/api';
-import { WatchlistButton } from '@/components/ui/watchlist-button';
-import { WatchProviders } from '@/components/ui/watch-providers';
-import { ShareButton } from '@/components/ui/share-button';
-import { 
-  formatDate, 
-  formatRuntime, 
-  formatVoteAverage, 
-  formatCurrency, 
-  getRatingColor,
-  truncateText 
-} from '@/lib/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
+import Image from "next/image";
+import Link from "next/link";
+import { CalendarIcon, ClockIcon, FilmIcon } from "@heroicons/react/24/outline";
+import { PlayIcon, StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
+import {
+  useMovieDetails,
+  useMovieWatchProviders,
+  getImageUrl,
+} from "@/lib/api";
+import { WatchlistButton } from "@/components/ui/watchlist-button";
+import { WatchProviders } from "@/components/ui/watch-providers";
+import { ShareButton } from "@/components/ui/share-button";
+import {
+  formatDate,
+  formatRuntime,
+  formatVoteAverage,
+  formatCurrency,
+} from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface MovieDetailsPageProps {
   movieId: number;
@@ -70,7 +64,7 @@ function MovieDetailsSkeleton() {
 
 export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
   const { movie, isLoading, isError } = useMovieDetails(movieId);
-  const { watchProviders, isLoading: isWatchProvidersLoading } = useMovieWatchProviders(movieId);
+  const { watchProviders } = useMovieWatchProviders(movieId);
 
   if (isLoading) {
     return <MovieDetailsSkeleton />;
@@ -83,7 +77,8 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           <FilmIcon className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">Movie Not Found</h1>
           <p className="text-muted-foreground">
-            The movie you're looking for doesn't exist or has been removed.
+            The movie you&apos;re looking for doesn&apos;t exist or has been
+            removed.
           </p>
           <Link
             href="/"
@@ -96,10 +91,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
     );
   }
 
-  const backdropUrl = getImageUrl(movie.backdrop_path, 'backdrop', 'original');
-  const posterUrl = getImageUrl(movie.poster_path, 'poster', 'w500');
+  const backdropUrl = getImageUrl(movie.backdrop_path, "backdrop", "original");
+  const posterUrl = getImageUrl(movie.poster_path, "poster", "w500");
   const rating = formatVoteAverage(movie.vote_average);
-  const ratingColor = getRatingColor(movie.vote_average);
   const runtime = formatRuntime(movie.runtime);
   const releaseDate = formatDate(movie.release_date);
   const budget = formatCurrency(movie.budget);
@@ -107,14 +101,16 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
   // Get trailer video
   const trailer = movie.videos?.results?.find(
-    video => video.type === 'Trailer' && video.site === 'YouTube'
+    (video) => video.type === "Trailer" && video.site === "YouTube",
   );
 
   // Get main cast (first 10)
   const mainCast = movie.credits?.cast?.slice(0, 10) || [];
 
   // Get director
-  const director = movie.credits?.crew?.find(person => person.job === 'Director');
+  const director = movie.credits?.crew?.find(
+    (person) => person.job === "Director",
+  );
 
   return (
     <div className="min-h-screen">
@@ -131,12 +127,12 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
         ) : (
           <div className="h-full w-full bg-gradient-to-br from-primary/20 to-primary/5" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-        
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
+
         {/* Hero Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-8">
+        <div className="absolute inset-0 flex items-center p-8">
           <div className="container mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
               {/* Poster */}
               <div className="md:col-span-3">
                 <div className="relative aspect-[2/3] w-full max-w-xs">
@@ -157,30 +153,32 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
               </div>
 
               {/* Title and Basic Info */}
-              <div className="md:col-span-9 space-y-4 text-white">
+              <div className="md:col-span-9 space-y-4 text-foreground relative z-10">
                 <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                   {movie.title}
                 </h1>
-                
+
                 {movie.tagline && (
-                  <p className="text-lg italic text-white/80">{movie.tagline}</p>
+                  <p className="text-lg italic text-foreground/80">
+                    {movie.tagline}
+                  </p>
                 )}
 
                 <div className="flex flex-wrap items-center gap-4 text-sm">
                   {movie.vote_average > 0 && (
-                    <div className="flex items-center space-x-1 bg-yellow-500 text-black px-3 py-1 rounded-full font-semibold">
+                    <div className="flex items-center space-x-1 bg-amber-500 text-amber-950 px-3 py-1 rounded-full font-semibold">
                       <StarSolidIcon className="h-4 w-4" />
                       <span>{rating}</span>
                     </div>
                   )}
-                  
+
                   {releaseDate && (
                     <div className="flex items-center space-x-1">
                       <CalendarIcon className="h-4 w-4" />
                       <span>{releaseDate}</span>
                     </div>
                   )}
-                  
+
                   {runtime && (
                     <div className="flex items-center space-x-1">
                       <ClockIcon className="h-4 w-4" />
@@ -188,8 +186,11 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                     </div>
                   )}
 
-                  {movie.genres.map(genre => (
-                    <span key={genre.id} className="px-2 py-1 bg-white/20 rounded-full text-xs">
+                  {movie.genres.map((genre) => (
+                    <span
+                      key={genre.id}
+                      className="px-2 py-1 bg-secondary text-secondary-foreground rounded-full text-xs"
+                    >
                       {genre.name}
                     </span>
                   ))}
@@ -202,20 +203,20 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                       href={`https://www.youtube.com/watch?v=${trailer.key}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors"
+                      className="inline-flex items-center space-x-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl"
                     >
                       <PlayIcon className="h-5 w-5" />
                       <span>Watch Trailer</span>
                     </a>
                   )}
-                  
-                  <WatchlistButton 
-                    item={movie} 
-                    mediaType="movie" 
+
+                  <WatchlistButton
+                    item={movie}
+                    mediaType="movie"
                     variant="hero"
                   />
-                  
-                  <ShareButton 
+
+                  <ShareButton
                     title={`${movie.title} - Movie Details`}
                     text={`Check out "${movie.title}" on this movie app!`}
                     variant="hero"
@@ -239,7 +240,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                   <CardTitle>Overview</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-foreground/90 leading-relaxed">{movie.overview}</p>
+                  <p className="text-foreground/90 leading-relaxed">
+                    {movie.overview}
+                  </p>
                 </CardContent>
               </Card>
             )}
@@ -252,7 +255,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    {mainCast.map(person => (
+                    {mainCast.map((person) => (
                       <Link
                         key={person.id}
                         href={`/person/${person.id}`}
@@ -261,20 +264,28 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                         <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-muted">
                           {person.profile_path ? (
                             <Image
-                              src={getImageUrl(person.profile_path, 'profile', 'w185')}
+                              src={getImageUrl(
+                                person.profile_path,
+                                "profile",
+                                "w185",
+                              )}
                               alt={person.name}
                               fill
                               className="object-cover"
                             />
                           ) : (
                             <div className="flex h-full items-center justify-center">
-                              <span className="text-xs text-muted-foreground">No Photo</span>
+                              <span className="text-xs text-muted-foreground">
+                                No Photo
+                              </span>
                             </div>
                           )}
                         </div>
                         <div>
                           <p className="text-sm font-medium">{person.name}</p>
-                          <p className="text-xs text-muted-foreground">{person.character}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {person.character}
+                          </p>
                         </div>
                       </Link>
                     ))}
@@ -294,44 +305,56 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
               <CardContent className="space-y-4">
                 {director && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Director</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Director
+                    </h4>
                     <p className="text-sm">{director.name}</p>
                   </div>
                 )}
-                
+
                 {movie.release_date && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Release Date</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Release Date
+                    </h4>
                     <p className="text-sm">{releaseDate}</p>
                   </div>
                 )}
-                
+
                 {runtime && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Runtime</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Runtime
+                    </h4>
                     <p className="text-sm">{runtime}</p>
                   </div>
                 )}
-                
+
                 {movie.budget > 0 && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Budget</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Budget
+                    </h4>
                     <p className="text-sm">{budget}</p>
                   </div>
                 )}
-                
+
                 {movie.revenue > 0 && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Revenue</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Revenue
+                    </h4>
                     <p className="text-sm">{revenue}</p>
                   </div>
                 )}
 
                 {movie.production_companies.length > 0 && (
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">Production</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground">
+                      Production
+                    </h4>
                     <div className="text-sm space-y-1">
-                      {movie.production_companies.slice(0, 3).map(company => (
+                      {movie.production_companies.slice(0, 3).map((company) => (
                         <p key={company.id}>{company.name}</p>
                       ))}
                     </div>
@@ -352,7 +375,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                       href={`https://www.imdb.com/title/${movie.external_ids.imdb_id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-sm text-blue-500 hover:text-blue-400 transition-colors"
+                      className="block text-sm text-primary hover:text-primary/80 transition-colors"
                     >
                       View on IMDB
                     </a>
@@ -362,7 +385,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                       href={movie.homepage}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-sm text-blue-500 hover:text-blue-400 transition-colors"
+                      className="block text-sm text-primary hover:text-primary/80 transition-colors"
                     >
                       Official Website
                     </a>

@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { UserIcon } from '@heroicons/react/24/outline';
-import { getImageUrl } from '@/lib/api';
-import { truncateText } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
-import type { Person } from '@/lib/types';
+import Image from "next/image";
+import Link from "next/link";
+import { UserIcon } from "@heroicons/react/24/outline";
+import { getImageUrl } from "@/lib/api";
+import { truncateText } from "@/lib/utils";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import type { Person } from "@/lib/types";
 
 interface PersonCardProps {
   person: Person;
@@ -13,7 +13,7 @@ interface PersonCardProps {
 }
 
 function PersonCard({ person, className }: PersonCardProps) {
-  const profileUrl = getImageUrl(person.profile_path, 'profile', 'w185');
+  const profileUrl = getImageUrl(person.profile_path, "profile", "w185");
 
   // Get known for items (movies and TV shows)
   const knownForItems = person.known_for?.slice(0, 3) || [];
@@ -22,9 +22,9 @@ function PersonCard({ person, className }: PersonCardProps) {
     <Link href={`/person/${person.id}`} className="group">
       <Card
         className={cn(
-          'overflow-hidden transition-all duration-200 hover:scale-105 hover:shadow-lg',
-          'border-0 bg-transparent shadow-none',
-          className
+          "overflow-hidden transition-all duration-200 hover:scale-105 hover:shadow-lg",
+          "border-0 bg-transparent shadow-none",
+          className,
         )}
       >
         <CardContent className="p-0 space-y-3">
@@ -53,7 +53,7 @@ function PersonCard({ person, className }: PersonCardProps) {
             <h3 className="text-sm font-medium leading-tight line-clamp-2 group-hover:text-primary transition-colors">
               {person.name}
             </h3>
-            
+
             {person.known_for_department && (
               <p className="text-xs text-muted-foreground">
                 {person.known_for_department}
@@ -63,11 +63,16 @@ function PersonCard({ person, className }: PersonCardProps) {
             {/* Known For */}
             {knownForItems.length > 0 && (
               <div className="space-y-1">
-                <p className="text-xs font-medium text-muted-foreground">Known for:</p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  Known for:
+                </p>
                 <div className="space-y-0.5">
                   {knownForItems.map((item, index) => (
-                    <p key={`${item.id}-${index}`} className="text-xs text-muted-foreground line-clamp-1">
-                      {'title' in item ? item.title : item.name}
+                    <p
+                      key={`${item.id}-${index}`}
+                      className="text-xs text-muted-foreground line-clamp-1"
+                    >
+                      {"title" in item ? item.title : item.name}
                     </p>
                   ))}
                 </div>
@@ -93,14 +98,14 @@ export function PersonGrid({
   isLoading = false,
   error,
   className,
-  emptyMessage = 'No people found.',
+  emptyMessage = "No people found.",
 }: PersonGridProps) {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <div className="text-destructive mb-2">⚠️ Error loading people</div>
         <p className="text-sm text-muted-foreground">
-          {error?.message || 'Something went wrong. Please try again later.'}
+          {error?.message || "Something went wrong. Please try again later."}
         </p>
       </div>
     );
@@ -110,9 +115,9 @@ export function PersonGrid({
     return (
       <div
         className={cn(
-          'grid gap-6',
-          'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6',
-          className
+          "grid gap-6",
+          "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
+          className,
         )}
       >
         {Array.from({ length: 12 }).map((_, index) => (
@@ -141,9 +146,9 @@ export function PersonGrid({
   return (
     <div
       className={cn(
-        'grid gap-6',
-        'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6',
-        className
+        "grid gap-6",
+        "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
+        className,
       )}
     >
       {people.map((person) => (

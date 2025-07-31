@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR from "swr";
 import type {
   MovieDetails,
   TVShowDetails,
@@ -12,23 +12,25 @@ import type {
   APIResponse,
   TMDBError,
   WatchProvidersResponse,
-} from './types';
-import { ENDPOINTS, API_CONFIG, SWR_CONFIG, IMAGE_URLS } from './constants';
+} from "./types";
+import { ENDPOINTS, API_CONFIG, SWR_CONFIG, IMAGE_URLS } from "./constants";
 
 // Get API key from environment
 const API_KEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY;
 
 if (!API_KEY) {
-  console.error('TMDB API key is not configured. Please set NEXT_PUBLIC_MOVIE_API_KEY environment variable.');
+  console.error(
+    "TMDB API key is not configured. Please set NEXT_PUBLIC_MOVIE_API_KEY environment variable.",
+  );
 }
 
 // Custom fetcher with error handling
 const fetcher = async (url: string): Promise<any> => {
   if (!API_KEY) {
-    throw new Error('TMDB API key is not configured');
+    throw new Error("TMDB API key is not configured");
   }
 
-  const separator = url.includes('?') ? '&' : '?';
+  const separator = url.includes("?") ? "&" : "?";
   const fullUrl = `${url}${separator}api_key=${API_KEY}`;
 
   const response = await fetch(fullUrl);
@@ -39,7 +41,7 @@ const fetcher = async (url: string): Promise<any> => {
       status_message: response.statusText,
       success: false,
     }));
-    
+
     throw new Error(errorData.status_message || `HTTP ${response.status}`);
   }
 
@@ -49,13 +51,13 @@ const fetcher = async (url: string): Promise<any> => {
 // Helper function to build query parameters
 const buildQueryParams = (params: Record<string, any>): string => {
   const searchParams = new URLSearchParams();
-  
+
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
       searchParams.append(key, String(value));
     }
   });
-  
+
   return searchParams.toString();
 };
 
@@ -68,7 +70,7 @@ export const formatMovieResults = (movie: Movie): FormattedMovie => {
     vote_average: movie.vote_average,
     poster_path: movie.poster_path,
     overview: movie.overview,
-    poster: movie.poster_path ? IMAGE_URLS.poster.w500(movie.poster_path) : '',
+    poster: movie.poster_path ? IMAGE_URLS.poster.w500(movie.poster_path) : "",
   };
 };
 
@@ -78,11 +80,11 @@ export const useMovieDetails = (movieId: number) => {
     language: API_CONFIG.language,
     append_to_response: API_CONFIG.append_to_response.movie,
   });
-  
+
   const { data, error, isLoading } = useSWR<MovieDetails>(
     movieId ? `${ENDPOINTS.movieDetails(movieId)}?${queryParams}` : null,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -102,7 +104,7 @@ export const usePopularMovies = () => {
   const { data, error, isLoading } = useSWR<TMDBResponse<Movie>>(
     `${ENDPOINTS.moviesPopular}?${queryParams}`,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -123,7 +125,7 @@ export const useTopRatedMovies = () => {
   const { data, error, isLoading } = useSWR<TMDBResponse<Movie>>(
     `${ENDPOINTS.moviesTopRated}?${queryParams}`,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -144,7 +146,7 @@ export const useNowPlayingMovies = () => {
   const { data, error, isLoading } = useSWR<TMDBResponse<Movie>>(
     `${ENDPOINTS.moviesNowPlaying}?${queryParams}`,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -161,11 +163,11 @@ export const useTVDetails = (tvId: number) => {
     language: API_CONFIG.language,
     append_to_response: API_CONFIG.append_to_response.tv,
   });
-  
+
   const { data, error, isLoading } = useSWR<TVShowDetails>(
     tvId ? `${ENDPOINTS.tvDetails(tvId)}?${queryParams}` : null,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -184,7 +186,7 @@ export const usePopularTVShows = () => {
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
     `${ENDPOINTS.tvPopular}?${queryParams}`,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -204,7 +206,7 @@ export const useTopRatedTVShows = () => {
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
     `${ENDPOINTS.tvTopRated}?${queryParams}`,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -224,7 +226,7 @@ export const useOnTheAirTVShows = () => {
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
     `${ENDPOINTS.tvOnTheAir}?${queryParams}`,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -241,11 +243,11 @@ export const usePersonDetails = (personId: number) => {
     language: API_CONFIG.language,
     append_to_response: API_CONFIG.append_to_response.person,
   });
-  
+
   const { data, error, isLoading } = useSWR<PersonDetails>(
     personId ? `${ENDPOINTS.personDetails(personId)}?${queryParams}` : null,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -264,14 +266,12 @@ export const useMultiSearch = (query: string) => {
     include_adult: API_CONFIG.include_adult,
   });
 
-  const { data, error, isLoading } = useSWR<TMDBResponse<Movie | TVShow | Person>>(
-    query ? `${ENDPOINTS.searchMulti}?${queryParams}` : null,
-    fetcher,
-    {
-      ...SWR_CONFIG,
-      dedupingInterval: 2000, // Shorter deduping for search
-    }
-  );
+  const { data, error, isLoading } = useSWR<
+    TMDBResponse<Movie | TVShow | Person>
+  >(query ? `${ENDPOINTS.searchMulti}?${queryParams}` : null, fetcher, {
+    ...SWR_CONFIG,
+    dedupingInterval: 2000, // Shorter deduping for search
+  });
 
   // Transform search results into categorized format
   const transformedResults: MultiSearchResult = {
@@ -282,11 +282,11 @@ export const useMultiSearch = (query: string) => {
 
   if (data?.results) {
     data.results.forEach((result: any) => {
-      if (result.media_type === 'movie') {
+      if (result.media_type === "movie") {
         transformedResults.movieResults.push(result as Movie);
-      } else if (result.media_type === 'tv') {
+      } else if (result.media_type === "tv") {
         transformedResults.tvResults.push(result as TVShow);
-      } else if (result.media_type === 'person') {
+      } else if (result.media_type === "person") {
         transformedResults.peopleResults.push(result as Person);
       }
     });
@@ -309,7 +309,7 @@ export const useDiscoverMovies = (params: {
   const queryParams = buildQueryParams({
     language: API_CONFIG.language,
     region: API_CONFIG.region,
-    sort_by: params.sortBy || 'popularity.desc',
+    sort_by: params.sortBy || "popularity.desc",
     page: params.page || 1,
     ...(params.genre && { with_genres: params.genre }),
     ...(params.keyword && { with_keywords: params.keyword }),
@@ -318,7 +318,7 @@ export const useDiscoverMovies = (params: {
   const { data, error, isLoading } = useSWR<TMDBResponse<Movie>>(
     `${ENDPOINTS.movieDiscover}?${queryParams}`,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -337,7 +337,7 @@ export const useDiscoverTVShows = (params: {
 }) => {
   const queryParams = buildQueryParams({
     language: API_CONFIG.language,
-    sort_by: params.sortBy || 'popularity.desc',
+    sort_by: params.sortBy || "popularity.desc",
     page: params.page || 1,
     ...(params.genre && { with_genres: params.genre }),
     ...(params.keyword && { with_keywords: params.keyword }),
@@ -346,7 +346,7 @@ export const useDiscoverTVShows = (params: {
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
     `${ENDPOINTS.tvDiscover}?${queryParams}`,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -360,28 +360,42 @@ export const useDiscoverTVShows = (params: {
 // Utility functions for images
 export const getImageUrl = (
   path: string | null,
-  type: 'poster' | 'backdrop' | 'profile' | 'logo' = 'poster',
-  size: string = 'w500'
+  type: "poster" | "backdrop" | "profile" | "logo" = "poster",
+  size: string = "w500",
 ): string => {
-  if (!path) return '';
-  
+  if (!path) return "";
+
   switch (type) {
-    case 'poster':
-      return IMAGE_URLS.poster[size as keyof typeof IMAGE_URLS.poster]?.(path) || '';
-    case 'backdrop':
-      return IMAGE_URLS.backdrop[size as keyof typeof IMAGE_URLS.backdrop]?.(path) || '';
-    case 'profile':
-      return IMAGE_URLS.profile[size as keyof typeof IMAGE_URLS.profile]?.(path) || '';
-    case 'logo':
-      return IMAGE_URLS.logo[size as keyof typeof IMAGE_URLS.logo]?.(path) || '';
+    case "poster":
+      return (
+        IMAGE_URLS.poster[size as keyof typeof IMAGE_URLS.poster]?.(path) || ""
+      );
+    case "backdrop":
+      return (
+        IMAGE_URLS.backdrop[size as keyof typeof IMAGE_URLS.backdrop]?.(path) ||
+        ""
+      );
+    case "profile":
+      return (
+        IMAGE_URLS.profile[size as keyof typeof IMAGE_URLS.profile]?.(path) ||
+        ""
+      );
+    case "logo":
+      return (
+        IMAGE_URLS.logo[size as keyof typeof IMAGE_URLS.logo]?.(path) || ""
+      );
     default:
-      return '';
+      return "";
   }
 };
 
 // Error boundary helper
 export const isAPIError = (error: any): error is TMDBError => {
-  return error && typeof error.status_code === 'number' && typeof error.status_message === 'string';
+  return (
+    error &&
+    typeof error.status_code === "number" &&
+    typeof error.status_message === "string"
+  );
 };
 
 // Watch Provider API Functions
@@ -389,7 +403,7 @@ export const useMovieWatchProviders = (movieId: number) => {
   const { data, error, isLoading } = useSWR<WatchProvidersResponse>(
     movieId ? `${ENDPOINTS.movieWatchProviders(movieId)}` : null,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
@@ -403,7 +417,7 @@ export const useTVWatchProviders = (tvId: number) => {
   const { data, error, isLoading } = useSWR<WatchProvidersResponse>(
     tvId ? `${ENDPOINTS.tvWatchProviders(tvId)}` : null,
     fetcher,
-    SWR_CONFIG
+    SWR_CONFIG,
   );
 
   return {
