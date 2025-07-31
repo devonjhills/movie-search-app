@@ -76,10 +76,16 @@ export function HeroSection({
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight drop-shadow-lg">
                 {movie.title}
               </h1>
-              {year && (
+              {movie.release_date && (
                 <div className="flex items-center space-x-2 text-foreground/80">
                   <CalendarIcon className="h-5 w-5" />
-                  <span className="text-lg drop-shadow-md">{year}</span>
+                  <span className="text-lg drop-shadow-md">
+                    {new Date(movie.release_date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </span>
                 </div>
               )}
             </div>
@@ -87,7 +93,7 @@ export function HeroSection({
             {/* Rating */}
             {movie.vote_average > 0 && (
               <div className="flex items-center space-x-2">
-                <div className="flex items-center space-x-1 bg-amber-500 text-amber-950 px-3 py-1 rounded-full font-semibold shadow-lg">
+                <div className="rating-badge shadow-lg">
                   <StarIcon className="h-4 w-4" />
                   <span>{rating}</span>
                 </div>

@@ -35,9 +35,9 @@ export function TVCard({
   const ratingColor = getRatingColor(tvShow.vote_average);
 
   const sizeClasses = {
-    sm: "w-32",
-    md: "w-40",
-    lg: "w-48",
+    sm: "w-40",
+    md: "w-48",
+    lg: "w-56",
   };
 
   const aspectRatio = "aspect-[2/3]"; // Standard poster ratio
@@ -52,7 +52,7 @@ export function TVCard({
           className,
         )}
       >
-        <CardContent className="p-0 space-y-3">
+        <CardContent className="p-3 space-y-3">
           {/* Poster Image */}
           <div
             className={cn("relative overflow-hidden rounded-lg", aspectRatio)}
@@ -73,9 +73,11 @@ export function TVCard({
 
             {/* Rating Badge */}
             {showRating && tvShow.vote_average > 0 && (
-              <div className="absolute top-2 right-2 flex items-center space-x-1 rounded-full bg-background/90 px-2 py-1 text-xs font-medium text-foreground backdrop-blur-sm border border-border">
-                <StarIcon className="h-3 w-3 text-yellow-400" />
-                <span>{rating}</span>
+              <div className="absolute top-2 right-2">
+                <div className="rating-badge text-xs backdrop-blur-sm">
+                  <StarIcon className="h-3 w-3" />
+                  <span>{rating}</span>
+                </div>
               </div>
             )}
 
@@ -88,9 +90,15 @@ export function TVCard({
             <h3 className="text-sm font-medium leading-tight line-clamp-2 group-hover:text-primary transition-colors">
               {tvShow.name}
             </h3>
-
-            {showYear && year && (
-              <p className="text-xs text-muted-foreground">{year}</p>
+            
+            {showYear && tvShow.first_air_date && (
+              <p className="text-xs text-muted-foreground">
+                {new Date(tvShow.first_air_date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </p>
             )}
 
             {showOverview && tvShow.overview && (
@@ -99,14 +107,6 @@ export function TVCard({
               </p>
             )}
 
-            {showRating && tvShow.vote_average > 0 && (
-              <div className="flex items-center space-x-1">
-                <StarIcon className="h-3 w-3 text-yellow-400" />
-                <span className={cn("text-xs font-medium", ratingColor)}>
-                  {rating}
-                </span>
-              </div>
-            )}
           </div>
         </CardContent>
       </Card>

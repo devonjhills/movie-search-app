@@ -14,6 +14,7 @@ import { useTVDetails, useTVWatchProviders, getImageUrl } from "@/lib/api";
 import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { WatchProviders } from "@/components/ui/watch-providers";
 import { ShareButton } from "@/components/ui/share-button";
+import { DetailsHero } from "@/components/ui/details-hero";
 import {
   formatDate,
   formatVoteAverage,
@@ -115,125 +116,11 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative h-96 md:h-[500px] overflow-hidden">
-        {backdropUrl ? (
-          <Image
-            src={backdropUrl}
-            alt={tvShow.name}
-            fill
-            className="object-cover"
-            priority
-          />
-        ) : (
-          <div className="h-full w-full bg-gradient-to-br from-primary/20 to-primary/5" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-
-        {/* Hero Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-8">
-          <div className="container mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
-              {/* Poster */}
-              <div className="md:col-span-3">
-                <div className="relative aspect-[2/3] w-full max-w-xs">
-                  {posterUrl ? (
-                    <Image
-                      src={posterUrl}
-                      alt={tvShow.name}
-                      fill
-                      className="object-cover rounded-lg shadow-2xl"
-                      sizes="(max-width: 768px) 300px, 400px"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-muted rounded-lg">
-                      <TvIcon className="h-16 w-16 text-muted-foreground" />
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Title and Basic Info */}
-              <div className="md:col-span-9 space-y-4 text-white">
-                <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                  {tvShow.name}
-                </h1>
-
-                {tvShow.tagline && (
-                  <p className="text-lg italic text-white/80">
-                    {tvShow.tagline}
-                  </p>
-                )}
-
-                <div className="flex flex-wrap items-center gap-4 text-sm">
-                  {tvShow.vote_average > 0 && (
-                    <div className="flex items-center space-x-1 bg-yellow-500 text-black px-3 py-1 rounded-full font-semibold">
-                      <StarSolidIcon className="h-4 w-4" />
-                      <span>{rating}</span>
-                    </div>
-                  )}
-
-                  {firstAirDate && (
-                    <div className="flex items-center space-x-1">
-                      <CalendarIcon className="h-4 w-4" />
-                      <span>{firstAirDate}</span>
-                    </div>
-                  )}
-
-                  <div className="flex items-center space-x-1">
-                    <span>
-                      {tvShow.number_of_seasons} Season
-                      {tvShow.number_of_seasons !== 1 ? "s" : ""}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center space-x-1">
-                    <span>
-                      {tvShow.number_of_episodes} Episode
-                      {tvShow.number_of_episodes !== 1 ? "s" : ""}
-                    </span>
-                  </div>
-
-                  {tvShow.genres.map((genre) => (
-                    <span
-                      key={genre.id}
-                      className="px-2 py-1 bg-white/20 rounded-full text-xs"
-                    >
-                      {genre.name}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex flex-wrap gap-3">
-                  {trailer && (
-                    <a
-                      href={`https://www.youtube.com/watch?v=${trailer.key}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors"
-                    >
-                      <PlayIcon className="h-5 w-5" />
-                      <span>Watch Trailer</span>
-                    </a>
-                  )}
-
-                  <WatchlistButton
-                    item={tvShow}
-                    mediaType="tv"
-                    variant="hero"
-                  />
-
-                  <ShareButton
-                    title={`${tvShow.name} - TV Show Details`}
-                    text={`Check out "${tvShow.name}" on this movie app!`}
-                    variant="hero"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <DetailsHero 
+        item={tvShow} 
+        mediaType="tv" 
+        trailer={trailer}
+      />
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">

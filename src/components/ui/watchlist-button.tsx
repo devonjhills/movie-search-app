@@ -148,7 +148,7 @@ export function WatchlistButton({
         )}
         title="View Watchlist"
       >
-        <BookmarkSolidIcon className="h-5 w-5 text-yellow-400" />
+        <BookmarkSolidIcon className="h-5 w-5" style={{color: 'hsl(var(--rating-gold))'}} />
       </Link>
     );
   }

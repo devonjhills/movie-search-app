@@ -61,9 +61,11 @@ export function WatchlistGrid({ items }: WatchlistGridProps) {
 
                 {/* Rating */}
                 {item.vote_average > 0 && (
-                  <div className="absolute top-2 left-2 flex items-center space-x-1 bg-black/70 text-white px-2 py-1 rounded-full text-xs">
-                    <StarSolidIcon className="h-3 w-3 text-yellow-400" />
-                    <span>{rating}</span>
+                  <div className="absolute top-2 left-2">
+                    <div className="rating-badge text-xs backdrop-blur-sm">
+                      <StarSolidIcon className="h-3 w-3" />
+                      <span>{rating}</span>
+                    </div>
                   </div>
                 )}
 
