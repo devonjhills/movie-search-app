@@ -90,13 +90,13 @@ export function MovieCard({
             <h3 className="text-sm font-medium leading-tight line-clamp-2 group-hover:text-primary transition-colors">
               {movie.title}
             </h3>
-            
+
             {showYear && movie.release_date && (
               <p className="text-xs text-muted-foreground">
-                {new Date(movie.release_date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
+                {new Date(movie.release_date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
                 })}
               </p>
             )}
@@ -106,7 +106,6 @@ export function MovieCard({
                 {truncateText(movie.overview, 120)}
               </p>
             )}
-
           </div>
         </CardContent>
       </Card>

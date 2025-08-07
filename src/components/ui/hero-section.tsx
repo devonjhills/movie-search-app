@@ -21,7 +21,7 @@ export function HeroSection({
   const backdropUrl = getImageUrl(
     movie.backdrop_path || movie.poster_path,
     "backdrop",
-    "w1280"
+    "w1280",
   );
   const posterUrl = getImageUrl(movie.poster_path, "poster", "w342");
   const rating = formatVoteAverage(movie.vote_average);
@@ -80,10 +80,10 @@ export function HeroSection({
                 <div className="flex items-center space-x-2 text-foreground/80">
                   <CalendarIcon className="h-5 w-5" />
                   <span className="text-lg drop-shadow-md">
-                    {new Date(movie.release_date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
+                    {new Date(movie.release_date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </span>
                 </div>
@@ -115,8 +115,9 @@ export function HeroSection({
                   "inline-flex items-center space-x-2 px-6 py-3 rounded-lg",
                   "bg-primary text-primary-foreground font-semibold shadow-lg",
                   "hover:bg-primary/90 transition-all duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-ring"
-                )}>
+                  "focus:outline-none focus:ring-2 focus:ring-ring",
+                )}
+              >
                 <InformationCircleIcon className="h-5 w-5" />
                 <span>View Details</span>
               </Link>

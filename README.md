@@ -46,17 +46,17 @@ A production-ready, responsive movie and TV discovery platform built with cuttin
 
 ## 🛠️ Technology Stack
 
-| Category | Technology | Version |
-|----------|------------|---------|
-| **Framework** | Next.js with App Router | 15.x |
-| **Language** | TypeScript | 5.x |
-| **Styling** | Tailwind CSS + Custom Design System | 3.x |
-| **Database & Auth** | Supabase (PostgreSQL + Auth) | Latest |
-| **State Management** | SWR for Data Fetching | Latest |
-| **UI Components** | Headless UI + shadcn/ui | Latest |
-| **Icons** | Heroicons + Lucide React | Latest |
-| **Theme Management** | next-themes | Latest |
-| **Deployment** | Vercel | Latest |
+| Category             | Technology                          | Version |
+| -------------------- | ----------------------------------- | ------- |
+| **Framework**        | Next.js with App Router             | 15.x    |
+| **Language**         | TypeScript                          | 5.x     |
+| **Styling**          | Tailwind CSS + Custom Design System | 3.x     |
+| **Database & Auth**  | Supabase (PostgreSQL + Auth)        | Latest  |
+| **State Management** | SWR for Data Fetching               | Latest  |
+| **UI Components**    | Headless UI + shadcn/ui             | Latest  |
+| **Icons**            | Heroicons + Lucide React            | Latest  |
+| **Theme Management** | next-themes                         | Latest  |
+| **Deployment**       | Vercel                              | Latest  |
 
 ## 🚀 Getting Started
 

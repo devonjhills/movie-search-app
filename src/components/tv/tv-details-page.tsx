@@ -116,11 +116,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <DetailsHero 
-        item={tvShow} 
-        mediaType="tv" 
-        trailer={trailer}
-      />
+      <DetailsHero item={tvShow} mediaType="tv" trailer={trailer} />
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">

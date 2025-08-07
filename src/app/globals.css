@@ -95,7 +95,7 @@
   .loading {
     @apply cursor-wait;
   }
-  
+
   /* IMDB-style rating badge */
   .rating-badge {
     background-color: hsl(var(--rating-gold));
