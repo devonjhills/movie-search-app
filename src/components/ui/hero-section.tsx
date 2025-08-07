@@ -21,7 +21,7 @@ export function HeroSection({
   const backdropUrl = getImageUrl(
     movie.backdrop_path || movie.poster_path,
     "backdrop",
-    "original"
+    "w1280"
   );
   const posterUrl = getImageUrl(movie.poster_path, "poster", "w342");
   const rating = formatVoteAverage(movie.vote_average);

@@ -25,7 +25,7 @@ interface DetailsHeroProps {
 }
 
 export function DetailsHero({ item, mediaType, trailer }: DetailsHeroProps) {
-  const backdropUrl = getImageUrl(item.backdrop_path, 'backdrop', 'original');
+  const backdropUrl = getImageUrl(item.backdrop_path, 'backdrop', 'w1280');
   const posterUrl = getImageUrl(item.poster_path, 'poster', 'w500');
   const rating = formatVoteAverage(item.vote_average);
   const releaseDate = formatDate(mediaType === 'movie' ? item.release_date : item.first_air_date);
@@ -41,6 +41,7 @@ export function DetailsHero({ item, mediaType, trailer }: DetailsHeroProps) {
           fill
           className="object-cover"
           priority
+          sizes="100vw"
         />
       ) : (
         <div className="h-full w-full bg-gradient-to-br from-primary/20 to-primary/5" />
