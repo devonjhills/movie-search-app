@@ -20,9 +20,13 @@ interface CastGridProps {
   mediaType?: "movie" | "tv";
 }
 
-export function CastGrid({ cast, initialDisplayCount = 12, mediaType = "movie" }: CastGridProps) {
+export function CastGrid({
+  cast,
+  initialDisplayCount = 12,
+  mediaType = "movie",
+}: CastGridProps) {
   const [showAll, setShowAll] = useState(false);
-  
+
   const displayedCast = showAll ? cast : cast.slice(0, initialDisplayCount);
   const hasMoreCast = cast.length > initialDisplayCount;
 

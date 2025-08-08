@@ -40,14 +40,18 @@ export function PersonCard({ person, role, href, mediaType }: PersonCardProps) {
         ) : (
           <div className="flex h-full items-center justify-center">
             <span className="text-sm font-bold text-primary/80 group-hover:text-primary transition-colors">
-              {person.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+              {person.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .slice(0, 2)}
             </span>
           </div>
         )}
         {/* Ring effect */}
         <div className="absolute inset-0 rounded-full ring-2 ring-primary/0 group-hover:ring-primary/30 transition-all duration-300" />
       </div>
-      
+
       {/* Person Info */}
       <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-1">
@@ -57,7 +61,8 @@ export function PersonCard({ person, role, href, mediaType }: PersonCardProps) {
           {role}
           {mediaType === "tv" && person.episode_count && (
             <span className="block text-xs text-muted-foreground/70">
-              {person.episode_count} episode{person.episode_count !== 1 ? "s" : ""}
+              {person.episode_count} episode
+              {person.episode_count !== 1 ? "s" : ""}
             </span>
           )}
         </p>
@@ -65,8 +70,18 @@ export function PersonCard({ person, role, href, mediaType }: PersonCardProps) {
 
       {/* Subtle arrow indicator */}
       <div className="opacity-0 group-hover:opacity-60 transition-opacity duration-300">
-        <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg
+          className="w-4 h-4 text-primary"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </div>
     </Link>

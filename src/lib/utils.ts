@@ -281,20 +281,45 @@ export function getMPAARatingStyle(rating: string | null): {
   bgColor: string;
   textColor: string;
 } {
-  if (!rating) return { color: "gray", bgColor: "bg-gray-100", textColor: "text-gray-800" };
+  if (!rating)
+    return {
+      color: "gray",
+      bgColor: "bg-gray-100",
+      textColor: "text-gray-800",
+    };
 
   switch (rating.toUpperCase()) {
     case "G":
-      return { color: "green", bgColor: "bg-green-100", textColor: "text-green-800" };
+      return {
+        color: "green",
+        bgColor: "bg-green-100",
+        textColor: "text-green-800",
+      };
     case "PG":
-      return { color: "blue", bgColor: "bg-blue-100", textColor: "text-blue-800" };
+      return {
+        color: "blue",
+        bgColor: "bg-blue-100",
+        textColor: "text-blue-800",
+      };
     case "PG-13":
-      return { color: "yellow", bgColor: "bg-yellow-100", textColor: "text-yellow-800" };
+      return {
+        color: "yellow",
+        bgColor: "bg-yellow-100",
+        textColor: "text-yellow-800",
+      };
     case "R":
       return { color: "red", bgColor: "bg-red-100", textColor: "text-red-800" };
     case "NC-17":
-      return { color: "purple", bgColor: "bg-purple-100", textColor: "text-purple-800" };
+      return {
+        color: "purple",
+        bgColor: "bg-purple-100",
+        textColor: "text-purple-800",
+      };
     default:
-      return { color: "gray", bgColor: "bg-gray-100", textColor: "text-gray-800" };
+      return {
+        color: "gray",
+        bgColor: "bg-gray-100",
+        textColor: "text-gray-800",
+      };
   }
 }

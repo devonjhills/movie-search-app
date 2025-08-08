@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarIcon, ClockIcon, FilmIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
+import {
+  CalendarIcon,
+  ClockIcon,
+  FilmIcon,
+  ShieldCheckIcon,
+} from "@heroicons/react/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
 import {
   useMovieDetails,
@@ -121,27 +126,41 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
   const keywords = movie.keywords?.keywords?.slice(0, 10) || [];
 
   // Get key crew members with proper ordering
-  const keyCrew = movie.credits?.crew?.filter(person => 
-    ["Director", "Producer", "Executive Producer", "Writer", "Screenplay", "Story", "Cinematography", "Music", "Original Music Composer"].includes(person.job)
-  ).sort((a, b) => {
-    // Priority order: Director first, then Writer/Screenplay, then others
-    const jobPriority: Record<string, number> = {
-      "Director": 1,
-      "Writer": 2,
-      "Screenplay": 2,
-      "Story": 2,
-      "Producer": 3,
-      "Executive Producer": 4,
-      "Cinematography": 5,
-      "Music": 6,
-      "Original Music Composer": 6,
-    };
-    
-    const priorityA = jobPriority[a.job] || 10;
-    const priorityB = jobPriority[b.job] || 10;
-    
-    return priorityA - priorityB;
-  }).slice(0, 8) || [];
+  const keyCrew =
+    movie.credits?.crew
+      ?.filter((person) =>
+        [
+          "Director",
+          "Producer",
+          "Executive Producer",
+          "Writer",
+          "Screenplay",
+          "Story",
+          "Cinematography",
+          "Music",
+          "Original Music Composer",
+        ].includes(person.job),
+      )
+      .sort((a, b) => {
+        // Priority order: Director first, then Writer/Screenplay, then others
+        const jobPriority: Record<string, number> = {
+          Director: 1,
+          Writer: 2,
+          Screenplay: 2,
+          Story: 2,
+          Producer: 3,
+          "Executive Producer": 4,
+          Cinematography: 5,
+          Music: 6,
+          "Original Music Composer": 6,
+        };
+
+        const priorityA = jobPriority[a.job] || 10;
+        const priorityB = jobPriority[b.job] || 10;
+
+        return priorityA - priorityB;
+      })
+      .slice(0, 8) || [];
 
   // Get recommendations
   const recommendations = movie.recommendations?.results?.slice(0, 12) || [];
@@ -174,7 +193,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Director
                     </h4>
-                    <Link 
+                    <Link
                       href={`/person/${director.id}`}
                       className="text-base font-medium text-primary hover:text-primary/80 transition-colors"
                     >
@@ -209,7 +228,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                       <ShieldCheckIcon className="h-3 w-3" />
                       Rating
                     </h4>
-                    <div className={`inline-flex px-3 py-1.5 rounded-md text-sm font-bold ${ratingStyle.bgColor} ${ratingStyle.textColor} border`}>
+                    <div
+                      className={`inline-flex px-3 py-1.5 rounded-md text-sm font-bold ${ratingStyle.bgColor} ${ratingStyle.textColor} border`}
+                    >
                       {usCertification}
                     </div>
                   </div>
@@ -222,8 +243,12 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                       TMDB Score
                     </h4>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-bold text-primary">{rating}</span>
-                      <span className="text-sm text-muted-foreground">/ 10</span>
+                      <span className="text-lg font-bold text-primary">
+                        {rating}
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        / 10
+                      </span>
                     </div>
                   </div>
                 )}
@@ -242,7 +267,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Revenue
                     </h4>
-                    <p className="text-sm font-medium text-green-600">{revenue}</p>
+                    <p className="text-sm font-medium text-green-600">
+                      {revenue}
+                    </p>
                   </div>
                 )}
 
@@ -253,7 +280,12 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                     </h4>
                     <div className="space-y-1">
                       {movie.production_companies.slice(0, 2).map((company) => (
-                        <p key={company.id} className="text-sm text-foreground/90">{company.name}</p>
+                        <p
+                          key={company.id}
+                          className="text-sm text-foreground/90"
+                        >
+                          {company.name}
+                        </p>
                       ))}
                     </div>
                   </div>
@@ -288,7 +320,11 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 <CardTitle>Cast</CardTitle>
               </CardHeader>
               <CardContent>
-                <CastGrid cast={movie.credits?.cast || []} initialDisplayCount={12} mediaType="movie" />
+                <CastGrid
+                  cast={movie.credits?.cast || []}
+                  initialDisplayCount={12}
+                  mediaType="movie"
+                />
               </CardContent>
             </Card>
           )}

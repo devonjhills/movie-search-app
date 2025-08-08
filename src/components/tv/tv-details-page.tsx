@@ -2,20 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  CalendarIcon,
-  TvIcon,
-} from "@heroicons/react/24/outline";
+import { CalendarIcon, TvIcon } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
 import { useTVDetails, useTVWatchProviders, getImageUrl } from "@/lib/api";
 import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/ui/cast-grid";
 import { PersonCard } from "@/components/ui/person-card";
 import { MovieGrid } from "@/components/movie/movie-grid";
-import {
-  formatDate,
-  formatVoteAverage,
-} from "@/lib/utils";
+import { formatDate, formatVoteAverage } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -98,8 +92,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   );
 
   // Get main cast - transform aggregate_credits to match regular credits structure
-  const mainCast = tvShow.aggregate_credits?.cast 
-    ? tvShow.aggregate_credits.cast.map(actor => ({
+  const mainCast = tvShow.aggregate_credits?.cast
+    ? tvShow.aggregate_credits.cast.map((actor) => ({
         id: actor.id,
         name: actor.name,
         profile_path: actor.profile_path,
@@ -121,39 +115,54 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   const creators = tvShow.created_by || [];
 
   // Get key crew members with proper ordering - for now, use regular credits since crew structure in aggregate_credits might be complex
-  const keyCrew = tvShow.credits?.crew?.filter(person => 
-    ["Director", "Producer", "Executive Producer", "Writer", "Screenplay", "Story", "Cinematography", "Music", "Original Music Composer"].includes(person.job)
-  ).sort((a, b) => {
-    const jobPriority: Record<string, number> = {
-      "Director": 1,
-      "Writer": 2,
-      "Screenplay": 2,
-      "Story": 2,
-      "Producer": 3,
-      "Executive Producer": 4,
-      "Cinematography": 5,
-      "Music": 6,
-      "Original Music Composer": 6,
-    };
-    
-    const priorityA = jobPriority[a.job] || 10;
-    const priorityB = jobPriority[b.job] || 10;
-    
-    return priorityA - priorityB;
-  }).slice(0, 8) || [];
+  const keyCrew =
+    tvShow.credits?.crew
+      ?.filter((person) =>
+        [
+          "Director",
+          "Producer",
+          "Executive Producer",
+          "Writer",
+          "Screenplay",
+          "Story",
+          "Cinematography",
+          "Music",
+          "Original Music Composer",
+        ].includes(person.job),
+      )
+      .sort((a, b) => {
+        const jobPriority: Record<string, number> = {
+          Director: 1,
+          Writer: 2,
+          Screenplay: 2,
+          Story: 2,
+          Producer: 3,
+          "Executive Producer": 4,
+          Cinematography: 5,
+          Music: 6,
+          "Original Music Composer": 6,
+        };
+
+        const priorityA = jobPriority[a.job] || 10;
+        const priorityB = jobPriority[b.job] || 10;
+
+        return priorityA - priorityB;
+      })
+      .slice(0, 8) || [];
 
   // Get keywords
   const keywords = tvShow.keywords?.results?.slice(0, 10) || [];
 
   // Get recommendations and transform TV shows to Movie-like objects for MovieGrid
-  const recommendations = tvShow.recommendations?.results?.slice(0, 12).map(show => ({
-    ...show,
-    title: show.name,
-    release_date: show.first_air_date,
-    original_title: show.original_name,
-    adult: false,
-    video: false
-  })) || [];
+  const recommendations =
+    tvShow.recommendations?.results?.slice(0, 12).map((show) => ({
+      ...show,
+      title: show.name,
+      release_date: show.first_air_date,
+      original_title: show.original_name,
+      adult: false,
+      video: false,
+    })) || [];
 
   return (
     <div className="min-h-screen relative">
@@ -185,7 +194,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                     </h4>
                     <div className="space-y-1">
                       {creators.slice(0, 2).map((creator) => (
-                        <Link 
+                        <Link
                           key={creator.id}
                           href={`/person/${creator.id}`}
                           className="text-base font-medium text-primary hover:text-primary/80 transition-colors block"
@@ -224,8 +233,12 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                       TMDB Score
                     </h4>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-bold text-primary">{rating}</span>
-                      <span className="text-sm text-muted-foreground">/ 10</span>
+                      <span className="text-lg font-bold text-primary">
+                        {rating}
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        / 10
+                      </span>
                     </div>
                   </div>
                 )}
@@ -242,7 +255,9 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Seasons
                     </h4>
-                    <p className="text-sm font-medium">{tvShow.number_of_seasons}</p>
+                    <p className="text-sm font-medium">
+                      {tvShow.number_of_seasons}
+                    </p>
                   </div>
                 )}
 
@@ -251,7 +266,9 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Episodes
                     </h4>
-                    <p className="text-sm font-medium">{tvShow.number_of_episodes}</p>
+                    <p className="text-sm font-medium">
+                      {tvShow.number_of_episodes}
+                    </p>
                   </div>
                 )}
 
@@ -262,7 +279,12 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                     </h4>
                     <div className="space-y-1">
                       {tvShow.networks.slice(0, 2).map((network) => (
-                        <p key={network.id} className="text-sm text-foreground/90">{network.name}</p>
+                        <p
+                          key={network.id}
+                          className="text-sm text-foreground/90"
+                        >
+                          {network.name}
+                        </p>
                       ))}
                     </div>
                   </div>
@@ -308,7 +330,11 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                         {season.poster_path ? (
                           <>
                             <Image
-                              src={getImageUrl(season.poster_path, "poster", "w185")}
+                              src={getImageUrl(
+                                season.poster_path,
+                                "poster",
+                                "w185",
+                              )}
                               alt={season.name}
                               fill
                               className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -328,8 +354,10 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                           {season.name}
                         </h4>
                         <p className="text-xs text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
-                          {season.episode_count} episode{season.episode_count !== 1 ? "s" : ""}
-                          {season.air_date && ` • ${formatDate(season.air_date)}`}
+                          {season.episode_count} episode
+                          {season.episode_count !== 1 ? "s" : ""}
+                          {season.air_date &&
+                            ` • ${formatDate(season.air_date)}`}
                         </p>
                         {season.overview && (
                           <p className="text-xs text-muted-foreground/90 line-clamp-2 group-hover:text-muted-foreground/70 transition-colors">
@@ -337,11 +365,21 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                           </p>
                         )}
                       </div>
-                      
+
                       {/* Subtle arrow indicator */}
                       <div className="opacity-0 group-hover:opacity-60 transition-opacity duration-300 flex-shrink-0">
-                        <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        <svg
+                          className="w-4 h-4 text-primary"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
                         </svg>
                       </div>
                     </Link>
@@ -358,7 +396,11 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 <CardTitle>Cast</CardTitle>
               </CardHeader>
               <CardContent>
-                <CastGrid cast={mainCast} initialDisplayCount={12} mediaType="tv" />
+                <CastGrid
+                  cast={mainCast}
+                  initialDisplayCount={12}
+                  mediaType="tv"
+                />
               </CardContent>
             </Card>
           )}

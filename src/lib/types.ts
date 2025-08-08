@@ -176,7 +176,10 @@ export interface TVShowDetails extends Omit<TVShow, "genre_ids"> {
       }[];
       total_episode_count: number;
     }[];
-    crew: (CrewMember & { episode_count: number; total_episode_count: number })[];
+    crew: (CrewMember & {
+      episode_count: number;
+      total_episode_count: number;
+    })[];
   };
   external_ids?: ExternalIds;
   recommendations?: TMDBResponse<TVShow>;

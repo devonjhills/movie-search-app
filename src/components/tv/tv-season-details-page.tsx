@@ -66,7 +66,8 @@ export function TVSeasonDetailsPage({
           </p>
           <Link
             href={`/tv/${tvId}`}
-            className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+            className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
             <ArrowLeftIcon className="h-4 w-4 mr-2" />
             Back to TV Show
           </Link>
@@ -143,10 +144,12 @@ export function TVSeasonDetailsPage({
                 variant="outline"
                 size="sm"
                 asChild
-                className="mt-4 -ml-2">
+                className="mt-4 -ml-2"
+              >
                 <Link
                   href={`/tv/${tvId}`}
-                  className="inline-flex items-center gap-2">
+                  className="inline-flex items-center gap-2"
+                >
                   <ArrowLeftIcon className="h-4 w-4" />
                   <span>Back to {tvShow?.name || "TV Show"}</span>
                 </Link>
@@ -169,7 +172,8 @@ export function TVSeasonDetailsPage({
                 {season.episodes.map((episode) => (
                   <div
                     key={episode.id}
-                    className="flex space-x-4 p-5 rounded-xl bg-gradient-to-r from-background to-muted/30 border border-border/50 hover:border-border transition-all duration-300 hover:shadow-lg hover:shadow-primary/5">
+                    className="flex space-x-4 p-5 rounded-xl bg-gradient-to-r from-background to-muted/30 border border-border/50 hover:border-border transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+                  >
                     {/* Episode Still */}
                     <div className="relative w-32 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-muted shadow-md">
                       {episode.still_path ? (
@@ -177,7 +181,7 @@ export function TVSeasonDetailsPage({
                           src={getImageUrl(
                             episode.still_path,
                             "backdrop",
-                            "w300"
+                            "w300",
                           )}
                           alt={episode.name}
                           fill

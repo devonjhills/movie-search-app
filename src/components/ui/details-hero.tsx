@@ -49,7 +49,8 @@ export function DetailsHero({
   const title = mediaType === "movie" ? item.title : item.name;
 
   // Get US MPAA rating for movies
-  const usCertification = mediaType === "movie" ? getUSCertification(item.release_dates) : null;
+  const usCertification =
+    mediaType === "movie" ? getUSCertification(item.release_dates) : null;
   const ratingStyle = getMPAARatingStyle(usCertification);
 
   // External links
@@ -163,7 +164,9 @@ export function DetailsHero({
                       )}
 
                       {usCertification && (
-                        <div className={`px-2 py-1 rounded text-xs font-semibold ${ratingStyle.bgColor} ${ratingStyle.textColor} border`}>
+                        <div
+                          className={`px-2 py-1 rounded text-xs font-semibold ${ratingStyle.bgColor} ${ratingStyle.textColor} border`}
+                        >
                           {usCertification}
                         </div>
                       )}
