@@ -12,7 +12,7 @@
 
 A production-ready, responsive movie and TV discovery platform built with cutting-edge technologies. This project showcases advanced proficiency in Next.js 15, TypeScript, modern React patterns, Supabase authentication, and responsive design principles - designed to highlight full-stack development expertise.
 
-![Screenshot 2025-07-31 at 2 24 19 AM](https://github.com/user-attachments/assets/35738b40-4044-48f1-9767-dac6e444e419)
+<img width="1248" height="633" alt="Screenshot 2025-08-08 at 3 12 52 PM" src="https://github.com/user-attachments/assets/39207651-35f9-4ece-8a4b-63d65749b6f9" />
 
 🔗 **[Live Demo](https://movie-search-app-rho-ten.vercel.app/)** | 📱 **Mobile Optimized** | 🌙 **Dark Mode Ready** | 🔐 **User Authentication**
 
