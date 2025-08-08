@@ -32,32 +32,37 @@ export const ENDPOINTS = {
 } as const;
 
 // Image URL builders
+// Optimized sizes based on actual display dimensions:
+// - Movie/TV cards: w185 (cards are max 224px wide)
+// - Hero sections: w342 (posters are max ~400px wide)
+// - Person details: h632 (profile images are max ~400px wide)
+// - Backdrops: w1280 (full-width hero sections)
 export const IMAGE_URLS = {
   // Poster sizes
   poster: {
-    w92: (path: string) => `${TMDB_IMAGE_BASE_URL}/w92${path}`,
-    w154: (path: string) => `${TMDB_IMAGE_BASE_URL}/w154${path}`,
-    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`,
-    w342: (path: string) => `${TMDB_IMAGE_BASE_URL}/w342${path}`,
-    w500: (path: string) => `${TMDB_IMAGE_BASE_URL}/w500${path}`,
-    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`,
-    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`,
+    w92: (path: string) => `${TMDB_IMAGE_BASE_URL}/w92${path}`, // Tiny thumbnails (48px)
+    w154: (path: string) => `${TMDB_IMAGE_BASE_URL}/w154${path}`, // Small thumbnails
+    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Card components (default)
+    w342: (path: string) => `${TMDB_IMAGE_BASE_URL}/w342${path}`, // Hero sections & large cards
+    w500: (path: string) => `${TMDB_IMAGE_BASE_URL}/w500${path}`, // Large displays
+    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Very large displays
+    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // Avoid - too large
   },
 
   // Backdrop sizes
   backdrop: {
-    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`,
-    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`,
-    w1280: (path: string) => `${TMDB_IMAGE_BASE_URL}/w1280${path}`,
-    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`,
+    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`, // Mobile backdrops
+    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Tablet backdrops
+    w1280: (path: string) => `${TMDB_IMAGE_BASE_URL}/w1280${path}`, // Desktop backdrops (default)
+    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // Avoid - too large
   },
 
   // Profile sizes (for person images)
   profile: {
-    w45: (path: string) => `${TMDB_IMAGE_BASE_URL}/w45${path}`,
-    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`,
-    h632: (path: string) => `${TMDB_IMAGE_BASE_URL}/h632${path}`,
-    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`,
+    w45: (path: string) => `${TMDB_IMAGE_BASE_URL}/w45${path}`, // Tiny avatars
+    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Grid cards
+    h632: (path: string) => `${TMDB_IMAGE_BASE_URL}/h632${path}`, // Details pages (default)
+    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // Avoid - too large
   },
 
   // Logo sizes

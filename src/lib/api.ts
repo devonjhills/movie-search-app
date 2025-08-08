@@ -69,6 +69,7 @@ export const formatMovieResults = (movie: Movie): FormattedMovie => {
     title: movie.title,
     vote_average: movie.vote_average,
     poster_path: movie.poster_path,
+    backdrop_path: movie.backdrop_path,
     overview: movie.overview,
     poster: movie.poster_path ? IMAGE_URLS.poster.w500(movie.poster_path) : "",
   };

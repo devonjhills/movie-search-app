@@ -14,7 +14,6 @@ A production-ready, responsive movie and TV discovery platform built with cuttin
 
 ![Screenshot 2025-07-31 at 2 24 19 AM](https://github.com/user-attachments/assets/35738b40-4044-48f1-9767-dac6e444e419)
 
-
 🔗 **[Live Demo](https://movie-search-app-rho-ten.vercel.app/)** | 📱 **Mobile Optimized** | 🌙 **Dark Mode Ready** | 🔐 **User Authentication**
 
 ## ✨ Portfolio Highlights

@@ -18,12 +18,12 @@ export function HeroSection({
   className,
   mediaType = "movie",
 }: HeroSectionProps) {
-  const backdropUrl = getImageUrl(
-    movie.backdrop_path || movie.poster_path,
-    "backdrop",
-    "w1280",
-  );
-  const posterUrl = getImageUrl(movie.poster_path, "poster", "w342");
+  const backdropUrl = movie.backdrop_path
+    ? getImageUrl(movie.backdrop_path, "backdrop", "w1280")
+    : movie.poster_path
+      ? getImageUrl(movie.poster_path, "poster", "w780")
+      : null;
+  const posterUrl = getImageUrl(movie.poster_path, "poster", "w185");
   const rating = formatVoteAverage(movie.vote_average);
   const year = formatYear(movie.release_date);
 
@@ -37,6 +37,7 @@ export function HeroSection({
             alt={movie.title}
             fill
             className="object-cover"
+            style={{ objectPosition: "center 25%" }}
             priority
             sizes="100vw"
           />
@@ -44,7 +45,7 @@ export function HeroSection({
           <div className="h-full w-full bg-gradient-to-br from-primary/20 to-primary/5" />
         )}
         {/* Theme-aware gradient overlay like movie details page */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-background/90" />
       </div>
 
       {/* Content */}
@@ -76,6 +77,16 @@ export function HeroSection({
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight drop-shadow-lg">
                 {movie.title}
               </h1>
+            </div>
+
+            {/* Rating and Date */}
+            <div className="flex items-center gap-4">
+              {movie.vote_average > 0 && (
+                <div className="rating-badge shadow-lg">
+                  <StarIcon className="h-4 w-4" />
+                  <span>{rating}</span>
+                </div>
+              )}
               {movie.release_date && (
                 <div className="flex items-center space-x-2 text-foreground/80">
                   <CalendarIcon className="h-5 w-5" />
@@ -90,16 +101,6 @@ export function HeroSection({
               )}
             </div>
 
-            {/* Rating */}
-            {movie.vote_average > 0 && (
-              <div className="flex items-center space-x-2">
-                <div className="rating-badge shadow-lg">
-                  <StarIcon className="h-4 w-4" />
-                  <span>{rating}</span>
-                </div>
-              </div>
-            )}
-
             {/* Overview */}
             {movie.overview && (
               <p className="text-lg md:text-xl leading-relaxed text-foreground/90 max-w-3xl drop-shadow-md">
@@ -111,12 +112,7 @@ export function HeroSection({
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 href={`/${mediaType}/${movie.id}`}
-                className={cn(
-                  "inline-flex items-center space-x-2 px-6 py-3 rounded-lg",
-                  "bg-primary text-primary-foreground font-semibold shadow-lg",
-                  "hover:bg-primary/90 transition-all duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-ring",
-                )}
+                className="btn-primary inline-flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold shadow-lg"
               >
                 <InformationCircleIcon className="h-5 w-5" />
                 <span>View Details</span>

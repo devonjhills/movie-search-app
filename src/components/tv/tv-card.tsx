@@ -29,7 +29,7 @@ export function TVCard({
   showRating = true,
   showOverview = false,
 }: TVCardProps) {
-  const imageUrl = getImageUrl(tvShow.poster_path, "poster", "w342");
+  const imageUrl = getImageUrl(tvShow.poster_path, "poster", "w185");
   const rating = formatVoteAverage(tvShow.vote_average);
   const year = formatYear(tvShow.first_air_date);
   const ratingColor = getRatingColor(tvShow.vote_average);
@@ -46,8 +46,8 @@ export function TVCard({
     <Link href={`/tv/${tvShow.id}`} className="group">
       <Card
         className={cn(
-          "overflow-hidden transition-all duration-200 hover:scale-105 hover:shadow-lg",
-          "border-0 bg-transparent shadow-none",
+          "overflow-hidden bg-transparent shadow-none card-hover",
+          "border-0",
           sizeClasses[size],
           className,
         )}
@@ -74,7 +74,7 @@ export function TVCard({
             {/* Rating Badge */}
             {showRating && tvShow.vote_average > 0 && (
               <div className="absolute top-2 right-2">
-                <div className="rating-badge text-xs backdrop-blur-sm">
+                <div className="rating-badge backdrop-blur-sm">
                   <StarIcon className="h-3 w-3" />
                   <span>{rating}</span>
                 </div>
@@ -82,7 +82,7 @@ export function TVCard({
             )}
 
             {/* Gradient Overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            <div className="absolute inset-0 gradient-overlay opacity-0 transition-opacity group-hover:opacity-100" />
           </div>
 
           {/* TV Show Info */}

@@ -43,13 +43,15 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Movie-themed colors
-        cinema: {
-          gold: "hsl(43, 74%, 49%)",
-          silver: "hsl(0, 0%, 75%)",
-          velvet: "hsl(0, 45%, 25%)",
-          spotlight: "hsl(45, 100%, 85%)",
-          curtain: "hsl(0, 30%, 15%)",
+        // Batman-themed colors
+        batman: {
+          gold: "hsl(51, 100%, 55%)",
+          "gold-dark": "hsl(38, 75%, 38%)",
+          black: "hsl(0, 0%, 6%)",
+          "grey-light": "hsl(0, 0%, 85%)",
+          "grey-medium": "hsl(0, 0%, 70%)",
+          "grey-dark": "hsl(0, 0%, 20%)",
+          white: "hsl(210, 17%, 98%)",
         },
       },
       borderRadius: {

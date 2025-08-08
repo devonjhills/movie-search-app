@@ -203,12 +203,11 @@ export function ShareButton({
   }
 
   const baseClasses =
-    "relative inline-flex items-center rounded-lg transition-colors focus:outline-none focus:ring-2";
+    "relative inline-flex items-center px-6 py-3 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
 
   const variantClasses = {
-    default:
-      "bg-secondary text-secondary-foreground hover:bg-secondary/80 focus:ring-secondary/50",
-    hero: "border border-foreground/30 text-foreground bg-background/20 backdrop-blur-sm hover:bg-background/40 focus:ring-primary/50",
+    default: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+    hero: "bg-background text-foreground hover:bg-accent hover:text-accent-foreground border border-input",
   };
 
   return (
@@ -218,7 +217,7 @@ export function ShareButton({
         className={cn(baseClasses, variantClasses[variant], className)}
         title={copied ? "URL Copied!" : "Share this page"}
       >
-        <div className="flex items-center space-x-2 px-6 py-3">
+        <div className="flex items-center space-x-2">
           {copied ? (
             <CheckIcon className="h-5 w-5 text-green-400" />
           ) : (

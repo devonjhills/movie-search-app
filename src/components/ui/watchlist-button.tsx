@@ -6,6 +6,7 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
 import { BookmarkIcon as BookmarkSolidIcon } from "@heroicons/react/24/solid";
 import { useWatchlist } from "@/lib/hooks/use-watchlist";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Movie, TVShow } from "@/lib/types";
 
@@ -32,10 +33,7 @@ export function WatchlistButton({
     mediaType === "movie" ? item.release_date : item.first_air_date;
 
   const handleClick = async () => {
-    // If already in watchlist, don't do anything (will be handled by Link)
-    if (inWatchlist) {
-      return;
-    }
+    if (inWatchlist) return;
 
     setIsLoading(true);
     try {
@@ -50,128 +48,61 @@ export function WatchlistButton({
       });
     } catch (error) {
       console.error("Watchlist error:", error);
-      // You could add a toast notification here
     } finally {
       setIsLoading(false);
     }
   };
 
+  const isHero = variant === "hero";
+  const buttonSize = isHero ? "lg" : "sm";
+  const buttonClass = isHero ? className : cn("px-2", className);
+
   if (!user) {
-    if (variant === "hero") {
-      return (
-        <Link
-          href="/auth/signin"
-          className={cn(
-            "inline-flex items-center space-x-2 px-6 py-3",
-            "bg-secondary text-secondary-foreground border border-border",
-            "hover:bg-secondary/80 hover:shadow-md transition-all duration-200",
-            "focus:outline-none focus:ring-2 focus:ring-ring",
-            "rounded-lg cursor-pointer",
-            className,
-          )}
-        >
-          <BookmarkIcon className="h-5 w-5" />
-          <span>Sign In to Add to Watchlist</span>
-        </Link>
-      );
-    }
-
     return (
-      <Link
+      <Button
+        as={Link}
         href="/auth/signin"
-        className={cn(
-          "inline-flex items-center justify-center p-2",
-          "bg-secondary text-secondary-foreground border border-border",
-          "hover:bg-secondary/80 hover:shadow-md transition-all duration-200",
-          "focus:outline-none focus:ring-2 focus:ring-ring",
-          "rounded-lg cursor-pointer",
-          className,
-        )}
-        title="Sign in to add to watchlist"
+        variant="secondary"
+        size={buttonSize}
+        className={cn(buttonClass, "border border-primary/50")}
+        title="Add to watchlist"
       >
         <BookmarkIcon className="h-5 w-5" />
-      </Link>
-    );
-  }
-
-  if (variant === "hero") {
-    if (inWatchlist) {
-      return (
-        <Link
-          href="/watchlist"
-          className={cn(
-            "inline-flex items-center space-x-2 px-6 py-3",
-            "bg-primary text-primary-foreground border border-primary",
-            "hover:bg-primary/90 hover:shadow-md transition-all duration-200",
-            "focus:outline-none focus:ring-2 focus:ring-ring",
-            "rounded-lg cursor-pointer",
-            className,
-          )}
-        >
-          <BookmarkSolidIcon className="h-5 w-5" />
-          <span>View Watchlist</span>
-        </Link>
-      );
-    }
-
-    return (
-      <button
-        onClick={handleClick}
-        disabled={isLoading}
-        className={cn(
-          "inline-flex items-center space-x-2 px-6 py-3",
-          "bg-secondary text-secondary-foreground border border-border",
-          "hover:bg-secondary/80 hover:shadow-md transition-all duration-200",
-          "focus:outline-none focus:ring-2 focus:ring-ring",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
-          "rounded-lg cursor-pointer",
-          className,
-        )}
-      >
-        <BookmarkIcon className="h-5 w-5" />
-        <span>{isLoading ? "Loading..." : "Add to Watchlist"}</span>
-      </button>
+        <span>Add to Watchlist</span>
+      </Button>
     );
   }
 
   if (inWatchlist) {
     return (
-      <Link
+      <Button
+        as={Link}
         href="/watchlist"
-        className={cn(
-          "inline-flex items-center justify-center p-2",
-          "bg-primary text-primary-foreground border border-primary",
-          "hover:bg-primary/90 hover:shadow-md transition-all duration-200",
-          "focus:outline-none focus:ring-2 focus:ring-ring",
-          "rounded-lg cursor-pointer",
-          className,
-        )}
-        title="View Watchlist"
+        variant={isHero ? "secondary" : "primary"}
+        size={buttonSize}
+        className={cn(buttonClass, "border border-primary/50")}
+        title={isHero ? undefined : "View Watchlist"}
       >
         <BookmarkSolidIcon
           className="h-5 w-5"
           style={{ color: "hsl(var(--rating-gold))" }}
         />
-      </Link>
+        <span>View Watchlist</span>
+      </Button>
     );
   }
 
   return (
-    <button
+    <Button
       onClick={handleClick}
       disabled={isLoading}
-      className={cn(
-        "inline-flex items-center justify-center p-2",
-        "bg-secondary text-secondary-foreground border border-border",
-        "hover:bg-secondary/80 hover:shadow-md transition-all duration-200",
-        "focus:outline-none focus:ring-2 focus:ring-ring",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
-        "rounded-lg cursor-pointer",
-        className,
-      )}
-      title="Add to Watchlist"
+      variant="secondary"
+      size={buttonSize}
+      className={cn(buttonClass, "border border-border/50")}
+      title={isHero ? undefined : "Add to Watchlist"}
     >
       <BookmarkIcon className="h-5 w-5" />
-    </button>
+      <span>{isLoading ? "Loading..." : "Add to Watchlist"}</span>
+    </Button>
   );
 }

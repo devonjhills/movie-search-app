@@ -73,7 +73,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
     );
   }
 
-  const profileUrl = getImageUrl(person.profile_path, "profile", "original");
+  const profileUrl = getImageUrl(person.profile_path, "profile", "h632");
   const birthDate = formatDate(person.birthday);
   const deathDate = formatDate(person.deathday);
   const age = calculateAge(person.birthday, person.deathday);
@@ -133,22 +133,24 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
               <CardHeader>
                 <CardTitle>Personal Info</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 {person.known_for_department && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Known For
                     </h4>
-                    <p className="text-sm">{person.known_for_department}</p>
+                    <p className="text-base font-medium">
+                      {person.known_for_department}
+                    </p>
                   </div>
                 )}
 
                 {person.birthday && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Born
                     </h4>
-                    <div className="text-sm space-y-1">
+                    <div className="text-base font-medium space-y-1">
                       <div className="flex items-center space-x-1">
                         <CalendarIcon className="h-4 w-4 text-muted-foreground" />
                         <span>{birthDate}</span>
@@ -169,11 +171,11 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                 )}
 
                 {person.deathday && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Died
                     </h4>
-                    <div className="text-sm">
+                    <div className="text-base font-medium">
                       <div className="flex items-center space-x-1">
                         <CalendarIcon className="h-4 w-4 text-muted-foreground" />
                         <span>{deathDate}</span>
@@ -188,11 +190,11 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                 )}
 
                 {person.also_known_as && person.also_known_as.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Also Known As
                     </h4>
-                    <div className="text-sm space-y-1">
+                    <div className="text-base font-medium space-y-1">
                       {person.also_known_as.slice(0, 3).map((name, index) => (
                         <p key={index}>{name}</p>
                       ))}

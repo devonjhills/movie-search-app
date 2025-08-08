@@ -4,54 +4,54 @@
 
 @layer base {
   :root {
-    /* Hollywood Golden Age - Warm off-white cinema palette */
-    --background: 45 25% 94%;
-    --foreground: 25 25% 12%;
-    --card: 45 20% 92%;
-    --card-foreground: 25 25% 12%;
-    --popover: 45 20% 92%;
-    --popover-foreground: 25 25% 12%;
-    --primary: 42 87% 55%;
-    --primary-foreground: 25 25% 12%;
-    --secondary: 45 12% 86%;
-    --secondary-foreground: 25 25% 12%;
-    --muted: 45 12% 86%;
-    --muted-foreground: 25 15% 40%;
-    --accent: 42 87% 55%;
-    --accent-foreground: 25 25% 12%;
+    /* IMDb/Batman Light - Clean cinematic theme with colorful accents */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 18%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 18%;
+    --primary: 45 93% 47%;
+    --primary-foreground: 220 13% 18%;
+    --secondary: 210 40% 92%;
+    --secondary-foreground: 220 13% 18%;
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 16% 46%;
+    --accent: 280 60% 90%;
+    --accent-foreground: 220 13% 18%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 45 20% 92%;
-    --border: 45 15% 78%;
-    --input: 45 15% 78%;
-    --ring: 42 87% 55%;
-    --rating-gold: 45 95% 48%;
-    --rating-gold-foreground: 25 25% 12%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 45 93% 47%;
+    --rating-gold: 45 93% 47%;
+    --rating-gold-foreground: 220 13% 18%;
     --radius: 0.5rem;
   }
 
   .dark {
-    /* Film Noir - Professional dark with IMDB-familiar accents */
-    --background: 240 10% 6%;
-    --foreground: 0 0% 95%;
-    --card: 240 10% 9%;
-    --card-foreground: 0 0% 95%;
-    --popover: 240 10% 9%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 42 87% 55%;
-    --primary-foreground: 240 10% 6%;
-    --secondary: 240 8% 15%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 240 8% 15%;
-    --muted-foreground: 0 0% 70%;
-    --accent: 42 87% 55%;
-    --accent-foreground: 240 10% 6%;
-    --destructive: 0 75% 60%;
-    --destructive-foreground: 0 0% 95%;
-    --border: 240 8% 18%;
-    --input: 240 8% 18%;
-    --ring: 42 87% 55%;
-    --rating-gold: 45 95% 48%;
-    --rating-gold-foreground: 25 25% 12%;
+    /* IMDb/Batman Dark - Rich dark theme with vibrant accents */
+    --background: 222 84% 4%;
+    --foreground: 210 40% 98%;
+    --card: 222 84% 5%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 84% 5%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 45 93% 47%;
+    --primary-foreground: 222 84% 4%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 32% 12%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 280 40% 25%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 75% 65%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 45 93% 47%;
+    --rating-gold: 45 93% 47%;
+    --rating-gold-foreground: 222 84% 4%;
   }
 }
 
@@ -89,17 +89,74 @@
   }
 
   .interactive {
-    @apply cursor-pointer transition-colors duration-200;
+    @apply cursor-pointer transition-all duration-200;
   }
 
   .loading {
-    @apply cursor-wait;
+    @apply cursor-wait opacity-50;
   }
 
-  /* IMDB-style rating badge */
+  /* IMDb-style rating badge with golden accent */
   .rating-badge {
-    background-color: hsl(var(--rating-gold));
+    @apply inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold shadow-md;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--rating-gold)),
+      hsl(var(--rating-gold)) 70%,
+      hsl(45 90% 40%)
+    );
     color: hsl(var(--rating-gold-foreground));
-    @apply inline-flex items-center space-x-1 px-3 py-1 rounded-md font-semibold text-sm shadow-sm;
+    border: 1px solid hsl(45 90% 35%);
+  }
+
+  /* Cinematic card hover effects */
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
+  }
+
+  /* Professional button variants using semantic colors */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply transition-all duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply transition-all duration-200;
+  }
+
+  .btn-outline {
+    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply transition-all duration-200;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-accent hover:text-accent-foreground;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply transition-all duration-200;
+  }
+
+  /* Cinematic gradient overlays */
+  .gradient-overlay {
+    @apply bg-gradient-to-t from-black/80 via-black/40 to-transparent;
+  }
+
+  .gradient-hero {
+    @apply bg-gradient-to-r from-background via-background/95 to-background/80;
+  }
+
+  /* Professional navigation links */
+  .nav-link {
+    @apply relative text-foreground/80 hover:text-foreground transition-all duration-200;
+    @apply after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary;
+    @apply after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  /* Hero section styling */
+  .hero-backdrop {
+    @apply absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background;
   }
 }

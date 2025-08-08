@@ -39,7 +39,7 @@ export function Navigation() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo and Brand */}
@@ -57,29 +57,29 @@ export function Navigation() {
           </Link>
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-8">
             <Link
               href="/"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
+              className="nav-link px-3 py-2 text-base font-semibold"
             >
               Movies
             </Link>
             <Link
               href="/tv"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
+              className="nav-link px-3 py-2 text-base font-semibold"
             >
               TV Shows
             </Link>
             <Link
               href="/discover"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
+              className="nav-link px-3 py-2 text-base font-semibold"
             >
               Discover
             </Link>
             {user && (
               <Link
                 href="/watchlist"
-                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
+                className="nav-link px-3 py-2 text-base font-semibold"
               >
                 Watchlist
               </Link>
@@ -97,12 +97,7 @@ export function Navigation() {
                   placeholder="Search movies, TV shows, people..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className={cn(
-                    "w-64 rounded-lg border border-input bg-background pl-9 pr-3 py-2 text-sm",
-                    "placeholder:text-muted-foreground cursor-text",
-                    "focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20",
-                    "hover:border-ring/50 transition-all duration-200",
-                  )}
+                  className="w-64 rounded-lg border-input bg-background pl-9 pr-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring hover:border-ring/50 transition-all duration-200"
                 />
               </div>
             </form>
@@ -115,24 +110,14 @@ export function Navigation() {
                 </span>
                 <Link
                   href="/watchlist"
-                  className={cn(
-                    "rounded-lg p-2 text-foreground/80 transition-all duration-200",
-                    "hover:bg-accent hover:text-accent-foreground hover:scale-105",
-                    "focus:outline-none focus:ring-2 focus:ring-ring/20",
-                    "cursor-pointer active:scale-95",
-                  )}
+                  className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
                   title="My Watchlist"
                 >
                   <BookmarkIcon className="h-5 w-5" />
                 </Link>
                 <button
                   onClick={() => signOut()}
-                  className={cn(
-                    "rounded-lg p-2 text-foreground/80 transition-all duration-200",
-                    "hover:bg-accent hover:text-accent-foreground hover:scale-105",
-                    "focus:outline-none focus:ring-2 focus:ring-ring/20",
-                    "cursor-pointer active:scale-95",
-                  )}
+                  className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
                   title="Sign Out"
                 >
                   <ArrowRightStartOnRectangleIcon className="h-5 w-5" />
@@ -141,13 +126,7 @@ export function Navigation() {
             ) : (
               <Link
                 href="/auth/signin"
-                className={cn(
-                  "rounded-lg px-3 py-1.5 text-sm font-medium",
-                  "bg-primary text-primary-foreground",
-                  "hover:bg-primary/90 hover:scale-105 hover:shadow-md transition-all duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-ring/20",
-                  "cursor-pointer active:scale-95",
-                )}
+                className="btn-primary rounded-lg px-3 py-1.5 text-sm font-medium"
               >
                 Sign In
               </Link>
@@ -155,12 +134,7 @@ export function Navigation() {
 
             <button
               onClick={toggleTheme}
-              className={cn(
-                "rounded-lg p-2 text-foreground/80 transition-all duration-200",
-                "hover:bg-accent hover:text-accent-foreground hover:scale-105",
-                "focus:outline-none focus:ring-2 focus:ring-ring/20",
-                "cursor-pointer active:scale-95",
-              )}
+              className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
               aria-label="Toggle theme"
             >
               {!mounted ? (
@@ -177,28 +151,22 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         <div className="flex md:hidden items-center space-x-6 pb-4">
-          <Link
-            href="/"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
-          >
+          <Link href="/" className="nav-link px-3 py-2 text-sm font-semibold">
             Movies
           </Link>
-          <Link
-            href="/tv"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
-          >
+          <Link href="/tv" className="nav-link px-3 py-2 text-sm font-semibold">
             TV Shows
           </Link>
           <Link
             href="/discover"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
+            className="nav-link px-3 py-2 text-sm font-semibold"
           >
             Discover
           </Link>
           {user && (
             <Link
               href="/watchlist"
-              className="text-sm font-medium text-foreground/80 hover:text-foreground transition-all duration-200 cursor-pointer hover:scale-105"
+              className="nav-link px-3 py-2 text-sm font-semibold"
             >
               Watchlist
             </Link>

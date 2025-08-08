@@ -15,6 +15,7 @@ import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { WatchProviders } from "@/components/ui/watch-providers";
 import { ShareButton } from "@/components/ui/share-button";
 import { DetailsHero } from "@/components/ui/details-hero";
+import { QuickAccessCard } from "@/components/ui/quick-access-card";
 import {
   formatDate,
   formatVoteAverage,
@@ -114,18 +115,23 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   const creators = tvShow.created_by || [];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       {/* Hero Section */}
-      <DetailsHero item={tvShow} mediaType="tv" trailer={trailer} />
+      <DetailsHero
+        item={tvShow}
+        mediaType="tv"
+        trailer={trailer}
+        watchProviders={watchProviders?.results?.US}
+      />
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="relative container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Overview */}
             {tvShow.overview && (
-              <Card>
+              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
                 <CardHeader>
                   <CardTitle>Overview</CardTitle>
                 </CardHeader>
@@ -139,7 +145,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
             {/* Seasons */}
             {tvShow.seasons && tvShow.seasons.length > 0 && (
-              <Card>
+              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
                 <CardHeader>
                   <CardTitle>Seasons</CardTitle>
                 </CardHeader>
@@ -191,7 +197,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
             {/* Cast */}
             {mainCast.length > 0 && (
-              <Card>
+              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
                 <CardHeader>
                   <CardTitle>Cast</CardTitle>
                 </CardHeader>
@@ -240,17 +246,17 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* TV Show Info */}
-            <Card>
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
               <CardHeader>
                 <CardTitle>TV Show Info</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 {creators.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Creator{creators.length > 1 ? "s" : ""}
                     </h4>
-                    <div className="text-sm space-y-1">
+                    <div className="text-base font-medium space-y-1">
                       {creators.map((creator) => (
                         <p key={creator.id}>{creator.name}</p>
                       ))}
@@ -259,43 +265,43 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 )}
 
                 {tvShow.first_air_date && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       First Air Date
                     </h4>
-                    <p className="text-sm">{firstAirDate}</p>
+                    <p className="text-base font-medium">{firstAirDate}</p>
                   </div>
                 )}
 
                 {tvShow.last_air_date && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Last Air Date
                     </h4>
-                    <p className="text-sm">{lastAirDate}</p>
+                    <p className="text-base font-medium">{lastAirDate}</p>
                   </div>
                 )}
 
-                <div>
-                  <h4 className="text-sm font-medium text-muted-foreground">
+                <div className="space-y-1">
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Status
                   </h4>
-                  <p className="text-sm">{tvShow.status}</p>
+                  <p className="text-base font-medium">{tvShow.status}</p>
                 </div>
 
-                <div>
-                  <h4 className="text-sm font-medium text-muted-foreground">
+                <div className="space-y-1">
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Type
                   </h4>
-                  <p className="text-sm">{tvShow.type}</p>
+                  <p className="text-base font-medium">{tvShow.type}</p>
                 </div>
 
                 {tvShow.networks.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Network
                     </h4>
-                    <div className="text-sm space-y-1">
+                    <div className="text-base font-medium space-y-1">
                       {tvShow.networks.slice(0, 3).map((network) => (
                         <p key={network.id}>{network.name}</p>
                       ))}
@@ -319,45 +325,6 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 )}
               </CardContent>
             </Card>
-
-            {/* External Links */}
-            {tvShow.external_ids && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>External Links</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {tvShow.external_ids.imdb_id && (
-                    <a
-                      href={`https://www.imdb.com/title/${tvShow.external_ids.imdb_id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-sm text-blue-500 hover:text-blue-400 transition-colors"
-                    >
-                      View on IMDB
-                    </a>
-                  )}
-                  {tvShow.homepage && (
-                    <a
-                      href={tvShow.homepage}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-sm text-blue-500 hover:text-blue-400 transition-colors"
-                    >
-                      Official Website
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Watch Providers */}
-            {watchProviders?.results?.US && (
-              <WatchProviders
-                providers={watchProviders.results.US}
-                className="w-full"
-              />
-            )}
           </div>
         </div>
       </div>

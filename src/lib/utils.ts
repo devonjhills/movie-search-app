@@ -244,3 +244,13 @@ export function groupBy<T, K extends keyof any>(
     {} as Record<K, T[]>,
   );
 }
+
+// Generate Rotten Tomatoes search URL
+export function getRottenTomatoesSearchUrl(
+  title: string,
+  year?: string,
+): string {
+  const query = year ? `${title} ${year}` : title;
+  const encodedQuery = encodeURIComponent(query.trim());
+  return `https://www.rottentomatoes.com/search?search=${encodedQuery}`;
+}

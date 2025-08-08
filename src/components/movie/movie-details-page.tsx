@@ -13,6 +13,7 @@ import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { WatchProviders } from "@/components/ui/watch-providers";
 import { ShareButton } from "@/components/ui/share-button";
 import { DetailsHero } from "@/components/ui/details-hero";
+import { QuickAccessCard } from "@/components/ui/quick-access-card";
 import {
   formatDate,
   formatRuntime,
@@ -114,18 +115,23 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       {/* Hero Section */}
-      <DetailsHero item={movie} mediaType="movie" trailer={trailer} />
+      <DetailsHero
+        item={movie}
+        mediaType="movie"
+        trailer={trailer}
+        watchProviders={watchProviders?.results?.US}
+      />
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="relative container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Overview */}
             {movie.overview && (
-              <Card>
+              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
                 <CardHeader>
                   <CardTitle>Overview</CardTitle>
                 </CardHeader>
@@ -139,7 +145,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
             {/* Cast */}
             {mainCast.length > 0 && (
-              <Card>
+              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
                 <CardHeader>
                   <CardTitle>Cast</CardTitle>
                 </CardHeader>
@@ -188,62 +194,62 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Movie Info */}
-            <Card>
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
               <CardHeader>
                 <CardTitle>Movie Info</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 {director && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Director
                     </h4>
-                    <p className="text-sm">{director.name}</p>
+                    <p className="text-base font-medium">{director.name}</p>
                   </div>
                 )}
 
                 {movie.release_date && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Release Date
                     </h4>
-                    <p className="text-sm">{releaseDate}</p>
+                    <p className="text-base font-medium">{releaseDate}</p>
                   </div>
                 )}
 
                 {runtime && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Runtime
                     </h4>
-                    <p className="text-sm">{runtime}</p>
+                    <p className="text-base font-medium">{runtime}</p>
                   </div>
                 )}
 
                 {movie.budget > 0 && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Budget
                     </h4>
-                    <p className="text-sm">{budget}</p>
+                    <p className="text-base font-medium">{budget}</p>
                   </div>
                 )}
 
                 {movie.revenue > 0 && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Revenue
                     </h4>
-                    <p className="text-sm">{revenue}</p>
+                    <p className="text-base font-medium">{revenue}</p>
                   </div>
                 )}
 
                 {movie.production_companies.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Production
                     </h4>
-                    <div className="text-sm space-y-1">
+                    <div className="text-base font-medium space-y-1">
                       {movie.production_companies.slice(0, 3).map((company) => (
                         <p key={company.id}>{company.name}</p>
                       ))}
@@ -252,45 +258,6 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 )}
               </CardContent>
             </Card>
-
-            {/* External Links */}
-            {movie.external_ids && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>External Links</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {movie.external_ids.imdb_id && (
-                    <a
-                      href={`https://www.imdb.com/title/${movie.external_ids.imdb_id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-sm text-primary hover:text-primary/80 transition-colors"
-                    >
-                      View on IMDB
-                    </a>
-                  )}
-                  {movie.homepage && (
-                    <a
-                      href={movie.homepage}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-sm text-primary hover:text-primary/80 transition-colors"
-                    >
-                      Official Website
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Watch Providers */}
-            {watchProviders?.results?.US && (
-              <WatchProviders
-                providers={watchProviders.results.US}
-                className="w-full"
-              />
-            )}
           </div>
         </div>
       </div>

@@ -372,6 +372,7 @@ export interface FormattedMovie {
   title: string;
   vote_average: number;
   poster_path: string | null;
+  backdrop_path: string | null;
   overview: string;
   poster: string;
 }
