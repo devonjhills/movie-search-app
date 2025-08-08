@@ -2,23 +2,24 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarIcon, ClockIcon, FilmIcon } from "@heroicons/react/24/outline";
-import { PlayIcon, StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
+import { CalendarIcon, ClockIcon, FilmIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
+import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
 import {
   useMovieDetails,
   useMovieWatchProviders,
   getImageUrl,
 } from "@/lib/api";
-import { WatchlistButton } from "@/components/ui/watchlist-button";
-import { WatchProviders } from "@/components/ui/watch-providers";
-import { ShareButton } from "@/components/ui/share-button";
 import { DetailsHero } from "@/components/ui/details-hero";
-import { QuickAccessCard } from "@/components/ui/quick-access-card";
+import { CastGrid } from "@/components/ui/cast-grid";
+import { MovieGrid } from "@/components/movie/movie-grid";
+import { PersonCard } from "@/components/ui/person-card";
 import {
   formatDate,
   formatRuntime,
   formatVoteAverage,
   formatCurrency,
+  getUSCertification,
+  getMPAARatingStyle,
 } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -93,8 +94,6 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
     );
   }
 
-  const backdropUrl = getImageUrl(movie.backdrop_path, "backdrop", "original");
-  const posterUrl = getImageUrl(movie.poster_path, "poster", "w500");
   const rating = formatVoteAverage(movie.vote_average);
   const runtime = formatRuntime(movie.runtime);
   const releaseDate = formatDate(movie.release_date);
@@ -114,6 +113,39 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
     (person) => person.job === "Director",
   );
 
+  // Get US certification and styling
+  const usCertification = getUSCertification(movie.release_dates);
+  const ratingStyle = getMPAARatingStyle(usCertification);
+
+  // Get keywords
+  const keywords = movie.keywords?.keywords?.slice(0, 10) || [];
+
+  // Get key crew members with proper ordering
+  const keyCrew = movie.credits?.crew?.filter(person => 
+    ["Director", "Producer", "Executive Producer", "Writer", "Screenplay", "Story", "Cinematography", "Music", "Original Music Composer"].includes(person.job)
+  ).sort((a, b) => {
+    // Priority order: Director first, then Writer/Screenplay, then others
+    const jobPriority: Record<string, number> = {
+      "Director": 1,
+      "Writer": 2,
+      "Screenplay": 2,
+      "Story": 2,
+      "Producer": 3,
+      "Executive Producer": 4,
+      "Cinematography": 5,
+      "Music": 6,
+      "Original Music Composer": 6,
+    };
+    
+    const priorityA = jobPriority[a.job] || 10;
+    const priorityB = jobPriority[b.job] || 10;
+    
+    return priorityA - priorityB;
+  }).slice(0, 8) || [];
+
+  // Get recommendations
+  const recommendations = movie.recommendations?.results?.slice(0, 12) || [];
+
   return (
     <div className="min-h-screen relative">
       {/* Hero Section */}
@@ -126,140 +158,183 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
       {/* Main Content */}
       <div className="relative container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Overview */}
-            {movie.overview && (
-              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-foreground/90 leading-relaxed">
-                    {movie.overview}
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Cast */}
-            {mainCast.length > 0 && (
-              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
-                <CardHeader>
-                  <CardTitle>Cast</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    {mainCast.map((person) => (
-                      <Link
-                        key={person.id}
-                        href={`/person/${person.id}`}
-                        className="text-center space-y-2 hover:opacity-80 transition-opacity"
-                      >
-                        <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-muted">
-                          {person.profile_path ? (
-                            <Image
-                              src={getImageUrl(
-                                person.profile_path,
-                                "profile",
-                                "w185",
-                              )}
-                              alt={person.name}
-                              fill
-                              className="object-cover"
-                            />
-                          ) : (
-                            <div className="flex h-full items-center justify-center">
-                              <span className="text-xs text-muted-foreground">
-                                No Photo
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium">{person.name}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {person.character}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Movie Info */}
-            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
-              <CardHeader>
-                <CardTitle>Movie Info</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
+        <div className="space-y-8">
+          {/* Movie Details - Full Width */}
+          <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FilmIcon className="h-5 w-5" />
+                Movie Details
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {director && (
-                  <div className="space-y-1">
+                  <div className="space-y-2">
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Director
                     </h4>
-                    <p className="text-base font-medium">{director.name}</p>
+                    <Link 
+                      href={`/person/${director.id}`}
+                      className="text-base font-medium text-primary hover:text-primary/80 transition-colors"
+                    >
+                      {director.name}
+                    </Link>
                   </div>
                 )}
 
                 {movie.release_date && (
-                  <div className="space-y-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                      <CalendarIcon className="h-3 w-3" />
                       Release Date
                     </h4>
-                    <p className="text-base font-medium">{releaseDate}</p>
+                    <p className="text-sm font-medium">{releaseDate}</p>
                   </div>
                 )}
 
                 {runtime && (
-                  <div className="space-y-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                      <ClockIcon className="h-3 w-3" />
                       Runtime
                     </h4>
-                    <p className="text-base font-medium">{runtime}</p>
+                    <p className="text-sm font-medium">{runtime}</p>
+                  </div>
+                )}
+
+                {usCertification && (
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                      <ShieldCheckIcon className="h-3 w-3" />
+                      Rating
+                    </h4>
+                    <div className={`inline-flex px-3 py-1.5 rounded-md text-sm font-bold ${ratingStyle.bgColor} ${ratingStyle.textColor} border`}>
+                      {usCertification}
+                    </div>
+                  </div>
+                )}
+
+                {movie.vote_average > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                      <StarSolidIcon className="h-3 w-3" />
+                      TMDB Score
+                    </h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-bold text-primary">{rating}</span>
+                      <span className="text-sm text-muted-foreground">/ 10</span>
+                    </div>
                   </div>
                 )}
 
                 {movie.budget > 0 && (
-                  <div className="space-y-1">
+                  <div className="space-y-2">
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Budget
                     </h4>
-                    <p className="text-base font-medium">{budget}</p>
+                    <p className="text-sm font-medium">{budget}</p>
                   </div>
                 )}
 
                 {movie.revenue > 0 && (
-                  <div className="space-y-1">
+                  <div className="space-y-2">
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Revenue
                     </h4>
-                    <p className="text-base font-medium">{revenue}</p>
+                    <p className="text-sm font-medium text-green-600">{revenue}</p>
                   </div>
                 )}
 
                 {movie.production_companies.length > 0 && (
-                  <div className="space-y-1">
+                  <div className="space-y-2">
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Production
                     </h4>
-                    <div className="text-base font-medium space-y-1">
-                      {movie.production_companies.slice(0, 3).map((company) => (
-                        <p key={company.id}>{company.name}</p>
+                    <div className="space-y-1">
+                      {movie.production_companies.slice(0, 2).map((company) => (
+                        <p key={company.id} className="text-sm text-foreground/90">{company.name}</p>
                       ))}
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Keywords - Full Width Row */}
+              {keywords.length > 0 && (
+                <div className="space-y-3 pt-6 border-t border-border/50 mt-6">
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    Keywords
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {keywords.map((keyword) => (
+                      <span
+                        key={keyword.id}
+                        className="px-2 py-1 bg-muted text-muted-foreground rounded-full text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors cursor-default"
+                      >
+                        {keyword.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Cast - Full Width */}
+          {mainCast.length > 0 && (
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+              <CardHeader>
+                <CardTitle>Cast</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CastGrid cast={movie.credits?.cast || []} initialDisplayCount={12} mediaType="movie" />
+              </CardContent>
+            </Card>
+          )}
+        </div>
+
+        {/* Key Crew - Full Width */}
+        {keyCrew.length > 0 && (
+          <div className="container mx-auto px-4 py-8">
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+              <CardHeader>
+                <CardTitle>Key Crew</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {keyCrew.map((person) => (
+                    <PersonCard
+                      key={`${person.id}-${person.job}`}
+                      person={person}
+                      role={person.job}
+                    />
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </div>
-        </div>
+        )}
+
+        {/* Recommendations - Full Width */}
+        {recommendations.length > 0 && (
+          <div className="container mx-auto px-4 py-8">
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+              <CardHeader>
+                <CardTitle className="text-xl">You might also like</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <MovieGrid
+                  movies={recommendations}
+                  cardSize="md"
+                  showYear={true}
+                  showRating={true}
+                  showOverview={false}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   );

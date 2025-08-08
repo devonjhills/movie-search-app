@@ -254,3 +254,47 @@ export function getRottenTomatoesSearchUrl(
   const encodedQuery = encodeURIComponent(query.trim());
   return `https://www.rottentomatoes.com/search?search=${encodedQuery}`;
 }
+
+// Extract US MPAA rating from release dates
+export function getUSCertification(
+  releaseDates: any, // ReleaseDatesResponse
+): string | null {
+  if (!releaseDates?.results) return null;
+
+  const usRelease = releaseDates.results.find(
+    (result: any) => result.iso_3166_1 === "US",
+  );
+
+  if (!usRelease?.release_dates) return null;
+
+  // Find the theatrical release (type 3) or any release with certification
+  const certifiedRelease = usRelease.release_dates.find(
+    (release: any) => release.certification && release.certification.trim(),
+  );
+
+  return certifiedRelease?.certification || null;
+}
+
+// Get MPAA rating color and styling
+export function getMPAARatingStyle(rating: string | null): {
+  color: string;
+  bgColor: string;
+  textColor: string;
+} {
+  if (!rating) return { color: "gray", bgColor: "bg-gray-100", textColor: "text-gray-800" };
+
+  switch (rating.toUpperCase()) {
+    case "G":
+      return { color: "green", bgColor: "bg-green-100", textColor: "text-green-800" };
+    case "PG":
+      return { color: "blue", bgColor: "bg-blue-100", textColor: "text-blue-800" };
+    case "PG-13":
+      return { color: "yellow", bgColor: "bg-yellow-100", textColor: "text-yellow-800" };
+    case "R":
+      return { color: "red", bgColor: "bg-red-100", textColor: "text-red-800" };
+    case "NC-17":
+      return { color: "purple", bgColor: "bg-purple-100", textColor: "text-purple-800" };
+    default:
+      return { color: "gray", bgColor: "bg-gray-100", textColor: "text-gray-800" };
+  }
+}

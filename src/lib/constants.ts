@@ -15,6 +15,8 @@ export const ENDPOINTS = {
 
   // TV endpoints
   tvDetails: (id: number) => `${TMDB_BASE_URL}/tv/${id}`,
+  tvSeasonDetails: (tvId: number, seasonNumber: number) =>
+    `${TMDB_BASE_URL}/tv/${tvId}/season/${seasonNumber}`,
   tvOnTheAir: `${TMDB_BASE_URL}/tv/on_the_air`,
   tvPopular: `${TMDB_BASE_URL}/tv/popular`,
   tvTopRated: `${TMDB_BASE_URL}/tv/top_rated`,
@@ -92,7 +94,8 @@ export const API_CONFIG = {
   append_to_response: {
     movie:
       "videos,credits,external_ids,recommendations,release_dates,reviews,keywords",
-    tv: "videos,credits,external_ids,recommendations,reviews,keywords",
+    tv: "videos,credits,aggregate_credits,external_ids,recommendations,reviews,keywords",
+    tvSeason: "credits,external_ids,images,videos",
     person: "combined_credits,external_ids,images",
   },
 } as const;

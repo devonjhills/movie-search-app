@@ -3,28 +3,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  StarIcon,
   CalendarIcon,
-  PlayIcon,
-  BookmarkIcon,
   TvIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
 import { useTVDetails, useTVWatchProviders, getImageUrl } from "@/lib/api";
-import { WatchlistButton } from "@/components/ui/watchlist-button";
-import { WatchProviders } from "@/components/ui/watch-providers";
-import { ShareButton } from "@/components/ui/share-button";
 import { DetailsHero } from "@/components/ui/details-hero";
-import { QuickAccessCard } from "@/components/ui/quick-access-card";
+import { CastGrid } from "@/components/ui/cast-grid";
+import { PersonCard } from "@/components/ui/person-card";
+import { MovieGrid } from "@/components/movie/movie-grid";
 import {
   formatDate,
   formatVoteAverage,
-  getRatingColor,
-  truncateText,
 } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 
 interface TVDetailsPageProps {
   tvId: number;
@@ -69,8 +62,7 @@ function TVDetailsSkeleton() {
 
 export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   const { tvShow, isLoading, isError } = useTVDetails(tvId);
-  const { watchProviders, isLoading: isWatchProvidersLoading } =
-    useTVWatchProviders(tvId);
+  const { watchProviders } = useTVWatchProviders(tvId);
 
   if (isLoading) {
     return <TVDetailsSkeleton />;
@@ -96,10 +88,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
     );
   }
 
-  const backdropUrl = getImageUrl(tvShow.backdrop_path, "backdrop", "original");
-  const posterUrl = getImageUrl(tvShow.poster_path, "poster", "w500");
   const rating = formatVoteAverage(tvShow.vote_average);
-  const ratingColor = getRatingColor(tvShow.vote_average);
   const firstAirDate = formatDate(tvShow.first_air_date);
   const lastAirDate = formatDate(tvShow.last_air_date);
 
@@ -108,11 +97,63 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
     (video) => video.type === "Trailer" && video.site === "YouTube",
   );
 
-  // Get main cast (first 10)
-  const mainCast = tvShow.credits?.cast?.slice(0, 10) || [];
+  // Get main cast - transform aggregate_credits to match regular credits structure
+  const mainCast = tvShow.aggregate_credits?.cast 
+    ? tvShow.aggregate_credits.cast.map(actor => ({
+        id: actor.id,
+        name: actor.name,
+        profile_path: actor.profile_path,
+        character: actor.roles[0]?.character || "Unknown Role", // Use first role
+        order: actor.order,
+        episode_count: actor.total_episode_count, // Total episodes across all roles
+        // Include other required CastMember fields
+        adult: actor.adult,
+        gender: actor.gender,
+        known_for_department: actor.known_for_department,
+        original_name: actor.original_name,
+        popularity: actor.popularity,
+        cast_id: 0, // Not available in aggregate_credits
+        credit_id: actor.roles[0]?.credit_id || "",
+      }))
+    : tvShow.credits?.cast || [];
 
   // Get creators
   const creators = tvShow.created_by || [];
+
+  // Get key crew members with proper ordering - for now, use regular credits since crew structure in aggregate_credits might be complex
+  const keyCrew = tvShow.credits?.crew?.filter(person => 
+    ["Director", "Producer", "Executive Producer", "Writer", "Screenplay", "Story", "Cinematography", "Music", "Original Music Composer"].includes(person.job)
+  ).sort((a, b) => {
+    const jobPriority: Record<string, number> = {
+      "Director": 1,
+      "Writer": 2,
+      "Screenplay": 2,
+      "Story": 2,
+      "Producer": 3,
+      "Executive Producer": 4,
+      "Cinematography": 5,
+      "Music": 6,
+      "Original Music Composer": 6,
+    };
+    
+    const priorityA = jobPriority[a.job] || 10;
+    const priorityB = jobPriority[b.job] || 10;
+    
+    return priorityA - priorityB;
+  }).slice(0, 8) || [];
+
+  // Get keywords
+  const keywords = tvShow.keywords?.results?.slice(0, 10) || [];
+
+  // Get recommendations and transform TV shows to Movie-like objects for MovieGrid
+  const recommendations = tvShow.recommendations?.results?.slice(0, 12).map(show => ({
+    ...show,
+    title: show.name,
+    release_date: show.first_air_date,
+    original_title: show.original_name,
+    adult: false,
+    video: false
+  })) || [];
 
   return (
     <div className="min-h-screen relative">
@@ -126,206 +167,238 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
       {/* Main Content */}
       <div className="relative container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Overview */}
-            {tvShow.overview && (
-              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-foreground/90 leading-relaxed">
-                    {tvShow.overview}
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Seasons */}
-            {tvShow.seasons && tvShow.seasons.length > 0 && (
-              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
-                <CardHeader>
-                  <CardTitle>Seasons</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {tvShow.seasons.map((season) => (
-                      <div
-                        key={season.id}
-                        className="flex space-x-4 p-4 rounded-lg bg-muted/50"
-                      >
-                        <div className="relative w-16 h-24 flex-shrink-0">
-                          {season.poster_path ? (
-                            <Image
-                              src={getImageUrl(
-                                season.poster_path,
-                                "poster",
-                                "w185",
-                              )}
-                              alt={season.name}
-                              fill
-                              className="object-cover rounded"
-                            />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-muted rounded">
-                              <TvIcon className="h-6 w-6 text-muted-foreground" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1 space-y-1">
-                          <h4 className="font-medium">{season.name}</h4>
-                          <p className="text-sm text-muted-foreground">
-                            {season.episode_count} episode
-                            {season.episode_count !== 1 ? "s" : ""}
-                            {season.air_date &&
-                              ` • ${formatDate(season.air_date)}`}
-                          </p>
-                          {season.overview && (
-                            <p className="text-sm text-muted-foreground line-clamp-2">
-                              {truncateText(season.overview, 150)}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Cast */}
-            {mainCast.length > 0 && (
-              <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
-                <CardHeader>
-                  <CardTitle>Cast</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    {mainCast.map((person) => (
-                      <Link
-                        key={person.id}
-                        href={`/person/${person.id}`}
-                        className="text-center space-y-2 hover:opacity-80 transition-opacity"
-                      >
-                        <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-muted">
-                          {person.profile_path ? (
-                            <Image
-                              src={getImageUrl(
-                                person.profile_path,
-                                "profile",
-                                "w185",
-                              )}
-                              alt={person.name}
-                              fill
-                              className="object-cover"
-                            />
-                          ) : (
-                            <div className="flex h-full items-center justify-center">
-                              <span className="text-xs text-muted-foreground">
-                                No Photo
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium">{person.name}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {person.character}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* TV Show Info */}
-            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
-              <CardHeader>
-                <CardTitle>TV Show Info</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
+        <div className="space-y-8">
+          {/* TV Show Details - Full Width */}
+          <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TvIcon className="h-5 w-5" />
+                TV Show Details
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {creators.length > 0 && (
-                  <div className="space-y-1">
+                  <div className="space-y-2">
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Creator{creators.length > 1 ? "s" : ""}
                     </h4>
-                    <div className="text-base font-medium space-y-1">
-                      {creators.map((creator) => (
-                        <p key={creator.id}>{creator.name}</p>
+                    <div className="space-y-1">
+                      {creators.slice(0, 2).map((creator) => (
+                        <Link 
+                          key={creator.id}
+                          href={`/person/${creator.id}`}
+                          className="text-base font-medium text-primary hover:text-primary/80 transition-colors block"
+                        >
+                          {creator.name}
+                        </Link>
                       ))}
                     </div>
                   </div>
                 )}
 
                 {tvShow.first_air_date && (
-                  <div className="space-y-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      First Air Date
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                      <CalendarIcon className="h-3 w-3" />
+                      First Aired
                     </h4>
-                    <p className="text-base font-medium">{firstAirDate}</p>
+                    <p className="text-sm font-medium">{firstAirDate}</p>
                   </div>
                 )}
 
                 {tvShow.last_air_date && (
-                  <div className="space-y-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      Last Air Date
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                      <CalendarIcon className="h-3 w-3" />
+                      Last Aired
                     </h4>
-                    <p className="text-base font-medium">{lastAirDate}</p>
+                    <p className="text-sm font-medium">{lastAirDate}</p>
                   </div>
                 )}
 
-                <div className="space-y-1">
+                {tvShow.vote_average > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                      <StarSolidIcon className="h-3 w-3" />
+                      TMDB Score
+                    </h4>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-bold text-primary">{rating}</span>
+                      <span className="text-sm text-muted-foreground">/ 10</span>
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-2">
                   <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Status
                   </h4>
-                  <p className="text-base font-medium">{tvShow.status}</p>
+                  <p className="text-sm font-medium">{tvShow.status}</p>
                 </div>
 
-                <div className="space-y-1">
-                  <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    Type
-                  </h4>
-                  <p className="text-base font-medium">{tvShow.type}</p>
-                </div>
+                {tvShow.number_of_seasons && (
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Seasons
+                    </h4>
+                    <p className="text-sm font-medium">{tvShow.number_of_seasons}</p>
+                  </div>
+                )}
 
-                {tvShow.networks.length > 0 && (
-                  <div className="space-y-1">
+                {tvShow.number_of_episodes && (
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Episodes
+                    </h4>
+                    <p className="text-sm font-medium">{tvShow.number_of_episodes}</p>
+                  </div>
+                )}
+
+                {tvShow.networks && tvShow.networks.length > 0 && (
+                  <div className="space-y-2">
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Network
                     </h4>
-                    <div className="text-base font-medium space-y-1">
-                      {tvShow.networks.slice(0, 3).map((network) => (
-                        <p key={network.id}>{network.name}</p>
+                    <div className="space-y-1">
+                      {tvShow.networks.slice(0, 2).map((network) => (
+                        <p key={network.id} className="text-sm text-foreground/90">{network.name}</p>
                       ))}
                     </div>
                   </div>
                 )}
+              </div>
 
-                {tvShow.production_companies.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-medium text-muted-foreground">
-                      Production
-                    </h4>
-                    <div className="text-sm space-y-1">
-                      {tvShow.production_companies
-                        .slice(0, 3)
-                        .map((company) => (
-                          <p key={company.id}>{company.name}</p>
-                        ))}
-                    </div>
+              {/* Keywords - Full Width Row */}
+              {keywords.length > 0 && (
+                <div className="space-y-3 pt-6 border-t border-border/50 mt-6">
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    Keywords
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {keywords.map((keyword) => (
+                      <span
+                        key={keyword.id}
+                        className="px-2 py-1 bg-muted text-muted-foreground rounded-full text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors cursor-default"
+                      >
+                        {keyword.name}
+                      </span>
+                    ))}
                   </div>
-                )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Seasons - Full Width */}
+          {tvShow.seasons && tvShow.seasons.length > 0 && (
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+              <CardHeader>
+                <CardTitle>Seasons</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {tvShow.seasons.map((season) => (
+                    <Link
+                      key={season.id}
+                      href={`/tv/${tvId}/season/${season.season_number}`}
+                      className="group flex space-x-4 p-4 rounded-xl bg-gradient-to-r from-background to-muted/30 border border-border/50 hover:border-border transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5"
+                    >
+                      <div className="relative w-16 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-primary/20 to-muted shadow-md group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
+                        {season.poster_path ? (
+                          <>
+                            <Image
+                              src={getImageUrl(season.poster_path, "poster", "w185")}
+                              alt={season.name}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                              sizes="64px"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          </>
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center">
+                            <TvIcon className="h-6 w-6 text-primary/80 group-hover:text-primary transition-colors" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 ring-2 ring-primary/0 group-hover:ring-primary/30 transition-all duration-300 rounded-lg" />
+                      </div>
+                      <div className="flex-1 space-y-2 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors duration-300">
+                          {season.name}
+                        </h4>
+                        <p className="text-xs text-muted-foreground group-hover:text-muted-foreground/80 transition-colors">
+                          {season.episode_count} episode{season.episode_count !== 1 ? "s" : ""}
+                          {season.air_date && ` • ${formatDate(season.air_date)}`}
+                        </p>
+                        {season.overview && (
+                          <p className="text-xs text-muted-foreground/90 line-clamp-2 group-hover:text-muted-foreground/70 transition-colors">
+                            {season.overview}
+                          </p>
+                        )}
+                      </div>
+                      
+                      {/* Subtle arrow indicator */}
+                      <div className="opacity-0 group-hover:opacity-60 transition-opacity duration-300 flex-shrink-0">
+                        <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </CardContent>
             </Card>
-          </div>
+          )}
+
+          {/* Cast - Full Width */}
+          {mainCast.length > 0 && (
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+              <CardHeader>
+                <CardTitle>Cast</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CastGrid cast={mainCast} initialDisplayCount={12} mediaType="tv" />
+              </CardContent>
+            </Card>
+          )}
+          {/* Key Crew - Full Width */}
+          {keyCrew.length > 0 && (
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+              <CardHeader>
+                <CardTitle>Key Crew</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {keyCrew.map((person) => (
+                    <PersonCard
+                      key={`${person.id}-${person.job}`}
+                      person={person}
+                      role={person.job}
+                    />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Recommendations - Full Width */}
+          {recommendations.length > 0 && (
+            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+              <CardHeader>
+                <CardTitle className="text-xl">You might also like</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <MovieGrid
+                  movies={recommendations}
+                  cardSize="md"
+                  showYear={true}
+                  showRating={true}
+                  showOverview={false}
+                />
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

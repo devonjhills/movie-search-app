@@ -158,6 +158,26 @@ export interface TVShowDetails extends Omit<TVShow, "genre_ids"> {
   type: string;
   videos?: VideoResponse;
   credits?: CreditsResponse;
+  aggregate_credits?: {
+    cast: {
+      adult: boolean;
+      gender: number;
+      id: number;
+      known_for_department: string;
+      name: string;
+      order: number;
+      original_name: string;
+      popularity: number;
+      profile_path: string | null;
+      roles: {
+        character: string;
+        credit_id: string;
+        episode_count: number;
+      }[];
+      total_episode_count: number;
+    }[];
+    crew: (CrewMember & { episode_count: number; total_episode_count: number })[];
+  };
   external_ids?: ExternalIds;
   recommendations?: TMDBResponse<TVShow>;
   reviews?: ReviewsResponse;
@@ -315,6 +335,56 @@ export interface KeywordsResponse {
 export interface TVKeywordsResponse {
   id: number;
   results: Keyword[];
+}
+
+// TV Season types
+export interface TVSeason {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  season_number: number;
+  vote_average: number;
+}
+
+export interface TVEpisode {
+  air_date: string;
+  episode_number: number;
+  id: number;
+  name: string;
+  overview: string;
+  production_code: string;
+  runtime: number;
+  season_number: number;
+  show_id: number;
+  still_path: string | null;
+  vote_average: number;
+  vote_count: number;
+  crew: CrewMember[];
+  guest_stars: (CastMember & { episode_count?: number })[];
+}
+
+export interface TVSeasonDetails extends TVSeason {
+  episodes: TVEpisode[];
+  credits?: {
+    cast: (CastMember & { episode_count: number })[];
+    crew: CrewMember[];
+  };
+  external_ids?: ExternalIds;
+  images?: {
+    posters: {
+      aspect_ratio: number;
+      height: number;
+      iso_639_1: string | null;
+      file_path: string;
+      vote_average: number;
+      vote_count: number;
+      width: number;
+    }[];
+  };
+  videos?: VideoResponse;
 }
 
 // Combined credits for person

@@ -7,17 +7,22 @@ import {
   PlayIcon,
   FilmIcon,
   TvIcon,
+  GlobeAltIcon,
+  LinkIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
 import { getImageUrl } from "@/lib/api";
 import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { ShareButton } from "@/components/ui/share-button";
+import { Button } from "@/components/ui/button";
 import {
   formatDate,
   formatRuntime,
   formatVoteAverage,
   getRottenTomatoesSearchUrl,
   formatYear,
+  getUSCertification,
+  getMPAARatingStyle,
 } from "@/lib/utils";
 import type { WatchProviderRegion } from "@/lib/types";
 
@@ -43,6 +48,10 @@ export function DetailsHero({
   const runtime = mediaType === "movie" ? formatRuntime(item.runtime) : null;
   const title = mediaType === "movie" ? item.title : item.name;
 
+  // Get US MPAA rating for movies
+  const usCertification = mediaType === "movie" ? getUSCertification(item.release_dates) : null;
+  const ratingStyle = getMPAARatingStyle(usCertification);
+
   // External links
   const year = formatYear(
     mediaType === "movie" ? item.release_date : item.first_air_date,
@@ -55,17 +64,20 @@ export function DetailsHero({
       url: item.external_ids?.imdb_id
         ? `https://www.imdb.com/title/${item.external_ids.imdb_id}`
         : null,
-      icon: "🎬",
+      icon: LinkIcon,
+      className: "text-amber-500 hover:text-amber-400",
     },
     {
       name: "Official Website",
       url: item.homepage,
-      icon: "🌐",
+      icon: GlobeAltIcon,
+      className: "text-blue-500 hover:text-blue-400",
     },
     {
       name: "Rotten Tomatoes",
       url: rottenTomatoesUrl,
-      icon: "🍅",
+      icon: LinkIcon,
+      className: "text-red-500 hover:text-red-400",
     },
   ].filter((link) => link.url);
 
@@ -147,6 +159,12 @@ export function DetailsHero({
                         <div className="rating-badge">
                           <StarSolidIcon className="h-4 w-4" />
                           <span>{rating}</span>
+                        </div>
+                      )}
+
+                      {usCertification && (
+                        <div className={`px-2 py-1 rounded text-xs font-semibold ${ratingStyle.bgColor} ${ratingStyle.textColor} border`}>
+                          {usCertification}
                         </div>
                       )}
 
@@ -239,23 +257,29 @@ export function DetailsHero({
                       <div className="flex flex-wrap items-center justify-between gap-6">
                         {/* External Links - Left Side */}
                         {externalLinks.length > 0 && (
-                          <div className="flex flex-wrap gap-6">
-                            {externalLinks.map((link) => (
-                              <a
-                                key={link.name}
-                                href={link.url!}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-3 text-base text-foreground/90 hover:text-foreground font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                              >
-                                <span className="text-base no-underline">
-                                  {link.icon}
-                                </span>
-                                <span className="underline decoration-foreground/40 hover:decoration-foreground underline-offset-4">
-                                  {link.name}
-                                </span>
-                              </a>
-                            ))}
+                          <div className="flex flex-wrap gap-2">
+                            {externalLinks.map((link) => {
+                              const IconComponent = link.icon;
+                              return (
+                                <Button
+                                  key={link.name}
+                                  variant="ghost"
+                                  size="sm"
+                                  asChild
+                                  className={link.className}
+                                >
+                                  <a
+                                    href={link.url!}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2"
+                                  >
+                                    <IconComponent className="h-4 w-4" />
+                                    <span>{link.name}</span>
+                                  </a>
+                                </Button>
+                              );
+                            })}
                           </div>
                         )}
 

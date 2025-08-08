@@ -2,6 +2,7 @@ import useSWR from "swr";
 import type {
   MovieDetails,
   TVShowDetails,
+  TVSeasonDetails,
   PersonDetails,
   Movie,
   TVShow,
@@ -423,6 +424,25 @@ export const useTVWatchProviders = (tvId: number) => {
 
   return {
     watchProviders: data,
+    isLoading,
+    isError: error,
+  };
+};
+
+export const useTVSeasonDetails = (tvId: number, seasonNumber: number) => {
+  const queryParams = buildQueryParams({
+    language: API_CONFIG.language,
+    append_to_response: API_CONFIG.append_to_response.tvSeason,
+  });
+  const { data, error, isLoading } = useSWR<TVSeasonDetails>(
+    tvId && seasonNumber !== undefined
+      ? `${ENDPOINTS.tvSeasonDetails(tvId, seasonNumber)}?${queryParams}`
+      : null,
+    fetcher,
+    SWR_CONFIG,
+  );
+  return {
+    season: data,
     isLoading,
     isError: error,
   };
