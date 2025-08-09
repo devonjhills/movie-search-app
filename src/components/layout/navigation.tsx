@@ -4,6 +4,7 @@ import { Link } from "@/components/ui/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import NextLink from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
@@ -14,7 +15,6 @@ import {
   SunIcon,
   ExitIcon,
   BookmarkIcon,
-  VideoIcon,
 } from "@radix-ui/react-icons";
 
 export function Navigation() {
@@ -47,41 +47,42 @@ export function Navigation() {
           {/* Logo and Brand */}
           <Link
             href="/"
-            className="flex items-center space-x-2 text-foreground hover:no-underline"
-          >
-            <div className="relative h-8 w-8 flex items-center justify-center">
-              <VideoIcon className="h-6 w-6 text-primary" />
+            className="flex items-center space-x-3 text-foreground hover:no-underline">
+            <div className="flex items-center space-x-2">
+              <Image
+                src="/logo.png"
+                alt="CineScope"
+                width={32}
+                height={32}
+                className="h-8 w-8"
+              />
+              <span className="text-2xl font-bold text-foreground">
+                CineScope
+              </span>
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              CineScope
-            </span>
           </Link>
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-1">
             <NextLink
               href="/"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            >
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
               Movies
             </NextLink>
             <NextLink
               href="/tv"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            >
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
               TV Shows
             </NextLink>
             <NextLink
               href="/discover"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            >
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
               Discover
             </NextLink>
             {user && (
               <NextLink
                 href="/watchlist"
-                className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-              >
+                className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
                 Watchlist
               </NextLink>
             )}
@@ -112,15 +113,13 @@ export function Navigation() {
                 <Link
                   href="/watchlist"
                   className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
-                  title="My Watchlist"
-                >
+                  title="My Watchlist">
                   <BookmarkIcon className="h-4 w-4" />
                 </Link>
                 <button
                   onClick={() => signOut()}
                   className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
-                  title="Sign Out"
-                >
+                  title="Sign Out">
                   <ExitIcon className="h-4 w-4" />
                 </button>
               </div>
@@ -135,8 +134,7 @@ export function Navigation() {
             <button
               onClick={toggleTheme}
               className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
-              aria-label="Toggle theme"
-            >
+              aria-label="Toggle theme">
               {!mounted ? (
                 // Show a neutral icon during SSR to prevent hydration mismatch
                 <div className="h-5 w-5" />
@@ -154,30 +152,26 @@ export function Navigation() {
           <Link
             href="/"
             variant="nav"
-            className="px-3 py-2 text-sm font-semibold"
-          >
+            className="px-3 py-2 text-sm font-semibold">
             Movies
           </Link>
           <Link
             href="/tv"
             variant="nav"
-            className="px-3 py-2 text-sm font-semibold"
-          >
+            className="px-3 py-2 text-sm font-semibold">
             TV Shows
           </Link>
           <Link
             href="/discover"
             variant="nav"
-            className="px-3 py-2 text-sm font-semibold"
-          >
+            className="px-3 py-2 text-sm font-semibold">
             Discover
           </Link>
           {user && (
             <Link
               href="/watchlist"
               variant="nav"
-              className="px-3 py-2 text-sm font-semibold"
-            >
+              className="px-3 py-2 text-sm font-semibold">
               Watchlist
             </Link>
           )}

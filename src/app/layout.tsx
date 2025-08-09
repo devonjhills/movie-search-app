@@ -10,6 +10,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {

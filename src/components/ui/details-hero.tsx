@@ -9,6 +9,7 @@ import {
   VideoIcon as TvIcon,
   StarFilledIcon,
 } from "@radix-ui/react-icons";
+import { Badge } from "@/components/ui/badge";
 import { getImageUrl } from "@/lib/api";
 import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { ShareButton } from "@/components/ui/share-button";
@@ -180,12 +181,9 @@ export function DetailsHero({
                       <div className="flex flex-wrap gap-2">
                         {item.genres.map(
                           (genre: { id: number; name: string }) => (
-                            <span
-                              key={genre.id}
-                              className="px-3 py-1 bg-accent text-accent-foreground rounded-full text-xs font-medium shadow-sm"
-                            >
+                            <Badge key={genre.id} variant="secondary">
                               {genre.name}
-                            </span>
+                            </Badge>
                           ),
                         )}
                       </div>
@@ -221,8 +219,12 @@ export function DetailsHero({
                     />
 
                     <ShareButton
-                      title={`${title} - ${mediaType === "movie" ? "Movie" : "TV Show"} Details`}
-                      text={`Check out "${title}" on this ${mediaType === "movie" ? "movie" : "TV show"} app!`}
+                      title={`${title} - ${
+                        mediaType === "movie" ? "Movie" : "TV Show"
+                      } Details`}
+                      text={`Check out "${title}" on this ${
+                        mediaType === "movie" ? "movie" : "TV show"
+                      } app!`}
                       variant="hero"
                     />
                   </div>

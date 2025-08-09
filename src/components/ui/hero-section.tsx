@@ -101,7 +101,7 @@ export function HeroSection({
                 {/* Rating and Date */}
                 <div className="flex items-center gap-4">
                   {movie.vote_average > 0 && (
-                    <Badge variant="rating">
+                    <Badge>
                       <StarIcon className="h-4 w-4" />
                       <span>{rating}</span>
                     </Badge>

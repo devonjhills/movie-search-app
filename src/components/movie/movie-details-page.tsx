@@ -292,9 +292,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {keywords.map((keyword) => (
-                      <Badge key={keyword.id} variant="keyword">
-                        {keyword.name}
-                      </Badge>
+                      <Badge key={keyword.id}>{keyword.name}</Badge>
                     ))}
                   </div>
                 </div>

@@ -39,13 +39,13 @@ export function MovieCard({
     <Link href={`/movie/${movie.id}`} className="group">
       <Card
         className={cn(
-          "overflow-hidden bg-transparent shadow-none card-hover",
+          "overflow-hidden bg-transparent shadow-none card-hover h-full flex flex-col",
           "border-0",
           sizeClasses[size],
           className,
         )}
       >
-        <CardContent className="p-3 space-y-3">
+        <CardContent className="p-3 space-y-3 flex-1 flex flex-col">
           {/* Poster Image */}
           <div
             className={cn("relative overflow-hidden rounded-lg", aspectRatio)}
@@ -67,7 +67,7 @@ export function MovieCard({
             {/* Rating Badge */}
             {showRating && movie.vote_average > 0 && (
               <div className="absolute top-2 right-2">
-                <Badge variant="rating">
+                <Badge>
                   <StarIcon className="h-3 w-3" />
                   <span>{rating}</span>
                 </Badge>
@@ -79,8 +79,8 @@ export function MovieCard({
           </div>
 
           {/* Movie Info */}
-          <div className="space-y-1">
-            <h3 className="text-sm font-medium leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+          <div className="space-y-1 flex-1 flex flex-col">
+            <h3 className="text-sm font-medium leading-tight min-h-[2.5rem] flex items-center group-hover:text-primary">
               {movie.title}
             </h3>
 
