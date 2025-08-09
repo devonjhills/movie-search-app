@@ -6,17 +6,17 @@
   :root {
     /* Catppuccin Latte - Soft pastel light theme */
     --background: 220 23% 95%;
-    --foreground: 234 16% 35%;
+    --foreground: 234 16% 25%;
     --card: 220 23% 97%;
-    --card-foreground: 234 16% 35%;
+    --card-foreground: 234 16% 25%;
     --popover: 220 23% 97%;
-    --popover-foreground: 234 16% 35%;
+    --popover-foreground: 234 16% 25%;
     --primary: 266 85% 58%;
     --primary-foreground: 220 23% 95%;
     --secondary: 220 17% 88%;
-    --secondary-foreground: 234 16% 35%;
+    --secondary-foreground: 234 16% 25%;
     --muted: 220 17% 92%;
-    --muted-foreground: 227 12% 57%;
+    --muted-foreground: 227 12% 45%;
     --accent: 35 77% 49%;
     --accent-foreground: 220 23% 95%;
     --destructive: 347 87% 44%;
@@ -84,69 +84,9 @@
 
 /* Focus and interaction styles using Tailwind utilities */
 @layer utilities {
-  .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-  }
-
-  .interactive {
-    @apply cursor-pointer transition-all duration-200;
-  }
-
-  .loading {
-    @apply cursor-wait opacity-50;
-  }
-
-  /* IMDb-style rating badge with golden accent */
-  .rating-badge {
-    @apply inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold shadow-md;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--rating-gold)),
-      hsl(var(--rating-gold)) 70%,
-      hsl(45 90% 40%)
-    );
-    color: hsl(var(--rating-gold-foreground));
-    border: 1px solid hsl(45 90% 35%);
-  }
-
   /* Cinematic card hover effects */
   .card-hover {
     @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
-  }
-
-  /* Accessible button variants with proper contrast ratios */
-  .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md;
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    @apply transition-all duration-200 font-semibold;
-    /* Ensure 4.5:1 contrast ratio */
-  }
-
-  .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-secondary/20;
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    @apply transition-all duration-200 font-medium;
-  }
-
-  .btn-outline {
-    @apply border-2 border-primary/60 bg-background text-primary hover:bg-primary hover:text-primary-foreground;
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    @apply transition-all duration-200 font-medium;
-  }
-
-  .btn-ghost {
-    @apply text-foreground hover:bg-accent hover:text-accent-foreground;
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    @apply transition-all duration-200 font-medium;
-  }
-
-  /* Cinematic gradient overlays */
-  .gradient-overlay {
-    @apply bg-gradient-to-t from-black/80 via-black/40 to-transparent;
-  }
-
-  .gradient-hero {
-    @apply bg-gradient-to-r from-background via-background/95 to-background/80;
   }
 
   /* Professional navigation links */
@@ -158,6 +98,6 @@
 
   /* Hero section styling */
   .hero-backdrop {
-    @apply absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background;
+    @apply absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background/70;
   }
 }

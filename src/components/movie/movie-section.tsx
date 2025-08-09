@@ -11,7 +11,7 @@ interface MovieSectionProps {
   title: string;
   movies: (Movie | FormattedMovie)[];
   isLoading?: boolean;
-  error?: any;
+  error?: Error | null;
   href?: string;
   className?: string;
   showViewAll?: boolean;

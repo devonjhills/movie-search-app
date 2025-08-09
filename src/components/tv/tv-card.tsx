@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { cn, formatVoteAverage, truncateText } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import type { TVShow } from "@/lib/types";
@@ -66,10 +67,10 @@ export function TVCard({
             {/* Rating Badge */}
             {showRating && tvShow.vote_average > 0 && (
               <div className="absolute top-2 right-2">
-                <div className="rating-badge backdrop-blur-sm">
+                <Badge variant="rating">
                   <StarIcon className="h-3 w-3" />
                   <span>{rating}</span>
-                </div>
+                </Badge>
               </div>
             )}
 

@@ -1,8 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Listbox } from "@headlessui/react";
-import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/24/outline";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useDiscoverMovies, useDiscoverTVShows } from "@/lib/hooks/api-hooks";
 import { MovieGrid } from "@/components/movie/movie-grid";
 import { TVGrid } from "@/components/tv/tv-grid";
@@ -79,71 +84,6 @@ const sortOptions: SortOptionType[] = [
   { value: "release_date.desc", label: "Newest First" },
   { value: "release_date.asc", label: "Oldest First" },
 ];
-
-function Select<T>({
-  value,
-  onChange,
-  options,
-  getLabel,
-  getValue,
-}: {
-  value: T;
-  onChange: (value: T) => void;
-  options: T[];
-  getLabel: (option: T) => string;
-  getValue: (option: T) => string | number;
-  placeholder?: string;
-}) {
-  return (
-    <Listbox value={value} onChange={onChange}>
-      <div className="relative">
-        <Listbox.Button className="relative w-full cursor-default rounded-lg bg-background border border-input py-2 pl-3 pr-10 text-left focus:outline-none focus:ring-2 focus:ring-ring/20 sm:text-sm">
-          <span className="block truncate">{getLabel(value)}</span>
-          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronUpDownIcon
-              className="h-5 w-5 text-muted-foreground"
-              aria-hidden="true"
-            />
-          </span>
-        </Listbox.Button>
-        <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background border border-input py-1 text-base shadow-lg focus:outline-none sm:text-sm">
-          {options.map((option) => (
-            <Listbox.Option
-              key={getValue(option)}
-              className={({ active }) =>
-                cn(
-                  "relative cursor-default select-none py-2 pl-10 pr-4",
-                  active
-                    ? "bg-accent text-accent-foreground"
-                    : "text-foreground",
-                )
-              }
-              value={option}
-            >
-              {({ selected }) => (
-                <>
-                  <span
-                    className={cn(
-                      "block truncate",
-                      selected ? "font-medium" : "font-normal",
-                    )}
-                  >
-                    {getLabel(option)}
-                  </span>
-                  {selected ? (
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-primary">
-                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                  ) : null}
-                </>
-              )}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </div>
-    </Listbox>
-  );
-}
 
 export function DiscoverPage() {
   const [mediaType, setMediaType] = useState<MediaType>("movie");
@@ -231,24 +171,51 @@ export function DiscoverPage() {
             <div className="space-y-2">
               <label className="text-sm font-medium">Genre</label>
               <Select
-                value={selectedGenre}
-                onChange={setSelectedGenre}
-                options={currentGenres}
-                getLabel={(genre) => genre.name}
-                getValue={(genre) => genre.id?.toString() || "all"}
-              />
+                value={selectedGenre.id?.toString() || "all"}
+                onValueChange={(value) => {
+                  const genre = currentGenres.find(
+                    (g) => (g.id?.toString() || "all") === value,
+                  );
+                  if (genre) setSelectedGenre(genre);
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select genre" />
+                </SelectTrigger>
+                <SelectContent>
+                  {currentGenres.map((genre) => (
+                    <SelectItem
+                      key={genre.id?.toString() || "all"}
+                      value={genre.id?.toString() || "all"}
+                    >
+                      {genre.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Sort By */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Sort By</label>
               <Select
-                value={sortBy}
-                onChange={setSortBy}
-                options={sortOptions}
-                getLabel={(option) => option.label}
-                getValue={(option) => option.value}
-              />
+                value={sortBy.value}
+                onValueChange={(value) => {
+                  const option = sortOptions.find((o) => o.value === value);
+                  if (option) setSortBy(option);
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select sort option" />
+                </SelectTrigger>
+                <SelectContent>
+                  {sortOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardContent>

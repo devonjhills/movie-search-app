@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { getImageUrl } from "@/lib/api";
-import { truncateText } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Person } from "@/lib/types";
@@ -88,7 +87,7 @@ function PersonCard({ person, className }: PersonCardProps) {
 interface PersonGridProps {
   people: Person[];
   isLoading?: boolean;
-  error?: any;
+  error?: Error | null;
   className?: string;
   emptyMessage?: string;
 }

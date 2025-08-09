@@ -41,7 +41,7 @@ if (!API_KEY) {
 }
 
 // Custom fetcher with error handling
-const fetcher = async (url: string): Promise<any> => {
+const fetcher = async (url: string): Promise<unknown> => {
   if (!API_KEY) {
     throw new Error("TMDB API key is not configured");
   }
@@ -65,7 +65,7 @@ const fetcher = async (url: string): Promise<any> => {
 };
 
 // Helper function to build query parameters
-const buildQueryParams = (params: Record<string, any>): string => {
+const buildQueryParams = (params: Record<string, unknown>): string => {
   const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
@@ -284,15 +284,17 @@ export const useMultiSearch = (query: string) => {
   };
 
   if (data?.results) {
-    data.results.forEach((result: any) => {
-      if (result.media_type === "movie") {
-        transformedResults.movieResults.push(result as Movie);
-      } else if (result.media_type === "tv") {
-        transformedResults.tvResults.push(result as TVShow);
-      } else if (result.media_type === "person") {
-        transformedResults.peopleResults.push(result as Person);
-      }
-    });
+    data.results.forEach(
+      (result: { media_type: string } & (Movie | TVShow | Person)) => {
+        if (result.media_type === "movie") {
+          transformedResults.movieResults.push(result as Movie);
+        } else if (result.media_type === "tv") {
+          transformedResults.tvResults.push(result as TVShow);
+        } else if (result.media_type === "person") {
+          transformedResults.peopleResults.push(result as Person);
+        }
+      },
+    );
   }
 
   return {

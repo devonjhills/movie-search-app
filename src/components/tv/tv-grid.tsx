@@ -6,7 +6,7 @@ import type { TVShow } from "@/lib/types";
 interface TVGridProps {
   tvShows: TVShow[];
   isLoading?: boolean;
-  error?: any;
+  error?: Error | null;
   className?: string;
   cardSize?: "sm" | "md" | "lg";
   showYear?: boolean;

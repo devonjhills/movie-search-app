@@ -4,7 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
-import { Tooltip } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { WatchProviderRegion, WatchProvider } from "@/lib/types";
 
 interface WatchProvidersProps {
@@ -204,23 +208,24 @@ export function WatchProvidersCompact({
   return (
     <div className={cn("flex items-center gap-2 flex-wrap", className)}>
       {providers.flatrate.map((provider) => (
-        <Tooltip
-          key={provider.provider_id}
-          content={provider.provider_name}
-          side="bottom"
-        >
-          <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-white dark:bg-gray-900 shadow-sm hover:scale-105 transition-transform duration-200 cursor-pointer">
-            <div className="absolute inset-0 p-1">
-              <Image
-                src={getImageUrl(provider.logo_path, "logo", "w154")}
-                alt={provider.provider_name}
-                fill
-                className="object-contain"
-                sizes="40px"
-                quality={90}
-              />
+        <Tooltip key={provider.provider_id}>
+          <TooltipTrigger asChild>
+            <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-white dark:bg-gray-900 shadow-sm hover:scale-105 transition-transform duration-200 cursor-pointer">
+              <div className="absolute inset-0 p-1">
+                <Image
+                  src={getImageUrl(provider.logo_path, "logo", "w154")}
+                  alt={provider.provider_name}
+                  fill
+                  className="object-contain"
+                  sizes="40px"
+                  quality={90}
+                />
+              </div>
             </div>
-          </div>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p>{provider.provider_name}</p>
+          </TooltipContent>
         </Tooltip>
       ))}
     </div>

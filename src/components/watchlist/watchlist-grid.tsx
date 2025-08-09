@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useWatchlist } from "@/lib/hooks/use-watchlist";
 import { getImageUrl } from "@/lib/api";
 import { formatDate, formatVoteAverage } from "@/lib/utils";
-import { StarIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
+import { Badge } from "@/components/ui/badge";
 import type { WatchlistItem } from "@/lib/types";
 
 interface WatchlistGridProps {
@@ -62,10 +63,10 @@ export function WatchlistGrid({ items }: WatchlistGridProps) {
                 {/* Rating */}
                 {item.vote_average > 0 && (
                   <div className="absolute top-2 left-2">
-                    <div className="rating-badge text-xs backdrop-blur-sm">
+                    <Badge variant="rating" className="text-xs">
                       <StarSolidIcon className="h-3 w-3" />
                       <span>{rating}</span>
-                    </div>
+                    </Badge>
                   </div>
                 )}
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { LinkIcon } from "@heroicons/react/24/outline";
+import { ExternalLinkIcon, VideoIcon, GlobeIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 import { getRottenTomatoesSearchUrl, formatYear } from "@/lib/utils";
 
 interface ExternalLinksProps {
@@ -29,36 +30,35 @@ export function ExternalLinks({
       url: externalIds?.imdb_id
         ? `https://www.imdb.com/title/${externalIds.imdb_id}`
         : null,
-      icon: "🎬",
+      icon: VideoIcon,
     },
     {
-      name: "Official",
+      name: "Official Site",
       url: homepage,
-      icon: "🌐",
+      icon: GlobeIcon,
     },
     {
-      name: "RT",
+      name: "Rotten Tomatoes",
       url: rottenTomatoesUrl,
-      icon: "🍅",
+      icon: ExternalLinkIcon,
     },
   ].filter((link) => link.url);
 
   if (links.length === 0) return null;
 
   return (
-    <div className={`flex flex-wrap gap-4 ${className}`}>
-      {links.map((link) => (
-        <a
-          key={link.name}
-          href={link.url!}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 transition-colors underline-offset-4 hover:underline"
-        >
-          <span className="text-base leading-none">{link.icon}</span>
-          <span className="font-medium">{link.name}</span>
-        </a>
-      ))}
+    <div className={`flex flex-wrap gap-2 ${className}`}>
+      {links.map((link) => {
+        const IconComponent = link.icon;
+        return (
+          <Button key={link.name} variant="ghost" size="default" asChild>
+            <a href={link.url!} target="_blank" rel="noopener noreferrer">
+              <IconComponent className="h-4 w-4" />
+              {link.name}
+            </a>
+          </Button>
+        );
+      })}
     </div>
   );
 }

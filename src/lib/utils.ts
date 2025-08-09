@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { GENRE_NAMES } from "./constants";
 
 // Utility function to merge Tailwind classes
 export function cn(...inputs: ClassValue[]) {
@@ -17,7 +18,7 @@ export function formatDate(dateString: string | null | undefined): string {
       month: "long",
       day: "numeric",
     });
-  } catch (error) {
+  } catch {
     return "Invalid Date";
   }
 }
@@ -29,7 +30,7 @@ export function formatYear(dateString: string | null | undefined): string {
   try {
     const date = new Date(dateString);
     return date.getFullYear().toString();
-  } catch (error) {
+  } catch {
     return "";
   }
 }
@@ -60,22 +61,6 @@ export function formatVoteAverage(
   return voteAverage.toFixed(1);
 }
 
-// Format large numbers (for vote count, revenue, etc.)
-export function formatNumber(num: number | null | undefined): string {
-  if (!num && num !== 0) return "N/A";
-
-  if (num >= 1000000000) {
-    return (num / 1000000000).toFixed(1) + "B";
-  }
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + "M";
-  }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + "K";
-  }
-  return num.toString();
-}
-
 // Format currency
 export function formatCurrency(amount: number | null | undefined): string {
   if (!amount && amount !== 0) return "N/A";
@@ -100,48 +85,20 @@ export function truncateText(
   return text.substring(0, maxLength).trim() + "...";
 }
 
-// Get rating color based on vote average
-export function getRatingColor(voteAverage: number | null | undefined): string {
-  if (!voteAverage && voteAverage !== 0) return "text-muted-foreground";
-
-  if (voteAverage >= 7) return "text-green-500";
-  if (voteAverage >= 5) return "text-yellow-500";
-  return "text-red-500";
-}
-
-// Extract YouTube video ID from URL or return the key if it's already an ID
-export function getYouTubeVideoId(urlOrId: string): string | null {
-  if (!urlOrId) return null;
-
-  // If it's already just an ID (11 characters, alphanumeric with dashes and underscores)
-  if (/^[a-zA-Z0-9_-]{11}$/.test(urlOrId)) {
-    return urlOrId;
-  }
-
-  // Extract from various YouTube URL formats
-  const patterns = [
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/v\/([a-zA-Z0-9_-]{11})/,
-  ];
-
-  for (const pattern of patterns) {
-    const match = urlOrId.match(pattern);
-    if (match) return match[1];
-  }
-
-  return null;
-}
-
-// Build YouTube thumbnail URL
-export function getYouTubeThumbnail(
-  videoId: string,
-  quality: "default" | "hqdefault" | "maxresdefault" = "hqdefault",
+// Get genre name by ID
+export function getGenreName(
+  genreId: number,
+  mediaType: "movie" | "tv",
 ): string {
-  return `https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
+  return (
+    GENRE_NAMES[mediaType][
+      genreId as keyof (typeof GENRE_NAMES)[typeof mediaType]
+    ] || "Unknown"
+  );
 }
 
 // Debounce function for search
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: never[]) => unknown>(
   func: T,
   wait: number,
 ): (...args: Parameters<T>) => void {
@@ -151,42 +108,6 @@ export function debounce<T extends (...args: any[]) => any>(
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
   };
-}
-
-// Generate a slug from a string
-export function slugify(text: string): string {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
-}
-
-// Check if a string is a valid URL
-export function isValidUrl(string: string): boolean {
-  try {
-    new URL(string);
-    return true;
-  } catch (_) {
-    return false;
-  }
-}
-
-// Generate a random ID
-export function generateId(): string {
-  return Math.random().toString(36).substring(2) + Date.now().toString(36);
-}
-
-// Capitalize first letter of each word
-export function capitalizeWords(text: string): string {
-  return text.replace(
-    /\w\S*/g,
-    (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase(),
-  );
 }
 
 // Calculate age from birth date
@@ -208,41 +129,9 @@ export function calculateAge(
     }
 
     return age;
-  } catch (error) {
+  } catch {
     return null;
   }
-}
-
-// Sort array by multiple criteria
-export function sortBy<T>(
-  array: T[],
-  ...criteria: Array<(item: T) => number | string>
-): T[] {
-  return [...array].sort((a, b) => {
-    for (const criterion of criteria) {
-      const aValue = criterion(a);
-      const bValue = criterion(b);
-
-      if (aValue < bValue) return -1;
-      if (aValue > bValue) return 1;
-    }
-    return 0;
-  });
-}
-
-// Group array by key
-export function groupBy<T, K extends keyof any>(
-  array: T[],
-  getKey: (item: T) => K,
-): Record<K, T[]> {
-  return array.reduce(
-    (groups, item) => {
-      const key = getKey(item);
-      (groups[key] = groups[key] || []).push(item);
-      return groups;
-    },
-    {} as Record<K, T[]>,
-  );
 }
 
 // Generate Rotten Tomatoes search URL
@@ -257,19 +146,29 @@ export function getRottenTomatoesSearchUrl(
 
 // Extract US MPAA rating from release dates
 export function getUSCertification(
-  releaseDates: any, // ReleaseDatesResponse
+  releaseDates:
+    | {
+        results?: Array<{
+          iso_3166_1: string;
+          release_dates?: Array<{
+            certification?: string;
+          }>;
+        }>;
+      }
+    | null
+    | undefined,
 ): string | null {
   if (!releaseDates?.results) return null;
 
   const usRelease = releaseDates.results.find(
-    (result: any) => result.iso_3166_1 === "US",
+    (result) => result.iso_3166_1 === "US",
   );
 
   if (!usRelease?.release_dates) return null;
 
   // Find the theatrical release (type 3) or any release with certification
   const certifiedRelease = usRelease.release_dates.find(
-    (release: any) => release.certification && release.certification.trim(),
+    (release) => release.certification && release.certification.trim(),
   );
 
   return certifiedRelease?.certification || null;

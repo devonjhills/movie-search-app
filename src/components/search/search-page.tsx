@@ -17,22 +17,22 @@ export function SearchPage({ initialQuery = "" }: SearchPageProps) {
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
 
   // Debounce search query
-  const debouncedSearch = useCallback(
-    debounce((searchQuery: string) => {
-      setDebouncedQuery(searchQuery);
+  const debouncedSearch = useCallback((searchQuery: string) => {
+    const debouncedFn = debounce((query: string) => {
+      setDebouncedQuery(query);
       // Update URL without triggering a navigation
-      if (searchQuery) {
+      if (query) {
         const url = new URL(window.location.href);
-        url.searchParams.set("q", searchQuery);
+        url.searchParams.set("q", query);
         window.history.replaceState({}, "", url.toString());
       } else {
         const url = new URL(window.location.href);
         url.searchParams.delete("q");
         window.history.replaceState({}, "", url.toString());
       }
-    }, 500),
-    [],
-  );
+    }, 500);
+    debouncedFn(searchQuery);
+  }, []);
 
   // Update debounced query when query changes
   useEffect(() => {

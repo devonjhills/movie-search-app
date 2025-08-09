@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "What To Watch? - Discover Movies and TV Shows",
+  title: "CineScope - Discover Movies and TV Shows",
   description:
     "Discover your next favorite movie or TV show with our comprehensive database powered by The Movie Database (TMDB).",
   keywords: [
@@ -24,9 +25,9 @@ export const metadata: Metadata = {
     "film",
     "television",
   ],
-  authors: [{ name: "What To Watch?" }],
+  authors: [{ name: "CineScope" }],
   openGraph: {
-    title: "What To Watch? - Discover Movies and TV Shows",
+    title: "CineScope - Discover Movies and TV Shows",
     description:
       "Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.",
     type: "website",
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "What To Watch? - Discover Movies and TV Shows",
+    title: "CineScope - Discover Movies and TV Shows",
     description:
       "Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.",
   },
@@ -61,9 +62,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navigation />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            <TooltipProvider>
+              <Navigation />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </TooltipProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>

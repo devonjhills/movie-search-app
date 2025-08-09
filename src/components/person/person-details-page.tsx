@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePersonDetails } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
-import { formatDate, calculateAge, sortBy } from "@/lib/utils";
+import { formatDate, calculateAge } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -90,17 +90,27 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
     ) || [];
 
   // Sort by popularity and release date
-  const sortedMovieCredits = sortBy(
-    movieCredits,
-    (credit) => -(credit.popularity || 0),
-    (credit) => -(new Date(credit.release_date || "").getTime() || 0),
-  );
+  const sortedMovieCredits = [...movieCredits].sort((a, b) => {
+    // Sort by popularity first (descending)
+    const popularityDiff = (b.popularity || 0) - (a.popularity || 0);
+    if (popularityDiff !== 0) return popularityDiff;
 
-  const sortedTVCredits = sortBy(
-    tvCredits,
-    (credit) => -(credit.popularity || 0),
-    (credit) => -(new Date(credit.first_air_date || "").getTime() || 0),
-  );
+    // Then by release date (descending)
+    const dateA = new Date(a.release_date || "").getTime() || 0;
+    const dateB = new Date(b.release_date || "").getTime() || 0;
+    return dateB - dateA;
+  });
+
+  const sortedTVCredits = [...tvCredits].sort((a, b) => {
+    // Sort by popularity first (descending)
+    const popularityDiff = (b.popularity || 0) - (a.popularity || 0);
+    if (popularityDiff !== 0) return popularityDiff;
+
+    // Then by first air date (descending)
+    const dateA = new Date(a.first_air_date || "").getTime() || 0;
+    const dateB = new Date(b.first_air_date || "").getTime() || 0;
+    return dateB - dateA;
+  });
 
   // Get most popular/recent credits for display
   const featuredMovies = sortedMovieCredits.slice(0, 6);

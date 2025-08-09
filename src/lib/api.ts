@@ -48,7 +48,7 @@ export const getImageUrl = (
 };
 
 // Error boundary helper
-export const isAPIError = (error: any): error is TMDBError => {
+export const isAPIError = (error: unknown): error is TMDBError => {
   return (
     error &&
     typeof error.status_code === "number" &&

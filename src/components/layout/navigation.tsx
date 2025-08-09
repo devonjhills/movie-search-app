@@ -1,7 +1,9 @@
 "use client";
 
 import { Link } from "@/components/ui/link";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
@@ -10,9 +12,10 @@ import {
   MagnifyingGlassIcon,
   MoonIcon,
   SunIcon,
-  ArrowRightStartOnRectangleIcon,
+  ExitIcon,
   BookmarkIcon,
-} from "@heroicons/react/24/outline";
+  VideoIcon,
+} from "@radix-ui/react-icons";
 
 export function Navigation() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,65 +45,60 @@ export function Navigation() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo and Brand */}
-          <Link href="/" className="flex items-center space-x-2 text-foreground hover:no-underline">
-            <div className="relative h-8 w-8">
-              <Image
-                src="/logo.png"
-                alt="What To Watch? Logo"
-                fill
-                className="object-contain"
-                priority
-              />
+          <Link
+            href="/"
+            className="flex items-center space-x-2 text-foreground hover:no-underline"
+          >
+            <div className="relative h-8 w-8 flex items-center justify-center">
+              <VideoIcon className="h-6 w-6 text-primary" />
             </div>
-            <span className="text-xl font-bold">What To Watch?</span>
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              CineScope
+            </span>
           </Link>
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link
+          <div className="hidden md:flex items-center space-x-1">
+            <NextLink
               href="/"
-              variant="nav"
-              className="px-3 py-2 text-base font-semibold"
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
             >
               Movies
-            </Link>
-            <Link
+            </NextLink>
+            <NextLink
               href="/tv"
-              variant="nav"
-              className="px-3 py-2 text-base font-semibold"
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
             >
               TV Shows
-            </Link>
-            <Link
+            </NextLink>
+            <NextLink
               href="/discover"
-              variant="nav"
-              className="px-3 py-2 text-base font-semibold"
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
             >
               Discover
-            </Link>
+            </NextLink>
             {user && (
-              <Link
+              <NextLink
                 href="/watchlist"
-                variant="nav"
-                className="px-3 py-2 text-base font-semibold"
+                className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
               >
                 Watchlist
-              </Link>
+              </NextLink>
             )}
           </div>
 
           {/* Search and Theme Toggle */}
           <div className="flex items-center space-x-4">
-            {/* Search Form */}
+            {/* Enhanced Search Form */}
             <form onSubmit={handleSearch} className="relative">
               <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <input
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground z-10" />
+                <Input
                   type="text"
                   placeholder="Search movies, TV shows, people..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-64 rounded-lg border-input bg-background pl-9 pr-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring hover:border-ring/50 transition-all duration-200"
+                  className="w-72 lg:w-80 pl-9 pr-3 bg-background/60 backdrop-blur-sm border-border/50 hover:border-primary/50 focus:border-primary transition-all duration-200 text-sm placeholder:text-muted-foreground/80"
                 />
               </div>
             </form>
@@ -116,24 +114,21 @@ export function Navigation() {
                   className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
                   title="My Watchlist"
                 >
-                  <BookmarkIcon className="h-5 w-5" />
+                  <BookmarkIcon className="h-4 w-4" />
                 </Link>
                 <button
                   onClick={() => signOut()}
                   className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
                   title="Sign Out"
                 >
-                  <ArrowRightStartOnRectangleIcon className="h-5 w-5" />
+                  <ExitIcon className="h-4 w-4" />
                 </button>
               </div>
             ) : (
-              <Link
-                href="/auth/signin"
-                variant="button"
-                size="sm"
-                className="px-3 py-1.5 text-sm font-medium"
-              >
-                Sign In
+              <Link href="/auth/signin">
+                <Button size="sm" className="px-3 py-1.5 text-sm font-medium">
+                  Sign In
+                </Button>
               </Link>
             )}
 
@@ -146,9 +141,9 @@ export function Navigation() {
                 // Show a neutral icon during SSR to prevent hydration mismatch
                 <div className="h-5 w-5" />
               ) : theme === "dark" ? (
-                <SunIcon className="h-5 w-5" />
+                <SunIcon className="h-4 w-4" />
               ) : (
-                <MoonIcon className="h-5 w-5" />
+                <MoonIcon className="h-4 w-4" />
               )}
             </button>
           </div>
@@ -156,10 +151,18 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         <div className="flex md:hidden items-center space-x-6 pb-4">
-          <Link href="/" variant="nav" className="px-3 py-2 text-sm font-semibold">
+          <Link
+            href="/"
+            variant="nav"
+            className="px-3 py-2 text-sm font-semibold"
+          >
             Movies
           </Link>
-          <Link href="/tv" variant="nav" className="px-3 py-2 text-sm font-semibold">
+          <Link
+            href="/tv"
+            variant="nav"
+            className="px-3 py-2 text-sm font-semibold"
+          >
             TV Shows
           </Link>
           <Link

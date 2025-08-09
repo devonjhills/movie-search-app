@@ -5,32 +5,34 @@ import {
   CalendarIcon,
   ClockIcon,
   PlayIcon,
-  FilmIcon,
-  TvIcon,
-  GlobeAltIcon,
-  LinkIcon,
-} from "@heroicons/react/24/outline";
-import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
+  ReaderIcon as FilmIcon,
+  VideoIcon as TvIcon,
+  StarFilledIcon,
+} from "@radix-ui/react-icons";
 import { getImageUrl } from "@/lib/api";
 import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { ShareButton } from "@/components/ui/share-button";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/components/ui/link";
 import { WatchProvidersCompact } from "@/components/ui/watch-providers";
+import { ExternalLinks } from "@/components/ui/external-links";
 import {
   formatDate,
   formatRuntime,
   formatVoteAverage,
-  getRottenTomatoesSearchUrl,
-  formatYear,
   getUSCertification,
 } from "@/lib/utils";
-import type { WatchProviderRegion } from "@/lib/types";
+import type { WatchProviderRegion, Movie, TVShow } from "@/lib/types";
 
 interface DetailsHeroProps {
-  item: any; // Movie or TV Show
+  item: Movie | TVShow;
   mediaType: "movie" | "tv";
-  trailer?: any;
+  trailer?: {
+    id: string;
+    key: string;
+    name: string;
+    site: string;
+    type: string;
+  };
   watchProviders?: WatchProviderRegion;
 }
 
@@ -53,34 +55,9 @@ export function DetailsHero({
   const usCertification =
     mediaType === "movie" ? getUSCertification(item.release_dates) : null;
 
-  // External links
-  const year = formatYear(
-    mediaType === "movie" ? item.release_date : item.first_air_date,
-  );
-  const rottenTomatoesUrl = getRottenTomatoesSearchUrl(title, year);
-
-  const externalLinks = [
-    {
-      name: "IMDb",
-      url: item.external_ids?.imdb_id
-        ? `https://www.imdb.com/title/${item.external_ids.imdb_id}`
-        : null,
-      icon: LinkIcon,
-      className: "text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/30",
-    },
-    {
-      name: "Official Website",
-      url: item.homepage,
-      icon: GlobeAltIcon,
-      className: "text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/30",
-    },
-    {
-      name: "Rotten Tomatoes",
-      url: rottenTomatoesUrl,
-      icon: LinkIcon,
-      className: "text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30",
-    },
-  ].filter((link) => link.url);
+  // External links - raw date for ExternalLinks component
+  const rawReleaseDate =
+    mediaType === "movie" ? item.release_date : item.first_air_date;
 
   return (
     <>
@@ -143,7 +120,7 @@ export function DetailsHero({
                       </h1>
                       {item.tagline && (
                         <p className="text-lg italic text-muted-foreground drop-shadow-md">
-                          "{item.tagline}"
+                          &ldquo;{item.tagline}&rdquo;
                         </p>
                       )}
                     </div>
@@ -152,7 +129,7 @@ export function DetailsHero({
                     <div className="flex flex-wrap items-center gap-3 text-sm">
                       {item.vote_average > 0 && (
                         <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold border-2 border-rating-gold/80 text-rating-gold bg-background shadow-sm">
-                          <StarSolidIcon className="h-4 w-4" />
+                          <StarFilledIcon className="h-4 w-4" />
                           <span>{rating}</span>
                         </div>
                       )}
@@ -180,7 +157,9 @@ export function DetailsHero({
                         {runtime && (
                           <div className="flex items-center gap-1.5">
                             <ClockIcon className="h-4 w-4 text-primary/80" />
-                            <span className="font-semibold text-base">{runtime}</span>
+                            <span className="font-semibold text-base">
+                              {runtime}
+                            </span>
                           </div>
                         )}
 
@@ -199,14 +178,16 @@ export function DetailsHero({
                     {/* Genres */}
                     {item.genres && item.genres.length > 0 && (
                       <div className="flex flex-wrap gap-2">
-                        {item.genres.map((genre: any) => (
-                          <span
-                            key={genre.id}
-                            className="px-3 py-1 bg-accent text-accent-foreground rounded-full text-xs font-medium shadow-sm"
-                          >
-                            {genre.name}
-                          </span>
-                        ))}
+                        {item.genres.map(
+                          (genre: { id: number; name: string }) => (
+                            <span
+                              key={genre.id}
+                              className="px-3 py-1 bg-accent text-accent-foreground rounded-full text-xs font-medium shadow-sm"
+                            >
+                              {genre.name}
+                            </span>
+                          ),
+                        )}
                       </div>
                     )}
 
@@ -221,16 +202,16 @@ export function DetailsHero({
                   {/* Section 3: Primary Actions */}
                   <div className="flex flex-wrap gap-3">
                     {trailer && (
-                      <Link
-                        href={`https://www.youtube.com/watch?v=${trailer.key}`}
-                        variant="button"
-                        size="md"
-                        external
-                        className="bg-red-600 text-white hover:bg-red-700 hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-200"
-                      >
-                        <PlayIcon className="h-5 w-5" />
-                        <span>Watch Trailer</span>
-                      </Link>
+                      <Button asChild variant="default" size="lg">
+                        <a
+                          href={`https://www.youtube.com/watch?v=${trailer.key}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <PlayIcon className="h-4 w-4" />
+                          Watch Trailer
+                        </a>
+                      </Button>
                     )}
 
                     <WatchlistButton
@@ -248,29 +229,17 @@ export function DetailsHero({
 
                   {/* Section 4: Secondary Actions & Discovery */}
                   {(watchProviders?.flatrate?.length ||
-                    externalLinks.length > 0) && (
+                    item.external_ids?.imdb_id ||
+                    item.homepage) && (
                     <div className="pt-4 border-t border-border/50">
                       <div className="flex flex-wrap items-center justify-between gap-6">
                         {/* External Links - Left Side */}
-                        {externalLinks.length > 0 && (
-                          <div className="flex flex-wrap gap-2">
-                            {externalLinks.map((link) => {
-                              const IconComponent = link.icon;
-                              return (
-                                <Link
-                                  key={link.name}
-                                  href={link.url!}
-                                  variant="ghost"
-                                  className={`h-9 px-3 text-xs gap-1.5 ${link.className}`}
-                                  external
-                                >
-                                  <IconComponent className="h-3.5 w-3.5" />
-                                  <span>{link.name}</span>
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        )}
+                        <ExternalLinks
+                          externalIds={item.external_ids}
+                          homepage={item.homepage}
+                          title={title}
+                          releaseDate={rawReleaseDate}
+                        />
 
                         {/* Streaming Providers - Right Side */}
                         {watchProviders?.flatrate?.length && (

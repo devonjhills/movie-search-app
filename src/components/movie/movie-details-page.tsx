@@ -13,6 +13,7 @@ import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/ui/cast-grid";
 import { MovieGrid } from "@/components/movie/movie-grid";
 import { PersonCard } from "@/components/ui/person-card";
+import { Badge } from "@/components/ui/badge";
 import {
   formatDate,
   formatRuntime,
@@ -291,12 +292,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {keywords.map((keyword) => (
-                      <span
-                        key={keyword.id}
-                        className="px-2 py-1 bg-muted text-muted-foreground rounded-full text-xs font-medium hover:bg-accent hover:text-accent-foreground transition-colors cursor-default"
-                      >
+                      <Badge key={keyword.id} variant="keyword">
                         {keyword.name}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
                 </div>

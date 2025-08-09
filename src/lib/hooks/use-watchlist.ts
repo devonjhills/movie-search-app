@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { useAuth } from "@/components/providers/auth-provider";
-import { WatchlistResponse, WatchlistItem } from "@/lib/types";
+import { WatchlistResponse } from "@/lib/types";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

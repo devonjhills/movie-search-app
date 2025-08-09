@@ -11,7 +11,7 @@ interface TVSectionProps {
   title: string;
   tvShows: TVShow[];
   isLoading?: boolean;
-  error?: any;
+  error?: Error | null;
   href?: string;
   className?: string;
   showViewAll?: boolean;

@@ -35,8 +35,9 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     ref,
   ) => {
     // Auto-detect external links if not explicitly set
-    const isExternal = external || href.startsWith("http") || href.startsWith("mailto:");
-    
+    const isExternal =
+      external || href.startsWith("http") || href.startsWith("mailto:");
+
     // Default rel attributes for external links
     const defaultRel = isExternal ? "noopener noreferrer" : undefined;
     const finalRel = rel || defaultRel;
@@ -52,26 +53,32 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       // Variant styles
       {
         // Default link
-        "text-primary hover:text-primary/80 underline-offset-4 hover:underline": variant === "default",
-        
+        "text-primary hover:text-primary/80 underline-offset-4 hover:underline":
+          variant === "default",
+
         // Navigation link with underline animation
         "nav-link": variant === "nav",
-        
+
         // Button-like link
-        "inline-flex items-center justify-center rounded-lg font-medium btn-primary": variant === "button",
-        
+        "inline-flex items-center justify-center rounded-lg font-medium btn-primary":
+          variant === "button",
+
         // Ghost button link
-        "inline-flex items-center justify-center rounded-lg font-medium btn-ghost": variant === "ghost",
-        
+        "inline-flex items-center justify-center rounded-lg font-medium btn-ghost":
+          variant === "ghost",
+
         // Accent colored link
-        "text-accent hover:text-accent/80 underline-offset-4 hover:underline font-medium": variant === "accent",
+        "text-accent hover:text-accent/80 underline-offset-4 hover:underline font-medium":
+          variant === "accent",
       },
       // Size variants for button-like links
-      variant === "button" || variant === "ghost" ? {
-        "h-11 px-3 text-sm gap-2": size === "sm",
-        "h-12 px-4 py-3 gap-2": size === "md", 
-        "h-14 px-6 text-lg gap-3": size === "lg",
-      } : {},
+      variant === "button" || variant === "ghost"
+        ? {
+            "h-11 px-3 text-sm gap-2": size === "sm",
+            "h-12 px-4 py-3 gap-2": size === "md",
+            "h-14 px-6 text-lg gap-3": size === "lg",
+          }
+        : {},
       className,
     );
 
@@ -87,7 +94,10 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
 
     if (disabled) {
       return (
-        <span className={cn(baseClasses, "cursor-not-allowed")} aria-disabled="true">
+        <span
+          className={cn(baseClasses, "cursor-not-allowed")}
+          aria-disabled="true"
+        >
           {children}
         </span>
       );
