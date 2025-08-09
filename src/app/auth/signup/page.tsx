@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import { useAuth } from "@/components/providers/auth-provider";
 import { Button } from "@/components/ui/button";
 import { FilmIcon } from "@heroicons/react/24/solid";
@@ -46,7 +46,7 @@ export default function SignUpPage() {
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
-          <Link href="/" className="inline-flex items-center space-x-2">
+          <Link href="/" className="inline-flex items-center space-x-2 text-foreground hover:no-underline">
             <FilmIcon className="h-12 w-12 text-primary" />
             <span className="text-2xl font-bold">What To Watch?</span>
           </Link>
@@ -55,7 +55,8 @@ export default function SignUpPage() {
             Or{" "}
             <Link
               href="/auth/signin"
-              className="font-medium text-primary hover:underline"
+              variant="accent"
+              className="font-medium"
             >
               sign in to your existing account
             </Link>
@@ -122,7 +123,8 @@ export default function SignUpPage() {
             Already have an account?{" "}
             <Link
               href="/auth/signin"
-              className="font-medium text-primary hover:underline"
+              variant="accent"
+              className="font-medium"
             >
               Sign in
             </Link>

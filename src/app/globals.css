@@ -4,54 +4,54 @@
 
 @layer base {
   :root {
-    /* IMDb/Batman Light - Clean cinematic theme with colorful accents */
-    --background: 0 0% 100%;
-    --foreground: 220 13% 18%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 13% 18%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 18%;
-    --primary: 45 93% 47%;
-    --primary-foreground: 220 13% 18%;
-    --secondary: 210 40% 92%;
-    --secondary-foreground: 220 13% 18%;
-    --muted: 210 40% 98%;
-    --muted-foreground: 215 16% 46%;
-    --accent: 280 60% 90%;
-    --accent-foreground: 220 13% 18%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 45 93% 47%;
-    --rating-gold: 45 93% 47%;
-    --rating-gold-foreground: 220 13% 18%;
-    --radius: 0.5rem;
+    /* Catppuccin Latte - Soft pastel light theme */
+    --background: 220 23% 95%;
+    --foreground: 234 16% 35%;
+    --card: 220 23% 97%;
+    --card-foreground: 234 16% 35%;
+    --popover: 220 23% 97%;
+    --popover-foreground: 234 16% 35%;
+    --primary: 266 85% 58%;
+    --primary-foreground: 220 23% 95%;
+    --secondary: 220 17% 88%;
+    --secondary-foreground: 234 16% 35%;
+    --muted: 220 17% 92%;
+    --muted-foreground: 227 12% 57%;
+    --accent: 35 77% 49%;
+    --accent-foreground: 220 23% 95%;
+    --destructive: 347 87% 44%;
+    --destructive-foreground: 220 23% 95%;
+    --border: 220 14% 89%;
+    --input: 220 17% 88%;
+    --ring: 266 85% 58%;
+    --rating-gold: 35 77% 49%;
+    --rating-gold-foreground: 234 16% 35%;
+    --radius: 0.75rem;
   }
 
   .dark {
-    /* IMDb/Batman Dark - Rich dark theme with vibrant accents */
-    --background: 222 84% 4%;
-    --foreground: 210 40% 98%;
-    --card: 222 84% 5%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 84% 5%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 45 93% 47%;
-    --primary-foreground: 222 84% 4%;
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 32% 12%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 280 40% 25%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 75% 65%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 45 93% 47%;
-    --rating-gold: 45 93% 47%;
-    --rating-gold-foreground: 222 84% 4%;
+    /* Catppuccin Mocha - Rich dark theme with vibrant pastels */
+    --background: 240 21% 15%;
+    --foreground: 226 64% 88%;
+    --card: 232 23% 18%;
+    --card-foreground: 226 64% 88%;
+    --popover: 232 23% 18%;
+    --popover-foreground: 226 64% 88%;
+    --primary: 267 84% 81%;
+    --primary-foreground: 240 21% 15%;
+    --secondary: 233 12% 39%;
+    --secondary-foreground: 226 64% 88%;
+    --muted: 230 19% 26%;
+    --muted-foreground: 227 17% 58%;
+    --accent: 35 88% 72%;
+    --accent-foreground: 240 21% 15%;
+    --destructive: 343 81% 75%;
+    --destructive-foreground: 240 21% 15%;
+    --border: 233 12% 39%;
+    --input: 233 12% 39%;
+    --ring: 267 84% 81%;
+    --rating-gold: 35 88% 72%;
+    --rating-gold-foreground: 240 21% 15%;
   }
 }
 
@@ -114,29 +114,30 @@
     @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
   }
 
-  /* Professional button variants using semantic colors */
+  /* Accessible button variants with proper contrast ratios */
   .btn-primary {
     @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    @apply transition-all duration-200;
+    @apply transition-all duration-200 font-semibold;
+    /* Ensure 4.5:1 contrast ratio */
   }
 
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-secondary/20;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    @apply transition-all duration-200;
+    @apply transition-all duration-200 font-medium;
   }
 
   .btn-outline {
-    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+    @apply border-2 border-primary/60 bg-background text-primary hover:bg-primary hover:text-primary-foreground;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    @apply transition-all duration-200;
+    @apply transition-all duration-200 font-medium;
   }
 
   .btn-ghost {
-    @apply hover:bg-accent hover:text-accent-foreground;
+    @apply text-foreground hover:bg-accent hover:text-accent-foreground;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    @apply transition-all duration-200;
+    @apply transition-all duration-200 font-medium;
   }
 
   /* Cinematic gradient overlays */

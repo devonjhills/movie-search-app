@@ -221,7 +221,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                       <ShieldCheckIcon className="h-3 w-3" />
                       Rating
                     </h4>
-                    <div className="inline-flex px-3 py-1.5 rounded-md text-sm font-bold bg-accent text-accent-foreground border">
+                    <div className="inline-flex px-2.5 py-1 rounded-md text-xs font-bold border-2 border-primary/80 text-primary bg-background shadow-sm">
                       {usCertification}
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -42,7 +42,7 @@ export function Navigation() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo and Brand */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 text-foreground hover:no-underline">
             <div className="relative h-8 w-8">
               <Image
                 src="/logo.png"
@@ -59,26 +59,30 @@ export function Navigation() {
           <div className="hidden md:flex items-center space-x-8">
             <Link
               href="/"
-              className="nav-link px-3 py-2 text-base font-semibold"
+              variant="nav"
+              className="px-3 py-2 text-base font-semibold"
             >
               Movies
             </Link>
             <Link
               href="/tv"
-              className="nav-link px-3 py-2 text-base font-semibold"
+              variant="nav"
+              className="px-3 py-2 text-base font-semibold"
             >
               TV Shows
             </Link>
             <Link
               href="/discover"
-              className="nav-link px-3 py-2 text-base font-semibold"
+              variant="nav"
+              className="px-3 py-2 text-base font-semibold"
             >
               Discover
             </Link>
             {user && (
               <Link
                 href="/watchlist"
-                className="nav-link px-3 py-2 text-base font-semibold"
+                variant="nav"
+                className="px-3 py-2 text-base font-semibold"
               >
                 Watchlist
               </Link>
@@ -125,7 +129,9 @@ export function Navigation() {
             ) : (
               <Link
                 href="/auth/signin"
-                className="btn-primary rounded-lg px-3 py-1.5 text-sm font-medium"
+                variant="button"
+                size="sm"
+                className="px-3 py-1.5 text-sm font-medium"
               >
                 Sign In
               </Link>
@@ -150,22 +156,24 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         <div className="flex md:hidden items-center space-x-6 pb-4">
-          <Link href="/" className="nav-link px-3 py-2 text-sm font-semibold">
+          <Link href="/" variant="nav" className="px-3 py-2 text-sm font-semibold">
             Movies
           </Link>
-          <Link href="/tv" className="nav-link px-3 py-2 text-sm font-semibold">
+          <Link href="/tv" variant="nav" className="px-3 py-2 text-sm font-semibold">
             TV Shows
           </Link>
           <Link
             href="/discover"
-            className="nav-link px-3 py-2 text-sm font-semibold"
+            variant="nav"
+            className="px-3 py-2 text-sm font-semibold"
           >
             Discover
           </Link>
           {user && (
             <Link
               href="/watchlist"
-              className="nav-link px-3 py-2 text-sm font-semibold"
+              variant="nav"
+              className="px-3 py-2 text-sm font-semibold"
             >
               Watchlist
             </Link>

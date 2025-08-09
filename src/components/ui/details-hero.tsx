@@ -15,6 +15,7 @@ import { getImageUrl } from "@/lib/api";
 import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { ShareButton } from "@/components/ui/share-button";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/components/ui/link";
 import { WatchProvidersCompact } from "@/components/ui/watch-providers";
 import {
   formatDate,
@@ -65,19 +66,19 @@ export function DetailsHero({
         ? `https://www.imdb.com/title/${item.external_ids.imdb_id}`
         : null,
       icon: LinkIcon,
-      className: "text-amber-500 hover:text-amber-400",
+      className: "text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/30",
     },
     {
       name: "Official Website",
       url: item.homepage,
       icon: GlobeAltIcon,
-      className: "text-blue-500 hover:text-blue-400",
+      className: "text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/30",
     },
     {
       name: "Rotten Tomatoes",
       url: rottenTomatoesUrl,
       icon: LinkIcon,
-      className: "text-red-500 hover:text-red-400",
+      className: "text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30",
     },
   ].filter((link) => link.url);
 
@@ -150,23 +151,23 @@ export function DetailsHero({
                     {/* Core Metadata Row */}
                     <div className="flex flex-wrap items-center gap-3 text-sm">
                       {item.vote_average > 0 && (
-                        <div className="rating-badge">
+                        <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold border-2 border-rating-gold/80 text-rating-gold bg-background shadow-sm">
                           <StarSolidIcon className="h-4 w-4" />
                           <span>{rating}</span>
                         </div>
                       )}
 
                       {usCertification && (
-                        <div className="px-2 py-1 rounded text-xs font-semibold bg-accent text-accent-foreground border">
+                        <div className="px-2.5 py-1 rounded-md text-xs font-bold border-2 border-primary/80 text-primary bg-background shadow-sm">
                           {usCertification}
                         </div>
                       )}
 
-                      <div className="flex flex-wrap items-center gap-3 text-muted-foreground">
+                      <div className="flex flex-wrap items-center gap-4 text-foreground/90">
                         {releaseDate && (
-                          <div className="flex items-center gap-1">
-                            <CalendarIcon className="h-4 w-4" />
-                            <span>
+                          <div className="flex items-center gap-1.5">
+                            <CalendarIcon className="h-4 w-4 text-primary/80" />
+                            <span className="font-semibold text-base">
                               {new Date(
                                 mediaType === "movie"
                                   ? item.release_date
@@ -177,14 +178,14 @@ export function DetailsHero({
                         )}
 
                         {runtime && (
-                          <div className="flex items-center gap-1">
-                            <ClockIcon className="h-4 w-4" />
-                            <span>{runtime}</span>
+                          <div className="flex items-center gap-1.5">
+                            <ClockIcon className="h-4 w-4 text-primary/80" />
+                            <span className="font-semibold text-base">{runtime}</span>
                           </div>
                         )}
 
                         {mediaType === "tv" && item.number_of_seasons && (
-                          <span>
+                          <span className="font-medium">
                             {item.number_of_seasons} Season
                             {item.number_of_seasons !== 1 ? "s" : ""}
                           </span>
@@ -220,15 +221,16 @@ export function DetailsHero({
                   {/* Section 3: Primary Actions */}
                   <div className="flex flex-wrap gap-3">
                     {trailer && (
-                      <a
+                      <Link
                         href={`https://www.youtube.com/watch?v=${trailer.key}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition-all duration-200"
+                        variant="button"
+                        size="md"
+                        external
+                        className="bg-red-600 text-white hover:bg-red-700 hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-200"
                       >
                         <PlayIcon className="h-5 w-5" />
                         <span>Watch Trailer</span>
-                      </a>
+                      </Link>
                     )}
 
                     <WatchlistButton
@@ -255,23 +257,16 @@ export function DetailsHero({
                             {externalLinks.map((link) => {
                               const IconComponent = link.icon;
                               return (
-                                <Button
+                                <Link
                                   key={link.name}
+                                  href={link.url!}
                                   variant="ghost"
-                                  size="sm"
-                                  asChild
-                                  className={link.className}
+                                  className={`h-9 px-3 text-xs gap-1.5 ${link.className}`}
+                                  external
                                 >
-                                  <a
-                                    href={link.url!}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2"
-                                  >
-                                    <IconComponent className="h-4 w-4" />
-                                    <span>{link.name}</span>
-                                  </a>
-                                </Button>
+                                  <IconComponent className="h-3.5 w-3.5" />
+                                  <span>{link.name}</span>
+                                </Link>
                               );
                             })}
                           </div>
