@@ -33,8 +33,10 @@ export default function SignUpPage() {
     try {
       await signUpWithEmail(email, password);
       setMessage("Check your email for the confirmation link!");
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Failed to create account",
+      );
     } finally {
       setLoading(false);
     }

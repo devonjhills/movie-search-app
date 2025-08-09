@@ -2,13 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  cn,
-  formatYear,
-  formatVoteAverage,
-  getRatingColor,
-  truncateText,
-} from "@/lib/utils";
+import { cn, formatVoteAverage, truncateText } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import type { Movie, FormattedMovie } from "@/lib/types";
 
@@ -31,8 +25,6 @@ export function MovieCard({
 }: MovieCardProps) {
   const imageUrl = getImageUrl(movie.poster_path, "poster", "w185");
   const rating = formatVoteAverage(movie.vote_average);
-  const year = formatYear(movie.release_date);
-  const ratingColor = getRatingColor(movie.vote_average);
 
   const sizeClasses = {
     sm: "w-40",

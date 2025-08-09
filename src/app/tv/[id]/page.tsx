@@ -22,16 +22,62 @@ export async function generateMetadata({
   }
 
   try {
-    // In a real app, you might want to fetch the TV show data here for SEO
-    // For now, we'll use a generic title
+    const API_KEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY;
+    if (!API_KEY) {
+      throw new Error("API key not configured");
+    }
+
+    const response = await fetch(
+      `https://api.themoviedb.org/3/tv/${tvId}?api_key=${API_KEY}`,
+      { next: { revalidate: 86400 } }, // Cache for 24 hours
+    );
+
+    if (!response.ok) {
+      throw new Error("TV show not found");
+    }
+
+    const tvShow = await response.json();
+    const year = tvShow.first_air_date
+      ? new Date(tvShow.first_air_date).getFullYear()
+      : "";
+    const title = `${tvShow.name} ${year ? `(${year})` : ""} - What To Watch?`;
+    const description =
+      tvShow.overview ||
+      `Discover ${tvShow.name}, ${year ? `a ${year} ` : ""}TV series. View cast, crew, episodes, ratings, and more details.`;
+    const posterUrl = tvShow.poster_path
+      ? `https://image.tmdb.org/t/p/w500${tvShow.poster_path}`
+      : null;
+
     return {
-      title: `TV Show Details - What To Watch?`,
-      description:
-        "View detailed information about this TV show including cast, crew, ratings, and more.",
+      title,
+      description,
+      keywords: [
+        tvShow.name,
+        "TV show",
+        "television",
+        "series",
+        "watch",
+        "stream",
+        "episodes",
+        ...(tvShow.genres?.map((g: { name: string }) => g.name) || []),
+      ],
+      openGraph: {
+        title,
+        description,
+        type: "website",
+        images: posterUrl ? [posterUrl] : [],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: posterUrl ? [posterUrl] : [],
+      },
     };
   } catch {
     return {
-      title: "TV Show Not Found",
+      title: "TV Show Not Found - What To Watch?",
+      description: "The requested TV show could not be found.",
     };
   }
 }

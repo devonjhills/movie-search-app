@@ -1,17 +1,18 @@
 import { cn } from "@/lib/utils";
-import { ButtonHTMLAttributes, forwardRef, ElementType } from "react";
+import { forwardRef, ElementType } from "react";
+import { type ClassValue } from "clsx";
 
 interface ButtonProps {
   variant?: "primary" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   asChild?: boolean;
   as?: ElementType;
-  className?: string;
+  className?: ClassValue;
   children?: React.ReactNode;
-  [key: string]: any; // Allow additional props for different elements
+  [key: string]: unknown; // Allow additional props for different elements
 }
 
-const Button = forwardRef<any, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,

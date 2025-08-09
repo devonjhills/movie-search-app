@@ -6,7 +6,7 @@ import {
   usePopularTVShows,
   useTopRatedTVShows,
   useOnTheAirTVShows,
-} from "@/lib/api";
+} from "@/lib/hooks/api-hooks";
 
 export default function TVPage() {
   const {
@@ -33,16 +33,22 @@ export default function TVPage() {
       {/* Hero Section */}
       {heroTVShow && !popularLoading && (
         <HeroSection
-          movie={
-            {
-              ...heroTVShow,
-              title: heroTVShow.name,
-              release_date: heroTVShow.first_air_date,
-              adult: false,
-              original_title: heroTVShow.original_name,
-              video: false,
-            } as any
-          }
+          movie={{
+            ...heroTVShow,
+            title: heroTVShow.name,
+            release_date: heroTVShow.first_air_date,
+            adult: false,
+            original_title: heroTVShow.original_name,
+            video: false,
+            genre_ids: heroTVShow.genre_ids || [],
+            original_language: heroTVShow.original_language || "",
+            overview: heroTVShow.overview || "",
+            popularity: heroTVShow.popularity || 0,
+            poster_path: heroTVShow.poster_path,
+            backdrop_path: heroTVShow.backdrop_path,
+            vote_average: heroTVShow.vote_average || 0,
+            vote_count: heroTVShow.vote_count || 0,
+          }}
           mediaType="tv"
           className="mb-12"
         />

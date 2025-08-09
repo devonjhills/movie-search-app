@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { useDiscoverMovies, useDiscoverTVShows } from "@/lib/api";
+import { useDiscoverMovies, useDiscoverTVShows } from "@/lib/hooks/api-hooks";
 import { MovieGrid } from "@/components/movie/movie-grid";
 import { TVGrid } from "@/components/tv/tv-grid";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -86,7 +86,6 @@ function Select<T>({
   options,
   getLabel,
   getValue,
-  placeholder = "Select option",
 }: {
   value: T;
   onChange: (value: T) => void;
@@ -108,7 +107,7 @@ function Select<T>({
           </span>
         </Listbox.Button>
         <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background border border-input py-1 text-base shadow-lg focus:outline-none sm:text-sm">
-          {options.map((option, optionIdx) => (
+          {options.map((option) => (
             <Listbox.Option
               key={getValue(option)}
               className={({ active }) =>

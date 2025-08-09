@@ -22,16 +22,58 @@ export async function generateMetadata({
   }
 
   try {
-    // In a real app, you might want to fetch the movie data here for SEO
-    // For now, we'll use a generic title
+    const API_KEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY;
+    if (!API_KEY) {
+      throw new Error("API key not configured");
+    }
+
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`,
+      { next: { revalidate: 86400 } }, // Cache for 24 hours
+    );
+
+    if (!response.ok) {
+      throw new Error("Movie not found");
+    }
+
+    const movie = await response.json();
+    const title = `${movie.title} (${new Date(movie.release_date).getFullYear()}) - What To Watch?`;
+    const description =
+      movie.overview ||
+      `Discover ${movie.title}, a ${new Date(movie.release_date).getFullYear()} movie. View cast, crew, ratings, and more details.`;
+    const posterUrl = movie.poster_path
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+      : null;
+
     return {
-      title: `Movie Details - What To Watch?`,
-      description:
-        "View detailed information about this movie including cast, crew, ratings, and more.",
+      title,
+      description,
+      keywords: [
+        movie.title,
+        "movie",
+        "film",
+        "cinema",
+        "watch",
+        "review",
+        ...(movie.genres?.map((g: { name: string }) => g.name) || []),
+      ],
+      openGraph: {
+        title,
+        description,
+        type: "website",
+        images: posterUrl ? [posterUrl] : [],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: posterUrl ? [posterUrl] : [],
+      },
     };
   } catch {
     return {
-      title: "Movie Not Found",
+      title: "Movie Not Found - What To Watch?",
+      description: "The requested movie could not be found.",
     };
   }
 }

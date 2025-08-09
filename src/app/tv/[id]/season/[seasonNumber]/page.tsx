@@ -10,19 +10,22 @@ interface SeasonPageProps {
 
 export default async function SeasonPage({ params }: SeasonPageProps) {
   const resolvedParams = await params;
-  const tvId = parseInt(resolvedParams.id);
   const seasonNumber = parseInt(resolvedParams.seasonNumber);
 
-  if (isNaN(tvId) || isNaN(seasonNumber)) {
+  if (isNaN(seasonNumber)) {
     notFound();
   }
 
-  return <TVSeasonDetailsPage tvId={tvId} seasonNumber={seasonNumber} />;
+  return (
+    <TVSeasonDetailsPage
+      tvId={parseInt(resolvedParams.id)}
+      seasonNumber={seasonNumber}
+    />
+  );
 }
 
 export async function generateMetadata({ params }: SeasonPageProps) {
   const resolvedParams = await params;
-  const tvId = parseInt(resolvedParams.id);
   const seasonNumber = parseInt(resolvedParams.seasonNumber);
 
   return {

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {
   CalendarIcon,
@@ -9,11 +8,7 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
-import {
-  useMovieDetails,
-  useMovieWatchProviders,
-  getImageUrl,
-} from "@/lib/api";
+import { useMovieDetails, useMovieWatchProviders } from "@/lib/hooks/api-hooks";
 import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/ui/cast-grid";
 import { MovieGrid } from "@/components/movie/movie-grid";
@@ -24,7 +19,6 @@ import {
   formatVoteAverage,
   formatCurrency,
   getUSCertification,
-  getMPAARatingStyle,
 } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -118,9 +112,8 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
     (person) => person.job === "Director",
   );
 
-  // Get US certification and styling
+  // Get US certification
   const usCertification = getUSCertification(movie.release_dates);
-  const ratingStyle = getMPAARatingStyle(usCertification);
 
   // Get keywords
   const keywords = movie.keywords?.keywords?.slice(0, 10) || [];
@@ -176,7 +169,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
       />
 
       {/* Main Content */}
-      <div className="relative container mx-auto px-4 py-12">
+      <div className="relative container mx-auto px-4 pt-16 pb-12">
         <div className="space-y-8">
           {/* Movie Details - Full Width */}
           <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
@@ -228,9 +221,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                       <ShieldCheckIcon className="h-3 w-3" />
                       Rating
                     </h4>
-                    <div
-                      className={`inline-flex px-3 py-1.5 rounded-md text-sm font-bold ${ratingStyle.bgColor} ${ratingStyle.textColor} border`}
-                    >
+                    <div className="inline-flex px-3 py-1.5 rounded-md text-sm font-bold bg-accent text-accent-foreground border">
                       {usCertification}
                     </div>
                   </div>

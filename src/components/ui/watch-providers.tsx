@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
+import { Tooltip } from "@/components/ui/tooltip";
 import type { WatchProviderRegion, WatchProvider } from "@/lib/types";
 
 interface WatchProvidersProps {
@@ -20,21 +21,25 @@ const ProviderLogo = ({
 }) => (
   <div
     className={cn(
-      "relative w-12 h-12 rounded-lg overflow-hidden",
-      "border border-border/50 bg-card shadow-sm",
-      "hover:scale-105 hover:shadow-md transition-all duration-200",
+      "relative w-16 h-16 rounded-2xl overflow-hidden",
+      "bg-white dark:bg-gray-900 shadow-md",
+      "hover:scale-105 hover:shadow-lg",
+      "transition-all duration-300 ease-out",
       onClick && "cursor-pointer",
     )}
     onClick={onClick}
     title={provider.provider_name}
   >
-    <Image
-      src={getImageUrl(provider.logo_path, "logo", "w92")}
-      alt={provider.provider_name}
-      fill
-      className="object-cover"
-      sizes="48px"
-    />
+    <div className="absolute inset-0 p-2">
+      <Image
+        src={getImageUrl(provider.logo_path, "logo", "w300")}
+        alt={provider.provider_name}
+        fill
+        className="object-contain"
+        sizes="64px"
+        quality={95}
+      />
+    </div>
   </div>
 );
 
@@ -46,20 +51,39 @@ const ProviderSection = ({
   title: string;
   providers: WatchProvider[];
   onProviderClick?: (provider: WatchProvider) => void;
-}) => (
-  <div className="space-y-2">
-    <h4 className="text-sm font-medium text-muted-foreground">{title}</h4>
-    <div className="flex flex-wrap gap-2">
-      {providers.map((provider) => (
-        <ProviderLogo
-          key={provider.provider_id}
-          provider={provider}
-          onClick={() => onProviderClick?.(provider)}
-        />
-      ))}
+}) => {
+  const getTitle = (title: string) => {
+    switch (title.toLowerCase()) {
+      case "stream":
+        return "Streaming now on";
+      case "free with ads":
+        return "Free with ads on";
+      case "buy":
+        return "Buy on";
+      case "rent":
+        return "Rent on";
+      default:
+        return `${title} on`;
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <h4 className="text-base font-semibold text-foreground">
+        {getTitle(title)}
+      </h4>
+      <div className="flex flex-wrap gap-4">
+        {providers.map((provider) => (
+          <ProviderLogo
+            key={provider.provider_id}
+            provider={provider}
+            onClick={() => onProviderClick?.(provider)}
+          />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export function WatchProviders({ providers, className }: WatchProvidersProps) {
   if (!providers) {
@@ -74,19 +98,22 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
     return (
       <div
         className={cn(
-          "p-4 rounded-lg border border-border/50 bg-card/50",
+          "p-6 rounded-xl bg-gradient-to-br from-card/80 to-card/40",
+          "border border-border/20 backdrop-blur-sm shadow-lg",
           className,
         )}
       >
         <div className="text-center text-muted-foreground">
-          <p className="text-sm">No streaming information available</p>
+          <p className="text-sm font-medium">
+            No streaming information available
+          </p>
         </div>
       </div>
     );
   }
 
-  const handleProviderClick = (provider: WatchProvider) => {
-    // Open TMDB link if available, or search for the provider
+  const handleProviderClick = () => {
+    // Open TMDB link if available
     if (link) {
       window.open(link, "_blank", "noopener,noreferrer");
     }
@@ -95,25 +122,26 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
   return (
     <div
       className={cn(
-        "space-y-4 p-4 rounded-lg border border-border/50 bg-card/50",
+        "space-y-6 p-6 rounded-xl bg-gradient-to-br from-card/80 to-card/40",
+        "border border-border/20 backdrop-blur-sm shadow-lg",
         className,
       )}
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">Where to Watch</h3>
+        <h3 className="text-xl font-bold tracking-tight">Where to Watch</h3>
         {link && (
           <Link
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
           >
             View on TMDB →
           </Link>
         )}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         {flatrate && flatrate.length > 0 && (
           <ProviderSection
             title="Stream"
@@ -147,14 +175,14 @@ export function WatchProviders({ providers, className }: WatchProvidersProps) {
         )}
       </div>
 
-      <div className="pt-2 border-t border-border/50">
-        <p className="text-xs text-muted-foreground">
+      <div className="pt-3 border-t border-border/20">
+        <p className="text-xs text-muted-foreground/80">
           Streaming data provided by{" "}
           <Link
             href="https://www.justwatch.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-foreground transition-colors"
+            className="hover:text-foreground transition-colors font-medium underline-offset-2 hover:underline"
           >
             JustWatch
           </Link>
@@ -174,27 +202,27 @@ export function WatchProvidersCompact({
   }
 
   return (
-    <div className={cn("flex items-center gap-1", className)}>
-      {providers.flatrate.slice(0, 3).map((provider) => (
-        <div
+    <div className={cn("flex items-center gap-2 flex-wrap", className)}>
+      {providers.flatrate.map((provider) => (
+        <Tooltip
           key={provider.provider_id}
-          className="relative w-6 h-6 rounded overflow-hidden border border-border/50"
-          title={provider.provider_name}
+          content={provider.provider_name}
+          side="bottom"
         >
-          <Image
-            src={getImageUrl(provider.logo_path, "logo", "w45")}
-            alt={provider.provider_name}
-            fill
-            className="object-cover"
-            sizes="24px"
-          />
-        </div>
+          <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-white dark:bg-gray-900 shadow-sm hover:scale-105 transition-transform duration-200 cursor-pointer">
+            <div className="absolute inset-0 p-1">
+              <Image
+                src={getImageUrl(provider.logo_path, "logo", "w154")}
+                alt={provider.provider_name}
+                fill
+                className="object-contain"
+                sizes="40px"
+                quality={90}
+              />
+            </div>
+          </div>
+        </Tooltip>
       ))}
-      {providers.flatrate.length > 3 && (
-        <span className="text-xs text-muted-foreground ml-1">
-          +{providers.flatrate.length - 3}
-        </span>
-      )}
     </div>
   );
 }

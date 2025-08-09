@@ -13,7 +13,6 @@ import {
   ArrowRightStartOnRectangleIcon,
   BookmarkIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@/lib/utils";
 
 export function Navigation() {
   const [searchQuery, setSearchQuery] = useState("");

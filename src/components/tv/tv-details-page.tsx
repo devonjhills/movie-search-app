@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarIcon, TvIcon } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
-import { useTVDetails, useTVWatchProviders, getImageUrl } from "@/lib/api";
+import { useTVDetails, useTVWatchProviders } from "@/lib/hooks/api-hooks";
+import { getImageUrl } from "@/lib/api";
 import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/ui/cast-grid";
 import { PersonCard } from "@/components/ui/person-card";
@@ -69,7 +70,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           <TvIcon className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">TV Show Not Found</h1>
           <p className="text-muted-foreground">
-            The TV show you're looking for doesn't exist or has been removed.
+            The TV show you&apos;re looking for doesn&apos;t exist or has been
+            removed.
           </p>
           <Link
             href="/tv"
@@ -175,7 +177,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
       />
 
       {/* Main Content */}
-      <div className="relative container mx-auto px-4 py-12">
+      <div className="relative container mx-auto px-4 pt-16 pb-12">
         <div className="space-y-8">
           {/* TV Show Details - Full Width */}
           <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">

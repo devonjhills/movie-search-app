@@ -31,8 +31,8 @@ export default function SignInPage() {
     try {
       await signInWithEmail(email, password);
       router.push("/");
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Failed to sign in");
     } finally {
       setLoading(false);
     }
@@ -106,7 +106,7 @@ export default function SignInPage() {
 
         <div className="text-center">
           <p className="text-sm text-muted-foreground">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/auth/signup"
               className="font-medium text-primary hover:underline"

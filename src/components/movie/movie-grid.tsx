@@ -6,7 +6,7 @@ import type { Movie, FormattedMovie } from "@/lib/types";
 interface MovieGridProps {
   movies: (Movie | FormattedMovie)[];
   isLoading?: boolean;
-  error?: any;
+  error?: Error | null;
   className?: string;
   cardSize?: "sm" | "md" | "lg";
   showYear?: boolean;

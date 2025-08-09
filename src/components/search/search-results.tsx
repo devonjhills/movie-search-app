@@ -4,7 +4,6 @@ import { useState } from "react";
 import { MovieGrid } from "@/components/movie/movie-grid";
 import { TVGrid } from "@/components/tv/tv-grid";
 import { PersonGrid } from "./person-grid";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { MultiSearchResult } from "@/lib/types";
 

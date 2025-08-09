@@ -9,11 +9,11 @@ import {
   LinkIcon,
   FilmIcon,
 } from "@heroicons/react/24/outline";
-import { usePersonDetails, getImageUrl } from "@/lib/api";
-import { formatDate, calculateAge, truncateText, sortBy } from "@/lib/utils";
+import { usePersonDetails } from "@/lib/hooks/api-hooks";
+import { getImageUrl } from "@/lib/api";
+import { formatDate, calculateAge, sortBy } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 
 interface PersonDetailsPageProps {
   personId: number;
@@ -60,7 +60,8 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
           <UserIcon className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">Person Not Found</h1>
           <p className="text-muted-foreground">
-            The person you're looking for doesn't exist or has been removed.
+            The person you&apos;re looking for doesn&apos;t exist or has been
+            removed.
           </p>
           <Link
             href="/"

@@ -10,9 +10,10 @@ import {
   PlayIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
-import { useTVSeasonDetails, useTVDetails, getImageUrl } from "@/lib/api";
+import { useTVSeasonDetails, useTVDetails } from "@/lib/hooks/api-hooks";
+import { getImageUrl } from "@/lib/api";
 import { PersonCard } from "@/components/ui/person-card";
-import { formatDate, formatVoteAverage } from "@/lib/utils";
+import { formatDate, formatVoteAverage, formatRuntime } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -62,7 +63,8 @@ export function TVSeasonDetailsPage({
           <TvIcon className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">Season Not Found</h1>
           <p className="text-muted-foreground">
-            The season you're looking for doesn't exist or has been removed.
+            The season you&apos;re looking for doesn&apos;t exist or has been
+            removed.
           </p>
           <Link
             href={`/tv/${tvId}`}
@@ -218,7 +220,7 @@ export function TVSeasonDetailsPage({
                           {episode.runtime > 0 && (
                             <div className="flex items-center gap-1">
                               <ClockIcon className="h-3 w-3" />
-                              <span>{episode.runtime}m</span>
+                              <span>{formatRuntime(episode.runtime)}</span>
                             </div>
                           )}
                         </div>

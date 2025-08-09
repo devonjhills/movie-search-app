@@ -15,6 +15,7 @@ import { getImageUrl } from "@/lib/api";
 import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { ShareButton } from "@/components/ui/share-button";
 import { Button } from "@/components/ui/button";
+import { WatchProvidersCompact } from "@/components/ui/watch-providers";
 import {
   formatDate,
   formatRuntime,
@@ -22,7 +23,6 @@ import {
   getRottenTomatoesSearchUrl,
   formatYear,
   getUSCertification,
-  getMPAARatingStyle,
 } from "@/lib/utils";
 import type { WatchProviderRegion } from "@/lib/types";
 
@@ -51,7 +51,6 @@ export function DetailsHero({
   // Get US MPAA rating for movies
   const usCertification =
     mediaType === "movie" ? getUSCertification(item.release_dates) : null;
-  const ratingStyle = getMPAARatingStyle(usCertification);
 
   // External links
   const year = formatYear(
@@ -81,12 +80,6 @@ export function DetailsHero({
       className: "text-red-500 hover:text-red-400",
     },
   ].filter((link) => link.url);
-
-  // Get streaming providers (flatrate and ads)
-  const streamingProviders = [
-    ...(watchProviders?.flatrate || []),
-    ...(watchProviders?.ads || []),
-  ];
 
   return (
     <>
@@ -164,9 +157,7 @@ export function DetailsHero({
                       )}
 
                       {usCertification && (
-                        <div
-                          className={`px-2 py-1 rounded text-xs font-semibold ${ratingStyle.bgColor} ${ratingStyle.textColor} border`}
-                        >
+                        <div className="px-2 py-1 rounded text-xs font-semibold bg-accent text-accent-foreground border">
                           {usCertification}
                         </div>
                       )}
@@ -254,7 +245,7 @@ export function DetailsHero({
                   </div>
 
                   {/* Section 4: Secondary Actions & Discovery */}
-                  {(streamingProviders.length > 0 ||
+                  {(watchProviders?.flatrate?.length ||
                     externalLinks.length > 0) && (
                     <div className="pt-4 border-t border-border/50">
                       <div className="flex flex-wrap items-center justify-between gap-6">
@@ -287,39 +278,12 @@ export function DetailsHero({
                         )}
 
                         {/* Streaming Providers - Right Side */}
-                        {streamingProviders.length > 0 && (
+                        {watchProviders?.flatrate?.length && (
                           <div className="inline-flex items-center gap-3 text-foreground">
-                            <span className="text-sm font-medium whitespace-nowrap">
-                              Watch on:
+                            <span className="text-base font-semibold whitespace-nowrap">
+                              Watch now
                             </span>
-                            <div className="flex flex-wrap gap-2">
-                              {streamingProviders
-                                .slice(0, 6)
-                                .map((provider) => (
-                                  <div
-                                    key={provider.provider_id}
-                                    className="relative w-8 h-8 rounded-md overflow-hidden bg-white shadow-sm hover:scale-110 transition-transform duration-200"
-                                    title={provider.provider_name}
-                                  >
-                                    <Image
-                                      src={getImageUrl(
-                                        provider.logo_path,
-                                        "logo",
-                                        "w92",
-                                      )}
-                                      alt={provider.provider_name}
-                                      fill
-                                      className="object-cover"
-                                      sizes="32px"
-                                    />
-                                  </div>
-                                ))}
-                              {streamingProviders.length > 6 && (
-                                <div className="flex items-center justify-center w-8 h-8 rounded-md bg-muted text-xs text-muted-foreground font-medium">
-                                  +{streamingProviders.length - 6}
-                                </div>
-                              )}
-                            </div>
+                            <WatchProvidersCompact providers={watchProviders} />
                           </div>
                         )}
                       </div>

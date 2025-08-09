@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useMultiSearch } from "@/lib/api";
+import { useMultiSearch } from "@/lib/hooks/api-hooks";
 import { debounce } from "@/lib/utils";
 import { SearchResults } from "./search-results";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,7 +15,6 @@ interface SearchPageProps {
 export function SearchPage({ initialQuery = "" }: SearchPageProps) {
   const [query, setQuery] = useState(initialQuery);
   const [debouncedQuery, setDebouncedQuery] = useState(initialQuery);
-  const router = useRouter();
 
   // Debounce search query
   const debouncedSearch = useCallback(
@@ -101,7 +99,7 @@ export function SearchPage({ initialQuery = "" }: SearchPageProps) {
           <MagnifyingGlassIcon className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <h2 className="text-xl font-semibold mb-2">Start your search</h2>
           <p className="text-muted-foreground">
-            Enter a movie title, TV show, or person's name to begin
+            Enter a movie title, TV show, or person&apos;s name to begin
           </p>
         </div>
       )}
@@ -138,7 +136,7 @@ export function SearchPage({ initialQuery = "" }: SearchPageProps) {
           {/* Results Summary */}
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">
-              Search Results for "{debouncedQuery}"
+              Search Results for &quot;{debouncedQuery}&quot;
             </h2>
             <p className="text-sm text-muted-foreground">
               {totalResults} result{totalResults !== 1 ? "s" : ""} found
