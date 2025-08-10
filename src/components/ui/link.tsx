@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import NextLink from "next/link";
 import { type ClassValue } from "clsx";
 
-interface LinkProps {
+interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'className'> {
   href: string;
   variant?: "default" | "nav" | "button" | "ghost" | "accent";
   size?: "sm" | "md" | "lg";
@@ -12,9 +12,6 @@ interface LinkProps {
   children: React.ReactNode;
   disabled?: boolean;
   prefetch?: boolean;
-  target?: string;
-  rel?: string;
-  [key: string]: unknown;
 }
 
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(

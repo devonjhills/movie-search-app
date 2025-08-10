@@ -22,10 +22,11 @@ import {
   formatVoteAverage,
   getUSCertification,
 } from "@/lib/utils";
-import type { WatchProviderRegion, Movie, TVShow } from "@/lib/types";
+import type { WatchProviderRegion, MovieDetailsOrTVShowDetails } from "@/lib/types";
+import { isMovieDetails, isTVShowDetails } from "@/lib/types";
 
 interface DetailsHeroProps {
-  item: Movie | TVShow;
+  item: MovieDetailsOrTVShowDetails;
   mediaType: "movie" | "tv";
   trailer?: {
     id: string;
@@ -47,18 +48,18 @@ export function DetailsHero({
   const posterUrl = getImageUrl(item.poster_path, "poster", "w342");
   const rating = formatVoteAverage(item.vote_average);
   const releaseDate = formatDate(
-    mediaType === "movie" ? item.release_date : item.first_air_date,
+    isMovieDetails(item) ? item.release_date : item.first_air_date,
   );
-  const runtime = mediaType === "movie" ? formatRuntime(item.runtime) : null;
-  const title = mediaType === "movie" ? item.title : item.name;
+  const runtime = isMovieDetails(item) ? formatRuntime(item.runtime) : null;
+  const title = isMovieDetails(item) ? item.title : item.name;
 
   // Get US MPAA rating for movies
   const usCertification =
-    mediaType === "movie" ? getUSCertification(item.release_dates) : null;
+    isMovieDetails(item) ? getUSCertification(item.release_dates) : null;
 
   // External links - raw date for ExternalLinks component
   const rawReleaseDate =
-    mediaType === "movie" ? item.release_date : item.first_air_date;
+    isMovieDetails(item) ? item.release_date : item.first_air_date;
 
   return (
     <>
@@ -119,9 +120,9 @@ export function DetailsHero({
                       <h1 className="text-4xl md:text-5xl font-bold leading-tight text-foreground drop-shadow-2xl">
                         {title}
                       </h1>
-                      {item.tagline && (
+                      {((isMovieDetails(item) && item.tagline) || (isTVShowDetails(item) && item.tagline)) && (
                         <p className="text-lg italic text-muted-foreground drop-shadow-md">
-                          &ldquo;{item.tagline}&rdquo;
+                          &ldquo;{isMovieDetails(item) ? item.tagline : isTVShowDetails(item) ? item.tagline : ''}&rdquo;
                         </p>
                       )}
                     </div>
@@ -147,7 +148,7 @@ export function DetailsHero({
                             <CalendarIcon className="h-4 w-4 text-primary/80" />
                             <span className="font-semibold text-base">
                               {new Date(
-                                mediaType === "movie"
+                                isMovieDetails(item)
                                   ? item.release_date
                                   : item.first_air_date,
                               ).getFullYear()}
@@ -164,7 +165,7 @@ export function DetailsHero({
                           </div>
                         )}
 
-                        {mediaType === "tv" && item.number_of_seasons && (
+                        {isTVShowDetails(item) && item.number_of_seasons && (
                           <span className="font-medium">
                             {item.number_of_seasons} Season
                             {item.number_of_seasons !== 1 ? "s" : ""}
@@ -177,9 +178,10 @@ export function DetailsHero({
                   {/* Section 2: Secondary Information */}
                   <div className="space-y-4">
                     {/* Genres */}
-                    {item.genres && item.genres.length > 0 && (
+                    {((isMovieDetails(item) && item.genres) || (isTVShowDetails(item) && item.genres)) && 
+                     ((isMovieDetails(item) ? item.genres : isTVShowDetails(item) ? item.genres : []).length > 0) && (
                       <div className="flex flex-wrap gap-2">
-                        {item.genres.map(
+                        {(isMovieDetails(item) ? item.genres : isTVShowDetails(item) ? item.genres : []).map(
                           (genre: { id: number; name: string }) => (
                             <Badge key={genre.id} variant="secondary">
                               {genre.name}
@@ -225,20 +227,19 @@ export function DetailsHero({
                       text={`Check out "${title}" on this ${
                         mediaType === "movie" ? "movie" : "TV show"
                       } app!`}
-                      variant="hero"
                     />
                   </div>
 
                   {/* Section 4: Secondary Actions & Discovery */}
                   {(watchProviders?.flatrate?.length ||
-                    item.external_ids?.imdb_id ||
-                    item.homepage) && (
+                    ((isMovieDetails(item) && item.external_ids?.imdb_id) || (isTVShowDetails(item) && item.external_ids?.imdb_id)) ||
+                    ((isMovieDetails(item) && item.homepage) || (isTVShowDetails(item) && item.homepage))) && (
                     <div className="pt-4 border-t border-border/50">
                       <div className="flex flex-wrap items-center justify-between gap-6">
                         {/* External Links - Left Side */}
                         <ExternalLinks
-                          externalIds={item.external_ids}
-                          homepage={item.homepage}
+                          externalIds={(isMovieDetails(item) ? item.external_ids : isTVShowDetails(item) ? item.external_ids : undefined)}
+                          homepage={(isMovieDetails(item) ? item.homepage : isTVShowDetails(item) ? item.homepage : undefined)}
                           title={title}
                           releaseDate={rawReleaseDate}
                         />

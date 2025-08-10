@@ -14,6 +14,7 @@ import type {
   FormattedMovie,
   TMDBError,
   WatchProvidersResponse,
+  SearchResultItem,
 } from "../types";
 import { ENDPOINTS, API_CONFIG, SWR_CONFIG, IMAGE_URLS } from "../constants";
 
@@ -41,7 +42,7 @@ if (!API_KEY) {
 }
 
 // Custom fetcher with error handling
-const fetcher = async (url: string): Promise<unknown> => {
+const fetcher = async <T>(url: string): Promise<T> => {
   if (!API_KEY) {
     throw new Error("TMDB API key is not configured");
   }
@@ -61,7 +62,7 @@ const fetcher = async (url: string): Promise<unknown> => {
     throw new Error(errorData.status_message || `HTTP ${response.status}`);
   }
 
-  return response.json();
+  return response.json() as Promise<T>;
 };
 
 // Helper function to build query parameters
@@ -86,7 +87,7 @@ export const useMovieDetails = (movieId: number) => {
 
   const { data, error, isLoading } = useSWR<MovieDetails>(
     movieId ? `${ENDPOINTS.movieDetails(movieId)}?${queryParams}` : null,
-    fetcher,
+    fetcher<MovieDetails>,
     SWR_CONFIG,
   );
 
@@ -106,7 +107,7 @@ export const usePopularMovies = () => {
 
   const { data, error, isLoading } = useSWR<TMDBResponse<Movie>>(
     `${ENDPOINTS.moviesPopular}?${queryParams}`,
-    fetcher,
+    fetcher<TMDBResponse<Movie>>,
     SWR_CONFIG,
   );
 
@@ -127,7 +128,7 @@ export const useTopRatedMovies = () => {
 
   const { data, error, isLoading } = useSWR<TMDBResponse<Movie>>(
     `${ENDPOINTS.moviesTopRated}?${queryParams}`,
-    fetcher,
+    fetcher<TMDBResponse<Movie>>,
     SWR_CONFIG,
   );
 
@@ -148,7 +149,7 @@ export const useNowPlayingMovies = () => {
 
   const { data, error, isLoading } = useSWR<TMDBResponse<Movie>>(
     `${ENDPOINTS.moviesNowPlaying}?${queryParams}`,
-    fetcher,
+    fetcher<TMDBResponse<Movie>>,
     SWR_CONFIG,
   );
 
@@ -169,7 +170,7 @@ export const useTVDetails = (tvId: number) => {
 
   const { data, error, isLoading } = useSWR<TVShowDetails>(
     tvId ? `${ENDPOINTS.tvDetails(tvId)}?${queryParams}` : null,
-    fetcher,
+    fetcher<TVShowDetails>,
     SWR_CONFIG,
   );
 
@@ -188,7 +189,7 @@ export const usePopularTVShows = () => {
 
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
     `${ENDPOINTS.tvPopular}?${queryParams}`,
-    fetcher,
+    fetcher<TMDBResponse<TVShow>>,
     SWR_CONFIG,
   );
 
@@ -208,7 +209,7 @@ export const useTopRatedTVShows = () => {
 
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
     `${ENDPOINTS.tvTopRated}?${queryParams}`,
-    fetcher,
+    fetcher<TMDBResponse<TVShow>>,
     SWR_CONFIG,
   );
 
@@ -228,7 +229,7 @@ export const useOnTheAirTVShows = () => {
 
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
     `${ENDPOINTS.tvOnTheAir}?${queryParams}`,
-    fetcher,
+    fetcher<TMDBResponse<TVShow>>,
     SWR_CONFIG,
   );
 
@@ -249,7 +250,7 @@ export const usePersonDetails = (personId: number) => {
 
   const { data, error, isLoading } = useSWR<PersonDetails>(
     personId ? `${ENDPOINTS.personDetails(personId)}?${queryParams}` : null,
-    fetcher,
+    fetcher<PersonDetails>,
     SWR_CONFIG,
   );
 
@@ -270,8 +271,8 @@ export const useMultiSearch = (query: string) => {
   });
 
   const { data, error, isLoading } = useSWR<
-    TMDBResponse<Movie | TVShow | Person>
-  >(query ? `${ENDPOINTS.searchMulti}?${queryParams}` : null, fetcher, {
+    TMDBResponse<SearchResultItem>
+  >(query ? `${ENDPOINTS.searchMulti}?${queryParams}` : null, fetcher<TMDBResponse<SearchResultItem>>, {
     ...SWR_CONFIG,
     dedupingInterval: 2000, // Shorter deduping for search
   });
@@ -284,17 +285,15 @@ export const useMultiSearch = (query: string) => {
   };
 
   if (data?.results) {
-    data.results.forEach(
-      (result: { media_type: string } & (Movie | TVShow | Person)) => {
-        if (result.media_type === "movie") {
-          transformedResults.movieResults.push(result as Movie);
-        } else if (result.media_type === "tv") {
-          transformedResults.tvResults.push(result as TVShow);
-        } else if (result.media_type === "person") {
-          transformedResults.peopleResults.push(result as Person);
-        }
-      },
-    );
+    data.results.forEach((result: SearchResultItem) => {
+      if (result.media_type === "movie") {
+        transformedResults.movieResults.push(result as Movie);
+      } else if (result.media_type === "tv") {
+        transformedResults.tvResults.push(result as TVShow);
+      } else if (result.media_type === "person") {
+        transformedResults.peopleResults.push(result as Person);
+      }
+    });
   }
 
   return {
@@ -322,7 +321,7 @@ export const useDiscoverMovies = (params: {
 
   const { data, error, isLoading } = useSWR<TMDBResponse<Movie>>(
     `${ENDPOINTS.movieDiscover}?${queryParams}`,
-    fetcher,
+    fetcher<TMDBResponse<Movie>>,
     SWR_CONFIG,
   );
 
@@ -350,7 +349,7 @@ export const useDiscoverTVShows = (params: {
 
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
     `${ENDPOINTS.tvDiscover}?${queryParams}`,
-    fetcher,
+    fetcher<TMDBResponse<TVShow>>,
     SWR_CONFIG,
   );
 
@@ -366,7 +365,7 @@ export const useDiscoverTVShows = (params: {
 export const useMovieWatchProviders = (movieId: number) => {
   const { data, error, isLoading } = useSWR<WatchProvidersResponse>(
     movieId ? `${ENDPOINTS.movieWatchProviders(movieId)}` : null,
-    fetcher,
+    fetcher<WatchProvidersResponse>,
     SWR_CONFIG,
   );
 
@@ -380,7 +379,7 @@ export const useMovieWatchProviders = (movieId: number) => {
 export const useTVWatchProviders = (tvId: number) => {
   const { data, error, isLoading } = useSWR<WatchProvidersResponse>(
     tvId ? `${ENDPOINTS.tvWatchProviders(tvId)}` : null,
-    fetcher,
+    fetcher<WatchProvidersResponse>,
     SWR_CONFIG,
   );
 
@@ -400,7 +399,7 @@ export const useTVSeasonDetails = (tvId: number, seasonNumber: number) => {
     tvId && seasonNumber !== undefined
       ? `${ENDPOINTS.tvSeasonDetails(tvId, seasonNumber)}?${queryParams}`
       : null,
-    fetcher,
+    fetcher<TVSeasonDetails>,
     SWR_CONFIG,
   );
   return {

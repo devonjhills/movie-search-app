@@ -4,10 +4,10 @@ import { ExternalLinkIcon, VideoIcon, GlobeIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { getRottenTomatoesSearchUrl, formatYear } from "@/lib/utils";
 
+import type { ExternalIds } from "@/lib/types";
+
 interface ExternalLinksProps {
-  externalIds?: {
-    imdb_id?: string;
-  };
+  externalIds?: ExternalIds;
   homepage?: string;
   title: string;
   releaseDate?: string;

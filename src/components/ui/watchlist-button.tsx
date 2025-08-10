@@ -6,10 +6,10 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { BookmarkIcon, BookmarkFilledIcon } from "@radix-ui/react-icons";
 import { useWatchlist } from "@/lib/hooks/use-watchlist";
 import { Button } from "@/components/ui/button";
-import type { Movie, TVShow } from "@/lib/types";
+import type { MovieOrTVShow, MovieDetailsOrTVShowDetails } from "@/lib/types";
 
 interface WatchlistButtonProps {
-  item: Movie | TVShow;
+  item: MovieOrTVShow | MovieDetailsOrTVShowDetails;
   mediaType: "movie" | "tv";
   variant?: "default" | "hero";
 }
@@ -24,9 +24,8 @@ export function WatchlistButton({
   const [isLoading, setIsLoading] = useState(false);
 
   const inWatchlist = isInWatchlist(item.id, mediaType);
-  const title = mediaType === "movie" ? item.title : item.name;
-  const releaseDate =
-    mediaType === "movie" ? item.release_date : item.first_air_date;
+  const title = "title" in item ? item.title : item.name;
+  const releaseDate = "release_date" in item ? item.release_date : item.first_air_date;
 
   const handleClick = async () => {
     if (inWatchlist) return;
