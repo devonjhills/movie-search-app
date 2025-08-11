@@ -12,12 +12,12 @@ export function Footer() {
               <div className="relative h-6 w-6">
                 <Image
                   src="/logo.png"
-                  alt="CineScope Logo"
+                  alt="FilmFatale Logo"
                   fill
                   className="object-contain"
                 />
               </div>
-              <span className="text-lg font-semibold">CineScope</span>
+              <span className="text-lg font-semibold">FilmFatale</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Discover your next favorite movie or TV show with our
@@ -104,7 +104,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-sm text-muted-foreground">
-            © 2024 CineScope All rights reserved.
+            © 2024 FilmFatale All rights reserved.
           </div>
           <div className="flex items-center space-x-4 text-sm text-muted-foreground">
             <span>Powered by</span>

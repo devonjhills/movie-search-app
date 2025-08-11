@@ -52,13 +52,13 @@ export function Navigation() {
             <div className="flex items-center space-x-2">
               <Image
                 src="/logo.png"
-                alt="CineScope"
+                alt="FilmFatale"
                 width={32}
                 height={32}
                 className="h-8 w-8"
               />
               <span className="text-2xl font-bold text-foreground">
-                CineScope
+                FilmFatale
               </span>
             </div>
           </Link>

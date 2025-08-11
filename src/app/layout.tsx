@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CineScope - Discover Movies and TV Shows",
+  title: "FilmFatale - Discover Movies and TV Shows",
   description:
     "Discover your next favorite movie or TV show with our comprehensive database powered by The Movie Database (TMDB).",
   keywords: [
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     "film",
     "television",
   ],
-  authors: [{ name: "CineScope" }],
+  authors: [{ name: "FilmFatale" }],
   openGraph: {
-    title: "CineScope - Discover Movies and TV Shows",
+    title: "FilmFatale - Discover Movies and TV Shows",
     description:
       "Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.",
     type: "website",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CineScope - Discover Movies and TV Shows",
+    title: "FilmFatale - Discover Movies and TV Shows",
     description:
       "Discover your next favorite movie or TV show with our comprehensive database powered by TMDB.",
   },

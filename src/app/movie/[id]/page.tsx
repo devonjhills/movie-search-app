@@ -37,7 +37,7 @@ export async function generateMetadata({
     }
 
     const movie = await response.json();
-    const title = `${movie.title} (${new Date(movie.release_date).getFullYear()}) - CineScope`;
+    const title = `${movie.title} (${new Date(movie.release_date).getFullYear()}) - FilmFatale`;
     const description =
       movie.overview ||
       `Discover ${movie.title}, a ${new Date(movie.release_date).getFullYear()} movie. View cast, crew, ratings, and more details.`;
@@ -72,7 +72,7 @@ export async function generateMetadata({
     };
   } catch {
     return {
-      title: "Movie Not Found - CineScope",
+      title: "Movie Not Found - FilmFatale",
       description: "The requested movie could not be found.",
     };
   }

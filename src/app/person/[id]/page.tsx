@@ -25,7 +25,7 @@ export async function generateMetadata({
     // In a real app, you might want to fetch the person data here for SEO
     // For now, we'll use a generic title
     return {
-      title: `Person Details - CineScope`,
+      title: `Person Details - FilmFatale`,
       description:
         "View detailed information about this person including filmography, biography, and more.",
     };

@@ -40,7 +40,7 @@ export async function generateMetadata({
     const year = tvShow.first_air_date
       ? new Date(tvShow.first_air_date).getFullYear()
       : "";
-    const title = `${tvShow.name} ${year ? `(${year})` : ""} - CineScope`;
+    const title = `${tvShow.name} ${year ? `(${year})` : ""} - FilmFatale`;
     const description =
       tvShow.overview ||
       `Discover ${tvShow.name}, ${year ? `a ${year} ` : ""}TV series. View cast, crew, episodes, ratings, and more details.`;
@@ -76,7 +76,7 @@ export async function generateMetadata({
     };
   } catch {
     return {
-      title: "TV Show Not Found - CineScope",
+      title: "TV Show Not Found - FilmFatale",
       description: "The requested TV show could not be found.",
     };
   }
