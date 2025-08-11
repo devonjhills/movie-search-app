@@ -9,7 +9,11 @@ type AuthContextType = {
   session: Session | null;
   loading: boolean;
   signInWithEmail: (email: string, password: string) => Promise<void>;
-  signUpWithEmail: (email: string, password: string, name?: string) => Promise<void>;
+  signUpWithEmail: (
+    email: string,
+    password: string,
+    name?: string,
+  ) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -29,11 +33,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signUpWithEmail = async (email: string, password: string, name?: string) => {
+  const signUpWithEmail = async (
+    email: string,
+    password: string,
+    name?: string,
+  ) => {
     const result = await signUp.email({
       email,
       password,
-      name: name || email.split('@')[0], // Use email prefix as default name
+      name: name || email.split("@")[0], // Use email prefix as default name
     });
     if (result.error) {
       throw new Error(result.error.message);
@@ -46,13 +54,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ 
-        user, 
-        session, 
-        loading, 
-        signInWithEmail, 
-        signUpWithEmail, 
-        signOut: handleSignOut 
+      value={{
+        user,
+        session,
+        loading,
+        signInWithEmail,
+        signUpWithEmail,
+        signOut: handleSignOut,
       }}
     >
       {children}

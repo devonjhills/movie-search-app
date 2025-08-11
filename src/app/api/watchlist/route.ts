@@ -47,7 +47,7 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Production: Use Postgres  
+    // Production: Use Postgres
     const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
     if (dbUrl) {
       await initDatabase();
@@ -56,21 +56,22 @@ export async function GET() {
         WHERE user_id = ${session.user.id}
         ORDER BY added_at DESC
       `;
-      
-      return NextResponse.json({ 
-        items: rows, 
-        total: rows.length 
+
+      return NextResponse.json({
+        items: rows,
+        total: rows.length,
       });
     }
-    
+
     // Development: Use in-memory storage
     const userWatchlist = watchlistData.get(session.user.id) || [];
-    
-    return NextResponse.json({ 
-      items: userWatchlist.sort((a, b) => 
-        new Date(b.added_at).getTime() - new Date(a.added_at).getTime()
-      ), 
-      total: userWatchlist.length 
+
+    return NextResponse.json({
+      items: userWatchlist.sort(
+        (a, b) =>
+          new Date(b.added_at).getTime() - new Date(a.added_at).getTime(),
+      ),
+      total: userWatchlist.length,
     });
   } catch (error) {
     console.error("Error fetching watchlist:", error);
@@ -125,11 +126,11 @@ export async function POST(request: NextRequest) {
       updated_at: now,
     };
 
-    // Production: Use Postgres  
+    // Production: Use Postgres
     const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
     if (dbUrl) {
       await initDatabase();
-      
+
       try {
         await sql`
           INSERT INTO watchlist (
@@ -142,11 +143,14 @@ export async function POST(request: NextRequest) {
             ${watchlistItem.added_at}, ${watchlistItem.created_at}, ${watchlistItem.updated_at}
           )
         `;
-        
+
         return NextResponse.json({ item: watchlistItem }, { status: 201 });
       } catch (dbError: unknown) {
         const error = dbError as { message?: string; code?: string };
-        if (error.message?.includes('duplicate key') || error.code === '23505') {
+        if (
+          error.message?.includes("duplicate key") ||
+          error.code === "23505"
+        ) {
           return NextResponse.json(
             { error: "Item already in watchlist" },
             { status: 409 },
@@ -155,13 +159,13 @@ export async function POST(request: NextRequest) {
         throw dbError;
       }
     }
-    
+
     // Development: Use in-memory storage
     const userWatchlist = watchlistData.get(session.user.id) || [];
-    
+
     // Check if item already exists in watchlist
     const existing = userWatchlist.find(
-      item => item.tmdb_id === tmdb_id && item.media_type === media_type
+      (item) => item.tmdb_id === tmdb_id && item.media_type === media_type,
     );
 
     if (existing) {
@@ -205,7 +209,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Production: Use Postgres  
+    // Production: Use Postgres
     const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
     if (dbUrl) {
       await sql`
@@ -214,16 +218,17 @@ export async function DELETE(request: NextRequest) {
         AND tmdb_id = ${parseInt(tmdb_id)} 
         AND media_type = ${media_type}
       `;
-      
+
       return NextResponse.json({ success: true });
     }
-    
+
     // Development: Use in-memory storage
     const userWatchlist = watchlistData.get(session.user.id) || [];
     const filteredWatchlist = userWatchlist.filter(
-      item => !(item.tmdb_id === parseInt(tmdb_id) && item.media_type === media_type)
+      (item) =>
+        !(item.tmdb_id === parseInt(tmdb_id) && item.media_type === media_type),
     );
-    
+
     watchlistData.set(session.user.id, filteredWatchlist);
 
     return NextResponse.json({ success: true });

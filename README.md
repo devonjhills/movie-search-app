@@ -160,6 +160,7 @@ src/
 
 3. **Add environment variables**
    In your Vercel project dashboard:
+
    ```env
    NEXT_PUBLIC_MOVIE_API_KEY=your_tmdb_api_key
    BETTER_AUTH_SECRET=your_32_character_secret
@@ -169,6 +170,7 @@ src/
 
 4. **Update Google OAuth (if using)**
    Add production redirect URI in Google Cloud Console:
+
    ```
    https://www.filmfatale.app/api/auth/callback/google
    ```
@@ -182,41 +184,49 @@ src/
 ## Environment Variables
 
 ### Required
+
 - `NEXT_PUBLIC_MOVIE_API_KEY`: Your TMDB API key
 - `BETTER_AUTH_SECRET`: Random 32+ character secret for JWT signing
 
 ### Optional (for Google OAuth)
+
 - `GOOGLE_CLIENT_ID`: Google OAuth client ID
 - `GOOGLE_CLIENT_SECRET`: Google OAuth client secret
 
 ### Automatic (Vercel)
+
 - `POSTGRES_URL`: Vercel Postgres connection string (set automatically)
 
 ## Features
 
 ### 🎬 **Movie & TV Discovery**
+
 - Browse popular, top-rated, and now-playing content
 - Advanced filtering by genre, rating, and release year
 - Comprehensive movie and TV show details with cast, crew, and recommendations
 
 ### 🔍 **Advanced Search**
+
 - Multi-type search across movies, TV shows, and people
 - Debounced search with real-time results
 - Categorized search results with filters
 
 ### 👤 **User Authentication**
+
 - Modern email/password authentication
 - Google OAuth integration
 - Secure JWT-based sessions
 - Protected routes and user-specific content
 
 ### 📋 **Personal Watchlist**
+
 - Save movies and TV shows to personal watchlist
 - Persistent storage across devices
 - Quick add/remove functionality
 - Organized watchlist management
 
 ### 🎨 **Modern UI/UX**
+
 - Responsive design optimized for all devices
 - Dark/light mode with system preference detection
 - Smooth animations and micro-interactions
@@ -225,11 +235,13 @@ src/
 ## Architecture
 
 ### Development Environment
+
 - **Authentication**: In-memory Better Auth (resets on server restart)
 - **Watchlist**: In-memory storage (temporary)
 - **Database**: No external database required
 
 ### Production Environment
+
 - **Authentication**: Better Auth with Vercel Postgres persistence
 - **Watchlist**: Persistent storage in Vercel Postgres
 - **Database**: Automatic table creation and migration
