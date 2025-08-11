@@ -13,11 +13,13 @@ const getBaseURL = () => {
 const getDatabaseConfig = () => {
   // Only use database in production
   if (process.env.NODE_ENV === "production") {
+    // Vercel provides POSTGRES_URL which includes necessary SSL config
     const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
     if (dbUrl) {
+      // Let the 'pg' Pool constructor parse the URL directly.
+      // Do not add your own `ssl` object when using the Vercel URL.
       const pool = new Pool({
         connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false },
       });
       return pool;
     }
