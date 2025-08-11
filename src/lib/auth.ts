@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { Pool } from "pg";
 
 // Determine environment and set base URL
 const getBaseURL = () => {
@@ -13,10 +14,11 @@ const getDatabaseConfig = () => {
   // Production: Use Vercel Postgres (try both variable names)
   const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
   if (dbUrl) {
-    return {
-      provider: "postgresql" as const,
-      url: dbUrl,
-    };
+    const pool = new Pool({
+      connectionString: dbUrl,
+      ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+    });
+    return pool;
   }
 
   // Development: Use in-memory (Better Auth will warn and use memory adapter)
