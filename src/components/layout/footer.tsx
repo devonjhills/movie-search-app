@@ -17,7 +17,9 @@ export function Footer() {
                   className="object-contain"
                 />
               </div>
-              <span className="text-lg font-semibold">FilmFatale</span>
+              <span className="text-lg font-display font-semibold text-glow">
+                FilmFatale
+              </span>
             </div>
             <p className="text-sm text-muted-foreground">
               Discover your next favorite movie or TV show with our
@@ -27,7 +29,7 @@ export function Footer() {
 
           {/* Movies */}
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Movies</h3>
+            <h3 className="text-sm font-display font-semibold">Movies</h3>
             <div className="space-y-2">
               <Link
                 href="/"
@@ -52,7 +54,7 @@ export function Footer() {
 
           {/* TV Shows */}
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold">TV Shows</h3>
+            <h3 className="text-sm font-display font-semibold">TV Shows</h3>
             <div className="space-y-2">
               <Link
                 href="/tv"
@@ -77,7 +79,7 @@ export function Footer() {
 
           {/* Discover */}
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Discover</h3>
+            <h3 className="text-sm font-display font-semibold">Discover</h3>
             <div className="space-y-2">
               <Link
                 href="/discover"

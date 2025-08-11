@@ -36,7 +36,7 @@ export function TVSection({
     <section className={cn("space-y-6", className)}>
       {/* Section Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+        <h2 className="text-display-md text-foreground">{title}</h2>
 
         <div className="flex items-center space-x-4">
           {/* Show More/Less Toggle */}

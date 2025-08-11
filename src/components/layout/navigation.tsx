@@ -57,7 +57,7 @@ export function Navigation() {
                 height={32}
                 className="h-8 w-8"
               />
-              <span className="text-2xl font-bold text-foreground">
+              <span className="text-2xl font-display font-bold text-foreground text-glow">
                 FilmFatale
               </span>
             </div>
@@ -67,26 +67,26 @@ export function Navigation() {
           <div className="hidden md:flex items-center space-x-1">
             <NextLink
               href="/"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+              className="nav-link inline-flex h-9 w-max items-center justify-center rounded-md bg-background/50 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-border/20 hover:border-primary/30 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
             >
               Movies
             </NextLink>
             <NextLink
               href="/tv"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+              className="nav-link inline-flex h-9 w-max items-center justify-center rounded-md bg-background/50 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-border/20 hover:border-primary/30 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
             >
               TV Shows
             </NextLink>
             <NextLink
               href="/discover"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+              className="nav-link inline-flex h-9 w-max items-center justify-center rounded-md bg-background/50 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-border/20 hover:border-primary/30 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
             >
               Discover
             </NextLink>
             {user && (
               <NextLink
                 href="/watchlist"
-                className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                className="nav-link inline-flex h-9 w-max items-center justify-center rounded-md bg-background/50 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-border/20 hover:border-primary/30 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
               >
                 Watchlist
               </NextLink>
@@ -132,7 +132,10 @@ export function Navigation() {
               </div>
             ) : (
               <Link href="/signin">
-                <Button size="sm" className="px-3 py-1.5 text-sm font-medium">
+                <Button
+                  size="sm"
+                  className="btn-noir px-3 py-1.5 text-sm font-medium"
+                >
                   Sign In
                 </Button>
               </Link>

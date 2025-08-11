@@ -4,54 +4,54 @@
 
 @layer base {
   :root {
-    /* Catppuccin Latte - Soft pastel light theme */
-    --background: 220 23% 95%;
-    --foreground: 234 16% 25%;
-    --card: 220 23% 97%;
-    --card-foreground: 234 16% 25%;
-    --popover: 220 23% 97%;
-    --popover-foreground: 234 16% 25%;
-    --primary: 266 85% 58%;
-    --primary-foreground: 220 23% 95%;
-    --secondary: 220 17% 88%;
-    --secondary-foreground: 234 16% 25%;
-    --muted: 220 17% 92%;
-    --muted-foreground: 227 12% 45%;
-    --accent: 35 77% 49%;
-    --accent-foreground: 220 23% 95%;
-    --destructive: 347 87% 44%;
-    --destructive-foreground: 220 23% 95%;
-    --border: 220 14% 89%;
-    --input: 220 17% 88%;
-    --ring: 266 85% 58%;
-    --rating-gold: 35 77% 49%;
-    --rating-gold-foreground: 234 16% 35%;
-    --radius: 0.75rem;
+    /* FilmFatale Light - Classic noir with subtle elegance */
+    --background: 40 10% 98%;
+    --foreground: 0 0% 15%;
+    --card: 40 12% 96%;
+    --card-foreground: 0 0% 15%;
+    --popover: 40 12% 96%;
+    --popover-foreground: 0 0% 15%;
+    --primary: 280 65% 45%;
+    --primary-foreground: 40 10% 98%;
+    --secondary: 40 8% 85%;
+    --secondary-foreground: 0 0% 25%;
+    --muted: 40 8% 90%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 45 85% 55%;
+    --accent-foreground: 0 0% 15%;
+    --destructive: 0 65% 52%;
+    --destructive-foreground: 40 10% 98%;
+    --border: 40 8% 82%;
+    --input: 40 8% 88%;
+    --ring: 280 65% 45%;
+    --rating-gold: 45 85% 55%;
+    --rating-gold-foreground: 0 0% 15%;
+    --radius: 0.5rem;
   }
 
   .dark {
-    /* Catppuccin Mocha - Rich dark theme with vibrant pastels */
-    --background: 240 21% 15%;
-    --foreground: 226 64% 88%;
-    --card: 232 23% 18%;
-    --card-foreground: 226 64% 88%;
-    --popover: 232 23% 18%;
-    --popover-foreground: 226 64% 88%;
-    --primary: 267 84% 81%;
-    --primary-foreground: 240 21% 15%;
-    --secondary: 233 12% 39%;
-    --secondary-foreground: 226 64% 88%;
-    --muted: 230 19% 26%;
-    --muted-foreground: 227 17% 58%;
-    --accent: 35 88% 72%;
-    --accent-foreground: 240 21% 15%;
-    --destructive: 343 81% 75%;
-    --destructive-foreground: 240 21% 15%;
-    --border: 233 12% 39%;
-    --input: 233 12% 39%;
-    --ring: 267 84% 81%;
-    --rating-gold: 35 88% 72%;
-    --rating-gold-foreground: 240 21% 15%;
+    /* FilmFatale Dark - Deep noir with elegant purple and gold accents */
+    --background: 280 15% 8%;
+    --foreground: 40 15% 92%;
+    --card: 280 12% 12%;
+    --card-foreground: 40 15% 92%;
+    --popover: 280 12% 12%;
+    --popover-foreground: 40 15% 92%;
+    --primary: 280 75% 65%;
+    --primary-foreground: 280 15% 8%;
+    --secondary: 280 8% 22%;
+    --secondary-foreground: 40 15% 85%;
+    --muted: 280 8% 18%;
+    --muted-foreground: 40 8% 65%;
+    --accent: 45 92% 68%;
+    --accent-foreground: 280 15% 8%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 40 15% 92%;
+    --border: 280 8% 25%;
+    --input: 280 8% 22%;
+    --ring: 280 75% 65%;
+    --rating-gold: 45 92% 68%;
+    --rating-gold-foreground: 280 15% 8%;
   }
 }
 
@@ -63,6 +63,141 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
+    background-image:
+      radial-gradient(circle at 25% 25%, hsl(var(--muted)) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, hsl(var(--muted)) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+  h5 {
+    font-size: 1.125rem;
+  }
+  h6 {
+    font-size: 1rem;
+  }
+
+  .font-display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Readable body text */
+  p,
+  span,
+  div {
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  /* Typography scale for consistent sizing */
+  .text-display-xl {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .text-display-lg {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+
+  .text-display-md {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .text-display-sm {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+  }
+
+  /* Card typography - increased sizes for readability */
+  .card-title {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.4;
+  }
+
+  .card-title-lg {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.4;
+  }
+
+  .card-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.005em;
+  }
+
+  .card-body {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  /* Person card specific typography */
+  .person-name {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.4;
+  }
+
+  .person-role {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
   }
 }
 
@@ -82,22 +217,90 @@
   }
 }
 
-/* Focus and interaction styles using Tailwind utilities */
+/* FilmFatale noir styling */
 @layer utilities {
-  /* Cinematic card hover effects */
+  /* Dramatic card hover effects with noir shadows */
   .card-hover {
-    @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
+    @apply transition-all duration-500 hover:scale-105;
+    box-shadow: 0 4px 20px hsl(var(--foreground) / 0.1);
   }
 
-  /* Professional navigation links */
+  .card-hover:hover {
+    box-shadow:
+      0 8px 40px hsl(var(--primary) / 0.2),
+      0 4px 20px hsl(var(--accent) / 0.1),
+      0 2px 10px hsl(var(--foreground) / 0.15);
+    transform: scale(1.05) translateY(-2px);
+  }
+
+  /* Femme fatale navigation links with dramatic underlines */
   .nav-link {
-    @apply relative text-foreground/80 hover:text-foreground transition-all duration-200;
+    @apply relative text-foreground/80 hover:text-primary transition-all duration-300;
     @apply after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary;
-    @apply after:transition-all after:duration-300 hover:after:w-full;
+    @apply after:transition-all after:duration-500 hover:after:w-full;
+    @apply after:shadow-[0_0_8px_hsl(var(--primary)_/_0.6)];
   }
 
-  /* Hero section styling */
+  /* Cinematic hero backdrop with film noir atmosphere */
   .hero-backdrop {
-    @apply absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background/70;
+    @apply absolute inset-0;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)) 0%,
+      hsl(var(--background) / 0.95) 25%,
+      hsl(var(--background) / 0.8) 50%,
+      hsl(var(--background) / 0.9) 75%,
+      hsl(var(--background)) 100%
+    );
+  }
+
+  /* Noir text glow effect */
+  .text-glow {
+    text-shadow:
+      0 0 10px hsl(var(--primary) / 0.5),
+      0 0 20px hsl(var(--primary) / 0.3),
+      0 0 30px hsl(var(--primary) / 0.1);
+  }
+
+  /* Gold accent glow */
+  .accent-glow {
+    box-shadow:
+      0 0 20px hsl(var(--accent) / 0.3),
+      0 0 40px hsl(var(--accent) / 0.1);
+  }
+
+  /* Dramatic button styling */
+  .btn-noir {
+    @apply relative overflow-hidden;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--primary) / 0.9) 100%
+    );
+    box-shadow:
+      0 4px 15px hsl(var(--primary) / 0.3),
+      inset 0 1px 0 hsl(var(--primary-foreground) / 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .btn-noir:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 6px 25px hsl(var(--primary) / 0.4),
+      inset 0 1px 0 hsl(var(--primary-foreground) / 0.2);
+  }
+
+  .btn-noir::before {
+    content: "";
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--accent) / 0.2) 0%,
+      transparent 100%
+    );
+  }
+
+  .btn-noir:hover::before {
+    opacity: 1;
   }
 }

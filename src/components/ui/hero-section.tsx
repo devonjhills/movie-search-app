@@ -93,9 +93,7 @@ export function HeroSection({
               <div className="md:col-span-9 lg:col-span-10 space-y-6 text-foreground relative z-10">
                 {/* Title and Year */}
                 <div className="space-y-2">
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight drop-shadow-lg">
-                    {title}
-                  </h1>
+                  <h1 className="text-display-xl drop-shadow-lg">{title}</h1>
                 </div>
 
                 {/* Rating and Date */}
@@ -109,7 +107,7 @@ export function HeroSection({
                   {releaseDate && (
                     <div className="flex items-center space-x-2 text-foreground/80">
                       <CalendarIcon className="h-5 w-5" />
-                      <span className="text-lg drop-shadow-md">
+                      <span className="card-title-lg drop-shadow-md">
                         {new Date(releaseDate).toLocaleDateString("en-US", {
                           year: "numeric",
                           month: "long",
@@ -122,7 +120,7 @@ export function HeroSection({
 
                 {/* Overview */}
                 {movie.overview && (
-                  <p className="text-lg md:text-xl leading-relaxed text-foreground/90 max-w-3xl drop-shadow-md">
+                  <p className="text-display-sm leading-relaxed text-foreground/90 max-w-3xl drop-shadow-md">
                     {truncateText(movie.overview, 300)}
                   </p>
                 )}

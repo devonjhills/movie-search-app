@@ -11,17 +11,19 @@ const getBaseURL = () => {
 
 // Database configuration
 const getDatabaseConfig = () => {
-  // Production: Use Vercel Postgres (try both variable names)
-  const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
-  if (dbUrl) {
-    const pool = new Pool({
-      connectionString: dbUrl,
-      ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-    });
-    return pool;
+  // Only use database in production
+  if (process.env.NODE_ENV === "production") {
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+    if (dbUrl) {
+      const pool = new Pool({
+        connectionString: dbUrl,
+        ssl: { rejectUnauthorized: false },
+      });
+      return pool;
+    }
   }
 
-  // Development: Use in-memory (Better Auth will warn and use memory adapter)
+  // Development: Use in-memory (Better Auth will use memory adapter)
   return undefined;
 };
 

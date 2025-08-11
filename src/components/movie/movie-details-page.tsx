@@ -175,7 +175,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           {/* Movie Details - Full Width */}
           <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="text-display-sm flex items-center gap-2">
                 <FilmIcon className="h-5 w-5" />
                 Movie Details
               </CardTitle>
@@ -184,12 +184,12 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {director && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                       Director
                     </h4>
                     <Link
                       href={`/person/${director.id}`}
-                      className="text-base font-medium text-primary hover:text-primary/80 transition-colors"
+                      className="text-lg font-medium text-primary hover:text-primary/80 transition-colors"
                     >
                       {director.name}
                     </Link>
@@ -198,27 +198,27 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
                 {movie.release_date && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
                       <CalendarIcon className="h-3 w-3" />
                       Release Date
                     </h4>
-                    <p className="text-sm font-medium">{releaseDate}</p>
+                    <p className="text-base font-medium">{releaseDate}</p>
                   </div>
                 )}
 
                 {runtime && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
                       <ClockIcon className="h-3 w-3" />
                       Runtime
                     </h4>
-                    <p className="text-sm font-medium">{runtime}</p>
+                    <p className="text-base font-medium">{runtime}</p>
                   </div>
                 )}
 
                 {usCertification && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
                       <ShieldCheckIcon className="h-3 w-3" />
                       Rating
                     </h4>
@@ -230,15 +230,15 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
                 {movie.vote_average > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
                       <StarSolidIcon className="h-3 w-3" />
                       TMDB Score
                     </h4>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-bold text-primary">
+                      <span className="text-xl font-bold text-primary">
                         {rating}
                       </span>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-base text-muted-foreground">
                         / 10
                       </span>
                     </div>
@@ -247,19 +247,19 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
                 {movie.budget > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                       Budget
                     </h4>
-                    <p className="text-sm font-medium">{budget}</p>
+                    <p className="text-base font-medium">{budget}</p>
                   </div>
                 )}
 
                 {movie.revenue > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                       Revenue
                     </h4>
-                    <p className="text-sm font-medium text-green-600">
+                    <p className="text-base font-medium text-green-600">
                       {revenue}
                     </p>
                   </div>
@@ -267,7 +267,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
                 {movie.production_companies.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                       Production
                     </h4>
                     <div className="space-y-1">
@@ -287,7 +287,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
               {/* Keywords - Full Width Row */}
               {keywords.length > 0 && (
                 <div className="space-y-3 pt-6 border-t border-border/50 mt-6">
-                  <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                     Keywords
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -304,7 +304,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           {mainCast.length > 0 && (
             <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
               <CardHeader>
-                <CardTitle>Cast</CardTitle>
+                <CardTitle className="text-display-sm">Cast</CardTitle>
               </CardHeader>
               <CardContent>
                 <CastGrid
@@ -322,7 +322,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           <div className="container mx-auto px-4 py-8">
             <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
               <CardHeader>
-                <CardTitle>Key Crew</CardTitle>
+                <CardTitle className="text-display-sm">Key Crew</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -344,7 +344,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           <div className="container mx-auto px-4 py-8">
             <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
               <CardHeader>
-                <CardTitle className="text-xl">You might also like</CardTitle>
+                <CardTitle className="text-display-sm">
+                  You might also like
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <MovieGrid
