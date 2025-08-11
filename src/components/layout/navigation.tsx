@@ -131,7 +131,7 @@ export function Navigation() {
                 </button>
               </div>
             ) : (
-              <Link href="/auth/signin">
+              <Link href="/signin">
                 <Button size="sm" className="px-3 py-1.5 text-sm font-medium">
                   Sign In
                 </Button>

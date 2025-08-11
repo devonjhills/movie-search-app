@@ -3,5 +3,17 @@
   "outputDirectory": ".next",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "redirects": [
+    {
+      "source": "/auth/(.*)",
+      "destination": "/api/auth/$1",
+      "permanent": false
+    }
+  ]
 }

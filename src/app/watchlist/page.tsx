@@ -20,7 +20,7 @@ export default function WatchlistPage() {
           <p className="text-muted-foreground">
             Create an account to save your favorite movies and TV shows.
           </p>
-          <Link href="/auth/signin">
+          <Link href="/signin">
             <Button>Sign In</Button>
           </Link>
         </div>

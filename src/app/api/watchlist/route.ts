@@ -1,35 +1,75 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/lib/auth";
 import { WatchlistItem } from "@/lib/types";
+import { headers } from "next/headers";
+import { sql } from "@vercel/postgres";
+
+// In-memory storage for development
+const watchlistData = new Map<string, WatchlistItem[]>();
+
+// Database initialization function
+async function initDatabase() {
+  if (!process.env.POSTGRES_URL) {
+    return; // Skip if no database URL (development mode)
+  }
+
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS watchlist (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        tmdb_id INTEGER NOT NULL,
+        media_type TEXT NOT NULL,
+        title TEXT NOT NULL,
+        poster_path TEXT,
+        overview TEXT,
+        release_date TEXT,
+        vote_average REAL,
+        added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(user_id, tmdb_id, media_type)
+      );
+    `;
+  } catch (error) {
+    console.error("Database initialization error:", error);
+  }
+}
 
 export async function GET() {
   try {
-    const supabase = await createClient();
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
+    if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { data, error } = await supabase
-      .from("watchlist")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Supabase error:", error);
-      return NextResponse.json(
-        { error: "Failed to fetch watchlist" },
-        { status: 500 },
-      );
+    // Production: Use Postgres
+    if (process.env.POSTGRES_URL) {
+      await initDatabase();
+      const { rows } = await sql`
+        SELECT * FROM watchlist 
+        WHERE user_id = ${session.user.id}
+        ORDER BY added_at DESC
+      `;
+      
+      return NextResponse.json({ 
+        items: rows, 
+        total: rows.length 
+      });
     }
-
-    return NextResponse.json({ items: data || [], total: data?.length || 0 });
+    
+    // Development: Use in-memory storage
+    const userWatchlist = watchlistData.get(session.user.id) || [];
+    
+    return NextResponse.json({ 
+      items: userWatchlist.sort((a, b) => 
+        new Date(b.added_at).getTime() - new Date(a.added_at).getTime()
+      ), 
+      total: userWatchlist.length 
+    });
   } catch (error) {
     console.error("Error fetching watchlist:", error);
     return NextResponse.json(
@@ -41,14 +81,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
+    if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -70,14 +107,59 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const now = new Date().toISOString();
+    const watchlistItem: WatchlistItem = {
+      id: `${session.user.id}-${tmdb_id}-${media_type}`,
+      user_id: session.user.id,
+      tmdb_id,
+      media_type,
+      title,
+      poster_path: poster_path || null,
+      overview: overview || "",
+      release_date: release_date || "",
+      vote_average: vote_average || 0,
+      added_at: now,
+      created_at: now,
+      updated_at: now,
+    };
+
+    // Production: Use Postgres
+    if (process.env.POSTGRES_URL) {
+      await initDatabase();
+      
+      try {
+        await sql`
+          INSERT INTO watchlist (
+            id, user_id, tmdb_id, media_type, title, poster_path, 
+            overview, release_date, vote_average, added_at, created_at, updated_at
+          ) VALUES (
+            ${watchlistItem.id}, ${watchlistItem.user_id}, ${watchlistItem.tmdb_id}, 
+            ${watchlistItem.media_type}, ${watchlistItem.title}, ${watchlistItem.poster_path},
+            ${watchlistItem.overview}, ${watchlistItem.release_date}, ${watchlistItem.vote_average},
+            ${watchlistItem.added_at}, ${watchlistItem.created_at}, ${watchlistItem.updated_at}
+          )
+        `;
+        
+        return NextResponse.json({ item: watchlistItem }, { status: 201 });
+      } catch (dbError: unknown) {
+        const error = dbError as { message?: string; code?: string };
+        if (error.message?.includes('duplicate key') || error.code === '23505') {
+          return NextResponse.json(
+            { error: "Item already in watchlist" },
+            { status: 409 },
+          );
+        }
+        throw dbError;
+      }
+    }
+    
+    // Development: Use in-memory storage
+    const userWatchlist = watchlistData.get(session.user.id) || [];
+    
     // Check if item already exists in watchlist
-    const { data: existing } = await supabase
-      .from("watchlist")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("tmdb_id", tmdb_id)
-      .eq("media_type", media_type)
-      .single();
+    const existing = userWatchlist.find(
+      item => item.tmdb_id === tmdb_id && item.media_type === media_type
+    );
 
     if (existing) {
       return NextResponse.json(
@@ -86,36 +168,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const watchlistItem: Omit<
-      WatchlistItem,
-      "id" | "created_at" | "updated_at"
-    > = {
-      user_id: user.id,
-      tmdb_id,
-      media_type,
-      title,
-      poster_path: poster_path || null,
-      overview: overview || "",
-      release_date: release_date || "",
-      vote_average: vote_average || 0,
-      added_at: new Date().toISOString(),
-    };
+    userWatchlist.push(watchlistItem);
+    watchlistData.set(session.user.id, userWatchlist);
 
-    const { data, error } = await supabase
-      .from("watchlist")
-      .insert([watchlistItem])
-      .select()
-      .single();
-
-    if (error) {
-      console.error("Supabase error:", error);
-      return NextResponse.json(
-        { error: "Failed to add to watchlist" },
-        { status: 500 },
-      );
-    }
-
-    return NextResponse.json({ item: data }, { status: 201 });
+    return NextResponse.json({ item: watchlistItem }, { status: 201 });
   } catch (error) {
     console.error("Error adding to watchlist:", error);
     return NextResponse.json(
@@ -127,14 +183,11 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
+    if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -149,20 +202,25 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const { error } = await supabase
-      .from("watchlist")
-      .delete()
-      .eq("user_id", user.id)
-      .eq("tmdb_id", parseInt(tmdb_id))
-      .eq("media_type", media_type);
-
-    if (error) {
-      console.error("Supabase error:", error);
-      return NextResponse.json(
-        { error: "Failed to remove from watchlist" },
-        { status: 500 },
-      );
+    // Production: Use Postgres
+    if (process.env.POSTGRES_URL) {
+      await sql`
+        DELETE FROM watchlist 
+        WHERE user_id = ${session.user.id} 
+        AND tmdb_id = ${parseInt(tmdb_id)} 
+        AND media_type = ${media_type}
+      `;
+      
+      return NextResponse.json({ success: true });
     }
+    
+    // Development: Use in-memory storage
+    const userWatchlist = watchlistData.get(session.user.id) || [];
+    const filteredWatchlist = userWatchlist.filter(
+      item => !(item.tmdb_id === parseInt(tmdb_id) && item.media_type === media_type)
+    );
+    
+    watchlistData.set(session.user.id, filteredWatchlist);
 
     return NextResponse.json({ success: true });
   } catch (error) {
