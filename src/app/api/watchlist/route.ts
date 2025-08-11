@@ -9,7 +9,8 @@ const watchlistData = new Map<string, WatchlistItem[]>();
 
 // Database initialization function
 async function initDatabase() {
-  if (!process.env.POSTGRES_URL) {
+  const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+  if (!dbUrl) {
     return; // Skip if no database URL (development mode)
   }
 
@@ -46,8 +47,9 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Production: Use Postgres
-    if (process.env.POSTGRES_URL) {
+    // Production: Use Postgres  
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+    if (dbUrl) {
       await initDatabase();
       const { rows } = await sql`
         SELECT * FROM watchlist 
@@ -123,8 +125,9 @@ export async function POST(request: NextRequest) {
       updated_at: now,
     };
 
-    // Production: Use Postgres
-    if (process.env.POSTGRES_URL) {
+    // Production: Use Postgres  
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+    if (dbUrl) {
       await initDatabase();
       
       try {
@@ -202,8 +205,9 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Production: Use Postgres
-    if (process.env.POSTGRES_URL) {
+    // Production: Use Postgres  
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+    if (dbUrl) {
       await sql`
         DELETE FROM watchlist 
         WHERE user_id = ${session.user.id} 

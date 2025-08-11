@@ -10,11 +10,12 @@ const getBaseURL = () => {
 
 // Database configuration
 const getDatabaseConfig = () => {
-  // Production: Use Vercel Postgres
-  if (process.env.POSTGRES_URL) {
+  // Production: Use Vercel Postgres (try both variable names)
+  const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+  if (dbUrl) {
     return {
       provider: "postgresql" as const,
-      url: process.env.POSTGRES_URL,
+      url: dbUrl,
     };
   }
   
