@@ -47,7 +47,8 @@ export function Navigation() {
           {/* Logo and Brand */}
           <Link
             href="/"
-            className="flex items-center space-x-3 text-foreground hover:no-underline">
+            className="flex items-center space-x-3 text-foreground hover:no-underline"
+          >
             <div className="flex items-center space-x-2">
               <Image
                 src="/logo.png"
@@ -66,23 +67,27 @@ export function Navigation() {
           <div className="hidden md:flex items-center space-x-1">
             <NextLink
               href="/"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+            >
               Movies
             </NextLink>
             <NextLink
               href="/tv"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+            >
               TV Shows
             </NextLink>
             <NextLink
               href="/discover"
-              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+              className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+            >
               Discover
             </NextLink>
             {user && (
               <NextLink
                 href="/watchlist"
-                className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                className="inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+              >
                 Watchlist
               </NextLink>
             )}
@@ -113,13 +118,15 @@ export function Navigation() {
                 <Link
                   href="/watchlist"
                   className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
-                  title="My Watchlist">
+                  title="My Watchlist"
+                >
                   <BookmarkIcon className="h-4 w-4" />
                 </Link>
                 <button
                   onClick={() => signOut()}
                   className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
-                  title="Sign Out">
+                  title="Sign Out"
+                >
                   <ExitIcon className="h-4 w-4" />
                 </button>
               </div>
@@ -134,7 +141,8 @@ export function Navigation() {
             <button
               onClick={toggleTheme}
               className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
-              aria-label="Toggle theme">
+              aria-label="Toggle theme"
+            >
               {!mounted ? (
                 // Show a neutral icon during SSR to prevent hydration mismatch
                 <div className="h-5 w-5" />
@@ -152,26 +160,30 @@ export function Navigation() {
           <Link
             href="/"
             variant="nav"
-            className="px-3 py-2 text-sm font-semibold">
+            className="px-3 py-2 text-sm font-semibold"
+          >
             Movies
           </Link>
           <Link
             href="/tv"
             variant="nav"
-            className="px-3 py-2 text-sm font-semibold">
+            className="px-3 py-2 text-sm font-semibold"
+          >
             TV Shows
           </Link>
           <Link
             href="/discover"
             variant="nav"
-            className="px-3 py-2 text-sm font-semibold">
+            className="px-3 py-2 text-sm font-semibold"
+          >
             Discover
           </Link>
           {user && (
             <Link
               href="/watchlist"
               variant="nav"
-              className="px-3 py-2 text-sm font-semibold">
+              className="px-3 py-2 text-sm font-semibold"
+            >
               Watchlist
             </Link>
           )}

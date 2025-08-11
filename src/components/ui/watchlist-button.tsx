@@ -25,7 +25,8 @@ export function WatchlistButton({
 
   const inWatchlist = isInWatchlist(item.id, mediaType);
   const title = "title" in item ? item.title : item.name;
-  const releaseDate = "release_date" in item ? item.release_date : item.first_air_date;
+  const releaseDate =
+    "release_date" in item ? item.release_date : item.first_air_date;
 
   const handleClick = async () => {
     if (inWatchlist) return;

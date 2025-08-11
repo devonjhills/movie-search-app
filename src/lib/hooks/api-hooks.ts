@@ -270,12 +270,14 @@ export const useMultiSearch = (query: string) => {
     include_adult: API_CONFIG.include_adult,
   });
 
-  const { data, error, isLoading } = useSWR<
-    TMDBResponse<SearchResultItem>
-  >(query ? `${ENDPOINTS.searchMulti}?${queryParams}` : null, fetcher<TMDBResponse<SearchResultItem>>, {
-    ...SWR_CONFIG,
-    dedupingInterval: 2000, // Shorter deduping for search
-  });
+  const { data, error, isLoading } = useSWR<TMDBResponse<SearchResultItem>>(
+    query ? `${ENDPOINTS.searchMulti}?${queryParams}` : null,
+    fetcher<TMDBResponse<SearchResultItem>>,
+    {
+      ...SWR_CONFIG,
+      dedupingInterval: 2000, // Shorter deduping for search
+    },
+  );
 
   // Transform search results into categorized format
   const transformedResults: MultiSearchResult = {

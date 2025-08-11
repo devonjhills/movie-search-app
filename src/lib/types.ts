@@ -487,19 +487,23 @@ export type MovieDetailsOrTVShowDetails = MovieDetails | TVShowDetails;
 
 // Type guards
 export function isMovie(item: MovieOrTVShow): item is Movie {
-  return 'title' in item && 'release_date' in item;
+  return "title" in item && "release_date" in item;
 }
 
 export function isTVShow(item: MovieOrTVShow): item is TVShow {
-  return 'name' in item && 'first_air_date' in item;
+  return "name" in item && "first_air_date" in item;
 }
 
-export function isMovieDetails(item: MovieDetailsOrTVShowDetails): item is MovieDetails {
-  return 'title' in item && 'release_date' in item;
+export function isMovieDetails(
+  item: MovieDetailsOrTVShowDetails,
+): item is MovieDetails {
+  return "title" in item && "release_date" in item;
 }
 
-export function isTVShowDetails(item: MovieDetailsOrTVShowDetails): item is TVShowDetails {
-  return 'name' in item && 'first_air_date' in item;
+export function isTVShowDetails(
+  item: MovieDetailsOrTVShowDetails,
+): item is TVShowDetails {
+  return "name" in item && "first_air_date" in item;
 }
 
 // Utility types for API responses

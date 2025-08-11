@@ -118,7 +118,6 @@ A modern movie and TV discovery platform built with Next.js 15, TypeScript, and 
    ```
 
 3. **Set up Supabase database**
-
    - Create a new table called `watchlist` using the schema in `supabase-schema.sql`
    - Enable Row Level Security and create appropriate policies
 

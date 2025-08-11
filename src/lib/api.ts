@@ -52,7 +52,7 @@ export const isAPIError = (error: unknown): error is TMDBError => {
   if (!error || typeof error !== "object" || error === null) {
     return false;
   }
-  
+
   const errorObj = error as Record<string, unknown>;
   return (
     "status_code" in errorObj &&

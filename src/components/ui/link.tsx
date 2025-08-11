@@ -3,7 +3,11 @@ import { forwardRef } from "react";
 import NextLink from "next/link";
 import { type ClassValue } from "clsx";
 
-interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'className'> {
+interface LinkProps
+  extends Omit<
+    React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    "href" | "className"
+  > {
   href: string;
   variant?: "default" | "nav" | "button" | "ghost" | "accent";
   size?: "sm" | "md" | "lg";

@@ -22,7 +22,10 @@ import {
   formatVoteAverage,
   getUSCertification,
 } from "@/lib/utils";
-import type { WatchProviderRegion, MovieDetailsOrTVShowDetails } from "@/lib/types";
+import type {
+  WatchProviderRegion,
+  MovieDetailsOrTVShowDetails,
+} from "@/lib/types";
 import { isMovieDetails, isTVShowDetails } from "@/lib/types";
 
 interface DetailsHeroProps {
@@ -54,12 +57,14 @@ export function DetailsHero({
   const title = isMovieDetails(item) ? item.title : item.name;
 
   // Get US MPAA rating for movies
-  const usCertification =
-    isMovieDetails(item) ? getUSCertification(item.release_dates) : null;
+  const usCertification = isMovieDetails(item)
+    ? getUSCertification(item.release_dates)
+    : null;
 
   // External links - raw date for ExternalLinks component
-  const rawReleaseDate =
-    isMovieDetails(item) ? item.release_date : item.first_air_date;
+  const rawReleaseDate = isMovieDetails(item)
+    ? item.release_date
+    : item.first_air_date;
 
   return (
     <>
@@ -120,9 +125,16 @@ export function DetailsHero({
                       <h1 className="text-4xl md:text-5xl font-bold leading-tight text-foreground drop-shadow-2xl">
                         {title}
                       </h1>
-                      {((isMovieDetails(item) && item.tagline) || (isTVShowDetails(item) && item.tagline)) && (
+                      {((isMovieDetails(item) && item.tagline) ||
+                        (isTVShowDetails(item) && item.tagline)) && (
                         <p className="text-lg italic text-muted-foreground drop-shadow-md">
-                          &ldquo;{isMovieDetails(item) ? item.tagline : isTVShowDetails(item) ? item.tagline : ''}&rdquo;
+                          &ldquo;
+                          {isMovieDetails(item)
+                            ? item.tagline
+                            : isTVShowDetails(item)
+                              ? item.tagline
+                              : ""}
+                          &rdquo;
                         </p>
                       )}
                     </div>
@@ -178,18 +190,27 @@ export function DetailsHero({
                   {/* Section 2: Secondary Information */}
                   <div className="space-y-4">
                     {/* Genres */}
-                    {((isMovieDetails(item) && item.genres) || (isTVShowDetails(item) && item.genres)) && 
-                     ((isMovieDetails(item) ? item.genres : isTVShowDetails(item) ? item.genres : []).length > 0) && (
-                      <div className="flex flex-wrap gap-2">
-                        {(isMovieDetails(item) ? item.genres : isTVShowDetails(item) ? item.genres : []).map(
-                          (genre: { id: number; name: string }) => (
+                    {((isMovieDetails(item) && item.genres) ||
+                      (isTVShowDetails(item) && item.genres)) &&
+                      (isMovieDetails(item)
+                        ? item.genres
+                        : isTVShowDetails(item)
+                          ? item.genres
+                          : []
+                      ).length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {(isMovieDetails(item)
+                            ? item.genres
+                            : isTVShowDetails(item)
+                              ? item.genres
+                              : []
+                          ).map((genre: { id: number; name: string }) => (
                             <Badge key={genre.id} variant="secondary">
                               {genre.name}
                             </Badge>
-                          ),
-                        )}
-                      </div>
-                    )}
+                          ))}
+                        </div>
+                      )}
 
                     {/* Overview */}
                     {item.overview && (
@@ -232,14 +253,28 @@ export function DetailsHero({
 
                   {/* Section 4: Secondary Actions & Discovery */}
                   {(watchProviders?.flatrate?.length ||
-                    ((isMovieDetails(item) && item.external_ids?.imdb_id) || (isTVShowDetails(item) && item.external_ids?.imdb_id)) ||
-                    ((isMovieDetails(item) && item.homepage) || (isTVShowDetails(item) && item.homepage))) && (
+                    (isMovieDetails(item) && item.external_ids?.imdb_id) ||
+                    (isTVShowDetails(item) && item.external_ids?.imdb_id) ||
+                    (isMovieDetails(item) && item.homepage) ||
+                    (isTVShowDetails(item) && item.homepage)) && (
                     <div className="pt-4 border-t border-border/50">
                       <div className="flex flex-wrap items-center justify-between gap-6">
                         {/* External Links - Left Side */}
                         <ExternalLinks
-                          externalIds={(isMovieDetails(item) ? item.external_ids : isTVShowDetails(item) ? item.external_ids : undefined)}
-                          homepage={(isMovieDetails(item) ? item.homepage : isTVShowDetails(item) ? item.homepage : undefined)}
+                          externalIds={
+                            isMovieDetails(item)
+                              ? item.external_ids
+                              : isTVShowDetails(item)
+                                ? item.external_ids
+                                : undefined
+                          }
+                          homepage={
+                            isMovieDetails(item)
+                              ? item.homepage
+                              : isTVShowDetails(item)
+                                ? item.homepage
+                                : undefined
+                          }
                           title={title}
                           releaseDate={rawReleaseDate}
                         />
