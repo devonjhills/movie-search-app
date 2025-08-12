@@ -4,10 +4,10 @@ import Link from "next/link";
 import {
   CalendarIcon,
   ClockIcon,
-  FilmIcon,
-  ShieldCheckIcon,
-} from "@heroicons/react/24/outline";
-import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
+  VideoIcon,
+  InfoCircledIcon,
+} from "@radix-ui/react-icons";
+import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useMovieDetails, useMovieWatchProviders } from "@/lib/hooks/api-hooks";
 import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/ui/cast-grid";
@@ -77,7 +77,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <FilmIcon className="h-16 w-16 text-muted-foreground mx-auto" />
+          <VideoIcon className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">Movie Not Found</h1>
           <p className="text-muted-foreground">
             The movie you&apos;re looking for doesn&apos;t exist or has been
@@ -176,7 +176,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
             <CardHeader>
               <CardTitle className="text-display-sm flex items-center gap-2">
-                <FilmIcon className="h-5 w-5" />
+                <VideoIcon className="h-5 w-5" />
                 Movie Details
               </CardTitle>
             </CardHeader>
@@ -219,7 +219,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 {usCertification && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
-                      <ShieldCheckIcon className="h-3 w-3" />
+                      <InfoCircledIcon className="h-3 w-3" />
                       Rating
                     </h4>
                     <div className="inline-flex px-2.5 py-1 rounded-md text-xs font-bold border-2 border-primary/80 text-primary bg-background shadow-sm">
@@ -231,7 +231,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 {movie.vote_average > 0 && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
-                      <StarSolidIcon className="h-3 w-3" />
+                      <StarFilledIcon className="h-3 w-3" />
                       TMDB Score
                     </h4>
                     <div className="flex items-center gap-2">

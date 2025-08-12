@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarIcon, TvIcon } from "@heroicons/react/24/outline";
-import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
+import { CalendarIcon, VideoIcon } from "@radix-ui/react-icons";
+import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useTVDetails, useTVWatchProviders } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { DetailsHero } from "@/components/ui/details-hero";
@@ -68,7 +68,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <TvIcon className="h-16 w-16 text-muted-foreground mx-auto" />
+          <VideoIcon className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">TV Show Not Found</h1>
           <p className="text-muted-foreground">
             The TV show you&apos;re looking for doesn&apos;t exist or has been
@@ -184,7 +184,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
             <CardHeader>
               <CardTitle className="text-display-sm flex items-center gap-2">
-                <TvIcon className="h-5 w-5" />
+                <VideoIcon className="h-5 w-5" />
                 TV Show Details
               </CardTitle>
             </CardHeader>
@@ -232,7 +232,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 {tvShow.vote_average > 0 && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
-                      <StarSolidIcon className="h-4 w-4" />
+                      <StarFilledIcon className="h-4 w-4" />
                       TMDB Score
                     </h4>
                     <div className="flex items-center gap-2">
@@ -342,7 +342,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                           </>
                         ) : (
                           <div className="flex h-full w-full items-center justify-center">
-                            <TvIcon className="h-6 w-6 text-primary/80 group-hover:text-primary transition-colors" />
+                            <VideoIcon className="h-6 w-6 text-primary/80 group-hover:text-primary transition-colors" />
                           </div>
                         )}
                         <div className="absolute inset-0 ring-2 ring-primary/0 group-hover:ring-primary/30 transition-all duration-300 rounded-lg" />

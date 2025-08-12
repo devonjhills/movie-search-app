@@ -58,7 +58,7 @@ Film Fatale is a production-ready, responsive movie and TV discovery platform bu
 | **Database**         | Vercel Postgres                     | Latest  |
 | **State Management** | SWR for Data Fetching               | Latest  |
 | **UI Components**    | Headless UI + shadcn/ui             | Latest  |
-| **Icons**            | Heroicons + Lucide React            | Latest  |
+| **Icons**            | Radix UI Icons                      | Latest  |
 | **Theme Management** | next-themes                         | Latest  |
 | **Deployment**       | Vercel                              | Latest  |
 

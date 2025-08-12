@@ -6,10 +6,10 @@ import {
   ArrowLeftIcon,
   CalendarIcon,
   ClockIcon,
-  TvIcon,
+  VideoIcon,
   PlayIcon,
-} from "@heroicons/react/24/outline";
-import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
+} from "@radix-ui/react-icons";
+import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useTVSeasonDetails, useTVDetails } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { PersonCard } from "@/components/ui/person-card";
@@ -60,7 +60,7 @@ export function TVSeasonDetailsPage({
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <TvIcon className="h-16 w-16 text-muted-foreground mx-auto" />
+          <VideoIcon className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">Season Not Found</h1>
           <p className="text-muted-foreground">
             The season you&apos;re looking for doesn&apos;t exist or has been
@@ -103,7 +103,7 @@ export function TVSeasonDetailsPage({
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-muted rounded-lg">
-                  <TvIcon className="h-8 w-8 text-muted-foreground" />
+                  <VideoIcon className="h-8 w-8 text-muted-foreground" />
                 </div>
               )}
             </div>
@@ -117,7 +117,7 @@ export function TVSeasonDetailsPage({
                 <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
                   {season.vote_average > 0 && (
                     <div className="flex items-center gap-1">
-                      <StarSolidIcon className="h-4 w-4 text-yellow-500" />
+                      <StarFilledIcon className="h-4 w-4 text-yellow-500" />
                       <span className="font-semibold">{rating}</span>
                     </div>
                   )}
@@ -211,7 +211,7 @@ export function TVSeasonDetailsPage({
                         <div className="flex items-center gap-3 text-sm text-muted-foreground flex-shrink-0">
                           {episode.vote_average > 0 && (
                             <div className="flex items-center gap-1">
-                              <StarSolidIcon className="h-3 w-3 text-yellow-500" />
+                              <StarFilledIcon className="h-3 w-3 text-yellow-500" />
                               <span>
                                 {formatVoteAverage(episode.vote_average)}
                               </span>

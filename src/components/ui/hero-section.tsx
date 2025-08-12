@@ -1,13 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { StarIcon, CalendarIcon } from "@heroicons/react/24/solid";
+import {
+  StarFilledIcon,
+  CalendarIcon,
+  InfoCircledIcon,
+} from "@radix-ui/react-icons";
 import { cn, formatVoteAverage, truncateText } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import { WatchlistButton } from "@/components/ui/watchlist-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Movie, FormattedMovie, TVShow } from "@/lib/types";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 interface HeroSectionProps {
   movie: Movie | FormattedMovie | TVShow;
@@ -99,8 +102,8 @@ export function HeroSection({
                 {/* Rating and Date */}
                 <div className="flex items-center gap-4">
                   {movie.vote_average > 0 && (
-                    <Badge>
-                      <StarIcon className="h-4 w-4" />
+                    <Badge className="gap-1">
+                      <StarFilledIcon className="h-4 w-4" />
                       <span>{rating}</span>
                     </Badge>
                   )}
@@ -129,7 +132,7 @@ export function HeroSection({
                 <div className="flex flex-wrap items-center gap-4">
                   <Button asChild size="lg">
                     <Link href={`/${mediaType}/${movie.id}`}>
-                      <InformationCircleIcon className="h-4 w-4" />
+                      <InfoCircledIcon className="h-4 w-4" />
                       View Details
                     </Link>
                   </Button>

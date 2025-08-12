@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { MovieGrid } from "./movie-grid";
 import { cn } from "@/lib/utils";
 import type { Movie, FormattedMovie } from "@/lib/types";

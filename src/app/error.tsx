@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import {
-  ExclamationTriangleIcon as AlertTriangleIcon,
-  ArrowPathIcon as RefreshCwIcon,
+  ExclamationTriangleIcon,
+  ReloadIcon,
   HomeIcon,
-} from "@heroicons/react/24/outline";
+} from "@radix-ui/react-icons";
 import Link from "next/link";
 
 export default function Error({
@@ -24,7 +24,7 @@ export default function Error({
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center space-y-6 max-w-md mx-auto px-4">
         <div className="space-y-4">
-          <AlertTriangleIcon className="h-24 w-24 text-destructive mx-auto" />
+          <ExclamationTriangleIcon className="h-24 w-24 text-destructive mx-auto" />
           <h1 className="text-2xl font-bold text-destructive">
             Something went wrong!
           </h1>
@@ -52,7 +52,7 @@ export default function Error({
             onClick={reset}
             className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
           >
-            <RefreshCwIcon className="h-4 w-4" />
+            <ReloadIcon className="h-4 w-4" />
             <span>Try again</span>
           </button>
           <Link

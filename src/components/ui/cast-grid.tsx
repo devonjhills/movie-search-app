@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { PersonCard } from "@/components/ui/person-card";
 

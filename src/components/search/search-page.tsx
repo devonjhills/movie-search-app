@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { useMultiSearch } from "@/lib/hooks/api-hooks";
 import { debounce } from "@/lib/utils";
 import { SearchResults } from "./search-results";
@@ -86,7 +86,7 @@ export function SearchPage({ initialQuery = "" }: SearchPageProps) {
                 className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-1 text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="Clear search"
               >
-                <XMarkIcon className="h-5 w-5" />
+                <Cross2Icon className="h-5 w-5" />
               </button>
             )}
           </div>

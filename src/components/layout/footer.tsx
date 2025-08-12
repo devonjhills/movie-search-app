@@ -4,32 +4,48 @@ import Image from "next/image";
 export function Footer() {
   return (
     <footer className="relative z-20 border-t border-border bg-background">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      {/* Background Logo */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+        <div className="relative h-56 w-56">
+          <Image
+            src="/logo.png"
+            alt=""
+            fill
+            sizes="224px"
+            className="object-contain"
+          />
+        </div>
+      </div>
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 justify-items-center">
           {/* Brand */}
           <div className="space-y-3">
-            <div className="flex items-center space-x-2">
-              <div className="relative h-6 w-6">
-                <Image
-                  src="/logo.png"
-                  alt="FilmFatale Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-lg font-display font-semibold text-glow">
-                FilmFatale
-              </span>
+            <h3 className="text-base font-display font-semibold">FilmFatale</h3>
+            <div className="space-y-2">
+              <Link
+                href="/"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Home
+              </Link>
+              <Link
+                href="/discover"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Discover
+              </Link>
+              <Link
+                href="/search"
+                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Search
+              </Link>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Discover your next favorite movie or TV show with our
-              comprehensive database powered by TMDB.
-            </p>
           </div>
 
           {/* Movies */}
           <div className="space-y-3">
-            <h3 className="text-sm font-display font-semibold">Movies</h3>
+            <h3 className="text-base font-display font-semibold">Movies</h3>
             <div className="space-y-2">
               <Link
                 href="/"
@@ -54,7 +70,7 @@ export function Footer() {
 
           {/* TV Shows */}
           <div className="space-y-3">
-            <h3 className="text-sm font-display font-semibold">TV Shows</h3>
+            <h3 className="text-base font-display font-semibold">TV Shows</h3>
             <div className="space-y-2">
               <Link
                 href="/tv"
@@ -77,27 +93,27 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Discover */}
+          {/* Support & Legal */}
           <div className="space-y-3">
-            <h3 className="text-sm font-display font-semibold">Discover</h3>
+            <h3 className="text-base font-display font-semibold">Support</h3>
             <div className="space-y-2">
               <Link
-                href="/discover"
+                href="/about"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                Browse by Genre
+                About Us
               </Link>
               <Link
-                href="/discover"
+                href="/privacy"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                Trending
+                Privacy Policy
               </Link>
               <Link
-                href="/search"
+                href="/terms"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                Advanced Search
+                Terms of Service
               </Link>
             </div>
           </div>

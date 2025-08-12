@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { StarIcon } from "@heroicons/react/24/solid";
+import { StarFilledIcon } from "@radix-ui/react-icons";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn, formatVoteAverage, truncateText } from "@/lib/utils";
@@ -39,8 +39,7 @@ export function MovieCard({
     <Link href={`/movie/${movie.id}`} className="group">
       <Card
         className={cn(
-          "overflow-hidden bg-transparent shadow-none card-hover h-full flex flex-col",
-          "border-0",
+          "overflow-hidden bg-card hover:bg-card/80 border-border/50 hover:border-border transition-all duration-200 hover:shadow-lg h-full flex flex-col",
           sizeClasses[size],
           className,
         )}
@@ -67,8 +66,8 @@ export function MovieCard({
             {/* Rating Badge */}
             {showRating && movie.vote_average > 0 && (
               <div className="absolute top-2 right-2">
-                <Badge>
-                  <StarIcon className="h-3 w-3" />
+                <Badge className="gap-1">
+                  <StarFilledIcon className="h-3 w-3" />
                   <span>{rating}</span>
                 </Badge>
               </div>

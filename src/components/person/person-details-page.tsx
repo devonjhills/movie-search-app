@@ -3,12 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  UserIcon,
+  PersonIcon,
   CalendarIcon,
-  MapPinIcon,
-  LinkIcon,
-  FilmIcon,
-} from "@heroicons/react/24/outline";
+  GlobeIcon,
+  Link2Icon,
+  VideoIcon,
+} from "@radix-ui/react-icons";
 import { usePersonDetails } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { formatDate, calculateAge } from "@/lib/utils";
@@ -57,7 +57,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <UserIcon className="h-16 w-16 text-muted-foreground mx-auto" />
+          <PersonIcon className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">Person Not Found</h1>
           <p className="text-muted-foreground">
             The person you&apos;re looking for doesn&apos;t exist or has been
@@ -134,7 +134,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-muted rounded-lg">
-                  <UserIcon className="h-24 w-24 text-muted-foreground" />
+                  <PersonIcon className="h-24 w-24 text-muted-foreground" />
                 </div>
               )}
             </div>
@@ -173,7 +173,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                       </div>
                       {person.place_of_birth && (
                         <div className="flex items-center space-x-1">
-                          <MapPinIcon className="h-4 w-4 text-muted-foreground" />
+                          <GlobeIcon className="h-4 w-4 text-muted-foreground" />
                           <span>{person.place_of_birth}</span>
                         </div>
                       )}
@@ -229,7 +229,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                       rel="noopener noreferrer"
                       className="flex items-center space-x-2 text-sm text-blue-500 hover:text-blue-400 transition-colors"
                     >
-                      <LinkIcon className="h-4 w-4" />
+                      <Link2Icon className="h-4 w-4" />
                       <span>IMDB</span>
                     </a>
                   )}
@@ -240,7 +240,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                       rel="noopener noreferrer"
                       className="flex items-center space-x-2 text-sm text-blue-500 hover:text-blue-400 transition-colors"
                     >
-                      <LinkIcon className="h-4 w-4" />
+                      <Link2Icon className="h-4 w-4" />
                       <span>Instagram</span>
                     </a>
                   )}
@@ -251,7 +251,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                       rel="noopener noreferrer"
                       className="flex items-center space-x-2 text-sm text-blue-500 hover:text-blue-400 transition-colors"
                     >
-                      <LinkIcon className="h-4 w-4" />
+                      <Link2Icon className="h-4 w-4" />
                       <span>Twitter</span>
                     </a>
                   )}
@@ -295,7 +295,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <FilmIcon className="h-5 w-5" />
+                    <VideoIcon className="h-5 w-5" />
                     <span>Movie Credits</span>
                     <span className="text-sm font-normal text-muted-foreground">
                       ({movieCredits.length} total)
@@ -324,7 +324,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                             />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center bg-muted rounded">
-                              <FilmIcon className="h-4 w-4 text-muted-foreground" />
+                              <VideoIcon className="h-4 w-4 text-muted-foreground" />
                             </div>
                           )}
                         </div>

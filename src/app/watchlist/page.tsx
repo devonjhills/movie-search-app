@@ -5,7 +5,8 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { useWatchlist } from "@/lib/hooks/use-watchlist";
 import { WatchlistGrid } from "@/components/watchlist/watchlist-grid";
 import { Button } from "@/components/ui/button";
-import { BookmarkIcon } from "@heroicons/react/24/outline";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookmarkIcon, VideoIcon } from "@radix-ui/react-icons";
 
 export default function WatchlistPage() {
   const { user } = useAuth();
@@ -84,7 +85,43 @@ export default function WatchlistPage() {
             </Button>
           </div>
         ) : (
-          <WatchlistGrid items={watchlist} />
+          <Tabs defaultValue="all" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3 max-w-md">
+              <TabsTrigger value="all" className="flex items-center gap-2">
+                <BookmarkIcon className="h-4 w-4" />
+                All ({watchlist.length})
+              </TabsTrigger>
+              <TabsTrigger value="movies" className="flex items-center gap-2">
+                <VideoIcon className="h-4 w-4" />
+                Movies (
+                {watchlist.filter((item) => item.media_type === "movie").length}
+                )
+              </TabsTrigger>
+              <TabsTrigger value="tv" className="flex items-center gap-2">
+                <VideoIcon className="h-4 w-4" />
+                TV Shows (
+                {watchlist.filter((item) => item.media_type === "tv").length})
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="all" className="space-y-4">
+              <WatchlistGrid items={watchlist} size="sm" />
+            </TabsContent>
+
+            <TabsContent value="movies" className="space-y-4">
+              <WatchlistGrid
+                items={watchlist.filter((item) => item.media_type === "movie")}
+                size="sm"
+              />
+            </TabsContent>
+
+            <TabsContent value="tv" className="space-y-4">
+              <WatchlistGrid
+                items={watchlist.filter((item) => item.media_type === "tv")}
+                size="sm"
+              />
+            </TabsContent>
+          </Tabs>
         )}
       </div>
     </div>

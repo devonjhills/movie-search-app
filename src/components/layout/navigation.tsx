@@ -2,7 +2,14 @@
 
 import { Link } from "@/components/ui/link";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import NextLink from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -10,15 +17,14 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useAuth } from "@/components/providers/auth-provider";
 import {
-  MagnifyingGlassIcon,
   MoonIcon,
   SunIcon,
   ExitIcon,
+  PersonIcon,
   BookmarkIcon,
 } from "@radix-ui/react-icons";
 
 export function Navigation() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { theme, setTheme } = useTheme();
@@ -28,14 +34,6 @@ export function Navigation() {
     setMounted(true);
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery("");
-    }
-  };
-
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
@@ -43,118 +41,123 @@ export function Navigation() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo and Brand */}
-          <Link
-            href="/"
-            className="flex items-center space-x-3 text-foreground hover:no-underline"
-          >
-            <div className="flex items-center space-x-2">
+        <div className="flex h-16 items-center justify-between w-full">
+          {/* Left: Logo */}
+          <div className="flex-shrink-0">
+            <Link
+              href="/"
+              className="flex items-center text-foreground hover:no-underline"
+            >
               <Image
                 src="/logo.png"
                 alt="FilmFatale"
-                width={32}
-                height={32}
-                className="h-8 w-8"
+                width={48}
+                height={48}
+                className="h-12 w-12"
               />
-              <span className="text-2xl font-display font-bold text-foreground text-glow">
-                FilmFatale
-              </span>
-            </div>
-          </Link>
-
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-1">
-            <NextLink
-              href="/"
-              className="nav-link inline-flex h-9 w-max items-center justify-center rounded-md bg-background/50 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-border/20 hover:border-primary/30 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            >
-              Movies
-            </NextLink>
-            <NextLink
-              href="/tv"
-              className="nav-link inline-flex h-9 w-max items-center justify-center rounded-md bg-background/50 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-border/20 hover:border-primary/30 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            >
-              TV Shows
-            </NextLink>
-            <NextLink
-              href="/discover"
-              className="nav-link inline-flex h-9 w-max items-center justify-center rounded-md bg-background/50 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-border/20 hover:border-primary/30 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            >
-              Discover
-            </NextLink>
-            {user && (
-              <NextLink
-                href="/watchlist"
-                className="nav-link inline-flex h-9 w-max items-center justify-center rounded-md bg-background/50 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-border/20 hover:border-primary/30 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-              >
-                Watchlist
-              </NextLink>
-            )}
+            </Link>
           </div>
 
-          {/* Search and Theme Toggle */}
-          <div className="flex items-center space-x-4">
-            {/* Enhanced Search Form */}
-            <form onSubmit={handleSearch} className="relative">
-              <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground z-10" />
-                <Input
-                  type="text"
-                  placeholder="Search movies, TV shows, people..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-72 lg:w-80 pl-9 pr-3 bg-background/60 backdrop-blur-sm border-border/50 hover:border-primary/50 focus:border-primary transition-all duration-200 text-sm placeholder:text-muted-foreground/80"
-                />
-              </div>
-            </form>
-
-            {/* Auth and Theme Toggle */}
-            {user ? (
-              <div className="flex items-center space-x-2">
-                <span className="hidden md:block text-sm text-foreground/80 mr-2">
-                  {user.email}
-                </span>
-                <Link
+          {/* Center: Navigation Links */}
+          <div className="hidden md:flex items-center justify-center flex-1">
+            <div className="flex items-center space-x-1">
+              <NextLink
+                href="/"
+                className="nav-link inline-flex h-10 w-max items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                Movies
+              </NextLink>
+              <NextLink
+                href="/tv"
+                className="nav-link inline-flex h-10 w-max items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                TV Shows
+              </NextLink>
+              <NextLink
+                href="/search"
+                className="nav-link inline-flex h-10 w-max items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                Browse
+              </NextLink>
+              {user && (
+                <NextLink
                   href="/watchlist"
-                  className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
-                  title="My Watchlist"
+                  className="nav-link inline-flex h-10 w-max items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <BookmarkIcon className="h-4 w-4" />
-                </Link>
-                <button
-                  onClick={() => signOut()}
-                  className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
-                  title="Sign Out"
-                >
-                  <ExitIcon className="h-4 w-4" />
-                </button>
-              </div>
-            ) : (
-              <Link href="/signin">
-                <Button
-                  size="sm"
-                  className="btn-noir px-3 py-1.5 text-sm font-medium"
-                >
-                  Sign In
-                </Button>
-              </Link>
-            )}
+                  Watchlist
+                </NextLink>
+              )}
+            </div>
+          </div>
 
-            <button
+          {/* Right: Controls */}
+          <div className="flex items-center space-x-2 flex-shrink-0">
+            {/* Auth Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="h-12 w-12 p-0 rounded-lg"
+                >
+                  <div className="relative">
+                    <PersonIcon className="h-7 w-7" />
+                    {user && (
+                      <div className="absolute -top-0.5 -right-0.5 h-3 w-3 rounded-full bg-primary border border-background" />
+                    )}
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                {user ? (
+                  <>
+                    <DropdownMenuLabel className="text-xs text-foreground/60">
+                      {user.email}
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => router.push("/watchlist")}
+                      className="flex items-center"
+                    >
+                      <BookmarkIcon className="h-4 w-4 mr-2" />
+                      <span>Watchlist</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => signOut()}
+                      className="flex items-center"
+                    >
+                      <ExitIcon className="h-4 w-4 mr-2" />
+                      <span>Sign Out</span>
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <DropdownMenuItem
+                    onClick={() => router.push("/signin")}
+                    className="flex items-center"
+                  >
+                    <PersonIcon className="h-4 w-4 mr-2" />
+                    <span>Sign In</span>
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Button
               onClick={toggleTheme}
-              className="rounded-lg p-2 text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/20 interactive"
+              variant="ghost"
+              size="lg"
+              className="h-12 w-12 p-0 rounded-lg"
               aria-label="Toggle theme"
             >
               {!mounted ? (
                 // Show a neutral icon during SSR to prevent hydration mismatch
-                <div className="h-5 w-5" />
+                <div className="h-7 w-7" />
               ) : theme === "dark" ? (
-                <SunIcon className="h-4 w-4" />
+                <SunIcon className="h-7 w-7 stroke-2" />
               ) : (
-                <MoonIcon className="h-4 w-4" />
+                <MoonIcon className="h-7 w-7 stroke-2" />
               )}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -175,11 +178,11 @@ export function Navigation() {
             TV Shows
           </Link>
           <Link
-            href="/discover"
+            href="/search"
             variant="nav"
             className="px-3 py-2 text-sm font-semibold"
           >
-            Discover
+            Browse
           </Link>
           {user && (
             <Link

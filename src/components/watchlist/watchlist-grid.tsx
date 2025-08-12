@@ -5,17 +5,30 @@ import Image from "next/image";
 import { useWatchlist } from "@/lib/hooks/use-watchlist";
 import { getImageUrl } from "@/lib/api";
 import { formatDate, formatVoteAverage } from "@/lib/utils";
-import { TrashIcon } from "@heroicons/react/24/outline";
-import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@radix-ui/react-icons";
+import { StarFilledIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
 import type { WatchlistItem } from "@/lib/types";
 
 interface WatchlistGridProps {
   items: WatchlistItem[];
+  size?: "sm" | "md" | "lg";
 }
 
-export function WatchlistGrid({ items }: WatchlistGridProps) {
+export function WatchlistGrid({ items, size = "md" }: WatchlistGridProps) {
   const { removeFromWatchlist } = useWatchlist();
+
+  const gridClasses = {
+    sm: "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3",
+    md: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4",
+    lg: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6",
+  };
+
+  const cardSizeClasses = {
+    sm: "text-sm",
+    md: "text-sm",
+    lg: "text-base",
+  };
 
   const handleRemove = async (item: WatchlistItem) => {
     try {
@@ -26,7 +39,7 @@ export function WatchlistGrid({ items }: WatchlistGridProps) {
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+    <div className={gridClasses[size]}>
       {items.map((item) => {
         const posterUrl = getImageUrl(item.poster_path, "poster", "w342");
         const rating = formatVoteAverage(item.vote_average);
@@ -63,8 +76,8 @@ export function WatchlistGrid({ items }: WatchlistGridProps) {
                 {/* Rating */}
                 {item.vote_average > 0 && (
                   <div className="absolute top-2 left-2">
-                    <Badge className="text-xs">
-                      <StarSolidIcon className="h-3 w-3" />
+                    <Badge className="text-xs gap-1">
+                      <StarFilledIcon className="h-3 w-3" />
                       <span>{rating}</span>
                     </Badge>
                   </div>
@@ -89,11 +102,15 @@ export function WatchlistGrid({ items }: WatchlistGridProps) {
             {/* Info */}
             <div className="mt-2 space-y-1">
               <Link href={href}>
-                <h3 className="font-medium text-sm line-clamp-2 hover:text-primary transition-colors">
+                <h3
+                  className={`font-medium line-clamp-2 hover:text-primary transition-colors ${cardSizeClasses[size]}`}
+                >
                   {item.title}
                 </h3>
               </Link>
-              {date && <p className="text-xs text-muted-foreground">{date}</p>}
+              {date && size !== "sm" && (
+                <p className="text-xs text-muted-foreground">{date}</p>
+              )}
             </div>
           </div>
         );
