@@ -51,6 +51,7 @@ export default async function Home() {
           movies={nowPlayingMovies}
           isLoading={false}
           error={null}
+          href="/movies/now-playing"
           limit={12}
         />
 
@@ -60,6 +61,7 @@ export default async function Home() {
           movies={popularMovies}
           isLoading={false}
           error={null}
+          href="/movies/popular"
           limit={12}
         />
 
@@ -69,6 +71,7 @@ export default async function Home() {
           movies={topRatedMovies}
           isLoading={false}
           error={null}
+          href="/movies/top-rated"
           limit={12}
         />
       </div>

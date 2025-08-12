@@ -98,10 +98,10 @@ export const useMovieDetails = (movieId: number) => {
   };
 };
 
-export const usePopularMovies = () => {
+export const usePopularMovies = (page: number = 1) => {
   const queryParams = buildQueryParams({
     language: API_CONFIG.language,
-    page: 1,
+    page,
     region: API_CONFIG.region,
   });
 
@@ -114,15 +114,17 @@ export const usePopularMovies = () => {
   return {
     movies: data?.results?.map(formatMovieResults) || [],
     totalPages: data?.total_pages || 0,
+    totalResults: data?.total_results || 0,
+    currentPage: page,
     isLoading,
     isError: error,
   };
 };
 
-export const useTopRatedMovies = () => {
+export const useTopRatedMovies = (page: number = 1) => {
   const queryParams = buildQueryParams({
     language: API_CONFIG.language,
-    page: 1,
+    page,
     region: API_CONFIG.region,
   });
 
@@ -135,15 +137,17 @@ export const useTopRatedMovies = () => {
   return {
     movies: data?.results?.map(formatMovieResults) || [],
     totalPages: data?.total_pages || 0,
+    totalResults: data?.total_results || 0,
+    currentPage: page,
     isLoading,
     isError: error,
   };
 };
 
-export const useNowPlayingMovies = () => {
+export const useNowPlayingMovies = (page: number = 1) => {
   const queryParams = buildQueryParams({
     language: API_CONFIG.language,
-    page: 1,
+    page,
     region: API_CONFIG.region,
   });
 
@@ -156,6 +160,8 @@ export const useNowPlayingMovies = () => {
   return {
     movies: data?.results?.map(formatMovieResults) || [],
     totalPages: data?.total_pages || 0,
+    totalResults: data?.total_results || 0,
+    currentPage: page,
     isLoading,
     isError: error,
   };
@@ -181,10 +187,10 @@ export const useTVDetails = (tvId: number) => {
   };
 };
 
-export const usePopularTVShows = () => {
+export const usePopularTVShows = (page: number = 1) => {
   const queryParams = buildQueryParams({
     language: API_CONFIG.language,
-    page: 1,
+    page,
   });
 
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
@@ -196,15 +202,17 @@ export const usePopularTVShows = () => {
   return {
     tvShows: data?.results || [],
     totalPages: data?.total_pages || 0,
+    totalResults: data?.total_results || 0,
+    currentPage: page,
     isLoading,
     isError: error,
   };
 };
 
-export const useTopRatedTVShows = () => {
+export const useTopRatedTVShows = (page: number = 1) => {
   const queryParams = buildQueryParams({
     language: API_CONFIG.language,
-    page: 1,
+    page,
   });
 
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
@@ -216,15 +224,17 @@ export const useTopRatedTVShows = () => {
   return {
     tvShows: data?.results || [],
     totalPages: data?.total_pages || 0,
+    totalResults: data?.total_results || 0,
+    currentPage: page,
     isLoading,
     isError: error,
   };
 };
 
-export const useOnTheAirTVShows = () => {
+export const useOnTheAirTVShows = (page: number = 1) => {
   const queryParams = buildQueryParams({
     language: API_CONFIG.language,
-    page: 1,
+    page,
   });
 
   const { data, error, isLoading } = useSWR<TMDBResponse<TVShow>>(
@@ -236,6 +246,8 @@ export const useOnTheAirTVShows = () => {
   return {
     tvShows: data?.results || [],
     totalPages: data?.total_pages || 0,
+    totalResults: data?.total_results || 0,
+    currentPage: page,
     isLoading,
     isError: error,
   };

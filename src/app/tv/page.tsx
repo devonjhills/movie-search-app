@@ -62,6 +62,7 @@ export default function TVPage() {
           tvShows={onTheAirTVShows}
           isLoading={onTheAirLoading}
           error={onTheAirError}
+          href="/tv/on-the-air"
           limit={12}
         />
 
@@ -71,6 +72,7 @@ export default function TVPage() {
           tvShows={popularTVShows}
           isLoading={popularLoading}
           error={popularError}
+          href="/tv/popular"
           limit={12}
         />
 
@@ -80,6 +82,7 @@ export default function TVPage() {
           tvShows={topRatedTVShows}
           isLoading={topRatedLoading}
           error={topRatedError}
+          href="/tv/top-rated"
           limit={12}
         />
       </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { MovieGrid } from "./movie-grid";
@@ -28,9 +27,7 @@ export function MovieSection({
   showViewAll = true,
   limit = 12,
 }: MovieSectionProps) {
-  const [showAll, setShowAll] = useState(false);
-
-  const displayMovies = showAll ? movies : movies.slice(0, limit);
+  const displayMovies = movies.slice(0, limit);
 
   return (
     <section className={cn("space-y-6", className)}>
@@ -40,28 +37,16 @@ export function MovieSection({
           {title}
         </h2>
 
-        <div className="flex items-center space-x-4">
-          {/* Show More/Less Toggle */}
-          {movies.length > limit && (
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {showAll ? "Show Less" : `Show All (${movies.length})`}
-            </button>
-          )}
-
-          {/* View All Link */}
-          {href && showViewAll && (
-            <Link
-              href={href}
-              className="flex items-center space-x-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              <span>View All</span>
-              <ChevronRightIcon className="h-4 w-4" />
-            </Link>
-          )}
-        </div>
+        {/* View All Link */}
+        {href && showViewAll && (
+          <Link
+            href={href}
+            className="flex items-center space-x-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            <span>View All</span>
+            <ChevronRightIcon className="h-4 w-4" />
+          </Link>
+        )}
       </div>
 
       {/* Movies Grid */}

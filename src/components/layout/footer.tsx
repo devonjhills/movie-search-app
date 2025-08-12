@@ -23,19 +23,19 @@ export function Footer() {
             <h3 className="text-base font-display font-semibold">Movies</h3>
             <div className="space-y-2">
               <Link
-                href="/"
+                href="/movies/popular"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Popular Movies
               </Link>
               <Link
-                href="/"
+                href="/movies/top-rated"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Top Rated
               </Link>
               <Link
-                href="/"
+                href="/movies/now-playing"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Now Playing
@@ -48,19 +48,19 @@ export function Footer() {
             <h3 className="text-base font-display font-semibold">TV Shows</h3>
             <div className="space-y-2">
               <Link
-                href="/tv"
+                href="/tv/popular"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Popular Shows
               </Link>
               <Link
-                href="/tv"
+                href="/tv/top-rated"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Top Rated
               </Link>
               <Link
-                href="/tv"
+                href="/tv/on-the-air"
                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 On The Air
