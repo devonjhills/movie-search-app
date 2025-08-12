@@ -7,7 +7,7 @@ import {
 } from "@radix-ui/react-icons";
 import { cn, formatVoteAverage, truncateText } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
-import { WatchlistButton } from "@/components/ui/watchlist-button";
+import { WatchStatusButton } from "@/components/ui/watch-status-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Movie, FormattedMovie, TVShow } from "@/lib/types";
@@ -139,10 +139,15 @@ export function HeroSection({
                     </Link>
                   </Button>
 
-                  <WatchlistButton
-                    item={movie as Movie | TVShow}
-                    mediaType={mediaType}
-                    variant="hero"
+                  <WatchStatusButton
+                    tmdb_id={movie.id}
+                    media_type={mediaType}
+                    title={title}
+                    poster_path={movie.poster_path}
+                    overview={movie.overview || ""}
+                    release_date={releaseDate || ""}
+                    vote_average={movie.vote_average}
+                    size="lg"
                   />
                 </div>
               </div>

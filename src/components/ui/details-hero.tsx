@@ -11,7 +11,7 @@ import {
 } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
 import { getImageUrl } from "@/lib/api";
-import { WatchlistButton } from "@/components/ui/watchlist-button";
+import { WatchStatusButton } from "@/components/ui/watch-status-button";
 import { ShareButton } from "@/components/ui/share-button";
 import { Button } from "@/components/ui/button";
 import { WatchProvidersCompact } from "@/components/ui/watch-providers";
@@ -235,10 +235,15 @@ export function DetailsHero({
                       </Button>
                     )}
 
-                    <WatchlistButton
-                      item={item}
-                      mediaType={mediaType}
-                      variant="hero"
+                    <WatchStatusButton
+                      tmdb_id={item.id}
+                      media_type={mediaType}
+                      title={title}
+                      poster_path={item.poster_path}
+                      overview={item.overview}
+                      release_date={rawReleaseDate}
+                      vote_average={item.vote_average}
+                      size="lg"
                     />
 
                     <ShareButton

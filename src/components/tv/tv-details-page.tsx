@@ -10,6 +10,7 @@ import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/ui/cast-grid";
 import { PersonCard } from "@/components/ui/person-card";
 import { MovieGrid } from "@/components/movie/movie-grid";
+import { EpisodeTracker } from "@/components/tv/episode-tracker";
 import { Badge } from "@/components/ui/badge";
 import { formatDate, formatVoteAverage } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -484,6 +485,11 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 </div>
               </CardContent>
             </Card>
+          )}
+
+          {/* Episode Tracker */}
+          {tvShow.seasons && tvShow.seasons.length > 0 && (
+            <EpisodeTracker tmdb_id={tvShow.id} seasons={tvShow.seasons} />
           )}
 
           {/* Cast - Full Width */}

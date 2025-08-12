@@ -81,10 +81,10 @@ export function Navigation() {
               </NextLink>
               {user && (
                 <NextLink
-                  href="/watchlist"
+                  href="/library"
                   className="nav-link inline-flex h-10 w-max items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  Watchlist
+                  My Library
                 </NextLink>
               )}
             </div>
@@ -116,11 +116,11 @@ export function Navigation() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => router.push("/watchlist")}
+                      onClick={() => router.push("/library")}
                       className="flex items-center"
                     >
                       <BookmarkIcon className="h-4 w-4 mr-2" />
-                      <span>Watchlist</span>
+                      <span>My Library</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => signOut()}
@@ -186,11 +186,11 @@ export function Navigation() {
           </Link>
           {user && (
             <Link
-              href="/watchlist"
+              href="/library"
               variant="nav"
               className="px-3 py-2 text-sm font-semibold"
             >
-              Watchlist
+              My Library
             </Link>
           )}
         </div>

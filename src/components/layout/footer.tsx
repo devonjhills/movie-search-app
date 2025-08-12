@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="relative z-20 border-t border-border bg-background">
       {/* Background Logo */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-start pl-8 opacity-5 pointer-events-none">
         <div className="relative h-56 w-56">
           <Image
             src="/logo.png"

@@ -438,7 +438,7 @@ export interface SearchResultItem
   media_type: "movie" | "tv" | "person";
 }
 
-// Formatted movie result (from the original formatResults function)
+// Formatted movie result
 export interface FormattedMovie {
   id: number;
   release_date: string;
@@ -448,20 +448,6 @@ export interface FormattedMovie {
   backdrop_path: string | null;
   overview: string;
   poster: string;
-}
-
-// API configuration
-export interface TMDBConfig {
-  images: {
-    base_url: string;
-    secure_base_url: string;
-    backdrop_sizes: string[];
-    logo_sizes: string[];
-    poster_sizes: string[];
-    profile_sizes: string[];
-    still_sizes: string[];
-  };
-  change_keys: string[];
 }
 
 // Image URL helpers type
@@ -506,38 +492,6 @@ export function isTVShowDetails(
   return "name" in item && "first_air_date" in item;
 }
 
-// Utility types for API responses
-export type APIResponse<T> =
-  | {
-      success: true;
-      data: T;
-    }
-  | {
-      success: false;
-      error: TMDBError | Error;
-    };
-
-// Watchlist types
-export interface WatchlistItem {
-  id: string;
-  user_id: string;
-  tmdb_id: number;
-  media_type: "movie" | "tv";
-  title: string;
-  poster_path: string | null;
-  overview: string;
-  release_date: string;
-  vote_average: number;
-  added_at: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface WatchlistResponse {
-  items: WatchlistItem[];
-  total: number;
-}
-
 // Watch Provider types (JustWatch integration)
 export interface WatchProvider {
   display_priority: number;
@@ -559,4 +513,119 @@ export interface WatchProvidersResponse {
   results: {
     [countryCode: string]: WatchProviderRegion;
   };
+}
+
+// Viewing History types
+export type WatchStatus = "watching" | "completed" | "plan_to_watch";
+
+export interface ViewingHistoryItem {
+  id: string;
+  user_id: string;
+  tmdb_id: number;
+  media_type: "movie" | "tv";
+  title: string;
+  poster_path: string | null;
+  overview: string;
+  release_date: string;
+  vote_average: number;
+  status: WatchStatus;
+  watch_count: number;
+  started_at: string | null;
+  completed_at: string | null;
+  last_watched_at: string | null;
+  notes: string | null;
+  rating: number | null; // User's personal rating (1-10)
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ViewingHistoryResponse {
+  items: ViewingHistoryItem[];
+  total: number;
+}
+
+// TV Episode Tracking
+export interface EpisodeProgress {
+  id: string;
+  user_id: string;
+  tmdb_id: number; // TV show ID
+  season_number: number;
+  episode_number: number;
+  watched: boolean;
+  watched_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SeasonProgress {
+  season_number: number;
+  total_episodes: number;
+  watched_episodes: number;
+  completion_percentage: number;
+}
+
+export interface TVShowProgress {
+  tmdb_id: number;
+  total_seasons: number;
+  total_episodes: number;
+  watched_episodes: number;
+  completion_percentage: number;
+  seasons: SeasonProgress[];
+  next_episode?: {
+    season_number: number;
+    episode_number: number;
+  };
+}
+
+// Watch Sessions (for tracking multiple viewings)
+export interface WatchSession {
+  id: string;
+  user_id: string;
+  tmdb_id: number;
+  media_type: "movie" | "tv";
+  season_number?: number;
+  episode_number?: number;
+  watched_at: string;
+  rating: number | null;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface WatchSessionsResponse {
+  sessions: WatchSession[];
+  total: number;
+}
+
+// Calendar View Data
+export interface CalendarDay {
+  date: string;
+  watchedItems: {
+    tmdb_id: number;
+    media_type: "movie" | "tv";
+    title: string;
+    poster_path: string | null;
+    session_count: number;
+  }[];
+}
+
+export interface CalendarMonth {
+  year: number;
+  month: number;
+  days: CalendarDay[];
+}
+
+// Statistics
+export interface ViewingStats {
+  total_movies_watched: number;
+  total_tv_shows_watched: number;
+  total_episodes_watched: number;
+  total_watch_time_minutes: number;
+  average_rating: number;
+  most_watched_genre: string;
+  completion_rate: number;
+  rewatch_rate: number;
+  monthly_activity: {
+    month: string;
+    count: number;
+  }[];
 }
