@@ -12,6 +12,7 @@ interface ViewingHistoryGridProps {
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  mediaTypeFilter: "movie" | "tv" | "all";
 }
 
 export function ViewingHistoryGrid({
@@ -21,6 +22,7 @@ export function ViewingHistoryGrid({
   page,
   totalPages,
   onPageChange,
+  mediaTypeFilter,
 }: ViewingHistoryGridProps) {
   if (loading) {
     return (
@@ -54,13 +56,48 @@ export function ViewingHistoryGrid({
     );
   }
 
-  return (
-    <div className="space-y-6">
+  // Group items by media type when showing all types
+  const shouldGroupByMediaType = mediaTypeFilter === "all";
+  const movieItems = shouldGroupByMediaType
+    ? items.filter((item) => item.media_type === "movie")
+    : [];
+  const tvItems = shouldGroupByMediaType
+    ? items.filter((item) => item.media_type === "tv")
+    : [];
+
+  const renderGrid = (items: ViewingHistoryItem[], title?: string) => (
+    <div className="space-y-4">
+      {title && (
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-serif font-semibold">{title}</h2>
+          <span className="text-sm text-muted-foreground">
+            ({items.length})
+          </span>
+        </div>
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
         {items.map((item) => (
           <ViewingHistoryCard key={item.id} item={item} onUpdate={onRefresh} />
         ))}
       </div>
+    </div>
+  );
+
+  return (
+    <div className="space-y-8">
+      {shouldGroupByMediaType ? (
+        <>
+          {movieItems.length > 0 && renderGrid(movieItems, "Movies")}
+          {tvItems.length > 0 && renderGrid(tvItems, "TV Shows")}
+          {movieItems.length === 0 && tvItems.length === 0 && (
+            <div className="text-center py-8 text-muted-foreground">
+              No items found for the current filters.
+            </div>
+          )}
+        </>
+      ) : (
+        renderGrid(items)
+      )}
 
       {totalPages > 1 && (
         <div className="flex justify-center items-center space-x-2">

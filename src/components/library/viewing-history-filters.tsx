@@ -22,10 +22,10 @@ interface ViewingHistoryFiltersProps {
 }
 
 const statusOptions = [
+  { value: "plan_to_watch", label: "Want to Watch" },
+  { value: "watching", label: "Currently Watching" },
+  { value: "completed", label: "Watched" },
   { value: "all", label: "All Statuses" },
-  { value: "watching", label: "Watching" },
-  { value: "completed", label: "Completed" },
-  { value: "plan_to_watch", label: "Plan to Watch" },
 ] as const;
 
 const mediaTypeOptions = [

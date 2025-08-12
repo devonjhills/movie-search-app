@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Star, MoreVertical, RotateCcw } from "lucide-react";
+import { Star, MoreVertical, RotateCcw, StickyNote, Edit3 } from "lucide-react";
 import { StatusUpdateDialog } from "./status-update-dialog";
 import Link from "next/link";
 import Image from "next/image";
@@ -31,9 +31,9 @@ const statusColors = {
 };
 
 const statusLabels = {
-  watching: "Watching",
-  completed: "Completed",
-  plan_to_watch: "Plan to Watch",
+  watching: "Currently Watching",
+  completed: "Watched",
+  plan_to_watch: "Want to Watch",
 };
 
 export function ViewingHistoryCard({
@@ -67,24 +67,29 @@ export function ViewingHistoryCard({
       <Card className="group hover:shadow-md transition-shadow">
         <div className="relative">
           <div className="relative aspect-[2/3] overflow-hidden rounded-t-lg">
-            {(() => {
-              const validImageUrl = getValidImageUrl(item.poster_path);
-              return validImageUrl ? (
-                <Image
-                  src={validImageUrl}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-transform group-hover:scale-105"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-                />
-              ) : (
-                <div className="w-full h-full bg-muted flex items-center justify-center">
-                  <span className="text-xs text-muted-foreground">
-                    No Image
-                  </span>
-                </div>
-              );
-            })()}
+            <Link
+              href={`/${item.media_type}/${item.tmdb_id}`}
+              className="block w-full h-full"
+            >
+              {(() => {
+                const validImageUrl = getValidImageUrl(item.poster_path);
+                return validImageUrl ? (
+                  <Image
+                    src={validImageUrl}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-muted flex items-center justify-center">
+                    <span className="text-xs text-muted-foreground">
+                      No Image
+                    </span>
+                  </div>
+                );
+              })()}
+            </Link>
 
             <div className="absolute top-1 left-1">
               <Badge
@@ -94,34 +99,42 @@ export function ViewingHistoryCard({
               </Badge>
             </div>
 
-            <div className="absolute top-1 right-1">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <MoreVertical className="h-3 w-3" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setShowStatusDialog(true)}>
-                    Update Status
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={handleRemove}
-                    className="text-destructive"
-                  >
-                    Remove from History
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+            <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex gap-1">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="h-6 w-6 p-0"
+                  onClick={() => setShowStatusDialog(true)}
+                  title="Update status, rating & notes"
+                >
+                  <Edit3 className="h-3 w-3" />
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="h-6 w-6 p-0"
+                    >
+                      <MoreVertical className="h-3 w-3" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                      onClick={handleRemove}
+                      className="text-destructive"
+                    >
+                      Remove from Library
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
         </div>
 
-        <CardContent className="p-2">
+        <CardContent className="p-3">
           <Link
             href={`/${item.media_type}/${item.tmdb_id}`}
             className="block hover:text-primary transition-colors"
@@ -133,18 +146,41 @@ export function ViewingHistoryCard({
 
           <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
             <span className="capitalize">{item.media_type}</span>
-            {item.rating && (
-              <div className="flex items-center gap-0.5">
-                <Star className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
-                <span>{item.rating}</span>
-              </div>
-            )}
+            <div className="flex items-center gap-2">
+              {item.rating && (
+                <div className="flex items-center gap-0.5" title="Your rating">
+                  <Star className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
+                  <span className="font-medium">{item.rating}/10</span>
+                </div>
+              )}
+              {item.vote_average && (
+                <div
+                  className="flex items-center gap-0.5 text-muted-foreground/60"
+                  title="TMDB score"
+                >
+                  <span className="text-xs">TMDB:</span>
+                  <span>{Math.round(item.vote_average * 10) / 10}</span>
+                </div>
+              )}
+            </div>
           </div>
 
           {item.watch_count > 1 && (
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <RotateCcw className="h-2.5 w-2.5" />
               <span>{item.watch_count}x</span>
+            </div>
+          )}
+
+          {item.notes && (
+            <div className="mt-2">
+              <hr className="border-muted mb-2" />
+              <div className="flex items-start gap-1 text-xs text-muted-foreground p-2 bg-muted/30 rounded">
+                <StickyNote className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                <span className="line-clamp-3 text-xs leading-relaxed">
+                  {item.notes}
+                </span>
+              </div>
             </div>
           )}
         </CardContent>

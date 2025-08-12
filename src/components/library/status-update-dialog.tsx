@@ -28,9 +28,9 @@ interface StatusUpdateDialogProps {
 }
 
 const statusOptions = [
-  { value: "watching", label: "Watching" },
-  { value: "completed", label: "Completed" },
-  { value: "plan_to_watch", label: "Plan to Watch" },
+  { value: "plan_to_watch", label: "Want to Watch" },
+  { value: "watching", label: "Currently Watching" },
+  { value: "completed", label: "Watched" },
 ] as const;
 
 export function StatusUpdateDialog({
@@ -109,7 +109,10 @@ export function StatusUpdateDialog({
           </div>
 
           <div>
-            <Label>Personal Rating</Label>
+            <Label>Your Personal Rating</Label>
+            <p className="text-xs text-muted-foreground mb-2">
+              Rate this title out of 10 stars
+            </p>
             <div className="flex items-center gap-1 mt-1">
               {Array.from({ length: 10 }, (_, i) => {
                 const starValue = i + 1;
@@ -119,32 +122,38 @@ export function StatusUpdateDialog({
                     type="button"
                     onClick={() => handleRatingClick(starValue)}
                     className="p-1 hover:scale-110 transition-transform"
+                    title={`Rate ${starValue} star${starValue !== 1 ? "s" : ""}`}
                   >
                     <Star
                       className={`h-5 w-5 ${
                         starValue <= rating
                           ? "fill-yellow-400 text-yellow-400"
-                          : "text-gray-300"
+                          : "text-gray-300 hover:text-yellow-200"
                       }`}
                     />
                   </button>
                 );
               })}
-              {rating > 0 && (
+              {rating > 0 ? (
+                <span className="ml-2 text-sm font-medium">{rating}/10</span>
+              ) : (
                 <span className="ml-2 text-sm text-muted-foreground">
-                  {rating}/10
+                  No rating
                 </span>
               )}
             </div>
           </div>
 
           <div>
-            <Label htmlFor="notes">Notes (Optional)</Label>
+            <Label htmlFor="notes">Personal Notes</Label>
+            <p className="text-xs text-muted-foreground mb-2">
+              Add your thoughts, opinions, or reminders
+            </p>
             <Textarea
               id="notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add your thoughts about this title..."
+              placeholder="What did you think? Any memorable quotes or scenes? Worth rewatching?"
               className="mt-1"
               rows={3}
             />

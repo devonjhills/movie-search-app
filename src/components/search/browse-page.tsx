@@ -201,7 +201,9 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
     <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="space-y-4">
-        <h1 className="text-3xl md:text-4xl font-bold">Browse</h1>
+        <h1 className="text-3xl md:text-4xl font-serif font-bold">
+          Browse Movies & TV Shows
+        </h1>
       </div>
 
       {/* Search Input */}
@@ -254,7 +256,9 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
           {!debouncedQuery ? (
             <div className="text-center py-12">
               <MagnifyingGlassIcon className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Start your search</h2>
+              <h2 className="text-xl font-serif font-semibold mb-2">
+                Start Your Search
+              </h2>
               <p className="text-muted-foreground">
                 Enter a movie title, TV show, or person&apos;s name to begin
               </p>
@@ -274,7 +278,9 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
           ) : totalSearchResults === 0 ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🔍</div>
-              <h2 className="text-xl font-semibold mb-2">No results found</h2>
+              <h2 className="text-xl font-serif font-semibold mb-2">
+                No Results Found
+              </h2>
               <p className="text-muted-foreground">
                 Try different keywords or check your spelling
               </p>
@@ -282,7 +288,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
           ) : (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">
+                <h2 className="text-xl font-serif font-semibold">
                   Search Results for &quot;{debouncedQuery}&quot;
                 </h2>
                 <p className="text-sm text-muted-foreground">
@@ -380,7 +386,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
           {/* Discover Results */}
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">
+              <h2 className="text-xl font-serif font-semibold">
                 {mediaType === "movie" ? "Movies" : "TV Shows"}
                 {selectedGenre.id && ` - ${selectedGenre.name}`}
               </h2>
@@ -418,7 +424,9 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
           <div className="space-y-8">
             {/* Top Rated Movies */}
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Top Rated Movies</h2>
+              <h2 className="text-xl font-serif font-semibold">
+                Top Rated Movies
+              </h2>
               <MovieGrid
                 movies={trendingMovies}
                 isLoading={trendingMoviesLoading}
@@ -432,7 +440,9 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
 
             {/* Top Rated TV Shows */}
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Top Rated TV Shows</h2>
+              <h2 className="text-xl font-serif font-semibold">
+                Top Rated TV Shows
+              </h2>
               <TVGrid
                 tvShows={trendingTVShows}
                 isLoading={trendingTVLoading}

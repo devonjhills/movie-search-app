@@ -5,9 +5,6 @@ import { useSearchParams } from "next/navigation";
 import { ViewingHistoryItem, WatchStatus } from "@/lib/types";
 import { ViewingHistoryGrid } from "@/components/library/viewing-history-grid";
 import { ViewingHistoryFilters } from "@/components/library/viewing-history-filters";
-import { ViewingHistoryStats } from "@/components/library/viewing-history-stats";
-import { CalendarView } from "@/components/library/calendar-view";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
 import { redirect } from "next/navigation";
 
@@ -20,7 +17,7 @@ export default function MyLibraryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState({
-    status: "all" as WatchStatus | "all",
+    status: "plan_to_watch" as WatchStatus | "all",
     mediaType: "all" as "movie" | "tv" | "all",
   });
   const [page, setPage] = useState(1);
@@ -101,57 +98,41 @@ export default function MyLibraryPage() {
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-serif font-bold tracking-tight">
-            My Movie Library
+            My Library
           </h1>
           <p className="text-muted-foreground">
-            Manage your watchlist, track progress, rate content, and view your
-            watching statistics
+            Manage your personal movie and TV show collection
           </p>
         </div>
 
-        <Tabs defaultValue="grid" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="grid">My Collection</TabsTrigger>
-            <TabsTrigger value="calendar">Activity Calendar</TabsTrigger>
-            <TabsTrigger value="stats">My Stats</TabsTrigger>
-          </TabsList>
+        <div className="space-y-6">
+          <ViewingHistoryFilters
+            filters={filters}
+            onFiltersChange={handleFiltersChange}
+          />
 
-          <TabsContent value="grid" className="space-y-6">
-            <ViewingHistoryFilters
-              filters={filters}
-              onFiltersChange={handleFiltersChange}
+          {error ? (
+            <div className="text-center py-8">
+              <p className="text-destructive">{error}</p>
+              <button
+                onClick={fetchViewingHistory}
+                className="mt-2 text-primary hover:underline"
+              >
+                Try again
+              </button>
+            </div>
+          ) : (
+            <ViewingHistoryGrid
+              items={viewingHistory}
+              loading={loading}
+              onRefresh={fetchViewingHistory}
+              page={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+              mediaTypeFilter={filters.mediaType}
             />
-
-            {error ? (
-              <div className="text-center py-8">
-                <p className="text-destructive">{error}</p>
-                <button
-                  onClick={fetchViewingHistory}
-                  className="mt-2 text-primary hover:underline"
-                >
-                  Try again
-                </button>
-              </div>
-            ) : (
-              <ViewingHistoryGrid
-                items={viewingHistory}
-                loading={loading}
-                onRefresh={fetchViewingHistory}
-                page={page}
-                totalPages={totalPages}
-                onPageChange={setPage}
-              />
-            )}
-          </TabsContent>
-
-          <TabsContent value="calendar">
-            <CalendarView />
-          </TabsContent>
-
-          <TabsContent value="stats">
-            <ViewingHistoryStats />
-          </TabsContent>
-        </Tabs>
+          )}
+        </div>
       </div>
     </div>
   );

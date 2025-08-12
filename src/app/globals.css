@@ -59,22 +59,169 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
+    font-size: 16px; /* Base font size for accessibility */
+    line-height: 1.6; /* Improved readability */
     background-image:
       radial-gradient(circle at 25% 25%, hsl(var(--muted)) 0%, transparent 50%),
       radial-gradient(circle at 75% 75%, hsl(var(--muted)) 0%, transparent 50%);
     background-attachment: fixed;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  /* Enhanced Typography Hierarchy with Playfair Display */
+  h1 {
     font-family: var(--font-serif);
+    font-size: clamp(2.25rem, 4vw, 3.5rem); /* Responsive scaling */
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
     font-weight: 600;
-    letter-spacing: -0.025em;
     line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.875rem;
+  }
+
+  h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2.125rem);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+
+  h4 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    margin-bottom: 0.625rem;
+  }
+
+  h5 {
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  h6 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Body text improvements */
+  p {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  /* Focus states for accessibility */
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Improved link accessibility */
+  a {
+    text-decoration-skip-ink: auto;
+    transition: color 0.2s ease;
+  }
+
+  a:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Better button focus states */
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Screen reader only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Skip links for accessibility */
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 6px;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: top 0.2s ease;
+    z-index: 1000;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    opacity: 0;
+  }
+
+  .skip-link:focus {
+    top: 8px;
+    opacity: 1;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    :root {
+      --border: 0 0% 20%;
+    }
+
+    .dark {
+      --border: 0 0% 80%;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* List improvements */
+  ul,
+  ol {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  li {
+    margin-bottom: 0.25rem;
   }
 }
 
