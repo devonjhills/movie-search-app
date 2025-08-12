@@ -129,9 +129,9 @@ export default function TermsPage() {
               8. Disclaimer of Warranties
             </h2>
             <p className="text-muted-foreground">
-              FilmFatale is provided &quot;as is&quot; without any warranties, express or
-              implied. We do not warrant that the service will be uninterrupted,
-              secure, or error-free.
+              FilmFatale is provided &quot;as is&quot; without any warranties,
+              express or implied. We do not warrant that the service will be
+              uninterrupted, secure, or error-free.
             </p>
           </section>
 

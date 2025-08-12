@@ -32,10 +32,10 @@ export default function AboutPage() {
             </h2>
             <p className="text-muted-foreground leading-relaxed">
               FilmFatale is a comprehensive movie and TV show discovery platform
-              designed to help you find your next favorite watch. Whether you&apos;re
-              looking for the latest blockbusters, hidden gems, or classic
-              films, our platform provides detailed information, ratings, and
-              reviews to guide your entertainment choices.
+              designed to help you find your next favorite watch. Whether
+              you&apos;re looking for the latest blockbusters, hidden gems, or
+              classic films, our platform provides detailed information,
+              ratings, and reviews to guide your entertainment choices.
             </p>
           </section>
 
@@ -67,8 +67,8 @@ export default function AboutPage() {
               <div className="space-y-2">
                 <h3 className="font-semibold">Search & Filter</h3>
                 <p className="text-sm text-muted-foreground">
-                  Find exactly what you&apos;re looking for with our powerful search
-                  and filtering tools
+                  Find exactly what you&apos;re looking for with our powerful
+                  search and filtering tools
                 </p>
               </div>
             </div>

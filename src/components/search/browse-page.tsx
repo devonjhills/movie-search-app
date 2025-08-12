@@ -174,10 +174,16 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
     sortBy: sortBy.value,
   });
 
-  const { movies: trendingMovies, isLoading: trendingMoviesLoading } =
-    useTopRatedMovies();
-  const { tvShows: trendingTVShows, isLoading: trendingTVLoading } =
-    useTopRatedTVShows();
+  const {
+    movies: trendingMovies,
+    isLoading: trendingMoviesLoading,
+    isError: trendingMoviesError,
+  } = useTopRatedMovies();
+  const {
+    tvShows: trendingTVShows,
+    isLoading: trendingTVLoading,
+    isError: trendingTVShowsError,
+  } = useTopRatedTVShows();
 
   // Calculate totals
   const totalSearchResults =
@@ -416,7 +422,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
               <MovieGrid
                 movies={trendingMovies}
                 isLoading={trendingMoviesLoading}
-                error={false}
+                error={trendingMoviesError}
                 cardSize="md"
                 showYear={true}
                 showRating={true}
@@ -430,7 +436,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
               <TVGrid
                 tvShows={trendingTVShows}
                 isLoading={trendingTVLoading}
-                error={false}
+                error={trendingTVShowsError}
                 cardSize="md"
                 showYear={true}
                 showRating={true}
