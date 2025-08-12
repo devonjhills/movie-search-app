@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { TVShowProgress, EpisodeProgress } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -24,16 +24,7 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
   const [loading, setLoading] = useState(true);
   const [selectedSeason, setSelectedSeason] = useState(1);
 
-  useEffect(() => {
-    fetchProgress();
-    fetchEpisodes();
-  }, [tmdb_id]);
-
-  useEffect(() => {
-    fetchEpisodes(selectedSeason);
-  }, [selectedSeason]);
-
-  const fetchProgress = async () => {
+  const fetchProgress = useCallback(async () => {
     try {
       const response = await fetch(`/api/tv-progress/${tmdb_id}`);
       if (response.ok) {
@@ -43,24 +34,36 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
     } catch (error) {
       console.error("Error fetching TV progress:", error);
     }
-  };
+  }, [tmdb_id]);
 
-  const fetchEpisodes = async (season?: number) => {
-    try {
-      const params = new URLSearchParams({ tmdb_id: tmdb_id.toString() });
-      if (season) params.append("season_number", season.toString());
+  const fetchEpisodes = useCallback(
+    async (season?: number) => {
+      try {
+        const params = new URLSearchParams({ tmdb_id: tmdb_id.toString() });
+        if (season) params.append("season_number", season.toString());
 
-      const response = await fetch(`/api/episodes?${params}`);
-      if (response.ok) {
-        const data = await response.json();
-        setEpisodes(data.episodes);
+        const response = await fetch(`/api/episodes?${params}`);
+        if (response.ok) {
+          const data = await response.json();
+          setEpisodes(data.episodes);
+        }
+      } catch (error) {
+        console.error("Error fetching episodes:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching episodes:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [tmdb_id],
+  );
+
+  useEffect(() => {
+    fetchProgress();
+    fetchEpisodes();
+  }, [fetchProgress, fetchEpisodes]);
+
+  useEffect(() => {
+    fetchEpisodes(selectedSeason);
+  }, [selectedSeason, fetchEpisodes]);
 
   const toggleEpisode = async (
     season_number: number,

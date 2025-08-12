@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { ViewingHistoryItem, WatchStatus } from "@/lib/types";
 import { ViewingHistoryGrid } from "@/components/library/viewing-history-grid";
@@ -48,7 +48,7 @@ export default function MyLibraryPage() {
     redirect("/signin");
   }
 
-  const fetchViewingHistory = async () => {
+  const fetchViewingHistory = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -72,13 +72,13 @@ export default function MyLibraryPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters.status, filters.mediaType, page]);
 
   useEffect(() => {
     if (user) {
       fetchViewingHistory();
     }
-  }, [user, filters, page]);
+  }, [user, filters, page, fetchViewingHistory]);
 
   const handleFiltersChange = (newFilters: typeof filters) => {
     setFilters(newFilters);
