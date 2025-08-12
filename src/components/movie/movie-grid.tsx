@@ -17,17 +17,35 @@ interface MovieGridProps {
 
 function MovieCardSkeleton({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
   const sizeClasses = {
-    sm: "w-32",
-    md: "w-40",
-    lg: "w-48",
+    sm: "w-40",
+    md: "w-48",
+    lg: "w-56",
   };
 
   return (
-    <div className={cn("space-y-3", sizeClasses[size])}>
-      <Skeleton className="aspect-[2/3] w-full rounded-lg" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-3 w-16" />
+    <div
+      className={cn(
+        "overflow-hidden bg-card border border-border/50 rounded-lg h-full flex flex-col transition-all duration-200",
+        sizeClasses[size],
+      )}
+    >
+      <div className="p-3 space-y-3 flex-1 flex flex-col">
+        {/* Poster Skeleton */}
+        <div className="relative overflow-hidden rounded-lg aspect-[2/3]">
+          <Skeleton className="h-full w-full" />
+          {/* Rating Badge Skeleton */}
+          <div className="absolute top-2 right-2">
+            <Skeleton className="h-6 w-12 rounded-full" />
+          </div>
+        </div>
+
+        {/* Movie Info Skeleton */}
+        <div className="space-y-1 flex-1 flex flex-col">
+          {/* Title - matches min-h-[2.5rem] */}
+          <Skeleton className="h-10 w-full" />
+          {/* Release Date */}
+          <Skeleton className="h-5 w-24" />
+        </div>
       </div>
     </div>
   );

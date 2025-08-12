@@ -21,34 +21,133 @@ interface TVDetailsPageProps {
 
 function TVDetailsSkeleton() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
       {/* Hero Skeleton */}
-      <div className="relative h-96 bg-muted">
-        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-        <div className="absolute bottom-8 left-8 right-8">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+      <div className="relative h-[75vh] md:h-[85vh] bg-muted">
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <div className="absolute inset-0 container mx-auto px-4 flex items-end pb-16">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 w-full">
             <div className="md:col-span-3">
-              <Skeleton className="aspect-[2/3] w-full max-w-xs" />
+              <Skeleton className="aspect-[2/3] w-full max-w-xs mx-auto md:mx-0" />
             </div>
             <div className="md:col-span-9 space-y-4">
-              <Skeleton className="h-12 w-96" />
-              <Skeleton className="h-6 w-32" />
-              <Skeleton className="h-20 w-full max-w-2xl" />
+              <Skeleton className="h-14 w-full max-w-2xl" />
+              <div className="flex flex-wrap gap-2">
+                <Skeleton className="h-6 w-16" />
+                <Skeleton className="h-6 w-20" />
+                <Skeleton className="h-6 w-24" />
+              </div>
+              <Skeleton className="h-20 w-full max-w-3xl" />
+              <div className="flex gap-3">
+                <Skeleton className="h-12 w-40" />
+                <Skeleton className="h-12 w-32" />
+                <Skeleton className="h-12 w-12 rounded-full" />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content Skeleton */}
-      <div className="container mx-auto px-4 py-8 space-y-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <Skeleton className="h-32 w-full" />
-            <Skeleton className="h-48 w-full" />
+      {/* Main Content Skeleton */}
+      <div className="relative container mx-auto px-4 pt-16 pb-12">
+        <div className="space-y-8">
+          {/* TV Show Details Card */}
+          <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl">
+            <div className="p-6 space-y-6">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-6 w-32" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-6 w-full" />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="space-y-6">
-            <Skeleton className="h-24 w-full" />
-            <Skeleton className="h-32 w-full" />
+
+          {/* Seasons Section */}
+          <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl">
+            <div className="p-6 space-y-6">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-6 w-20" />
+              </div>
+              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex gap-4 p-4 border border-border/20 rounded-lg"
+                  >
+                    <Skeleton className="aspect-[2/3] w-20 rounded-lg flex-shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-5 w-32" />
+                      <Skeleton className="h-4 w-16" />
+                      <Skeleton className="h-12 w-full" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Cast Section */}
+          <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl">
+            <div className="p-6 space-y-6">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-6 w-16" />
+              </div>
+              <div className="space-y-4">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center space-x-3 p-3 rounded-lg"
+                  >
+                    <Skeleton className="h-20 w-20 rounded-full flex-shrink-0" />
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <Skeleton className="h-5 w-32" />
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-3 w-16" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Recommendations Section */}
+          <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl">
+            <div className="p-6 space-y-6">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-6 w-32" />
+              </div>
+              <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="overflow-hidden bg-card border border-border/50 rounded-lg h-full flex flex-col transition-all duration-200 w-48"
+                  >
+                    <div className="p-3 space-y-3 flex-1 flex flex-col">
+                      <div className="relative overflow-hidden rounded-lg aspect-[2/3]">
+                        <Skeleton className="h-full w-full" />
+                        <div className="absolute top-2 right-2">
+                          <Skeleton className="h-6 w-12 rounded-full" />
+                        </div>
+                      </div>
+                      <div className="space-y-1 flex-1 flex flex-col">
+                        <Skeleton className="h-10 w-full" />
+                        <Skeleton className="h-5 w-24" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -3,12 +3,48 @@ import Link from "next/link";
 import { PersonIcon } from "@radix-ui/react-icons";
 import { getImageUrl } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import type { Person } from "@/lib/types";
 
 interface PersonCardProps {
   person: Person;
   className?: string;
+}
+
+function PersonCardSkeleton() {
+  return (
+    <Card
+      className={cn(
+        "overflow-hidden transition-all duration-200 hover:scale-105 hover:shadow-lg",
+        "border-0 bg-transparent shadow-none",
+      )}
+    >
+      <CardContent className="p-0 space-y-3">
+        {/* Profile Image Skeleton */}
+        <div className="relative aspect-[2/3] overflow-hidden rounded-lg">
+          <Skeleton className="h-full w-full" />
+        </div>
+
+        {/* Person Info Skeleton */}
+        <div className="space-y-2">
+          {/* Name */}
+          <Skeleton className="h-4 w-full" />
+          {/* Department */}
+          <Skeleton className="h-3 w-20" />
+          {/* Known For Section */}
+          <div className="space-y-1">
+            <Skeleton className="h-3 w-16" />
+            <div className="space-y-0.5">
+              <Skeleton className="h-3 w-full" />
+              <Skeleton className="h-3 w-3/4" />
+              <Skeleton className="h-3 w-5/6" />
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 
 function PersonCard({ person, className }: PersonCardProps) {
@@ -120,13 +156,7 @@ export function PersonGrid({
         )}
       >
         {Array.from({ length: 12 }).map((_, index) => (
-          <div key={index} className="space-y-3">
-            <div className="aspect-[2/3] bg-muted rounded-lg animate-pulse" />
-            <div className="space-y-2">
-              <div className="h-4 bg-muted rounded animate-pulse" />
-              <div className="h-3 bg-muted rounded animate-pulse w-16" />
-            </div>
-          </div>
+          <PersonCardSkeleton key={index} />
         ))}
       </div>
     );

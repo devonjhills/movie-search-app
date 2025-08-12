@@ -26,19 +26,115 @@ function PersonDetailsSkeleton() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Skeleton */}
           <div className="space-y-6">
-            <Skeleton className="aspect-[2/3] w-full max-w-sm mx-auto" />
-            <div className="space-y-4">
-              <Skeleton className="h-8 w-48" />
-              <Skeleton className="h-4 w-32" />
-              <Skeleton className="h-20 w-full" />
+            <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
+              <div className="space-y-6">
+                <Skeleton className="aspect-[2/3] w-full max-w-sm mx-auto rounded-lg" />
+                <div className="space-y-4 text-center">
+                  <Skeleton className="h-10 w-48 mx-auto" />
+                  <Skeleton className="h-6 w-32 mx-auto" />
+                </div>
+              </div>
+            </div>
+
+            {/* Personal Information Card */}
+            <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-5 w-5" />
+                  <Skeleton className="h-6 w-40" />
+                </div>
+                <div className="space-y-4">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="space-y-2">
+                      <Skeleton className="h-4 w-20" />
+                      <Skeleton className="h-5 w-32" />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Content Skeleton */}
           <div className="lg:col-span-2 space-y-6">
-            <Skeleton className="h-32 w-full" />
-            <Skeleton className="h-48 w-full" />
-            <Skeleton className="h-48 w-full" />
+            {/* Biography Card */}
+            <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-5 w-5" />
+                  <Skeleton className="h-6 w-24" />
+                </div>
+                <div className="space-y-3">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-5/6" />
+                </div>
+              </div>
+            </div>
+
+            {/* Known For Movies Card */}
+            <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
+              <div className="space-y-6">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-5 w-5" />
+                  <Skeleton className="h-6 w-32" />
+                </div>
+                <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="overflow-hidden bg-card border border-border/50 rounded-lg h-full flex flex-col transition-all duration-200 w-48"
+                    >
+                      <div className="p-3 space-y-3 flex-1 flex flex-col">
+                        <div className="relative overflow-hidden rounded-lg aspect-[2/3]">
+                          <Skeleton className="h-full w-full" />
+                          <div className="absolute top-2 right-2">
+                            <Skeleton className="h-6 w-12 rounded-full" />
+                          </div>
+                        </div>
+                        <div className="space-y-1 flex-1 flex flex-col">
+                          <Skeleton className="h-10 w-full" />
+                          <Skeleton className="h-5 w-24" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Known For TV Shows Card */}
+            <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
+              <div className="space-y-6">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-5 w-5" />
+                  <Skeleton className="h-6 w-32" />
+                </div>
+                <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="overflow-hidden bg-card border border-border/50 rounded-lg h-full flex flex-col transition-all duration-200 w-48"
+                    >
+                      <div className="p-3 space-y-3 flex-1 flex flex-col">
+                        <div className="relative overflow-hidden rounded-lg aspect-[2/3]">
+                          <Skeleton className="h-full w-full" />
+                          <div className="absolute top-2 right-2">
+                            <Skeleton className="h-6 w-12 rounded-full" />
+                          </div>
+                        </div>
+                        <div className="space-y-1 flex-1 flex flex-col">
+                          <Skeleton className="h-10 w-full" />
+                          <Skeleton className="h-5 w-24" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -28,18 +28,102 @@ function SeasonDetailsSkeleton() {
     <div className="min-h-screen">
       {/* Header Skeleton */}
       <div className="relative bg-muted p-8">
-        <div className="container mx-auto">
-          <Skeleton className="h-8 w-32 mb-4" />
-          <Skeleton className="h-12 w-96 mb-2" />
-          <Skeleton className="h-6 w-48" />
+        <div className="container mx-auto space-y-4">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-6 w-24" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <div className="md:col-span-3">
+              <Skeleton className="aspect-[2/3] w-full max-w-xs" />
+            </div>
+            <div className="md:col-span-9 space-y-4">
+              <Skeleton className="h-12 w-96" />
+              <div className="flex gap-4">
+                <Skeleton className="h-6 w-20" />
+                <Skeleton className="h-6 w-24" />
+              </div>
+              <Skeleton className="h-20 w-full max-w-2xl" />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Content Skeleton */}
       <div className="container mx-auto px-4 py-8 space-y-8">
-        <Skeleton className="h-32 w-full" />
-        <Skeleton className="h-64 w-full" />
-        <Skeleton className="h-48 w-full" />
+        {/* Season Overview Card */}
+        <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-5 w-5" />
+              <Skeleton className="h-6 w-32" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="space-y-2">
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-6 w-full" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Episodes List Card */}
+        <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-5 w-5" />
+              <Skeleton className="h-6 w-20" />
+            </div>
+            <div className="space-y-4">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex gap-4 p-4 border border-border/20 rounded-lg"
+                >
+                  <Skeleton className="aspect-video w-32 rounded-lg flex-shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Skeleton className="h-5 w-16" />
+                      <Skeleton className="h-5 w-48" />
+                    </div>
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-12 w-full" />
+                    <div className="flex gap-2">
+                      <Skeleton className="h-4 w-16" />
+                      <Skeleton className="h-4 w-12" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Cast Section Card */}
+        <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
+          <div className="space-y-6">
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-5 w-5" />
+              <Skeleton className="h-6 w-16" />
+            </div>
+            <div className="space-y-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex items-center space-x-3 p-3 rounded-lg"
+                >
+                  <Skeleton className="h-20 w-20 rounded-full flex-shrink-0" />
+                  <div className="min-w-0 flex-1 space-y-1">
+                    <Skeleton className="h-5 w-32" />
+                    <Skeleton className="h-4 w-24" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
