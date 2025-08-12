@@ -63,7 +63,7 @@ export default function TermsPage() {
               </p>
               <p className="text-muted-foreground">
                 • Attempt to gain unauthorized access to our systems or other
-                users' accounts
+                users&apos; accounts
               </p>
               <p className="text-muted-foreground">
                 • Interfere with or disrupt the service or servers connected to
@@ -129,7 +129,7 @@ export default function TermsPage() {
               8. Disclaimer of Warranties
             </h2>
             <p className="text-muted-foreground">
-              FilmFatale is provided "as is" without any warranties, express or
+              FilmFatale is provided &quot;as is&quot; without any warranties, express or
               implied. We do not warrant that the service will be uninterrupted,
               secure, or error-free.
             </p>
@@ -168,7 +168,7 @@ export default function TermsPage() {
             <p className="text-muted-foreground">
               We may update these Terms of Service from time to time. We will
               notify you of any material changes by posting the updated terms on
-              this page and updating the "Last updated" date.
+              this page and updating the &quot;Last updated&quot; date.
             </p>
           </section>
 
