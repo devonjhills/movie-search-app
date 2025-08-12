@@ -92,7 +92,7 @@ export function DetailsHero({
         <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-4">
             {/* Glass backdrop container for entire hero */}
-            <div className="bg-background/80 backdrop-blur-sm rounded-xl p-8 border border-border/20 shadow-2xl">
+            <div className="bg-background/20 backdrop-blur-sm rounded-xl p-8 border border-border/10 shadow-2xl">
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                 {/* Poster */}
                 <div className="md:col-span-3">
@@ -122,7 +122,7 @@ export function DetailsHero({
                   {/* Section 1: Primary Information */}
                   <div className="space-y-4">
                     <div>
-                      <h1 className="text-4xl md:text-5xl font-bold leading-tight text-foreground drop-shadow-2xl">
+                      <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight text-foreground drop-shadow-2xl">
                         {title}
                       </h1>
                       {((isMovieDetails(item) && item.tagline) ||
@@ -142,16 +142,16 @@ export function DetailsHero({
                     {/* Core Metadata Row */}
                     <div className="flex flex-wrap items-center gap-3 text-sm">
                       {item.vote_average > 0 && (
-                        <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold border-2 border-rating-gold/80 text-rating-gold bg-background shadow-sm">
-                          <StarFilledIcon className="h-4 w-4" />
+                        <Badge variant="accent" className="gap-1 font-bold">
+                          <StarFilledIcon className="h-3 w-3" />
                           <span>{rating}</span>
-                        </div>
+                        </Badge>
                       )}
 
                       {usCertification && (
-                        <div className="px-2.5 py-1 rounded-md text-xs font-bold border-2 border-primary/80 text-primary bg-background shadow-sm">
+                        <Badge variant="default" className="font-bold">
                           {usCertification}
-                        </div>
+                        </Badge>
                       )}
 
                       <div className="flex flex-wrap items-center gap-4 text-foreground/90">

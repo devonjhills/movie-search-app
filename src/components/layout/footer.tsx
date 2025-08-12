@@ -17,32 +17,7 @@ export function Footer() {
         </div>
       </div>
       <div className="container mx-auto px-4 py-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 justify-items-center">
-          {/* Brand */}
-          <div className="space-y-3">
-            <h3 className="text-base font-display font-semibold">FilmFatale</h3>
-            <div className="space-y-2">
-              <Link
-                href="/"
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/discover"
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Discover
-              </Link>
-              <Link
-                href="/search"
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Search
-              </Link>
-            </div>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 justify-items-center">
           {/* Movies */}
           <div className="space-y-3">
             <h3 className="text-base font-display font-semibold">Movies</h3>

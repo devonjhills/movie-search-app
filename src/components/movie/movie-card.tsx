@@ -79,12 +79,12 @@ export function MovieCard({
 
           {/* Movie Info */}
           <div className="space-y-1 flex-1 flex flex-col">
-            <h3 className="card-title text-foreground min-h-[2.5rem] flex items-center group-hover:text-primary transition-colors">
+            <h3 className="font-serif text-base font-medium leading-tight text-foreground min-h-[2.5rem] flex items-center group-hover:text-primary transition-colors">
               {movie.title}
             </h3>
 
             {showYear && movie.release_date && (
-              <p className="card-subtitle text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 {new Date(movie.release_date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -94,7 +94,7 @@ export function MovieCard({
             )}
 
             {showOverview && movie.overview && (
-              <p className="card-body text-muted-foreground line-clamp-3">
+              <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
                 {truncateText(movie.overview, 120)}
               </p>
             )}

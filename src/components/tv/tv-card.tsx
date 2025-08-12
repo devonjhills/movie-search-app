@@ -79,12 +79,12 @@ export function TVCard({
 
           {/* TV Show Info */}
           <div className="space-y-1 flex-1 flex flex-col">
-            <h3 className="card-title text-foreground min-h-[2.5rem] flex items-center group-hover:text-primary transition-colors">
+            <h3 className="font-serif text-base font-medium leading-tight text-foreground min-h-[2.5rem] flex items-center group-hover:text-primary transition-colors">
               {tvShow.name}
             </h3>
 
             {showYear && tvShow.first_air_date && (
-              <p className="card-subtitle text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 {new Date(tvShow.first_air_date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -94,7 +94,7 @@ export function TVCard({
             )}
 
             {showOverview && tvShow.overview && (
-              <p className="card-body text-muted-foreground line-clamp-3">
+              <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
                 {truncateText(tvShow.overview, 120)}
               </p>
             )}

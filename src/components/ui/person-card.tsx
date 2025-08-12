@@ -48,10 +48,12 @@ export function PersonCard({ person, role, href, mediaType }: PersonCardProps) {
 
       {/* Person Info */}
       <div className="min-w-0 flex-1">
-        <p className="person-name text-foreground mb-1">{person.name}</p>
-        <p className="person-role text-foreground/70 mb-1">{role}</p>
+        <p className="font-serif text-lg font-medium text-foreground mb-1">
+          {person.name}
+        </p>
+        <p className="text-sm text-muted-foreground mb-1">{role}</p>
         {mediaType === "tv" && person.episode_count && (
-          <p className="person-role text-foreground/60">
+          <p className="text-sm text-muted-foreground">
             {person.episode_count} episode
             {person.episode_count !== 1 ? "s" : ""}
           </p>
