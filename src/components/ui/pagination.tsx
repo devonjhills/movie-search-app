@@ -46,7 +46,7 @@ export function Pagination({
       {/* Results info */}
       {totalResults && (
         <p className="text-sm text-muted-foreground">
-          Showing page {currentPage} of {totalPages}(
+          Showing page {currentPage} of {totalPages} (
           {totalResults.toLocaleString()} total results)
         </p>
       )}

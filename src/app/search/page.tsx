@@ -1,11 +1,14 @@
-"use client";
+import type { Metadata } from "next";
+import { SearchPageClient } from "./search-page-client";
 
-import { useSearchParams } from "next/navigation";
-import { BrowsePage } from "@/components/search/browse-page";
+export const metadata: Metadata = {
+  title: "Search - FilmFatale",
+  description:
+    "Search for movies, TV shows, and people. Discover your next favorite entertainment with FilmFatale's comprehensive search powered by TMDB.",
+  keywords:
+    "search movies, search TV shows, find films, discover entertainment, movie search, TV search, film database",
+};
 
 export default function Search() {
-  const searchParams = useSearchParams();
-  const initialQuery = searchParams.get("q") || "";
-
-  return <BrowsePage initialQuery={initialQuery} />;
+  return <SearchPageClient />;
 }

@@ -9,6 +9,7 @@ import {
   BookmarkIcon,
   PersonIcon,
   ClockIcon,
+  ChevronRightIcon,
 } from "@radix-ui/react-icons";
 import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useTVDetails, useTVWatchProviders } from "@/lib/hooks/api-hooks";
@@ -488,19 +489,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
                       {/* Subtle arrow indicator */}
                       <div className="opacity-0 group-hover:opacity-60 transition-opacity duration-300 flex-shrink-0">
-                        <svg
-                          className="w-4 h-4 text-primary"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
+                        <ChevronRightIcon className="w-4 h-4 text-primary" />
                       </div>
                     </Link>
                   ))}

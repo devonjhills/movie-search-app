@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,14 +9,22 @@ import {
   GlobeIcon,
   Link2Icon,
   VideoIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
 } from "@radix-ui/react-icons";
 import { usePersonDetails } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { formatDate, calculateAge } from "@/lib/utils";
+import type { Movie, TVShow } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { BackNavigation } from "@/components/ui/back-navigation";
+import { Pagination } from "@/components/ui/pagination";
+import { Badge } from "@/components/ui/badge";
+import { MovieCardHorizontal } from "@/components/movie/movie-card-horizontal";
+import { TVCardHorizontal } from "@/components/tv/tv-card-horizontal";
 
 interface PersonDetailsPageProps {
   personId: number;
@@ -146,6 +155,12 @@ function PersonDetailsSkeleton() {
 
 export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
   const { person, isLoading, isError } = usePersonDetails(personId);
+  const [movieCreditsExpanded, setMovieCreditsExpanded] = useState(false);
+  const [tvCreditsExpanded, setTvCreditsExpanded] = useState(false);
+  const [movieCreditsPage, setMovieCreditsPage] = useState(1);
+  const [tvCreditsPage, setTvCreditsPage] = useState(1);
+
+  const ITEMS_PER_PAGE = 12;
 
   if (isLoading) {
     return <PersonDetailsSkeleton />;
@@ -187,32 +202,81 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
       (credit) => credit.media_type === "tv",
     ) || [];
 
-  // Sort by popularity and release date
+  // Sort by release date (newest to oldest)
   const sortedMovieCredits = [...movieCredits].sort((a, b) => {
-    // Sort by popularity first (descending)
-    const popularityDiff = (b.popularity || 0) - (a.popularity || 0);
-    if (popularityDiff !== 0) return popularityDiff;
-
-    // Then by release date (descending)
+    // Sort by release date (descending - newest first)
     const dateA = new Date(a.release_date || "").getTime() || 0;
     const dateB = new Date(b.release_date || "").getTime() || 0;
-    return dateB - dateA;
+
+    // If dates are different, sort by date
+    if (dateA !== dateB) return dateB - dateA;
+
+    // If dates are same or both missing, sort by popularity as secondary
+    return (b.popularity || 0) - (a.popularity || 0);
   });
 
   const sortedTVCredits = [...tvCredits].sort((a, b) => {
-    // Sort by popularity first (descending)
-    const popularityDiff = (b.popularity || 0) - (a.popularity || 0);
-    if (popularityDiff !== 0) return popularityDiff;
-
-    // Then by first air date (descending)
+    // Sort by first air date (descending - newest first)
     const dateA = new Date(a.first_air_date || "").getTime() || 0;
     const dateB = new Date(b.first_air_date || "").getTime() || 0;
-    return dateB - dateA;
+
+    // If dates are different, sort by date
+    if (dateA !== dateB) return dateB - dateA;
+
+    // If dates are same or both missing, sort by popularity as secondary
+    return (b.popularity || 0) - (a.popularity || 0);
   });
 
-  // Get most popular/recent credits for display
-  const featuredMovies = sortedMovieCredits.slice(0, 6);
-  const featuredTV = sortedTVCredits.slice(0, 6);
+  // Get credits for display based on expansion state and pagination
+  const getDisplayedCredits = <T,>(
+    credits: T[],
+    expanded: boolean,
+    page: number,
+  ): T[] => {
+    if (!expanded) {
+      return credits.slice(0, 6);
+    }
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return credits.slice(startIndex, endIndex);
+  };
+
+  const displayedMovies = getDisplayedCredits(
+    sortedMovieCredits,
+    movieCreditsExpanded,
+    movieCreditsPage,
+  );
+  const displayedTV = getDisplayedCredits(
+    sortedTVCredits,
+    tvCreditsExpanded,
+    tvCreditsPage,
+  );
+
+  const movieTotalPages = Math.ceil(sortedMovieCredits.length / ITEMS_PER_PAGE);
+  const tvTotalPages = Math.ceil(sortedTVCredits.length / ITEMS_PER_PAGE);
+
+  // Get all departments the person has worked in
+  const getAllDepartments = () => {
+    const departments = new Set<string>();
+
+    // Add primary known_for_department
+    if (person.known_for_department) {
+      departments.add(person.known_for_department);
+    }
+
+    // Add departments from crew credits
+    if (person.combined_credits?.crew) {
+      person.combined_credits.crew.forEach((credit) => {
+        if (credit.department) {
+          departments.add(credit.department);
+        }
+      });
+    }
+
+    return Array.from(departments).sort();
+  };
+
+  const allDepartments = getAllDepartments();
 
   return (
     <div className="min-h-screen">
@@ -230,18 +294,18 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
       </div>
 
       <div className="container mx-auto px-4 pb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Profile Sidebar */}
-          <div className="space-y-6">
+          <div className="lg:col-span-1 space-y-6">
             {/* Profile Image */}
-            <div className="relative aspect-[2/3] w-full max-w-sm mx-auto">
+            <div className="relative aspect-[2/3] w-full max-w-sm mx-auto lg:max-w-full">
               {profileUrl ? (
                 <Image
                   src={profileUrl}
                   alt={person.name}
                   fill
                   className="object-cover rounded-lg shadow-lg"
-                  sizes="(max-width: 1024px) 100vw, 400px"
+                  sizes="(max-width: 1024px) 100vw, 300px"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-muted rounded-lg">
@@ -256,14 +320,22 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                 <CardTitle>Personal Info</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {person.known_for_department && (
-                  <div className="space-y-1">
+                {allDepartments.length > 0 && (
+                  <div className="space-y-2">
                     <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Known For
                     </h4>
-                    <p className="text-base font-medium">
-                      {person.known_for_department}
-                    </p>
+                    <div className="flex flex-wrap gap-1">
+                      {allDepartments.map((department, index) => (
+                        <Badge
+                          key={index}
+                          variant="secondary"
+                          className="text-xs"
+                        >
+                          {department}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                 )}
 
@@ -372,15 +444,30 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-3 space-y-8">
             {/* Name and Basic Info */}
-            <div className="space-y-2">
-              <h1 className="text-4xl md:text-5xl font-bold">{person.name}</h1>
-              {person.known_for_department && (
-                <p className="text-xl text-muted-foreground">
-                  {person.known_for_department}
-                </p>
-              )}
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif">
+                  {person.name}
+                </h1>
+              </div>
+
+              {/* Quick stats for mobile */}
+              <div className="lg:hidden flex flex-wrap gap-4 text-sm">
+                {person.birthday && (
+                  <div className="flex items-center gap-1">
+                    <CalendarIcon className="h-4 w-4 text-muted-foreground" />
+                    <span>{formatDate(person.birthday)}</span>
+                  </div>
+                )}
+                {person.place_of_birth && (
+                  <div className="flex items-center gap-1">
+                    <GlobeIcon className="h-4 w-4 text-muted-foreground" />
+                    <span>{person.place_of_birth}</span>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Biography */}
@@ -402,64 +489,73 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             )}
 
             {/* Movie Credits */}
-            {featuredMovies.length > 0 && (
+            {displayedMovies.length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <VideoIcon className="h-5 w-5" />
-                    <span>Movie Credits</span>
-                    <span className="text-sm font-normal text-muted-foreground">
-                      ({movieCredits.length} total)
-                    </span>
-                  </CardTitle>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center space-x-2">
+                      <VideoIcon className="h-5 w-5" />
+                      <span>Movie Credits</span>
+                      <span className="text-sm font-normal text-muted-foreground">
+                        ({movieCredits.length} total)
+                      </span>
+                    </CardTitle>
+                    {movieCredits.length > 6 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setMovieCreditsExpanded(!movieCreditsExpanded);
+                          if (movieCreditsExpanded) {
+                            setMovieCreditsPage(1);
+                          }
+                        }}
+                        className="flex items-center gap-1"
+                      >
+                        {movieCreditsExpanded ? (
+                          <>
+                            Show Less
+                            <ChevronUpIcon className="h-4 w-4" />
+                          </>
+                        ) : (
+                          <>
+                            Show All
+                            <ChevronDownIcon className="h-4 w-4" />
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {featuredMovies.map((movie) => (
-                      <Link
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    {displayedMovies.map((movie) => (
+                      <MovieCardHorizontal
                         key={`${movie.id}-${movie.credit_id}`}
-                        href={`/movie/${movie.id}`}
-                        className="flex space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
-                      >
-                        <div className="relative w-12 h-18 flex-shrink-0">
-                          {movie.poster_path ? (
-                            <Image
-                              src={getImageUrl(
-                                movie.poster_path,
-                                "poster",
-                                "w185",
-                              )}
-                              alt={movie.title || ""}
-                              fill
-                              className="object-cover rounded"
-                            />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-muted rounded">
-                              <VideoIcon className="h-4 w-4 text-muted-foreground" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1 space-y-1">
-                          <h4 className="text-sm font-medium line-clamp-1">
-                            {movie.title}
-                          </h4>
-                          <p className="text-xs text-muted-foreground">
-                            {movie.character && `as ${movie.character}`}
-                          </p>
-                          {movie.release_date && (
-                            <p className="text-xs text-muted-foreground">
-                              {new Date(movie.release_date).getFullYear()}
-                            </p>
-                          )}
-                        </div>
-                      </Link>
+                        movie={movie}
+                        character={movie.character}
+                      />
                     ))}
                   </div>
-                  {movieCredits.length > 6 && (
+
+                  {/* Pagination for expanded view */}
+                  {movieCreditsExpanded && movieTotalPages > 1 && (
+                    <div className="mt-6">
+                      <Pagination
+                        currentPage={movieCreditsPage}
+                        totalPages={movieTotalPages}
+                        totalResults={movieCredits.length}
+                        onPageChange={setMovieCreditsPage}
+                      />
+                    </div>
+                  )}
+
+                  {/* Show count for collapsed view */}
+                  {!movieCreditsExpanded && movieCredits.length > 6 && (
                     <div className="mt-4 text-center">
                       <p className="text-sm text-muted-foreground">
-                        Showing {featuredMovies.length} of {movieCredits.length}{" "}
-                        movie credits
+                        Showing {displayedMovies.length} of{" "}
+                        {movieCredits.length} movie credits
                       </p>
                     </div>
                   )}
@@ -468,87 +564,72 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             )}
 
             {/* TV Credits */}
-            {featuredTV.length > 0 && (
+            {displayedTV.length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                    <span>TV Credits</span>
-                    <span className="text-sm font-normal text-muted-foreground">
-                      ({tvCredits.length} total)
-                    </span>
-                  </CardTitle>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center space-x-2">
+                      <VideoIcon className="h-5 w-5" />
+                      <span>TV Credits</span>
+                      <span className="text-sm font-normal text-muted-foreground">
+                        ({tvCredits.length} total)
+                      </span>
+                    </CardTitle>
+                    {tvCredits.length > 6 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setTvCreditsExpanded(!tvCreditsExpanded);
+                          if (tvCreditsExpanded) {
+                            setTvCreditsPage(1);
+                          }
+                        }}
+                        className="flex items-center gap-1"
+                      >
+                        {tvCreditsExpanded ? (
+                          <>
+                            Show Less
+                            <ChevronUpIcon className="h-4 w-4" />
+                          </>
+                        ) : (
+                          <>
+                            Show All
+                            <ChevronDownIcon className="h-4 w-4" />
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {featuredTV.map((show) => (
-                      <Link
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    {displayedTV.map((show) => (
+                      <TVCardHorizontal
                         key={`${show.id}-${show.credit_id}`}
-                        href={`/tv/${show.id}`}
-                        className="flex space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
-                      >
-                        <div className="relative w-12 h-18 flex-shrink-0">
-                          {show.poster_path ? (
-                            <Image
-                              src={getImageUrl(
-                                show.poster_path,
-                                "poster",
-                                "w185",
-                              )}
-                              alt={show.name || ""}
-                              fill
-                              className="object-cover rounded"
-                            />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-muted rounded">
-                              <svg
-                                className="h-4 w-4 text-muted-foreground"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                />
-                              </svg>
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1 space-y-1">
-                          <h4 className="text-sm font-medium line-clamp-1">
-                            {show.name}
-                          </h4>
-                          <p className="text-xs text-muted-foreground">
-                            {show.character && `as ${show.character}`}
-                          </p>
-                          {show.first_air_date && (
-                            <p className="text-xs text-muted-foreground">
-                              {new Date(show.first_air_date).getFullYear()}
-                            </p>
-                          )}
-                        </div>
-                      </Link>
+                        tvShow={show}
+                        character={show.character}
+                      />
                     ))}
                   </div>
-                  {tvCredits.length > 6 && (
+
+                  {/* Pagination for expanded view */}
+                  {tvCreditsExpanded && tvTotalPages > 1 && (
+                    <div className="mt-6">
+                      <Pagination
+                        currentPage={tvCreditsPage}
+                        totalPages={tvTotalPages}
+                        totalResults={tvCredits.length}
+                        onPageChange={setTvCreditsPage}
+                      />
+                    </div>
+                  )}
+
+                  {/* Show count for collapsed view */}
+                  {!tvCreditsExpanded && tvCredits.length > 6 && (
                     <div className="mt-4 text-center">
                       <p className="text-sm text-muted-foreground">
-                        Showing {featuredTV.length} of {tvCredits.length} TV
+                        Showing {displayedTV.length} of {tvCredits.length} TV
                         credits
                       </p>
                     </div>

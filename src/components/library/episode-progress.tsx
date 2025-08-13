@@ -83,7 +83,8 @@ export function EpisodeProgress({
           <div className="flex items-center justify-between gap-2">
             <Badge
               variant="secondary"
-              className="gap-1 text-xs flex-shrink-0 font-medium">
+              className="gap-1 text-xs flex-shrink-0 font-medium"
+            >
               Next: S{progress.next_episode.season_number}E
               {progress.next_episode.episode_number}
             </Badge>
@@ -96,7 +97,8 @@ export function EpisodeProgress({
                   variant="outline"
                   onClick={markNextEpisodeWatched}
                   disabled={isUpdating}
-                  className="h-6 w-6 p-0 border-primary/40 hover:border-primary hover:bg-primary hover:text-primary-foreground">
+                  className="h-6 w-6 p-0 border-primary/40 hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                >
                   {isUpdating ? (
                     <div className="h-3 w-3 animate-spin rounded-full border border-current border-t-transparent" />
                   ) : (
@@ -113,7 +115,8 @@ export function EpisodeProgress({
         ) : (
           <Badge
             variant="default"
-            className="gap-1 text-xs w-fit bg-green-500/10 text-green-700 dark:bg-green-500/20 dark:text-green-400 border-green-500/20">
+            className="gap-1 text-xs w-fit bg-green-500/10 text-green-700 dark:bg-green-500/20 dark:text-green-400 border-green-500/20"
+          >
             <CheckIcon className="h-3 w-3" />
             Complete
           </Badge>
