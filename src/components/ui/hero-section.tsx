@@ -104,7 +104,7 @@ export function HeroSection({
                 {/* Rating and Date */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   {movie.vote_average > 0 && (
-                    <Badge className="gap-1 text-xs sm:text-sm">
+                    <Badge variant="accent" className="gap-1 text-xs sm:text-sm">
                       <StarFilledIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                       <span>{rating}</span>
                     </Badge>
@@ -128,12 +128,13 @@ export function HeroSection({
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-2 sm:gap-3">
-                  <Button asChild size="lg">
-                    <Link href={`/${mediaType}/${movie.id}`}>
-                      <InfoCircledIcon className="h-4 w-4" />
-                      View Details
-                    </Link>
-                  </Button>
+                  <Link 
+                    href={`/${mediaType}/${movie.id}`}
+                    className="inline-flex items-center gap-2 text-primary hover:text-primary/80 underline underline-offset-4 hover:underline-offset-2 transition-all duration-200 font-medium text-sm sm:text-base md:text-lg drop-shadow-md"
+                  >
+                    <InfoCircledIcon className="h-4 w-4" />
+                    View Details
+                  </Link>
 
                   <WatchStatusButton
                     tmdb_id={movie.id}

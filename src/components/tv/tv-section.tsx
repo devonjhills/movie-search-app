@@ -46,17 +46,17 @@ export function TVSection({
           </h2>
           {/* Enhanced badges */}
           {showTrending && (
-            <Badge className="gap-1.5 text-sm">
+            <Badge variant="secondary" className="gap-1.5 text-sm">
               🔥 Hot
             </Badge>
           )}
           {badge && (
-            <Badge className="text-xs font-serif shimmer text-champagne-glow">
+            <Badge variant="outline" className="text-xs font-serif">
               {badge}
             </Badge>
           )}
           {showEpisodeIndicator && (
-            <Badge className="gap-1 text-xs">
+            <Badge variant="secondary" className="gap-1 text-xs">
               📺 New Episodes
             </Badge>
           )}

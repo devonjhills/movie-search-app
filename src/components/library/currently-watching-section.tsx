@@ -74,7 +74,7 @@ export function CurrentlyWatchingSection({
             <ClockIcon className="h-6 w-6" />
             Currently Watching
           </h2>
-          <Badge className="text-sm">
+          <Badge variant="secondary" className="text-sm">
             {watchingItems.length}{" "}
             {watchingItems.length === 1 ? "item" : "items"}
           </Badge>
@@ -95,7 +95,7 @@ export function CurrentlyWatchingSection({
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-serif font-semibold flex items-center gap-2">
               TV Shows
-              <Badge className="text-xs">
+              <Badge variant="outline" className="text-xs">
                 {tvShows.length}
               </Badge>
             </h3>
@@ -122,7 +122,7 @@ export function CurrentlyWatchingSection({
         <div className="space-y-4">
           <h3 className="text-lg font-serif font-semibold flex items-center gap-2">
             Movies
-            <Badge className="text-xs">
+            <Badge variant="outline" className="text-xs">
               {movies.length}
             </Badge>
           </h3>

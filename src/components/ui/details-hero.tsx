@@ -142,14 +142,14 @@ export function DetailsHero({
                     {/* Core Metadata Row */}
                     <div className="flex flex-wrap items-center gap-2 sm:gap-2 lg:gap-3 text-xs sm:text-xs md:text-sm">
                       {item.vote_average > 0 && (
-                        <Badge className="gap-1 font-bold">
+                        <Badge variant="accent" className="gap-1 font-bold">
                           <StarFilledIcon className="h-3 w-3" />
                           <span>{rating}</span>
                         </Badge>
                       )}
 
                       {usCertification && (
-                        <Badge className="font-bold">
+                        <Badge variant="default" className="font-bold">
                           {usCertification}
                         </Badge>
                       )}
@@ -205,7 +205,7 @@ export function DetailsHero({
                             ? item.genres
                             : []
                           ).map((genre: { id: number; name: string }) => (
-                            <Badge key={genre.id}>
+                            <Badge key={genre.id} variant="outline">
                               {genre.name}
                             </Badge>
                           ))}

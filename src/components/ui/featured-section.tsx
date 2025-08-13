@@ -39,7 +39,7 @@ export function FeaturedSection({
             {title}
           </h2>
           {showTrending && (
-            <Badge className="gap-1.5 text-sm">
+            <Badge variant="secondary" className="gap-1.5 text-sm">
               🔥 Trending
             </Badge>
           )}
@@ -68,7 +68,7 @@ export function FeaturedSection({
               {/* Trending Badge */}
               {showTrending && index < 6 && (
                 <div className="absolute top-3 right-3 z-20">
-                  <Badge className="gap-1 text-xs">
+                  <Badge variant="secondary" className="gap-1 text-xs">
                     🔥 #{index + 1}
                   </Badge>
                 </div>
@@ -104,7 +104,7 @@ export function FeaturedSection({
                           </h3>
                           <div className="flex flex-wrap items-center gap-2">
                             {item.vote_average > 0 && (
-                              <Badge className="gap-1.5 text-sm">
+                              <Badge variant="accent" className="gap-1.5 text-sm">
                                 <StarFilledIcon className="h-4 w-4" />
                                 <span>{rating}</span>
                               </Badge>

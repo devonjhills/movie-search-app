@@ -183,12 +183,6 @@ export function RotatingHeroSection({
       {/* Content */}
       <div className="relative h-full flex items-start sm:items-center py-6 sm:py-8 justify-center">
         <div className="px-4 w-full max-w-7xl">
-          {/* Featured Badge */}
-          <div className="mb-4">
-            <Badge className="font-serif text-sm px-3 py-1">
-              ✨ Featured
-            </Badge>
-          </div>
 
           {/* Glass backdrop container */}
           <div className="bg-background/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 border border-border/10 shadow-2xl relative overflow-hidden">
@@ -269,7 +263,7 @@ export function RotatingHeroSection({
                 {/* Rating and Date */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   {currentItem.vote_average > 0 && (
-                    <Badge className="gap-1 text-xs sm:text-sm">
+                    <Badge variant="accent" className="gap-1 text-xs sm:text-sm">
                       <StarFilledIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                       <span>{rating}</span>
                     </Badge>
@@ -283,7 +277,7 @@ export function RotatingHeroSection({
                     </div>
                   )}
                   {/* Trending Indicator */}
-                  <Badge className="gap-1 text-xs">
+                  <Badge variant="secondary" className="gap-1 text-xs">
                     🔥 Trending
                   </Badge>
                 </div>
@@ -297,14 +291,14 @@ export function RotatingHeroSection({
 
                 {/* Enhanced Action Buttons */}
                 <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3">
-                  <Button asChild size="lg" className="">
+                  <Button asChild size="lg">
                     <Link href={`/${mediaType}/${currentItem.id}`}>
                       <InfoCircledIcon className="h-4 w-4" />
                       View Details
                     </Link>
                   </Button>
 
-                  <Button variant="default" size="lg" className="">
+                  <Button variant="outline" size="lg">
                     <PlayIcon className="h-4 w-4" />
                     Watch Trailer
                   </Button>

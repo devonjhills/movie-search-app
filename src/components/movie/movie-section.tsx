@@ -45,12 +45,12 @@ export function MovieSection({
           </h2>
           {/* Enhanced badges */}
           {showTrending && (
-            <Badge className="gap-1.5 text-sm">
+            <Badge variant="secondary" className="gap-1.5 text-sm">
               🔥 Trending
             </Badge>
           )}
           {badge && (
-            <Badge className="gap-1.5 text-sm">
+            <Badge variant="secondary" className="gap-1.5 text-sm">
               {badge}
             </Badge>
           )}

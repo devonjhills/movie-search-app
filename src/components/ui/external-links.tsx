@@ -47,16 +47,20 @@ export function ExternalLinks({
   if (links.length === 0) return null;
 
   return (
-    <div className={`flex flex-wrap gap-2 ${className}`}>
+    <div className={`flex flex-wrap gap-4 ${className}`}>
       {links.map((link) => {
         const IconComponent = link.icon;
         return (
-          <Button key={link.name} variant="default" size="default" asChild>
-            <a href={link.url!} target="_blank" rel="noopener noreferrer">
-              <IconComponent className="h-4 w-4" />
-              {link.name}
-            </a>
-          </Button>
+          <a 
+            key={link.name} 
+            href={link.url!} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 underline underline-offset-4 hover:underline-offset-2 transition-all duration-200 font-medium text-sm"
+          >
+            <IconComponent className="h-4 w-4" />
+            {link.name}
+          </a>
         );
       })}
     </div>
