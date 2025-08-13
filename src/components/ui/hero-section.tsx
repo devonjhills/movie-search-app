@@ -44,7 +44,7 @@ export function HeroSection({
   return (
     <section
       className={cn(
-        "relative overflow-hidden min-h-[400px] sm:min-h-[500px] md:h-[650px] border-b border-border/30",
+        "relative overflow-hidden min-h-[300px] sm:min-h-[350px] md:h-[450px] border-b border-border/30 smoke-effect",
         className,
       )}
     >
@@ -68,10 +68,10 @@ export function HeroSection({
       </div>
 
       {/* Content with glassmorphic card */}
-      <div className="relative h-full flex items-start sm:items-center py-4 sm:py-8">
-        <div className="container mx-auto px-4">
+      <div className="relative h-full flex items-start sm:items-center py-4 sm:py-8 justify-center">
+        <div className="px-4">
           {/* Glass backdrop container for entire hero */}
-          <div className="bg-background/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 border border-border/10 shadow-2xl">
+          <div className="bg-background/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 border border-border/10 shadow-2xl w-fit">
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start sm:items-center">
               {/* Poster */}
               <div className="col-span-1 sm:col-span-1 lg:col-span-2">
@@ -96,7 +96,7 @@ export function HeroSection({
               <div className="col-span-2 sm:col-span-3 lg:col-span-10 space-y-2 sm:space-y-4 lg:space-y-6 text-foreground relative z-10">
                 {/* Title */}
                 <div>
-                  <h1 className="font-serif text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight drop-shadow-lg">
+                  <h1 className="font-serif text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight drop-shadow-lg text-glow">
                     {title}
                   </h1>
                 </div>
@@ -104,7 +104,7 @@ export function HeroSection({
                 {/* Rating and Date */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   {movie.vote_average > 0 && (
-                    <Badge className="gap-1 text-xs sm:text-sm">
+                    <Badge className="gap-1 text-xs sm:text-sm shimmer text-champagne-glow">
                       <StarFilledIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                       <span>{rating}</span>
                     </Badge>

@@ -33,7 +33,7 @@ export function MovieSection({
     <section className={cn("space-y-6", className)}>
       {/* Section Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-serif font-semibold text-foreground">
+        <h2 className="text-2xl font-serif font-semibold text-foreground text-glow">
           {title}
         </h2>
 

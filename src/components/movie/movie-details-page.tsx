@@ -246,7 +246,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
       />
 
       {/* Main Content */}
-      <div className="relative container mx-auto px-4 pt-8 pb-12">
+      <div className="relative container mx-auto px-4 pt-4 pb-12">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center justify-between gap-4 mb-8">
           <Breadcrumb

@@ -39,7 +39,7 @@ export default async function Home() {
   const heroMovie = nowPlayingMovies[0];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen smoke-effect">
       {/* Hero Section */}
       {heroMovie && (
         <HeroSection movie={heroMovie} className="mb-6 sm:mb-8 md:mb-12" />

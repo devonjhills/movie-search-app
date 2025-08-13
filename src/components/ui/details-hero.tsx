@@ -87,12 +87,12 @@ export function DetailsHero({
       </div>
 
       {/* Hero Section */}
-      <div className="relative min-h-[400px] sm:min-h-[450px] lg:h-[500px] mt-16 z-10">
+      <div className="relative min-h-[400px] sm:min-h-[450px] lg:h-[500px] mt-10 mb-8 z-10">
         {/* Hero Content */}
         <div className="relative h-full flex items-start sm:items-center py-4 sm:py-6 lg:py-0">
           <div className="container mx-auto px-4">
             {/* Glass backdrop container for entire hero */}
-            <div className="bg-background/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 border border-border/10 shadow-2xl">
+            <div className="bg-background/80 rounded-xl p-4 sm:p-6 md:p-8 border-2 border-border/40 overflow-hidden">
               <div className="grid grid-cols-1 sm:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start sm:items-center">
                 {/* Poster */}
                 <div className="sm:col-span-2 lg:col-span-3">
@@ -122,7 +122,7 @@ export function DetailsHero({
                   {/* Section 1: Primary Information */}
                   <div className="space-y-4">
                     <div>
-                      <h1 className="font-serif text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight text-foreground drop-shadow-2xl">
+                      <h1 className="font-serif text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight text-foreground drop-shadow-2xl text-glow">
                         {title}
                       </h1>
                       {((isMovieDetails(item) && item.tagline) ||
@@ -142,7 +142,10 @@ export function DetailsHero({
                     {/* Core Metadata Row */}
                     <div className="flex flex-wrap items-center gap-2 sm:gap-2 lg:gap-3 text-xs sm:text-xs md:text-sm">
                       {item.vote_average > 0 && (
-                        <Badge variant="accent" className="gap-1 font-bold">
+                        <Badge
+                          variant="accent"
+                          className="gap-1 font-bold shimmer text-champagne-glow"
+                        >
                           <StarFilledIcon className="h-3 w-3" />
                           <span>{rating}</span>
                         </Badge>

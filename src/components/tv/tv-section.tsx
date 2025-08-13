@@ -33,7 +33,9 @@ export function TVSection({
     <section className={cn("space-y-6", className)}>
       {/* Section Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-display-md text-foreground">{title}</h2>
+        <h2 className="text-2xl font-serif font-semibold text-foreground text-glow">
+          {title}
+        </h2>
 
         {/* View All Link */}
         {href && showViewAll && (

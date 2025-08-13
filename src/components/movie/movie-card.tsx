@@ -69,7 +69,7 @@ export function MovieCard({
             {/* Rating Badge */}
             {showRating && movie.vote_average > 0 && (
               <div className="absolute top-2 right-2">
-                <Badge className="gap-1">
+                <Badge className="gap-1 shimmer text-champagne-glow">
                   <StarFilledIcon className="h-3 w-3" />
                   <span>{rating}</span>
                 </Badge>
@@ -82,7 +82,7 @@ export function MovieCard({
 
           {/* Movie Info */}
           <div className="space-y-1 flex-1 flex flex-col">
-            <h3 className="font-serif text-base font-medium leading-tight text-foreground min-h-[2.5rem] flex items-center group-hover:text-primary transition-colors">
+            <h3 className="font-serif text-base font-medium leading-tight text-foreground min-h-[2.5rem] flex items-center group-hover:text-primary group-hover:text-glow transition-all duration-300">
               {movie.title}
             </h3>
 

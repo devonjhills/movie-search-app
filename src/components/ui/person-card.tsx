@@ -28,7 +28,7 @@ export function PersonCard({ person, role, href, mediaType }: PersonCardProps) {
   return (
     <Link
       href={linkPath}
-      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 hover:shadow-noir-soft transition-all duration-300 group"
     >
       {/* Person Avatar */}
       <Avatar className="h-20 w-20 flex-shrink-0">
@@ -48,7 +48,7 @@ export function PersonCard({ person, role, href, mediaType }: PersonCardProps) {
 
       {/* Person Info */}
       <div className="min-w-0 flex-1">
-        <p className="font-serif text-lg font-medium text-foreground mb-1">
+        <p className="font-serif text-lg font-medium text-foreground mb-1 group-hover:text-glow transition-all duration-300">
           {person.name}
         </p>
         <p className="text-sm text-muted-foreground mb-1">{role}</p>

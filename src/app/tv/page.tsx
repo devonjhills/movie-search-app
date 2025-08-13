@@ -29,7 +29,7 @@ export default function TVPage() {
   const heroTVShow = popularTVShows[0];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen smoke-effect">
       {/* Hero Section */}
       {heroTVShow && !popularLoading && (
         <HeroSection

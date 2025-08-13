@@ -15,6 +15,7 @@ import {
 import { usePersonDetails } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { formatDate, calculateAge } from "@/lib/utils";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Movie, TVShow } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
