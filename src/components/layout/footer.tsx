@@ -105,9 +105,15 @@ export function Footer() {
               href="https://www.themoviedb.org/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 hover:text-blue-400 transition-colors"
+              className="hover:opacity-80 transition-opacity"
             >
-              The Movie Database (TMDB)
+              <Image
+                src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_long_1-8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596.svg"
+                alt="The Movie Database (TMDB)"
+                width={96}
+                height={20}
+                className="h-5 w-auto"
+              />
             </Link>
           </div>
         </div>
