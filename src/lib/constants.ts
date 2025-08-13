@@ -17,6 +17,7 @@ export const ENDPOINTS = {
   tvDetails: (id: number) => `${TMDB_BASE_URL}/tv/${id}`,
   tvSeasonDetails: (tvId: number, seasonNumber: number) =>
     `${TMDB_BASE_URL}/tv/${tvId}/season/${seasonNumber}`,
+  tvAiringToday: `${TMDB_BASE_URL}/tv/airing_today`,
   tvOnTheAir: `${TMDB_BASE_URL}/tv/on_the_air`,
   tvPopular: `${TMDB_BASE_URL}/tv/popular`,
   tvTopRated: `${TMDB_BASE_URL}/tv/top_rated`,

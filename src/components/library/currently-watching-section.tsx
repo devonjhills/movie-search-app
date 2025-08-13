@@ -58,7 +58,7 @@ export function CurrentlyWatchingSection({
             Start watching movies and TV shows to track your progress here.
           </p>
         </div>
-        <Button variant="outline" onClick={onRefresh}>
+        <Button variant="default" onClick={onRefresh}>
           Refresh
         </Button>
       </div>
@@ -74,13 +74,13 @@ export function CurrentlyWatchingSection({
             <ClockIcon className="h-6 w-6" />
             Currently Watching
           </h2>
-          <Badge variant="secondary" className="text-sm">
+          <Badge className="text-sm">
             {watchingItems.length}{" "}
             {watchingItems.length === 1 ? "item" : "items"}
           </Badge>
         </div>
         <Button
-          variant="ghost"
+          variant="default"
           size="sm"
           onClick={onRefresh}
           className="text-muted-foreground hover:text-primary"
@@ -95,7 +95,7 @@ export function CurrentlyWatchingSection({
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-serif font-semibold flex items-center gap-2">
               TV Shows
-              <Badge variant="outline" className="text-xs">
+              <Badge className="text-xs">
                 {tvShows.length}
               </Badge>
             </h3>
@@ -122,7 +122,7 @@ export function CurrentlyWatchingSection({
         <div className="space-y-4">
           <h3 className="text-lg font-serif font-semibold flex items-center gap-2">
             Movies
-            <Badge variant="outline" className="text-xs">
+            <Badge className="text-xs">
               {movies.length}
             </Badge>
           </h3>
@@ -148,7 +148,7 @@ export function CurrentlyWatchingSection({
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="default" size="sm" asChild>
             <Link href="/library?status=all">View All Library Items</Link>
           </Button>
         </div>

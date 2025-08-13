@@ -48,7 +48,7 @@ export function SplitLayoutSection({
               {mainTitle}
             </h2>
             {mainHref && (
-              <Button variant="ghost" asChild className="group">
+              <Button variant="default" asChild className="group">
                 <Link
                   href={mainHref}
                   className="flex items-center gap-2 text-sm"
@@ -99,7 +99,7 @@ export function SplitLayoutSection({
                       {/* Rating Badge */}
                       {item.vote_average > 0 && (
                         <div className="absolute top-2 right-2">
-                          <Badge className="gap-1 text-xs shimmer text-champagne-glow">
+                          <Badge className="gap-1 text-xs">
                             <StarFilledIcon className="h-3 w-3" />
                             <span>{rating}</span>
                           </Badge>
@@ -133,7 +133,7 @@ export function SplitLayoutSection({
               {sidebarTitle}
             </h3>
             {sidebarHref && (
-              <Button variant="ghost" size="sm" asChild className="group">
+              <Button variant="default" size="sm" asChild className="group">
                 <Link
                   href={sidebarHref}
                   className="flex items-center gap-1 text-xs"

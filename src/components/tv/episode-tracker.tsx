@@ -168,7 +168,7 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
             <ClockIcon className="h-5 w-5" />
             Episode Tracker
             {progress?.next_episode && (
-              <Badge variant="default" className="gap-1.5 bg-primary/90">
+              <Badge className="gap-1.5">
                 <PlayIcon className="h-3 w-3" />
                 Next: S{progress.next_episode.season_number}E
                 {progress.next_episode.episode_number}

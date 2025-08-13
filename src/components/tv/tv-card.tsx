@@ -66,7 +66,7 @@ export function TVCard({
             {/* Rating Badge */}
             {showRating && tvShow.vote_average > 0 && (
               <div className="absolute top-2 right-2">
-                <Badge className="gap-1 shimmer text-champagne-glow">
+                <Badge className="gap-1">
                   <StarFilledIcon className="h-3 w-3" />
                   <span>{rating}</span>
                 </Badge>

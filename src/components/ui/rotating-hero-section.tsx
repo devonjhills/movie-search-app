@@ -185,7 +185,7 @@ export function RotatingHeroSection({
         <div className="px-4 w-full max-w-7xl">
           {/* Featured Badge */}
           <div className="mb-4">
-            <Badge className="bg-primary/90 text-primary-foreground font-serif text-sm px-3 py-1 shimmer">
+            <Badge className="font-serif text-sm px-3 py-1">
               ✨ Featured
             </Badge>
           </div>
@@ -241,7 +241,7 @@ export function RotatingHeroSection({
               {/* Content Details */}
               <div className="col-span-2 sm:col-span-3 lg:col-span-10 space-y-3 sm:space-y-4 text-foreground relative z-10">
                 {/* Title */}
-                <div className="relative overflow-hidden min-h-[2.5rem] sm:min-h-[3rem] md:min-h-[4rem]">
+                <div className="relative min-h-[3.5rem] sm:min-h-[4.5rem] md:min-h-[6rem] mb-4">
                   {featuredItems.map((item, index) => {
                     const itemTitle =
                       "title" in item
@@ -254,7 +254,7 @@ export function RotatingHeroSection({
                       <h1
                         key={`title-${index}`}
                         className={cn(
-                          "absolute inset-0 font-serif text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight drop-shadow-lg text-glow transition-all duration-500 ease-out",
+                          "absolute top-0 left-0 right-0 font-serif text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-normal drop-shadow-lg text-glow transition-all duration-500 ease-out whitespace-nowrap overflow-hidden text-ellipsis py-1",
                           index === currentIndex
                             ? "opacity-100 transform-none"
                             : "opacity-0 translate-y-4",
@@ -269,7 +269,7 @@ export function RotatingHeroSection({
                 {/* Rating and Date */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   {currentItem.vote_average > 0 && (
-                    <Badge className="gap-1 text-xs sm:text-sm shimmer text-champagne-glow">
+                    <Badge className="gap-1 text-xs sm:text-sm">
                       <StarFilledIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                       <span>{rating}</span>
                     </Badge>
@@ -283,7 +283,7 @@ export function RotatingHeroSection({
                     </div>
                   )}
                   {/* Trending Indicator */}
-                  <Badge variant="secondary" className="gap-1 text-xs">
+                  <Badge className="gap-1 text-xs">
                     🔥 Trending
                   </Badge>
                 </div>
@@ -297,14 +297,14 @@ export function RotatingHeroSection({
 
                 {/* Enhanced Action Buttons */}
                 <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3">
-                  <Button asChild size="lg" className="btn-noir">
+                  <Button asChild size="lg" className="">
                     <Link href={`/${mediaType}/${currentItem.id}`}>
                       <InfoCircledIcon className="h-4 w-4" />
                       View Details
                     </Link>
                   </Button>
 
-                  <Button variant="outline" size="lg" className="btn-noir">
+                  <Button variant="default" size="lg" className="">
                     <PlayIcon className="h-4 w-4" />
                     Watch Trailer
                   </Button>

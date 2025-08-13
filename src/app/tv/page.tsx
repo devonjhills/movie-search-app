@@ -1,38 +1,49 @@
-"use client";
-
 import { RotatingHeroSection } from "@/components/ui/rotating-hero-section";
 import { FeaturedSection } from "@/components/ui/featured-section";
 import { TVSection } from "@/components/tv/tv-section";
-import {
-  usePopularTVShows,
-  useTopRatedTVShows,
-  useOnTheAirTVShows,
-} from "@/lib/hooks/api-hooks";
+import { ENDPOINTS } from "@/lib/constants";
+import type { TVShow, TMDBResponse } from "@/lib/types";
 
-export default function TVPage() {
-  const { tvShows: popularTVShows, isLoading: popularLoading } =
-    usePopularTVShows();
-  const {
-    tvShows: topRatedTVShows,
-    isLoading: topRatedLoading,
-    isError: topRatedError,
-  } = useTopRatedTVShows();
-  const {
-    tvShows: onTheAirTVShows,
-    isLoading: onTheAirLoading,
-    isError: onTheAirError,
-  } = useOnTheAirTVShows();
+async function fetchTVShows(endpoint: string): Promise<TVShow[]> {
+  const API_KEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY;
 
-  // Create featured TV shows for rotating hero (mix of popular and top rated)
-  const featuredTVShows = [
-    ...popularTVShows.slice(0, 3),
-    ...topRatedTVShows.slice(0, 2),
-  ];
+  if (!API_KEY) {
+    console.error("TMDB API key is not configured");
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${endpoint}?api_key=${API_KEY}`, {
+      next: { revalidate: 3600 }, // Cache for 1 hour
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data: TMDBResponse<TVShow> = await response.json();
+    return data.results || [];
+  } catch (error) {
+    console.error(`Error fetching TV shows from ${endpoint}:`, error);
+    return [];
+  }
+}
+
+export default async function TVPage() {
+  // Fetch all TV data in parallel
+  const [onTheAirTVShows, popularTVShows, topRatedTVShows] = await Promise.all([
+    fetchTVShows(ENDPOINTS.tvOnTheAir),
+    fetchTVShows(ENDPOINTS.tvPopular),
+    fetchTVShows(ENDPOINTS.tvTopRated),
+  ]);
+
+  // Get top TV shows for featured rotation (top 5 from on the air)
+  const featuredTVShows = [...onTheAirTVShows.slice(0, 5)];
 
   return (
     <div className="min-h-screen smoke-effect">
       {/* Enhanced Rotating Hero Section for TV */}
-      {featuredTVShows.length > 0 && !popularLoading && !topRatedLoading && (
+      {featuredTVShows.length > 0 && (
         <RotatingHeroSection
           items={featuredTVShows}
           mediaType="tv"
@@ -49,56 +60,30 @@ export default function TVPage() {
           mediaType="tv"
           limit={6}
           showTrending={true}
+          viewAllHref="/tv/popular"
         />
 
-        {/* Currently Airing with episode indicators */}
+        {/* On The Air */}
         <TVSection
-          title="Currently Airing"
+          title="On The Air"
           tvShows={onTheAirTVShows}
-          isLoading={onTheAirLoading}
-          error={onTheAirError}
-          href="/tv/on-the-air"
-          limit={12}
-          badge="📺 On Air"
-          showTrending={true}
-          showEpisodeIndicator={true}
-        />
-
-        {/* Popular TV Shows section */}
-        <TVSection
-          title="Popular TV Shows"
-          tvShows={popularTVShows}
-          isLoading={popularLoading}
+          isLoading={false}
           error={null}
-          href="/tv/popular"
+          href="/tv/on-the-air"
           limit={10}
-          badge="🔥 Popular"
+          badge="📺 On Air"
         />
 
-        {/* Critically Acclaimed */}
+        {/* Top Rated */}
         <TVSection
-          title="Critically Acclaimed"
+          title="Top Rated"
           tvShows={topRatedTVShows}
-          isLoading={topRatedLoading}
-          error={topRatedError}
+          isLoading={false}
+          error={null}
           href="/tv/top-rated"
           limit={10}
-          badge="🏆 Emmy Winners"
+          badge="⭐ Critics' Choice"
         />
-
-        {/* Recently Added/Trending */}
-        {onTheAirTVShows.length > 0 && (
-          <TVSection
-            title="Fresh Episodes"
-            tvShows={onTheAirTVShows}
-            isLoading={onTheAirLoading}
-            error={onTheAirError}
-            href="/tv/on-the-air"
-            limit={8}
-            badge="🆕 New"
-            showEpisodeIndicator={true}
-          />
-        )}
       </div>
     </div>
   );

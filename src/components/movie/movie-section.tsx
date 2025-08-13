@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { MovieGrid } from "./movie-grid";
 import { Badge } from "@/components/ui/badge";
+import { ViewAllButton } from "@/components/ui/view-all-button";
 import { cn } from "@/lib/utils";
 import type { Movie, FormattedMovie } from "@/lib/types";
 
@@ -44,27 +45,19 @@ export function MovieSection({
           </h2>
           {/* Enhanced badges */}
           {showTrending && (
-            <Badge variant="outline" className="gap-1.5 text-sm">
+            <Badge className="gap-1.5 text-sm">
               🔥 Trending
             </Badge>
           )}
           {badge && (
-            <Badge className="text-xs font-serif shimmer text-champagne-glow">
+            <Badge className="gap-1.5 text-sm">
               {badge}
             </Badge>
           )}
         </div>
 
-        {/* View All Link */}
-        {href && showViewAll && (
-          <Link
-            href={href}
-            className="flex items-center space-x-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
-          >
-            <span>View All</span>
-            <ChevronRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        )}
+        {/* View All Button */}
+        {href && showViewAll && <ViewAllButton href={href} />}
       </div>
 
       {/* Movies Grid */}

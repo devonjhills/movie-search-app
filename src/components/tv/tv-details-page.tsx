@@ -528,7 +528,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                             Sign In to Track Episodes
                           </Link>
                         </Button>
-                        <Button variant="outline" size="lg" asChild>
+                        <Button variant="default" size="lg" asChild>
                           <Link href="/library">
                             <BookmarkIcon className="h-4 w-4 mr-2" />
                             View My Library

@@ -60,6 +60,7 @@ export default async function Home() {
           mediaType="movie"
           limit={6}
           showTrending={true}
+          viewAllHref="/movies/popular"
         />
 
         {/* Now Playing with enhanced styling */}
@@ -71,18 +72,6 @@ export default async function Home() {
           href="/movies/now-playing"
           limit={10}
           badge="🎬 In Theaters"
-          showTrending={true}
-        />
-
-        {/* Popular Movies section */}
-        <MovieSection
-          title="Popular Movies"
-          movies={popularMovies}
-          isLoading={false}
-          error={null}
-          href="/movies/popular"
-          limit={10}
-          badge="🔥 Popular"
         />
 
         {/* Top Rated section */}

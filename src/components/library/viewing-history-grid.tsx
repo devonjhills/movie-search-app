@@ -48,7 +48,7 @@ export function ViewingHistoryGrid({
           <p className="text-muted-foreground mb-4">
             Start watching movies and TV shows to build your viewing history.
           </p>
-          <Button onClick={onRefresh} variant="outline">
+          <Button onClick={onRefresh} variant="default">
             Refresh
           </Button>
         </div>
@@ -102,7 +102,7 @@ export function ViewingHistoryGrid({
       {totalPages > 1 && (
         <div className="flex justify-center items-center space-x-2">
           <Button
-            variant="outline"
+            variant="default"
             size="sm"
             onClick={() => onPageChange(page - 1)}
             disabled={page === 1}
@@ -139,7 +139,7 @@ export function ViewingHistoryGrid({
           </div>
 
           <Button
-            variant="outline"
+            variant="default"
             size="sm"
             onClick={() => onPageChange(page + 1)}
             disabled={page === totalPages}
