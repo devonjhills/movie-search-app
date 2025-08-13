@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { MovieGrid } from "./movie-grid";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Movie, FormattedMovie } from "@/lib/types";
 
@@ -15,6 +16,8 @@ interface MovieSectionProps {
   className?: string;
   showViewAll?: boolean;
   limit?: number;
+  showTrending?: boolean;
+  badge?: string;
 }
 
 export function MovieSection({
@@ -26,6 +29,8 @@ export function MovieSection({
   className,
   showViewAll = true,
   limit = 12,
+  showTrending = false,
+  badge,
 }: MovieSectionProps) {
   const displayMovies = movies.slice(0, limit);
 
@@ -33,18 +38,31 @@ export function MovieSection({
     <section className={cn("space-y-6", className)}>
       {/* Section Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-serif font-semibold text-foreground text-glow">
-          {title}
-        </h2>
+        <div className="flex items-center gap-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-foreground text-glow">
+            {title}
+          </h2>
+          {/* Enhanced badges */}
+          {showTrending && (
+            <Badge variant="outline" className="gap-1.5 text-sm">
+              🔥 Trending
+            </Badge>
+          )}
+          {badge && (
+            <Badge className="text-xs font-serif shimmer text-champagne-glow">
+              {badge}
+            </Badge>
+          )}
+        </div>
 
         {/* View All Link */}
         {href && showViewAll && (
           <Link
             href={href}
-            className="flex items-center space-x-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            className="flex items-center space-x-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
           >
             <span>View All</span>
-            <ChevronRightIcon className="h-4 w-4" />
+            <ChevronRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         )}
       </div>

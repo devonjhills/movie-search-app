@@ -1,6 +1,7 @@
 "use client";
 
-import { HeroSection } from "@/components/ui/hero-section";
+import { RotatingHeroSection } from "@/components/ui/rotating-hero-section";
+import { FeaturedSection } from "@/components/ui/featured-section";
 import { TVSection } from "@/components/tv/tv-section";
 import {
   usePopularTVShows,
@@ -9,11 +10,8 @@ import {
 } from "@/lib/hooks/api-hooks";
 
 export default function TVPage() {
-  const {
-    tvShows: popularTVShows,
-    isLoading: popularLoading,
-    isError: popularError,
-  } = usePopularTVShows();
+  const { tvShows: popularTVShows, isLoading: popularLoading } =
+    usePopularTVShows();
   const {
     tvShows: topRatedTVShows,
     isLoading: topRatedLoading,
@@ -25,66 +23,82 @@ export default function TVPage() {
     isError: onTheAirError,
   } = useOnTheAirTVShows();
 
-  // Use the first popular TV show as hero if available
-  const heroTVShow = popularTVShows[0];
+  // Create featured TV shows for rotating hero (mix of popular and top rated)
+  const featuredTVShows = [
+    ...popularTVShows.slice(0, 3),
+    ...topRatedTVShows.slice(0, 2),
+  ];
 
   return (
     <div className="min-h-screen smoke-effect">
-      {/* Hero Section */}
-      {heroTVShow && !popularLoading && (
-        <HeroSection
-          movie={{
-            ...heroTVShow,
-            title: heroTVShow.name,
-            release_date: heroTVShow.first_air_date,
-            adult: false,
-            original_title: heroTVShow.original_name,
-            video: false,
-            genre_ids: heroTVShow.genre_ids || [],
-            original_language: heroTVShow.original_language || "",
-            overview: heroTVShow.overview || "",
-            popularity: heroTVShow.popularity || 0,
-            poster_path: heroTVShow.poster_path,
-            backdrop_path: heroTVShow.backdrop_path,
-            vote_average: heroTVShow.vote_average || 0,
-            vote_count: heroTVShow.vote_count || 0,
-          }}
+      {/* Enhanced Rotating Hero Section for TV */}
+      {featuredTVShows.length > 0 && !popularLoading && !topRatedLoading && (
+        <RotatingHeroSection
+          items={featuredTVShows}
           mediaType="tv"
-          className="mb-6 sm:mb-8 md:mb-12"
+          className="mb-8 sm:mb-12 md:mb-16"
         />
       )}
 
-      {/* TV Show Sections */}
-      <div className="container mx-auto px-4 space-y-8 md:space-y-12 pb-8 md:pb-12">
-        {/* On The Air */}
+      {/* Enhanced TV Show Sections */}
+      <div className="container mx-auto px-4 space-y-10 md:space-y-16 pb-8 md:pb-12">
+        {/* Binge-Worthy Series - Featured Layout */}
+        <FeaturedSection
+          title="Binge-Worthy Series"
+          items={popularTVShows}
+          mediaType="tv"
+          limit={6}
+          showTrending={true}
+        />
+
+        {/* Currently Airing with episode indicators */}
         <TVSection
-          title="On The Air"
+          title="Currently Airing"
           tvShows={onTheAirTVShows}
           isLoading={onTheAirLoading}
           error={onTheAirError}
           href="/tv/on-the-air"
           limit={12}
+          badge="📺 On Air"
+          showTrending={true}
+          showEpisodeIndicator={true}
         />
 
-        {/* Popular TV Shows */}
+        {/* Popular TV Shows section */}
         <TVSection
           title="Popular TV Shows"
           tvShows={popularTVShows}
           isLoading={popularLoading}
-          error={popularError}
+          error={null}
           href="/tv/popular"
-          limit={12}
+          limit={10}
+          badge="🔥 Popular"
         />
 
-        {/* Top Rated */}
+        {/* Critically Acclaimed */}
         <TVSection
-          title="Top Rated"
+          title="Critically Acclaimed"
           tvShows={topRatedTVShows}
           isLoading={topRatedLoading}
           error={topRatedError}
           href="/tv/top-rated"
-          limit={12}
+          limit={10}
+          badge="🏆 Emmy Winners"
         />
+
+        {/* Recently Added/Trending */}
+        {onTheAirTVShows.length > 0 && (
+          <TVSection
+            title="Fresh Episodes"
+            tvShows={onTheAirTVShows}
+            isLoading={onTheAirLoading}
+            error={onTheAirError}
+            href="/tv/on-the-air"
+            limit={8}
+            badge="🆕 New"
+            showEpisodeIndicator={true}
+          />
+        )}
       </div>
     </div>
   );
