@@ -35,6 +35,8 @@ export default function PopularTVShowsPage() {
       totalResults={totalResults}
       currentPage={currentPage}
       onPageChange={setCurrentPage}
+      breadcrumbParent="TV Shows"
+      breadcrumbParentHref="/tv"
     />
   );
 }

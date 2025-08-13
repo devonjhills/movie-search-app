@@ -35,6 +35,8 @@ export default function TopRatedMoviesPage() {
       totalResults={totalResults}
       currentPage={currentPage}
       onPageChange={setCurrentPage}
+      breadcrumbParent="Movies"
+      breadcrumbParentHref="/"
     />
   );
 }

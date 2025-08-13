@@ -50,12 +50,12 @@ export default function TVPage() {
             vote_count: heroTVShow.vote_count || 0,
           }}
           mediaType="tv"
-          className="mb-12"
+          className="mb-6 sm:mb-8 md:mb-12"
         />
       )}
 
       {/* TV Show Sections */}
-      <div className="container mx-auto px-4 space-y-12 pb-12">
+      <div className="container mx-auto px-4 space-y-8 md:space-y-12 pb-8 md:pb-12">
         {/* On The Air */}
         <TVSection
           title="On The Air"

@@ -41,10 +41,12 @@ export default async function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      {heroMovie && <HeroSection movie={heroMovie} className="mb-12" />}
+      {heroMovie && (
+        <HeroSection movie={heroMovie} className="mb-6 sm:mb-8 md:mb-12" />
+      )}
 
       {/* Movie Sections */}
-      <div className="container mx-auto px-4 space-y-12 pb-12">
+      <div className="container mx-auto px-4 space-y-8 md:space-y-12 pb-8 md:pb-12">
         {/* Now Playing */}
         <MovieSection
           title="Now Playing"
@@ -52,7 +54,7 @@ export default async function Home() {
           isLoading={false}
           error={null}
           href="/movies/now-playing"
-          limit={12}
+          limit={10}
         />
 
         {/* Popular Movies */}
@@ -62,7 +64,7 @@ export default async function Home() {
           isLoading={false}
           error={null}
           href="/movies/popular"
-          limit={12}
+          limit={10}
         />
 
         {/* Top Rated */}
@@ -72,7 +74,7 @@ export default async function Home() {
           isLoading={false}
           error={null}
           href="/movies/top-rated"
-          limit={12}
+          limit={10}
         />
       </div>
     </div>

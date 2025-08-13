@@ -17,9 +17,9 @@ interface TVGridProps {
 
 function TVCardSkeleton({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
   const sizeClasses = {
-    sm: "w-40",
-    md: "w-48",
-    lg: "w-56",
+    sm: "w-full max-w-36 sm:max-w-40",
+    md: "w-full max-w-44 sm:max-w-52",
+    lg: "w-full max-w-52 sm:max-w-60",
   };
 
   return (
@@ -77,8 +77,8 @@ export function TVGrid({
     return (
       <div
         className={cn(
-          "grid gap-6",
-          "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
+          "grid gap-4 sm:gap-5 lg:gap-6",
+          "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
           className,
         )}
       >
@@ -102,8 +102,8 @@ export function TVGrid({
   return (
     <div
       className={cn(
-        "grid gap-6",
-        "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
+        "grid gap-4 sm:gap-5 lg:gap-6",
+        "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
         className,
       )}
     >

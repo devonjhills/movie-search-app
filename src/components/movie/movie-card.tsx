@@ -14,6 +14,7 @@ interface MovieCardProps {
   showYear?: boolean;
   showRating?: boolean;
   showOverview?: boolean;
+  priority?: boolean;
 }
 
 export function MovieCard({
@@ -23,14 +24,15 @@ export function MovieCard({
   showYear = true,
   showRating = true,
   showOverview = false,
+  priority = false,
 }: MovieCardProps) {
   const imageUrl = getImageUrl(movie.poster_path, "poster", "w185");
   const rating = formatVoteAverage(movie.vote_average);
 
   const sizeClasses = {
-    sm: "w-40",
-    md: "w-48",
-    lg: "w-56",
+    sm: "w-full max-w-36 sm:max-w-40",
+    md: "w-full max-w-44 sm:max-w-52",
+    lg: "w-full max-w-52 sm:max-w-60",
   };
 
   const aspectRatio = "aspect-[2/3]"; // Standard movie poster ratio
@@ -56,6 +58,7 @@ export function MovieCard({
                 fill
                 className="object-cover transition-transform duration-200 group-hover:scale-110"
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                priority={priority}
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">

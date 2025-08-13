@@ -28,9 +28,9 @@ export function TVCard({
   const rating = formatVoteAverage(tvShow.vote_average);
 
   const sizeClasses = {
-    sm: "w-40",
-    md: "w-48",
-    lg: "w-56",
+    sm: "w-full max-w-36 sm:max-w-40",
+    md: "w-full max-w-44 sm:max-w-52",
+    lg: "w-full max-w-52 sm:max-w-60",
   };
 
   const aspectRatio = "aspect-[2/3]"; // Standard poster ratio

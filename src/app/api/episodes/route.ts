@@ -7,6 +7,88 @@ import { sql } from "@vercel/postgres";
 // In-memory storage for development
 const episodeProgressData = new Map<string, EpisodeProgress[]>();
 
+// Batch update function
+async function handleBatchUpdate(
+  session: { user: { id: string } },
+  tmdb_id: number,
+  episodes: {
+    season_number: number;
+    episode_number: number;
+    watched: boolean;
+  }[],
+) {
+  const now = new Date().toISOString();
+  const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+
+  if (dbUrl) {
+    await initDatabase();
+
+    try {
+      // Use individual SQL queries for safety - still much faster than HTTP requests
+      for (const ep of episodes) {
+        const id = `${session.user.id}-${tmdb_id}-${ep.season_number}-${ep.episode_number}`;
+        const watchedAt = ep.watched ? now : null;
+
+        await sql`
+          INSERT INTO episode_progress (
+            id, user_id, tmdb_id, season_number, episode_number, watched, watched_at, created_at, updated_at
+          ) VALUES (
+            ${id}, ${session.user.id}, ${tmdb_id}, ${ep.season_number}, ${ep.episode_number}, 
+            ${ep.watched}, ${watchedAt}, ${now}, ${now}
+          ) ON CONFLICT (user_id, tmdb_id, season_number, episode_number) 
+          DO UPDATE SET 
+            watched = ${ep.watched},
+            watched_at = ${watchedAt},
+            updated_at = ${now}
+        `;
+      }
+
+      return NextResponse.json({ success: true, updated: episodes.length });
+    } catch (dbError) {
+      console.error("Batch database error:", dbError);
+      return NextResponse.json(
+        { error: "Database update failed", details: String(dbError) },
+        { status: 500 },
+      );
+    }
+  } else {
+    // Development: Use in-memory storage
+    const userEpisodes = episodeProgressData.get(session.user.id) || [];
+
+    episodes.forEach((epData) => {
+      const existingIndex = userEpisodes.findIndex(
+        (ep) =>
+          ep.tmdb_id === tmdb_id &&
+          ep.season_number === epData.season_number &&
+          ep.episode_number === epData.episode_number,
+      );
+
+      const id = `${session.user.id}-${tmdb_id}-${epData.season_number}-${epData.episode_number}`;
+      const episodeProgress = {
+        id,
+        user_id: session.user.id,
+        tmdb_id,
+        season_number: epData.season_number,
+        episode_number: epData.episode_number,
+        watched: epData.watched,
+        watched_at: epData.watched ? now : null,
+        created_at:
+          existingIndex >= 0 ? userEpisodes[existingIndex].created_at : now,
+        updated_at: now,
+      };
+
+      if (existingIndex >= 0) {
+        userEpisodes[existingIndex] = episodeProgress;
+      } else {
+        userEpisodes.push(episodeProgress);
+      }
+    });
+
+    episodeProgressData.set(session.user.id, userEpisodes);
+    return NextResponse.json({ success: true, updated: episodes.length });
+  }
+}
+
 // Database initialization function
 async function initDatabase() {
   const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
@@ -114,7 +196,12 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { tmdb_id, season_number, episode_number, watched } = body;
+    const { tmdb_id, season_number, episode_number, watched, episodes } = body;
+
+    // Handle batch operations
+    if (episodes && Array.isArray(episodes)) {
+      return await handleBatchUpdate(session, tmdb_id, episodes);
+    }
 
     if (
       !tmdb_id ||

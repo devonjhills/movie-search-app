@@ -22,8 +22,8 @@ interface ViewingHistoryFiltersProps {
 }
 
 const statusOptions = [
-  { value: "plan_to_watch", label: "Want to Watch" },
   { value: "watching", label: "Currently Watching" },
+  { value: "plan_to_watch", label: "Want to Watch" },
   { value: "completed", label: "Watched" },
   { value: "all", label: "All Statuses" },
 ] as const;

@@ -1,8 +1,15 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarIcon, VideoIcon } from "@radix-ui/react-icons";
+import {
+  CalendarIcon,
+  VideoIcon,
+  BookmarkIcon,
+  PersonIcon,
+  ClockIcon,
+} from "@radix-ui/react-icons";
 import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useTVDetails, useTVWatchProviders } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
@@ -12,9 +19,13 @@ import { PersonCard } from "@/components/ui/person-card";
 import { MovieGrid } from "@/components/movie/movie-grid";
 import { EpisodeTracker } from "@/components/tv/episode-tracker";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { formatDate, formatVoteAverage } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BackNavigation } from "@/components/ui/back-navigation";
+import { useAuth } from "@/components/providers/auth-provider";
 
 interface TVDetailsPageProps {
   tvId: number;
@@ -159,6 +170,7 @@ function TVDetailsSkeleton() {
 export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   const { tvShow, isLoading, isError } = useTVDetails(tvId);
   const { watchProviders } = useTVWatchProviders(tvId);
+  const { user } = useAuth();
 
   if (isLoading) {
     return <TVDetailsSkeleton />;
@@ -258,7 +270,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
   // Get recommendations and transform TV shows to Movie-like objects for MovieGrid
   const recommendations =
-    tvShow.recommendations?.results?.slice(0, 12).map((show) => ({
+    tvShow.recommendations?.results?.slice(0, 10).map((show) => ({
       ...show,
       title: show.name,
       release_date: show.first_air_date,
@@ -278,7 +290,17 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
       />
 
       {/* Main Content */}
-      <div className="relative container mx-auto px-4 pt-16 pb-12">
+      <div className="relative container mx-auto px-4 pt-8 pb-12">
+        {/* Breadcrumb Navigation */}
+        <div className="flex items-center justify-between gap-4 mb-8">
+          <Breadcrumb
+            items={[
+              { label: "TV Shows", href: "/tv" },
+              { label: tvShow.name, current: true },
+            ]}
+          />
+          <BackNavigation fallbackHref="/tv" />
+        </div>
         <div className="space-y-8">
           {/* TV Show Details - Full Width */}
           <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
@@ -487,9 +509,48 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
             </Card>
           )}
 
-          {/* Episode Tracker */}
+          {/* Episode Tracker - Only for authenticated users */}
           {tvShow.seasons && tvShow.seasons.length > 0 && (
-            <EpisodeTracker tmdb_id={tvShow.id} seasons={tvShow.seasons} />
+            <>
+              {user ? (
+                <EpisodeTracker tmdb_id={tvShow.id} seasons={tvShow.seasons} />
+              ) : (
+                <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+                  <CardContent className="p-8">
+                    <div className="text-center space-y-6">
+                      <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                        <ClockIcon className="h-8 w-8 text-primary" />
+                      </div>
+
+                      <div className="space-y-2">
+                        <h3 className="text-2xl font-bold text-foreground">
+                          Track Your Progress
+                        </h3>
+                        <p className="text-muted-foreground max-w-md mx-auto">
+                          Sign in to track which episodes you&apos;ve watched
+                          and pick up where you left off.
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <Button asChild size="lg">
+                          <Link href="/signin">
+                            <PersonIcon className="h-4 w-4 mr-2" />
+                            Sign In to Track Episodes
+                          </Link>
+                        </Button>
+                        <Button variant="outline" size="lg" asChild>
+                          <Link href="/library">
+                            <BookmarkIcon className="h-4 w-4 mr-2" />
+                            View My Library
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </>
           )}
 
           {/* Cast - Full Width */}

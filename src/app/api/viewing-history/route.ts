@@ -1,11 +1,129 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import { ViewingHistoryItem, WatchStatus } from "@/lib/types";
+import {
+  ViewingHistoryItem,
+  WatchStatus,
+  TVShowProgress,
+  SeasonProgress,
+  EpisodeProgress,
+} from "@/lib/types";
 import { headers } from "next/headers";
 import { sql } from "@vercel/postgres";
 
 // In-memory storage for development
 const viewingHistoryData = new Map<string, ViewingHistoryItem[]>();
+const episodeProgressData = new Map<string, EpisodeProgress[]>();
+
+// Helper function to get TV show details from TMDB
+async function getTVShowDetails(tmdbId: number) {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${process.env.NEXT_PUBLIC_MOVIE_API_KEY}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch TV show details");
+  }
+
+  return response.json();
+}
+
+// Helper function to calculate TV show progress
+async function calculateTVProgress(
+  userId: string,
+  tmdbId: number,
+): Promise<TVShowProgress | null> {
+  try {
+    // Get TV show details from TMDB
+    const tvShowDetails = await getTVShowDetails(tmdbId);
+
+    // Get user's episode progress
+    let userEpisodes: EpisodeProgress[] = [];
+
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+    if (dbUrl) {
+      const { rows } = await sql`
+        SELECT * FROM episode_progress 
+        WHERE user_id = ${userId} AND tmdb_id = ${tmdbId}
+        ORDER BY season_number ASC, episode_number ASC
+      `;
+      userEpisodes = rows as EpisodeProgress[];
+    } else {
+      // Development: Use in-memory storage
+      const allUserEpisodes = episodeProgressData.get(userId) || [];
+      userEpisodes = allUserEpisodes.filter((ep) => ep.tmdb_id === tmdbId);
+    }
+
+    // Calculate progress for each season
+    const seasons: SeasonProgress[] = [];
+    let totalEpisodes = 0;
+    let totalWatchedEpisodes = 0;
+
+    for (const season of tvShowDetails.seasons) {
+      if (season.season_number === 0) continue; // Skip specials
+
+      const seasonEpisodes = userEpisodes.filter(
+        (ep) => ep.season_number === season.season_number,
+      );
+
+      const watchedCount = seasonEpisodes.filter((ep) => ep.watched).length;
+      const episodeCount = season.episode_count;
+
+      seasons.push({
+        season_number: season.season_number,
+        total_episodes: episodeCount,
+        watched_episodes: watchedCount,
+        completion_percentage:
+          episodeCount > 0 ? (watchedCount / episodeCount) * 100 : 0,
+      });
+
+      totalEpisodes += episodeCount;
+      totalWatchedEpisodes += watchedCount;
+    }
+
+    // Find next episode to watch
+    let nextEpisode:
+      | { season_number: number; episode_number: number }
+      | undefined;
+
+    for (const season of seasons) {
+      if (season.completion_percentage < 100) {
+        // Find first unwatched episode in this season
+        const seasonEpisodes = userEpisodes.filter(
+          (ep) => ep.season_number === season.season_number,
+        );
+
+        for (let ep = 1; ep <= season.total_episodes; ep++) {
+          const episodeProgress = seasonEpisodes.find(
+            (progress) => progress.episode_number === ep,
+          );
+
+          if (!episodeProgress || !episodeProgress.watched) {
+            nextEpisode = {
+              season_number: season.season_number,
+              episode_number: ep,
+            };
+            break;
+          }
+        }
+        break;
+      }
+    }
+
+    return {
+      tmdb_id: tmdbId,
+      total_seasons: seasons.length,
+      total_episodes: totalEpisodes,
+      watched_episodes: totalWatchedEpisodes,
+      completion_percentage:
+        totalEpisodes > 0 ? (totalWatchedEpisodes / totalEpisodes) * 100 : 0,
+      seasons,
+      next_episode: nextEpisode,
+    };
+  } catch (error) {
+    console.error(`Error calculating TV progress for ${tmdbId}:`, error);
+    return null;
+  }
+}
 
 // Database initialization function
 async function initDatabase() {
@@ -92,6 +210,20 @@ export async function GET(request: NextRequest) {
 
       const { rows } = await sql.query(query, params);
 
+      // Add episode progress for TV shows
+      const enrichedItems = await Promise.all(
+        rows.map(async (item: ViewingHistoryItem) => {
+          if (item.media_type === "tv") {
+            const progress = await calculateTVProgress(
+              session.user.id,
+              item.tmdb_id,
+            );
+            return { ...item, episode_progress: progress };
+          }
+          return item;
+        }),
+      );
+
       // Get total count
       let countQuery = `
         SELECT COUNT(*) FROM viewing_history 
@@ -118,7 +250,7 @@ export async function GET(request: NextRequest) {
       const total = parseInt(countRows[0].count);
 
       return NextResponse.json({
-        items: rows,
+        items: enrichedItems,
         total,
         page,
         totalPages: Math.ceil(total / limit),
@@ -151,8 +283,22 @@ export async function GET(request: NextRequest) {
     const total = userHistory.length;
     const paginatedItems = userHistory.slice(offset, offset + limit);
 
+    // Add episode progress for TV shows
+    const enrichedItems = await Promise.all(
+      paginatedItems.map(async (item: ViewingHistoryItem) => {
+        if (item.media_type === "tv") {
+          const progress = await calculateTVProgress(
+            session.user.id,
+            item.tmdb_id,
+          );
+          return { ...item, episode_progress: progress };
+        }
+        return item;
+      }),
+    );
+
     return NextResponse.json({
-      items: paginatedItems,
+      items: enrichedItems,
       total,
       page,
       totalPages: Math.ceil(total / limit),

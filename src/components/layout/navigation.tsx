@@ -22,10 +22,13 @@ import {
   ExitIcon,
   PersonIcon,
   BookmarkIcon,
+  HamburgerMenuIcon,
+  Cross1Icon,
 } from "@radix-ui/react-icons";
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const { user, signOut } = useAuth();
@@ -54,6 +57,7 @@ export function Navigation() {
                 width={48}
                 height={48}
                 className="h-12 w-12"
+                priority
               />
             </Link>
           </div>
@@ -92,6 +96,20 @@ export function Navigation() {
 
           {/* Right: Controls */}
           <div className="flex items-center space-x-2 flex-shrink-0">
+            {/* Mobile Menu Toggle */}
+            <Button
+              variant="ghost"
+              size="lg"
+              className="h-12 w-12 p-0 rounded-lg md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <Cross1Icon className="h-7 w-7" />
+              ) : (
+                <HamburgerMenuIcon className="h-7 w-7" />
+              )}
+            </Button>
             {/* Auth Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -100,42 +118,66 @@ export function Navigation() {
                   size="lg"
                   className="h-12 w-12 p-0 rounded-lg"
                 >
-                  <div className="relative">
+                  {user ? (
+                    <div className="relative">
+                      {/* User Avatar with initials */}
+                      <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-semibold border-2 border-primary/20">
+                        {user.email
+                          ? user.email.charAt(0).toUpperCase()
+                          : user.name
+                            ? user.name.charAt(0).toUpperCase()
+                            : "U"}
+                      </div>
+                      {/* Online indicator */}
+                      <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-green-500 border-2 border-background" />
+                    </div>
+                  ) : (
                     <PersonIcon className="h-7 w-7" />
-                    {user && (
-                      <div className="absolute -top-0.5 -right-0.5 h-3 w-3 rounded-full bg-primary border border-background" />
-                    )}
-                  </div>
+                  )}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-56">
                 {user ? (
                   <>
-                    <DropdownMenuLabel className="text-xs text-foreground/60">
-                      {user.email}
+                    <DropdownMenuLabel className="flex items-center gap-3 py-3">
+                      <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-semibold">
+                        {user.email
+                          ? user.email.charAt(0).toUpperCase()
+                          : user.name
+                            ? user.name.charAt(0).toUpperCase()
+                            : "U"}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium text-foreground">
+                          {user.name || "User"}
+                        </span>
+                        <span className="text-xs text-muted-foreground truncate">
+                          {user.email}
+                        </span>
+                      </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       onClick={() => router.push("/library")}
-                      className="flex items-center"
+                      className="flex items-center py-2.5"
                     >
-                      <BookmarkIcon className="h-4 w-4 mr-2" />
+                      <BookmarkIcon className="h-4 w-4 mr-3 text-muted-foreground" />
                       <span>My Library</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => signOut()}
-                      className="flex items-center"
+                      className="flex items-center py-2.5 text-destructive focus:text-destructive"
                     >
-                      <ExitIcon className="h-4 w-4 mr-2" />
+                      <ExitIcon className="h-4 w-4 mr-3" />
                       <span>Sign Out</span>
                     </DropdownMenuItem>
                   </>
                 ) : (
                   <DropdownMenuItem
                     onClick={() => router.push("/signin")}
-                    className="flex items-center"
+                    className="flex items-center py-2.5"
                   >
-                    <PersonIcon className="h-4 w-4 mr-2" />
+                    <PersonIcon className="h-4 w-4 mr-3 text-muted-foreground" />
                     <span>Sign In</span>
                   </DropdownMenuItem>
                 )}
@@ -162,38 +204,42 @@ export function Navigation() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex md:hidden items-center space-x-6 pb-4">
-          <Link
-            href="/"
-            variant="nav"
-            className="px-3 py-2 text-sm font-semibold"
-          >
-            Movies
-          </Link>
-          <Link
-            href="/tv"
-            variant="nav"
-            className="px-3 py-2 text-sm font-semibold"
-          >
-            TV Shows
-          </Link>
-          <Link
-            href="/search"
-            variant="nav"
-            className="px-3 py-2 text-sm font-semibold"
-          >
-            Browse
-          </Link>
-          {user && (
-            <Link
-              href="/library"
-              variant="nav"
-              className="px-3 py-2 text-sm font-semibold"
-            >
-              My Library
-            </Link>
-          )}
-        </div>
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-border/30 py-4">
+            <div className="flex flex-col space-y-2">
+              <NextLink
+                href="/"
+                className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg mx-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Movies
+              </NextLink>
+              <NextLink
+                href="/tv"
+                className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg mx-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                TV Shows
+              </NextLink>
+              <NextLink
+                href="/search"
+                className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg mx-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Browse
+              </NextLink>
+              {user && (
+                <NextLink
+                  href="/library"
+                  className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg mx-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  My Library
+                </NextLink>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Star, MoreVertical, RotateCcw, StickyNote, Edit3 } from "lucide-react";
 import { StatusUpdateDialog } from "./status-update-dialog";
+import { EpisodeProgress } from "./episode-progress";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -69,7 +70,7 @@ export function ViewingHistoryCard({
           <div className="relative aspect-[2/3] overflow-hidden rounded-t-lg">
             <Link
               href={`/${item.media_type}/${item.tmdb_id}`}
-              className="block w-full h-full"
+              className="block w-full h-full relative"
             >
               {(() => {
                 const validImageUrl = getValidImageUrl(item.poster_path);
@@ -134,7 +135,7 @@ export function ViewingHistoryCard({
           </div>
         </div>
 
-        <CardContent className="p-3">
+        <CardContent className="p-4">
           <Link
             href={`/${item.media_type}/${item.tmdb_id}`}
             className="block hover:text-primary transition-colors"
@@ -170,6 +171,15 @@ export function ViewingHistoryCard({
               <RotateCcw className="h-2.5 w-2.5" />
               <span>{item.watch_count}x</span>
             </div>
+          )}
+
+          {/* Episode Progress for TV Shows */}
+          {item.media_type === "tv" && item.episode_progress && (
+            <EpisodeProgress
+              progress={item.episode_progress}
+              tmdbId={item.tmdb_id}
+              onEpisodeUpdate={onUpdate}
+            />
           )}
 
           {item.notes && (

@@ -1,12 +1,16 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { ViewingHistoryItem, WatchStatus } from "@/lib/types";
 import { ViewingHistoryGrid } from "@/components/library/viewing-history-grid";
 import { ViewingHistoryFilters } from "@/components/library/viewing-history-filters";
+import { CurrentlyWatchingSection } from "@/components/library/currently-watching-section";
 import { useAuth } from "@/hooks/useAuth";
 import { redirect } from "next/navigation";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BackNavigation } from "@/components/ui/back-navigation";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function MyLibraryPage() {
   const { user, loading: isLoading } = useAuth();
@@ -17,29 +21,43 @@ export default function MyLibraryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState({
-    status: "plan_to_watch" as WatchStatus | "all",
+    status: "watching" as WatchStatus | "all",
     mediaType: "all" as "movie" | "tv" | "all",
   });
+  const [activeTab, setActiveTab] = useState("watching");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // Initialize filters from URL params
+  // Initialize filters and tab from URL params
   useEffect(() => {
     const statusParam = searchParams?.get("status");
     const mediaTypeParam = searchParams?.get("media_type");
+    const tabParam = searchParams?.get("tab");
 
-    if (
-      statusParam &&
-      ["watching", "completed", "plan_to_watch"].includes(statusParam)
-    ) {
-      setFilters((prev) => ({ ...prev, status: statusParam as WatchStatus }));
-    }
+    // Set initial tab based on URL param
+    if (tabParam && ["watching", "all"].includes(tabParam)) {
+      setActiveTab(tabParam);
+      if (tabParam === "watching") {
+        setFilters({ status: "watching", mediaType: "all" });
+      } else {
+        setFilters({ status: "all", mediaType: "all" });
+      }
+    } else {
+      // Set filters based on URL params if no tab specified
+      if (
+        statusParam &&
+        ["watching", "completed", "plan_to_watch"].includes(statusParam)
+      ) {
+        setFilters((prev) => ({ ...prev, status: statusParam as WatchStatus }));
+        setActiveTab(statusParam === "watching" ? "watching" : "all");
+      }
 
-    if (mediaTypeParam && ["movie", "tv"].includes(mediaTypeParam)) {
-      setFilters((prev) => ({
-        ...prev,
-        mediaType: mediaTypeParam as "movie" | "tv",
-      }));
+      if (mediaTypeParam && ["movie", "tv"].includes(mediaTypeParam)) {
+        setFilters((prev) => ({
+          ...prev,
+          mediaType: mediaTypeParam as "movie" | "tv",
+        }));
+      }
     }
   }, [searchParams]);
 
@@ -85,53 +103,102 @@ export default function MyLibraryPage() {
     setPage(1); // Reset to first page when filters change
   };
 
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    if (value === "watching") {
+      setFilters({ status: "watching", mediaType: "all" });
+    } else {
+      setFilters({ status: "all", mediaType: "all" });
+    }
+    setPage(1);
+  };
+
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">Loading...</div>
+      <div className="min-h-screen">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">Loading...</div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-serif font-bold tracking-tight">
-            My Library
-          </h1>
-          <p className="text-muted-foreground">
-            Manage your personal movie and TV show collection
-          </p>
+    <div className="min-h-screen">
+      {/* Navigation */}
+      <div className="container mx-auto px-4 pt-6 pb-4">
+        <div className="flex items-center justify-between gap-4">
+          <Breadcrumb items={[{ label: "My Library", current: true }]} />
+          <BackNavigation fallbackHref="/" />
         </div>
+      </div>
 
+      <div className="container mx-auto px-4 pb-8">
         <div className="space-y-6">
-          <ViewingHistoryFilters
-            filters={filters}
-            onFiltersChange={handleFiltersChange}
-          />
+          <div>
+            <h1 className="text-3xl font-serif font-bold tracking-tight">
+              My Library
+            </h1>
+            <p className="text-muted-foreground">
+              Manage your personal movie and TV show collection
+            </p>
+          </div>
 
-          {error ? (
-            <div className="text-center py-8">
-              <p className="text-destructive">{error}</p>
-              <button
-                onClick={fetchViewingHistory}
-                className="mt-2 text-primary hover:underline"
-              >
-                Try again
-              </button>
-            </div>
-          ) : (
-            <ViewingHistoryGrid
-              items={viewingHistory}
-              loading={loading}
-              onRefresh={fetchViewingHistory}
-              page={page}
-              totalPages={totalPages}
-              onPageChange={setPage}
-              mediaTypeFilter={filters.mediaType}
-            />
-          )}
+          <Tabs value={activeTab} onValueChange={handleTabChange}>
+            <TabsList className="grid w-full grid-cols-2 max-w-md">
+              <TabsTrigger value="watching">Currently Watching</TabsTrigger>
+              <TabsTrigger value="all">All Library</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="watching" className="space-y-6">
+              {error ? (
+                <div className="text-center py-8">
+                  <p className="text-destructive">{error}</p>
+                  <button
+                    onClick={fetchViewingHistory}
+                    className="mt-2 text-primary hover:underline"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : (
+                <CurrentlyWatchingSection
+                  items={viewingHistory}
+                  loading={loading}
+                  onRefresh={fetchViewingHistory}
+                />
+              )}
+            </TabsContent>
+
+            <TabsContent value="all" className="space-y-6">
+              <ViewingHistoryFilters
+                filters={filters}
+                onFiltersChange={handleFiltersChange}
+              />
+
+              {error ? (
+                <div className="text-center py-8">
+                  <p className="text-destructive">{error}</p>
+                  <button
+                    onClick={fetchViewingHistory}
+                    className="mt-2 text-primary hover:underline"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : (
+                <ViewingHistoryGrid
+                  items={viewingHistory}
+                  loading={loading}
+                  onRefresh={fetchViewingHistory}
+                  page={page}
+                  totalPages={totalPages}
+                  onPageChange={setPage}
+                  mediaTypeFilter={filters.mediaType}
+                />
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

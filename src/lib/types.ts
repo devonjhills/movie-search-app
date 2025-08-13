@@ -537,6 +537,7 @@ export interface ViewingHistoryItem {
   rating: number | null; // User's personal rating (1-10)
   created_at: string;
   updated_at: string;
+  episode_progress?: TVShowProgress | null; // Episode progress for TV shows
 }
 
 export interface ViewingHistoryResponse {

@@ -87,16 +87,16 @@ export function DetailsHero({
       </div>
 
       {/* Hero Section */}
-      <div className="relative h-96 md:h-[500px] mt-16 z-10">
+      <div className="relative min-h-[400px] sm:min-h-[450px] lg:h-[500px] mt-16 z-10">
         {/* Hero Content */}
-        <div className="absolute inset-0 flex items-center">
+        <div className="relative h-full flex items-start sm:items-center py-4 sm:py-6 lg:py-0">
           <div className="container mx-auto px-4">
             {/* Glass backdrop container for entire hero */}
-            <div className="bg-background/20 backdrop-blur-sm rounded-xl p-8 border border-border/10 shadow-2xl">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div className="bg-background/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 border border-border/10 shadow-2xl">
+              <div className="grid grid-cols-1 sm:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start sm:items-center">
                 {/* Poster */}
-                <div className="md:col-span-3">
-                  <div className="relative aspect-[2/3] w-full max-w-xs mx-auto md:ml-4">
+                <div className="sm:col-span-2 lg:col-span-3">
+                  <div className="relative aspect-[2/3] w-full max-w-48 sm:max-w-44 lg:max-w-xs mx-auto lg:ml-4">
                     {posterUrl ? (
                       <Image
                         src={posterUrl}
@@ -118,16 +118,16 @@ export function DetailsHero({
                 </div>
 
                 {/* Title and Content */}
-                <div className="md:col-span-9 space-y-8 text-foreground relative z-10">
+                <div className="sm:col-span-6 lg:col-span-9 space-y-3 sm:space-y-4 lg:space-y-6 text-foreground relative z-10">
                   {/* Section 1: Primary Information */}
                   <div className="space-y-4">
                     <div>
-                      <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight text-foreground drop-shadow-2xl">
+                      <h1 className="font-serif text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight text-foreground drop-shadow-2xl">
                         {title}
                       </h1>
                       {((isMovieDetails(item) && item.tagline) ||
                         (isTVShowDetails(item) && item.tagline)) && (
-                        <p className="text-lg italic text-muted-foreground drop-shadow-md">
+                        <p className="text-sm sm:text-sm md:text-base lg:text-lg italic text-muted-foreground drop-shadow-md">
                           &ldquo;
                           {isMovieDetails(item)
                             ? item.tagline
@@ -140,7 +140,7 @@ export function DetailsHero({
                     </div>
 
                     {/* Core Metadata Row */}
-                    <div className="flex flex-wrap items-center gap-3 text-sm">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-2 lg:gap-3 text-xs sm:text-xs md:text-sm">
                       {item.vote_average > 0 && (
                         <Badge variant="accent" className="gap-1 font-bold">
                           <StarFilledIcon className="h-3 w-3" />
@@ -154,11 +154,11 @@ export function DetailsHero({
                         </Badge>
                       )}
 
-                      <div className="flex flex-wrap items-center gap-4 text-foreground/90">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 text-foreground/90">
                         {releaseDate && (
                           <div className="flex items-center gap-1.5">
                             <CalendarIcon className="h-4 w-4 text-primary/80" />
-                            <span className="font-semibold text-base">
+                            <span className="font-semibold text-sm sm:text-base">
                               {new Date(
                                 isMovieDetails(item)
                                   ? item.release_date
@@ -171,14 +171,14 @@ export function DetailsHero({
                         {runtime && (
                           <div className="flex items-center gap-1.5">
                             <ClockIcon className="h-4 w-4 text-primary/80" />
-                            <span className="font-semibold text-base">
+                            <span className="font-semibold text-sm sm:text-base">
                               {runtime}
                             </span>
                           </div>
                         )}
 
                         {isTVShowDetails(item) && item.number_of_seasons && (
-                          <span className="font-medium">
+                          <span className="font-medium text-sm sm:text-base">
                             {item.number_of_seasons} Season
                             {item.number_of_seasons !== 1 ? "s" : ""}
                           </span>
@@ -214,14 +214,14 @@ export function DetailsHero({
 
                     {/* Overview */}
                     {item.overview && (
-                      <p className="text-lg leading-relaxed text-foreground/90 max-w-4xl drop-shadow-md">
+                      <p className="text-sm sm:text-sm md:text-base lg:text-lg leading-relaxed text-foreground/90 max-w-4xl drop-shadow-md">
                         {item.overview}
                       </p>
                     )}
                   </div>
 
                   {/* Section 3: Primary Actions */}
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-2 lg:gap-3">
                     {trailer && (
                       <Button asChild variant="default" size="lg">
                         <a
@@ -262,8 +262,8 @@ export function DetailsHero({
                     (isTVShowDetails(item) && item.external_ids?.imdb_id) ||
                     (isMovieDetails(item) && item.homepage) ||
                     (isTVShowDetails(item) && item.homepage)) && (
-                    <div className="pt-4 border-t border-border/50">
-                      <div className="flex flex-wrap items-center justify-between gap-6">
+                    <div className="pt-3 sm:pt-4 border-t border-border/50">
+                      <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-3 sm:gap-6">
                         {/* External Links - Left Side */}
                         <ExternalLinks
                           externalIds={
@@ -287,7 +287,7 @@ export function DetailsHero({
                         {/* Streaming Providers - Right Side */}
                         {watchProviders?.flatrate?.length && (
                           <div className="inline-flex items-center gap-3 text-foreground">
-                            <span className="text-base font-semibold whitespace-nowrap">
+                            <span className="text-sm sm:text-base font-semibold whitespace-nowrap">
                               Watch now
                             </span>
                             <WatchProvidersCompact providers={watchProviders} />

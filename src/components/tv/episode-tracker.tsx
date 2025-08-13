@@ -5,9 +5,16 @@ import { TVShowProgress, EpisodeProgress } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckIcon, CircleIcon, PlayIcon } from "@radix-ui/react-icons";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import {
+  CheckIcon,
+  CircleIcon,
+  PlayIcon,
+  ChevronRightIcon,
+  ClockIcon,
+  BookmarkIcon,
+} from "@radix-ui/react-icons";
+import Link from "next/link";
 
 interface EpisodeTrackerProps {
   tmdb_id: number;
@@ -98,8 +105,34 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
     if (!season) return;
 
     try {
+      // Create batch of episodes to update
+      const episodesToUpdate = [];
       for (let ep = 1; ep <= season.episode_count; ep++) {
-        await toggleEpisode(season_number, ep, watched);
+        episodesToUpdate.push({
+          season_number,
+          episode_number: ep,
+          watched,
+        });
+      }
+
+      // Send batch update request
+      const response = await fetch("/api/episodes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tmdb_id,
+          episodes: episodesToUpdate,
+        }),
+      });
+
+      if (response.ok) {
+        // Refresh data after batch update
+        await fetchProgress();
+        await fetchEpisodes(selectedSeason);
+      } else {
+        console.error("Batch update failed:", response.statusText);
       }
     } catch (error) {
       console.error("Error marking season:", error);
@@ -128,59 +161,127 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
   );
 
   return (
-    <Card>
+    <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          Episode Tracker
-          {progress?.next_episode && (
-            <Badge variant="outline" className="gap-1">
-              <PlayIcon className="h-3 w-3" />
-              Next: S{progress.next_episode.season_number}E
-              {progress.next_episode.episode_number}
-            </Badge>
-          )}
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-display-sm flex items-center gap-3">
+            <ClockIcon className="h-5 w-5" />
+            Episode Tracker
+            {progress?.next_episode && (
+              <Badge variant="default" className="gap-1.5 bg-primary/90">
+                <PlayIcon className="h-3 w-3" />
+                Next: S{progress.next_episode.season_number}E
+                {progress.next_episode.episode_number}
+              </Badge>
+            )}
+          </CardTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-muted-foreground hover:text-primary"
+          >
+            <Link href="/library?tab=watching">
+              <BookmarkIcon className="h-4 w-4 mr-1" />
+              My Library
+            </Link>
+          </Button>
+        </div>
 
         {progress && (
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Overall Progress</span>
-              <span>
-                {progress.watched_episodes}/{progress.total_episodes} episodes
+          <div className="space-y-3">
+            <div className="flex justify-between text-sm font-medium">
+              <span className="text-muted-foreground">Overall Progress</span>
+              <span className="text-primary font-semibold">
+                {progress.watched_episodes}/{progress.total_episodes} episodes (
+                {Math.round(progress.completion_percentage)}%)
               </span>
             </div>
-            <Progress value={progress.completion_percentage} className="h-2" />
+            <div className="h-3 w-full bg-muted/50 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary transition-all duration-500 rounded-full"
+                style={{ width: `${progress.completion_percentage}%` }}
+              />
+            </div>
           </div>
         )}
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <Tabs
           value={selectedSeason.toString()}
           onValueChange={(value) => setSelectedSeason(parseInt(value))}
         >
-          <TabsList className="grid grid-cols-4 lg:grid-cols-6">
-            {regularSeasons.slice(0, 6).map((season) => {
-              const seasonProgress = progress?.seasons.find(
-                (s) => s.season_number === season.season_number,
-              );
-              return (
-                <TabsTrigger
-                  key={season.season_number}
-                  value={season.season_number.toString()}
-                >
-                  <div className="flex flex-col items-center">
-                    <span>S{season.season_number}</span>
+          {/* Enhanced Season Selector */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+              <ChevronRightIcon className="h-4 w-4" />
+              Select Season
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {regularSeasons.map((season) => {
+                const seasonProgress = progress?.seasons.find(
+                  (s) => s.season_number === season.season_number,
+                );
+                const isSelected = selectedSeason === season.season_number;
+                const completionPercentage =
+                  seasonProgress?.completion_percentage || 0;
+
+                return (
+                  <button
+                    key={season.season_number}
+                    onClick={() => setSelectedSeason(season.season_number)}
+                    className={`relative group flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg min-w-[80px] ${
+                      isSelected
+                        ? "border-primary bg-primary/10 shadow-md shadow-primary/20"
+                        : "border-border hover:border-primary/50 bg-background hover:bg-primary/5"
+                    }`}
+                  >
+                    <div
+                      className={`text-lg font-bold transition-colors ${
+                        isSelected
+                          ? "text-primary"
+                          : "text-foreground group-hover:text-primary"
+                      }`}
+                    >
+                      S{season.season_number}
+                    </div>
+
                     {seasonProgress && (
-                      <span className="text-xs text-muted-foreground">
-                        {Math.round(seasonProgress.completion_percentage)}%
-                      </span>
+                      <>
+                        <div
+                          className={`text-xs font-semibold transition-colors ${
+                            isSelected
+                              ? "text-primary"
+                              : "text-muted-foreground group-hover:text-foreground"
+                          }`}
+                        >
+                          {Math.round(completionPercentage)}%
+                        </div>
+
+                        {/* Progress Ring */}
+                        <div className="relative w-8 h-2 bg-muted rounded-full overflow-hidden">
+                          <div
+                            className={`absolute left-0 top-0 h-full transition-all duration-500 rounded-full ${
+                              isSelected
+                                ? "bg-primary"
+                                : "bg-primary/60 group-hover:bg-primary"
+                            }`}
+                            style={{ width: `${completionPercentage}%` }}
+                          />
+                        </div>
+                      </>
                     )}
-                  </div>
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
+
+                    {/* Selected indicator */}
+                    {isSelected && (
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full border-2 border-background" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           {regularSeasons.map((season) => (
             <TabsContent
@@ -188,8 +289,8 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
               value={season.season_number.toString()}
             >
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-semibold">
+                <div className="flex items-center justify-between py-2">
+                  <h3 className="text-xl font-bold text-foreground">
                     Season {season.season_number}
                   </h3>
                   <div className="flex gap-2">
@@ -199,7 +300,9 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                       onClick={() =>
                         markSeasonWatched(season.season_number, true)
                       }
+                      className="border-green-200 text-green-700 hover:bg-green-50 hover:border-green-300 dark:border-green-800 dark:text-green-400 dark:hover:bg-green-950"
                     >
+                      <CheckIcon className="h-4 w-4 mr-1" />
                       Mark All Watched
                     </Button>
                     <Button
@@ -208,63 +311,103 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                       onClick={() =>
                         markSeasonWatched(season.season_number, false)
                       }
+                      className="border-orange-200 text-orange-700 hover:bg-orange-50 hover:border-orange-300 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950"
                     >
+                      <CircleIcon className="h-4 w-4 mr-1" />
                       Mark All Unwatched
                     </Button>
                   </div>
                 </div>
 
                 {currentSeasonProgress && (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Season Progress</span>
-                      <span>
+                  <div className="space-y-3 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                    <div className="flex justify-between text-sm font-medium">
+                      <span className="text-muted-foreground">
+                        Season Progress
+                      </span>
+                      <span className="text-primary font-semibold">
                         {currentSeasonProgress.watched_episodes}/
-                        {currentSeasonProgress.total_episodes} episodes
+                        {currentSeasonProgress.total_episodes} episodes (
+                        {Math.round(
+                          currentSeasonProgress.completion_percentage,
+                        )}
+                        %)
                       </span>
                     </div>
-                    <Progress
-                      value={currentSeasonProgress.completion_percentage}
-                      className="h-2"
-                    />
+                    <div className="h-3 w-full bg-muted/50 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-primary transition-all duration-500 rounded-full"
+                        style={{
+                          width: `${currentSeasonProgress.completion_percentage}%`,
+                        }}
+                      />
+                    </div>
                   </div>
                 )}
 
-                <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
-                  {Array.from({ length: season.episode_count }, (_, i) => {
-                    const episode_number = i + 1;
-                    const episodeProgress = episodes.find(
-                      (ep) =>
-                        ep.season_number === season.season_number &&
-                        ep.episode_number === episode_number,
-                    );
-                    const isWatched = episodeProgress?.watched || false;
+                <div className="space-y-3">
+                  <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+                    Episodes ({season.episode_count} total)
+                  </h4>
+                  <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15 gap-3">
+                    {Array.from({ length: season.episode_count }, (_, i) => {
+                      const episode_number = i + 1;
+                      const episodeProgress = episodes.find(
+                        (ep) =>
+                          ep.season_number === season.season_number &&
+                          ep.episode_number === episode_number,
+                      );
+                      const isWatched = episodeProgress?.watched || false;
 
-                    return (
-                      <Button
-                        key={episode_number}
-                        variant={isWatched ? "default" : "outline"}
-                        size="sm"
-                        className="h-10 w-full p-0"
-                        onClick={() =>
-                          toggleEpisode(
-                            season.season_number,
-                            episode_number,
-                            !isWatched,
-                          )
-                        }
-                      >
-                        <div className="flex flex-col items-center">
-                          {isWatched ? (
-                            <CheckIcon className="h-4 w-4" />
-                          ) : (
-                            <CircleIcon className="h-4 w-4" />
+                      return (
+                        <Button
+                          key={episode_number}
+                          variant={isWatched ? "default" : "outline"}
+                          size="sm"
+                          className={`relative h-12 w-full p-0 transition-all duration-200 hover:scale-105 ${
+                            isWatched
+                              ? "bg-primary hover:bg-primary/90 shadow-md shadow-primary/20"
+                              : "border-2 hover:border-primary/60 hover:bg-primary/5"
+                          }`}
+                          onClick={() =>
+                            toggleEpisode(
+                              season.season_number,
+                              episode_number,
+                              !isWatched,
+                            )
+                          }
+                        >
+                          <div className="flex flex-col items-center justify-center gap-1">
+                            <div
+                              className={`transition-all duration-200 ${
+                                isWatched ? "scale-110" : "scale-100"
+                              }`}
+                            >
+                              {isWatched ? (
+                                <CheckIcon className="h-4 w-4" />
+                              ) : (
+                                <CircleIcon className="h-3 w-3 opacity-60" />
+                              )}
+                            </div>
+                            <span
+                              className={`text-xs font-medium ${
+                                isWatched
+                                  ? "text-primary-foreground"
+                                  : "text-muted-foreground"
+                              }`}
+                            >
+                              {episode_number}
+                            </span>
+                          </div>
+
+                          {/* Watched indicator */}
+                          {isWatched && (
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background" />
                           )}
-                          <span className="text-xs">{episode_number}</span>
-                        </div>
-                      </Button>
-                    );
-                  })}
+                        </Button>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 {season.episode_count > 50 && (

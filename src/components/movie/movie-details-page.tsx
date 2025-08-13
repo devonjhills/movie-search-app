@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import {
   CalendarIcon,
@@ -23,6 +24,8 @@ import {
 } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BackNavigation } from "@/components/ui/back-navigation";
 
 interface MovieDetailsPageProps {
   movieId: number;
@@ -230,7 +233,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
       .slice(0, 8) || [];
 
   // Get recommendations
-  const recommendations = movie.recommendations?.results?.slice(0, 12) || [];
+  const recommendations = movie.recommendations?.results?.slice(0, 10) || [];
 
   return (
     <div className="min-h-screen relative">
@@ -243,7 +246,17 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
       />
 
       {/* Main Content */}
-      <div className="relative container mx-auto px-4 pt-16 pb-12">
+      <div className="relative container mx-auto px-4 pt-8 pb-12">
+        {/* Breadcrumb Navigation */}
+        <div className="flex items-center justify-between gap-4 mb-8">
+          <Breadcrumb
+            items={[
+              { label: "Movies", href: "/" },
+              { label: movie.title, current: true },
+            ]}
+          />
+          <BackNavigation fallbackHref="/" />
+        </div>
         <div className="space-y-8">
           {/* Movie Details - Full Width */}
           <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
@@ -388,11 +401,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
               </CardContent>
             </Card>
           )}
-        </div>
 
-        {/* Key Crew - Full Width */}
-        {keyCrew.length > 0 && (
-          <div className="container mx-auto px-4 py-8">
+          {/* Key Crew - Full Width */}
+          {keyCrew.length > 0 && (
             <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-display-sm">Key Crew</CardTitle>
@@ -409,12 +420,10 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        )}
+          )}
 
-        {/* Recommendations - Full Width */}
-        {recommendations.length > 0 && (
-          <div className="container mx-auto px-4 py-8">
+          {/* Recommendations - Full Width */}
+          {recommendations.length > 0 && (
             <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-display-sm">
@@ -431,8 +440,8 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 />
               </CardContent>
             </Card>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

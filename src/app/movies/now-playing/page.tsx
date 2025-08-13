@@ -35,6 +35,8 @@ export default function NowPlayingMoviesPage() {
       totalResults={totalResults}
       currentPage={currentPage}
       onPageChange={setCurrentPage}
+      breadcrumbParent="Movies"
+      breadcrumbParentHref="/"
     />
   );
 }

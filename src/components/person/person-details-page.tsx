@@ -14,6 +14,8 @@ import { getImageUrl } from "@/lib/api";
 import { formatDate, calculateAge } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BackNavigation } from "@/components/ui/back-navigation";
 
 interface PersonDetailsPageProps {
   personId: number;
@@ -214,7 +216,20 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-8">
+      {/* Navigation */}
+      <div className="container mx-auto px-4 pt-6 pb-4">
+        <div className="flex items-center justify-between gap-4">
+          <Breadcrumb
+            items={[
+              { label: "People", href: "/search?tab=people" },
+              { label: person.name, current: true },
+            ]}
+          />
+          <BackNavigation fallbackHref="/search?tab=people" />
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Sidebar */}
           <div className="space-y-6">
