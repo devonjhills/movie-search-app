@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { GENRE_NAMES } from "./constants";
 
 // Utility function to merge Tailwind classes
 export function cn(...inputs: ClassValue[]) {
@@ -83,18 +82,6 @@ export function truncateText(
   if (text.length <= maxLength) return text;
 
   return text.substring(0, maxLength).trim() + "...";
-}
-
-// Get genre name by ID
-export function getGenreName(
-  genreId: number,
-  mediaType: "movie" | "tv",
-): string {
-  return (
-    GENRE_NAMES[mediaType][
-      genreId as keyof (typeof GENRE_NAMES)[typeof mediaType]
-    ] || "Unknown"
-  );
 }
 
 // Debounce function for search

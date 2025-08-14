@@ -23,7 +23,7 @@ export function ViewAllButton({
       size={size}
       className={cn(
         "gap-1.5 font-medium transition-all duration-200 hover:gap-2 group",
-        className
+        className,
       )}
     >
       <Link href={href}>

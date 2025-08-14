@@ -146,7 +146,7 @@ export function WatchStatusButton({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant={currentStatus ? "default" : "outline"}
+          variant={currentStatus ? "secondary" : "outline"}
           size={size}
           disabled={loading}
           className="gap-2"

@@ -17,7 +17,6 @@ export const ENDPOINTS = {
   tvDetails: (id: number) => `${TMDB_BASE_URL}/tv/${id}`,
   tvSeasonDetails: (tvId: number, seasonNumber: number) =>
     `${TMDB_BASE_URL}/tv/${tvId}/season/${seasonNumber}`,
-  tvAiringToday: `${TMDB_BASE_URL}/tv/airing_today`,
   tvOnTheAir: `${TMDB_BASE_URL}/tv/on_the_air`,
   tvPopular: `${TMDB_BASE_URL}/tv/popular`,
   tvTopRated: `${TMDB_BASE_URL}/tv/top_rated`,
@@ -29,62 +28,37 @@ export const ENDPOINTS = {
 
   // Search endpoints
   searchMulti: `${TMDB_BASE_URL}/search/multi`,
-  searchMovie: `${TMDB_BASE_URL}/search/movie`,
-  searchTv: `${TMDB_BASE_URL}/search/tv`,
-  searchPerson: `${TMDB_BASE_URL}/search/person`,
 } as const;
 
-// Image URL builders
-// Optimized sizes based on actual display dimensions:
-// - Movie/TV cards: w185 (cards are max 224px wide)
-// - Hero sections: w342 (posters are max ~400px wide)
-// - Person details: h632 (profile images are max ~400px wide)
-// - Backdrops: w1280 (full-width hero sections)
+// Image URL builders - Only sizes actually used in the codebase
 export const IMAGE_URLS = {
   // Poster sizes
   poster: {
-    w92: (path: string) => `${TMDB_IMAGE_BASE_URL}/w92${path}`, // Tiny thumbnails (48px)
-    w154: (path: string) => `${TMDB_IMAGE_BASE_URL}/w154${path}`, // Small thumbnails
-    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Card components (default)
-    w342: (path: string) => `${TMDB_IMAGE_BASE_URL}/w342${path}`, // Hero sections & large cards
-    w500: (path: string) => `${TMDB_IMAGE_BASE_URL}/w500${path}`, // Large displays
-    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Very large displays
-    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // Avoid - too large
+    w92: (path: string) => `${TMDB_IMAGE_BASE_URL}/w92${path}`, // Horizontal cards
+    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Card components
+    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`, // Split layout sections
+    w342: (path: string) => `${TMDB_IMAGE_BASE_URL}/w342${path}`, // Hero sections
+    w500: (path: string) => `${TMDB_IMAGE_BASE_URL}/w500${path}`, // Formatted movie results
+    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Large hero displays
   },
 
   // Backdrop sizes
   backdrop: {
-    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`, // Mobile backdrops
-    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Tablet backdrops
-    w1280: (path: string) => `${TMDB_IMAGE_BASE_URL}/w1280${path}`, // Desktop backdrops (default)
-    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // Avoid - too large
+    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Featured sections
+    w1280: (path: string) => `${TMDB_IMAGE_BASE_URL}/w1280${path}`, // Hero sections
   },
 
   // Profile sizes (for person images)
   profile: {
-    w45: (path: string) => `${TMDB_IMAGE_BASE_URL}/w45${path}`, // Tiny avatars
-    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Grid cards
-    h632: (path: string) => `${TMDB_IMAGE_BASE_URL}/h632${path}`, // Details pages (default)
-    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // Avoid - too large
+    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Person cards
+    h632: (path: string) => `${TMDB_IMAGE_BASE_URL}/h632${path}`, // Person details
   },
 
   // Logo sizes
   logo: {
-    w45: (path: string) => `${TMDB_IMAGE_BASE_URL}/w45${path}`,
-    w92: (path: string) => `${TMDB_IMAGE_BASE_URL}/w92${path}`,
-    w154: (path: string) => `${TMDB_IMAGE_BASE_URL}/w154${path}`,
-    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`,
-    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`,
-    w500: (path: string) => `${TMDB_IMAGE_BASE_URL}/w500${path}`,
-    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`,
+    w154: (path: string) => `${TMDB_IMAGE_BASE_URL}/w154${path}`, // Watch providers
+    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`, // Watch providers
   },
-} as const;
-
-// Default image URLs for fallbacks
-export const DEFAULT_IMAGES = {
-  poster: "/images/default-poster.svg",
-  backdrop: "/images/default-backdrop.svg",
-  person: "/images/default-person.svg",
 } as const;
 
 // API Configuration
@@ -109,13 +83,6 @@ export const SWR_CONFIG = {
   dedupingInterval: 60000, // 1 minute
   errorRetryCount: 3,
   errorRetryInterval: 5000, // 5 seconds
-} as const;
-
-// Media types
-export const MEDIA_TYPES = {
-  MOVIE: "movie",
-  TV: "tv",
-  PERSON: "person",
 } as const;
 
 // Genre mappings (commonly used ones)

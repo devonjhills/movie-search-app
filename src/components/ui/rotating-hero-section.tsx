@@ -183,7 +183,6 @@ export function RotatingHeroSection({
       {/* Content */}
       <div className="relative h-full flex items-start sm:items-center py-6 sm:py-8 justify-center">
         <div className="px-4 w-full max-w-7xl">
-
           {/* Glass backdrop container */}
           <div className="bg-background/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 border border-border/10 shadow-2xl relative overflow-hidden">
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start sm:items-center">
@@ -263,7 +262,10 @@ export function RotatingHeroSection({
                 {/* Rating and Date */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   {currentItem.vote_average > 0 && (
-                    <Badge variant="accent" className="gap-1 text-xs sm:text-sm">
+                    <Badge
+                      variant="accent"
+                      className="gap-1 text-xs sm:text-sm"
+                    >
                       <StarFilledIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                       <span>{rating}</span>
                     </Badge>

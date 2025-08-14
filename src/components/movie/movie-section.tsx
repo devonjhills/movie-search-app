@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { MovieGrid } from "./movie-grid";
 import { Badge } from "@/components/ui/badge";
 import { ViewAllButton } from "@/components/ui/view-all-button";

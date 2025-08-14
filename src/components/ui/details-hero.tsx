@@ -51,7 +51,7 @@ export function DetailsHero({
   const posterUrl = getImageUrl(item.poster_path, "poster", "w342");
   const rating = formatVoteAverage(item.vote_average);
   const releaseDate = formatDate(
-    isMovieDetails(item) ? item.release_date : item.first_air_date
+    isMovieDetails(item) ? item.release_date : item.first_air_date,
   );
   const runtime = isMovieDetails(item) ? formatRuntime(item.runtime) : null;
   const title = isMovieDetails(item) ? item.title : item.name;
@@ -132,8 +132,8 @@ export function DetailsHero({
                           {isMovieDetails(item)
                             ? item.tagline
                             : isTVShowDetails(item)
-                            ? item.tagline
-                            : ""}
+                              ? item.tagline
+                              : ""}
                           &rdquo;
                         </p>
                       )}
@@ -162,7 +162,7 @@ export function DetailsHero({
                               {new Date(
                                 isMovieDetails(item)
                                   ? item.release_date
-                                  : item.first_air_date
+                                  : item.first_air_date,
                               ).getFullYear()}
                             </span>
                           </div>
@@ -195,15 +195,15 @@ export function DetailsHero({
                       (isMovieDetails(item)
                         ? item.genres
                         : isTVShowDetails(item)
-                        ? item.genres
-                        : []
+                          ? item.genres
+                          : []
                       ).length > 0 && (
                         <div className="flex flex-wrap gap-2">
                           {(isMovieDetails(item)
                             ? item.genres
                             : isTVShowDetails(item)
-                            ? item.genres
-                            : []
+                              ? item.genres
+                              : []
                           ).map((genre: { id: number; name: string }) => (
                             <Badge key={genre.id} variant="outline">
                               {genre.name}
@@ -227,7 +227,8 @@ export function DetailsHero({
                         <a
                           href={`https://www.youtube.com/watch?v=${trailer.key}`}
                           target="_blank"
-                          rel="noopener noreferrer">
+                          rel="noopener noreferrer"
+                        >
                           <PlayIcon className="h-4 w-4" />
                           Watch Trailer
                         </a>
@@ -269,15 +270,15 @@ export function DetailsHero({
                             isMovieDetails(item)
                               ? item.external_ids
                               : isTVShowDetails(item)
-                              ? item.external_ids
-                              : undefined
+                                ? item.external_ids
+                                : undefined
                           }
                           homepage={
                             isMovieDetails(item)
                               ? item.homepage
                               : isTVShowDetails(item)
-                              ? item.homepage
-                              : undefined
+                                ? item.homepage
+                                : undefined
                           }
                           title={title}
                           releaseDate={rawReleaseDate}

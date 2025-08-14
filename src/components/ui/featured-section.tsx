@@ -56,15 +56,20 @@ export function FeaturedSection({
             "release_date" in item
               ? item.release_date
               : "first_air_date" in item
-              ? item.first_air_date
-              : null;
-          const backdropUrl = getImageUrl(item.backdrop_path, "backdrop", "w780");
+                ? item.first_air_date
+                : null;
+          const backdropUrl = getImageUrl(
+            item.backdrop_path,
+            "backdrop",
+            "w780",
+          );
           const rating = formatVoteAverage(item.vote_average);
 
           return (
             <div
               key={item.id}
-              className="group relative rounded-lg overflow-hidden bg-card border border-border/50 shadow-md hover:shadow-xl transition-all duration-300">
+              className="group relative rounded-lg overflow-hidden bg-card border border-border/50 shadow-md hover:shadow-xl transition-all duration-300"
+            >
               {/* Trending Badge */}
               {showTrending && index < 6 && (
                 <div className="absolute top-3 right-3 z-20">
@@ -92,7 +97,6 @@ export function FeaturedSection({
                     </div>
                   )}
 
-
                   {/* Content Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
                     <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 lg:p-6">
@@ -104,7 +108,10 @@ export function FeaturedSection({
                           </h3>
                           <div className="flex flex-wrap items-center gap-2">
                             {item.vote_average > 0 && (
-                              <Badge variant="accent" className="gap-1.5 text-sm">
+                              <Badge
+                                variant="accent"
+                                className="gap-1.5 text-sm"
+                              >
                                 <StarFilledIcon className="h-4 w-4" />
                                 <span>{rating}</span>
                               </Badge>

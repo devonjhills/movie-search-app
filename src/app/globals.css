@@ -29,10 +29,7 @@
     /* Film Noir Extensions */
     --noir-shadow: 0 0% 15%; /* Deep shadows */
     --noir-highlight: 0 0% 85%; /* Soft highlights */
-    --femme-fatale: 348 85% 45%; /* Alias for primary */
-    --champagne: 42 95% 65%; /* Alias for accent */
     --cigarette-smoke: 0 0% 75%; /* Hazy gray */
-    --venetian-blind: 0 0% 25%; /* Sharp contrast lines */
   }
 
   .dark {
@@ -60,10 +57,7 @@
     /* Film Noir Extensions - Dark Mode */
     --noir-shadow: 0 0% 0%; /* Pure black shadows */
     --noir-highlight: 0 0% 15%; /* Subtle dark highlights */
-    --femme-fatale: 348 90% 65%;
-    --champagne: 42 85% 70%;
     --cigarette-smoke: 0 0% 25%;
-    --venetian-blind: 0 0% 75%;
   }
 }
 
@@ -324,7 +318,7 @@
   }
 
   .shadow-noir-medium {
-    box-shadow: 
+    box-shadow:
       0 4px 12px hsl(var(--noir-shadow) / 0.15),
       0 2px 6px hsl(var(--noir-shadow) / 0.1);
   }
@@ -432,7 +426,6 @@
       0 0 36px hsl(var(--primary) / 0.15);
   }
 
-
   /* Sophisticated gradient overlays */
   .gradient-overlay {
     background: linear-gradient(
@@ -441,15 +434,6 @@
       hsl(var(--noir-shadow) / 0.05) 40%,
       hsl(var(--noir-shadow) / 0.15) 70%,
       hsl(var(--noir-shadow) / 0.35) 100%
-    );
-  }
-
-  .gradient-overlay-vertical {
-    background: linear-gradient(
-      to right,
-      hsl(var(--background) / 0.9) 0%,
-      hsl(var(--background) / 0.7) 30%,
-      transparent 70%
     );
   }
 
@@ -530,28 +514,5 @@
       hsl(var(--cigarette-smoke) / 0.15) 70%,
       transparent 100%
     );
-  }
-
-
-
-  /* Smooth hero transitions - optimized for performance */
-  .hero-crossfade {
-    transition:
-      opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .hero-scale-fade {
-    transition:
-      opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  /* Reduced motion support for transitions */
-  @media (prefers-reduced-motion: reduce) {
-    .hero-crossfade,
-    .hero-scale-fade {
-      transition-duration: 0.1s;
-    }
   }
 }

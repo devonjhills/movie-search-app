@@ -1,7 +1,6 @@
 "use client";
 
 import { ExternalLinkIcon, VideoIcon, GlobeIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
 import { getRottenTomatoesSearchUrl, formatYear } from "@/lib/utils";
 
 import type { ExternalIds } from "@/lib/types";
@@ -51,10 +50,10 @@ export function ExternalLinks({
       {links.map((link) => {
         const IconComponent = link.icon;
         return (
-          <a 
-            key={link.name} 
-            href={link.url!} 
-            target="_blank" 
+          <a
+            key={link.name}
+            href={link.url!}
+            target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-primary hover:text-primary/80 underline underline-offset-4 hover:underline-offset-2 transition-all duration-200 font-medium text-sm"
           >

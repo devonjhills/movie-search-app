@@ -11,26 +11,12 @@ import type {
   Person,
   TMDBResponse,
   MultiSearchResult,
-  FormattedMovie,
   TMDBError,
   WatchProvidersResponse,
   SearchResultItem,
 } from "../types";
-import { ENDPOINTS, API_CONFIG, SWR_CONFIG, IMAGE_URLS } from "../constants";
-
-// Format movie results (preserving original functionality)
-export const formatMovieResults = (movie: Movie): FormattedMovie => {
-  return {
-    id: movie.id,
-    release_date: movie.release_date,
-    title: movie.title,
-    vote_average: movie.vote_average,
-    poster_path: movie.poster_path,
-    backdrop_path: movie.backdrop_path,
-    overview: movie.overview,
-    poster: movie.poster_path ? IMAGE_URLS.poster.w500(movie.poster_path) : "",
-  };
-};
+import { ENDPOINTS, API_CONFIG, SWR_CONFIG } from "../constants";
+import { formatMovieResults } from "../api";
 
 // Get API key from environment
 const API_KEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY;
