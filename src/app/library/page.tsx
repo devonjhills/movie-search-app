@@ -124,42 +124,53 @@ export default function MyLibraryPage() {
   }
 
   return (
-    <div className="min-h-screen">
-      {/* Navigation */}
-      <div className="container mx-auto px-4 pt-6 pb-4">
-        <div className="flex items-center justify-between gap-4">
-          <Breadcrumb items={[{ label: "My Library", current: true }]} />
-          <BackNavigation fallbackHref="/" />
+    <div className="min-h-screen bg-background venetian-blinds">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-b border-border">
+        <div className="container mx-auto px-4 pt-6 pb-8">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <Breadcrumb items={[{ label: "My Library", current: true }]} />
+            <BackNavigation fallbackHref="/" />
+          </div>
+          
+          <div className="text-center space-y-3">
+            <h1 className="text-4xl font-serif font-bold tracking-tight">
+              My Library
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Track your viewing progress, rate movies and shows, and manage your personal collection
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 pb-8">
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-serif font-bold tracking-tight">
-              My Library
-            </h1>
-            <p className="text-muted-foreground">
-              Manage your personal movie and TV show collection
-            </p>
-          </div>
-
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto space-y-8">
           <Tabs value={activeTab} onValueChange={handleTabChange}>
-            <TabsList className="grid w-full grid-cols-2 max-w-md">
-              <TabsTrigger value="watching">Currently Watching</TabsTrigger>
-              <TabsTrigger value="all">All Library</TabsTrigger>
-            </TabsList>
+            <div className="flex justify-center">
+              <TabsList className="grid grid-cols-2 w-full max-w-md h-12 bg-muted/90 backdrop-blur-sm border border-border shadow-sm">
+                <TabsTrigger value="watching" className="text-sm font-medium data-[state=active]:bg-background/95 data-[state=active]:backdrop-blur-sm">
+                  Currently Watching
+                </TabsTrigger>
+                <TabsTrigger value="all" className="text-sm font-medium data-[state=active]:bg-background/95 data-[state=active]:backdrop-blur-sm">
+                  All Library
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
-            <TabsContent value="watching" className="space-y-6">
+            <TabsContent value="watching" className="mt-8">
               {error ? (
-                <div className="text-center py-8">
-                  <p className="text-destructive">{error}</p>
-                  <button
-                    onClick={fetchViewingHistory}
-                    className="mt-2 text-primary hover:underline"
-                  >
-                    Try again
-                  </button>
+                <div className="bg-destructive/20 backdrop-blur-sm border border-destructive/30 rounded-lg p-8 text-center shadow-sm">
+                  <div className="space-y-3">
+                    <p className="text-destructive font-medium">{error}</p>
+                    <Button
+                      onClick={fetchViewingHistory}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Try again
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <CurrentlyWatchingSection
@@ -170,21 +181,26 @@ export default function MyLibraryPage() {
               )}
             </TabsContent>
 
-            <TabsContent value="all" className="space-y-6">
-              <ViewingHistoryFilters
-                filters={filters}
-                onFiltersChange={handleFiltersChange}
-              />
+            <TabsContent value="all" className="mt-8 space-y-6">
+              <div className="bg-card/95 backdrop-blur-sm border border-border rounded-lg p-6 shadow-sm">
+                <ViewingHistoryFilters
+                  filters={filters}
+                  onFiltersChange={handleFiltersChange}
+                />
+              </div>
 
               {error ? (
-                <div className="text-center py-8">
-                  <p className="text-destructive">{error}</p>
-                  <button
-                    onClick={fetchViewingHistory}
-                    className="mt-2 text-primary hover:underline"
-                  >
-                    Try again
-                  </button>
+                <div className="bg-destructive/20 backdrop-blur-sm border border-destructive/30 rounded-lg p-8 text-center shadow-sm">
+                  <div className="space-y-3">
+                    <p className="text-destructive font-medium">{error}</p>
+                    <Button
+                      onClick={fetchViewingHistory}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Try again
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <ViewingHistoryGrid

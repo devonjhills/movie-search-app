@@ -65,9 +65,9 @@ export function ViewingHistoryCard({
 
   return (
     <>
-      <Card className="group hover:shadow-md transition-shadow">
+      <Card className="group hover:shadow-lg hover:shadow-primary/5 transition-all duration-200 border-border hover:border-border overflow-hidden bg-card/95 backdrop-blur-sm">
         <div className="relative">
-          <div className="relative aspect-[2/3] overflow-hidden rounded-t-lg">
+          <div className="relative aspect-[2/3] overflow-hidden">
             <Link
               href={`/${item.media_type}/${item.tmdb_id}`}
               className="block w-full h-full relative"
@@ -79,12 +79,12 @@ export function ViewingHistoryCard({
                     src={validImageUrl}
                     alt={item.title}
                     fill
-                    className="object-cover transition-transform group-hover:scale-105"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                     sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
                   />
                 ) : (
-                  <div className="w-full h-full bg-muted flex items-center justify-center">
-                    <span className="text-xs text-muted-foreground">
+                  <div className="w-full h-full bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">
+                    <span className="text-xs text-muted-foreground font-medium">
                       No Image
                     </span>
                   </div>
@@ -92,20 +92,20 @@ export function ViewingHistoryCard({
               })()}
             </Link>
 
-            <div className="absolute top-1 left-1">
+            <div className="absolute top-2 left-2">
               <Badge
-                className={`${statusColors[item.status]} text-xs px-1 py-0.5`}
+                className={`${statusColors[item.status]} text-xs px-2 py-1 font-medium shadow-sm`}
               >
                 {statusLabels[item.status]}
               </Badge>
             </div>
 
-            <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <div className="flex gap-1">
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="h-6 w-6 p-0"
+                  className="h-7 w-7 p-0 shadow-sm backdrop-blur-sm bg-background/95 hover:bg-background"
                   onClick={() => setShowStatusDialog(true)}
                   title="Update status, rating & notes"
                 >
@@ -116,7 +116,7 @@ export function ViewingHistoryCard({
                     <Button
                       variant="secondary"
                       size="sm"
-                      className="h-6 w-6 p-0"
+                      className="h-7 w-7 p-0 shadow-sm backdrop-blur-sm bg-background/95 hover:bg-background"
                     >
                       <MoreVertical className="h-3 w-3" />
                     </Button>
@@ -135,32 +135,34 @@ export function ViewingHistoryCard({
           </div>
         </div>
 
-        <CardContent className="p-4">
+        <CardContent className="p-4 space-y-3">
           <Link
             href={`/${item.media_type}/${item.tmdb_id}`}
             className="block hover:text-primary transition-colors"
           >
-            <h3 className="font-medium text-sm line-clamp-2 mb-1">
+            <h3 className="font-semibold text-sm line-clamp-2 leading-tight">
               {item.title}
             </h3>
           </Link>
 
-          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-            <span className="capitalize">{item.media_type}</span>
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground capitalize font-medium">
+              {item.media_type}
+            </span>
+            <div className="flex items-center gap-3">
               {item.rating && (
-                <div className="flex items-center gap-0.5" title="Your rating">
-                  <Star className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
-                  <span className="font-medium">{item.rating}/10</span>
+                <div className="flex items-center gap-1" title="Your rating">
+                  <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                  <span className="text-xs font-semibold">{item.rating}/10</span>
                 </div>
               )}
               {item.vote_average && (
                 <div
-                  className="flex items-center gap-0.5 text-muted-foreground/60"
+                  className="flex items-center gap-1 text-muted-foreground/70"
                   title="TMDB score"
                 >
-                  <span className="text-xs">TMDB:</span>
-                  <span>{Math.round(item.vote_average * 10) / 10}</span>
+                  <span className="text-xs font-medium">TMDB</span>
+                  <span className="text-xs">{Math.round(item.vote_average * 10) / 10}</span>
                 </div>
               )}
             </div>
@@ -168,8 +170,8 @@ export function ViewingHistoryCard({
 
           {item.watch_count > 1 && (
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <RotateCcw className="h-2.5 w-2.5" />
-              <span>{item.watch_count}x</span>
+              <RotateCcw className="h-3 w-3" />
+              <span className="font-medium">Watched {item.watch_count}x</span>
             </div>
           )}
 
@@ -183,11 +185,10 @@ export function ViewingHistoryCard({
           )}
 
           {item.notes && (
-            <div className="mt-2">
-              <hr className="border-muted mb-2" />
-              <div className="flex items-start gap-1 text-xs text-muted-foreground p-2 bg-muted/30 rounded">
-                <StickyNote className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                <span className="line-clamp-3 text-xs leading-relaxed">
+            <div className="pt-2 border-t border-border/30">
+              <div className="flex items-start gap-2 text-xs text-muted-foreground p-3 bg-muted/40 backdrop-blur-sm rounded-md">
+                <StickyNote className="h-3 w-3 mt-0.5 flex-shrink-0 text-primary/70" />
+                <span className="line-clamp-3 leading-relaxed">
                   {item.notes}
                 </span>
               </div>

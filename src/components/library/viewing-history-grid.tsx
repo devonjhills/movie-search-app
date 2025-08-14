@@ -3,6 +3,7 @@
 import { ViewingHistoryItem } from "@/lib/types";
 import { ViewingHistoryCard } from "./viewing-history-card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
 interface ViewingHistoryGridProps {
@@ -42,15 +43,27 @@ export function ViewingHistoryGrid({
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-12">
-        <div className="max-w-md mx-auto">
-          <h3 className="text-lg font-semibold mb-2">No viewing history yet</h3>
-          <p className="text-muted-foreground mb-4">
-            Start watching movies and TV shows to build your viewing history.
-          </p>
-          <Button onClick={onRefresh} variant="default">
-            Refresh
-          </Button>
+      <div className="bg-gradient-to-br from-muted/50 to-background/95 backdrop-blur-sm border border-border rounded-xl p-12 text-center shadow-sm">
+        <div className="max-w-lg mx-auto space-y-6">
+          <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+            <svg className="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+          <div className="space-y-3">
+            <h3 className="text-xl font-serif font-semibold">Your Library Awaits</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              No items match your current filters. Try adjusting your search criteria or explore new content to add to your library.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button variant="default" asChild className="bg-primary/95 backdrop-blur-sm hover:bg-primary">
+              <a href="/discover">Discover Content</a>
+            </Button>
+            <Button onClick={onRefresh} variant="outline" className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background">
+              Refresh Library
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -66,13 +79,15 @@ export function ViewingHistoryGrid({
     : [];
 
   const renderGrid = (items: ViewingHistoryItem[], title?: string) => (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {title && (
-        <div className="flex items-center gap-2">
-          <h2 className="text-xl font-serif font-semibold">{title}</h2>
-          <span className="text-sm text-muted-foreground">
-            ({items.length})
-          </span>
+        <div className="flex items-center gap-3 pb-2 border-b border-border/30">
+          <div className="bg-background/85 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-border/40 shadow-sm">
+            <h2 className="text-xl font-serif font-bold">{title}</h2>
+          </div>
+          <Badge variant="outline" className="px-2 py-1 bg-background/90 backdrop-blur-sm border-border/50">
+            {items.length}
+          </Badge>
         </div>
       )}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
@@ -100,53 +115,57 @@ export function ViewingHistoryGrid({
       )}
 
       {totalPages > 1 && (
-        <div className="flex justify-center items-center space-x-2">
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => onPageChange(page - 1)}
-            disabled={page === 1}
-          >
-            <ChevronLeftIcon className="h-4 w-4" />
-            Previous
-          </Button>
+        <div className="bg-muted/60 backdrop-blur-sm rounded-lg p-6 border border-border shadow-sm">
+          <div className="flex justify-center items-center space-x-3">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onPageChange(page - 1)}
+              disabled={page === 1}
+              className="gap-2"
+            >
+              <ChevronLeftIcon className="h-4 w-4" />
+              Previous
+            </Button>
 
-          <div className="flex items-center space-x-1">
-            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-              let pageNum;
-              if (totalPages <= 5) {
-                pageNum = i + 1;
-              } else if (page <= 3) {
-                pageNum = i + 1;
-              } else if (page >= totalPages - 2) {
-                pageNum = totalPages - 4 + i;
-              } else {
-                pageNum = page - 2 + i;
-              }
+            <div className="flex items-center space-x-1">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (page <= 3) {
+                  pageNum = i + 1;
+                } else if (page >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = page - 2 + i;
+                }
 
-              return (
-                <Button
-                  key={pageNum}
-                  variant={page === pageNum ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => onPageChange(pageNum)}
-                  className="w-10"
-                >
-                  {pageNum}
-                </Button>
-              );
-            })}
+                return (
+                  <Button
+                    key={pageNum}
+                    variant={page === pageNum ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => onPageChange(pageNum)}
+                    className="w-10 h-9"
+                  >
+                    {pageNum}
+                  </Button>
+                );
+              })}
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onPageChange(page + 1)}
+              disabled={page === totalPages}
+              className="gap-2"
+            >
+              Next
+              <ChevronRightIcon className="h-4 w-4" />
+            </Button>
           </div>
-
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => onPageChange(page + 1)}
-            disabled={page === totalPages}
-          >
-            Next
-            <ChevronRightIcon className="h-4 w-4" />
-          </Button>
         </div>
       )}
     </div>

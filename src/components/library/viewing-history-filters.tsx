@@ -49,63 +49,70 @@ export function ViewingHistoryFilters({
     filters.status !== "all" || filters.mediaType !== "all";
 
   return (
-    <div className="flex flex-wrap items-center gap-4 p-4 bg-muted/50 rounded-lg">
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">Filter by:</span>
-
-        <Select
-          value={filters.status}
-          onValueChange={(value) =>
-            onFiltersChange({
-              ...filters,
-              status: value as WatchStatus | "all",
-            })
-          }
-        >
-          <SelectTrigger className="w-40">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            {statusOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <Select
-          value={filters.mediaType}
-          onValueChange={(value) =>
-            onFiltersChange({
-              ...filters,
-              mediaType: value as "movie" | "tv" | "all",
-            })
-          }
-        >
-          <SelectTrigger className="w-32">
-            <SelectValue placeholder="Type" />
-          </SelectTrigger>
-          <SelectContent>
-            {mediaTypeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <h3 className="text-lg font-serif font-semibold">Filter Library</h3>
+        {hasActiveFilters && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClearFilters}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            Clear All
+          </Button>
+        )}
       </div>
+      
+      <div className="flex flex-wrap items-center gap-4">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-muted-foreground">Status:</span>
+          <Select
+            value={filters.status}
+            onValueChange={(value) =>
+              onFiltersChange({
+                ...filters,
+                status: value as WatchStatus | "all",
+              })
+            }
+          >
+            <SelectTrigger className="w-44 h-9">
+              <SelectValue placeholder="All Statuses" />
+            </SelectTrigger>
+            <SelectContent>
+              {statusOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      {hasActiveFilters && (
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleClearFilters}
-          className="text-xs"
-        >
-          Clear Filters
-        </Button>
-      )}
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-muted-foreground">Type:</span>
+          <Select
+            value={filters.mediaType}
+            onValueChange={(value) =>
+              onFiltersChange({
+                ...filters,
+                mediaType: value as "movie" | "tv" | "all",
+              })
+            }
+          >
+            <SelectTrigger className="w-36 h-9">
+              <SelectValue placeholder="All Types" />
+            </SelectTrigger>
+            <SelectContent>
+              {mediaTypeOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
     </div>
   );
 }
