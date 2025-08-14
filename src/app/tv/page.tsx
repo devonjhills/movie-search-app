@@ -71,7 +71,7 @@ export default async function TVPage() {
           error={null}
           href="/tv/on-the-air"
           limit={10}
-          badge="📺 On Air"
+          badge="Playing Now"
         />
 
         {/* Top Rated */}
@@ -82,7 +82,7 @@ export default async function TVPage() {
           error={null}
           href="/tv/top-rated"
           limit={10}
-          badge="⭐ Critics' Choice"
+          badge="Critics' Choice"
         />
       </div>
     </div>

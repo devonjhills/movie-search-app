@@ -71,7 +71,7 @@ export function CurrentlyWatchingSection({
               asChild
               className="bg-primary/95 backdrop-blur-sm hover:bg-primary"
             >
-              <a href="/discover">Discover Movies & Shows</a>
+              <a href="/search">Discover Movies & Shows</a>
             </Button>
             <Button
               variant="outline"
@@ -105,12 +105,7 @@ export function CurrentlyWatchingSection({
             {watchingItems.length === 1 ? "item" : "items"}
           </Badge>
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onRefresh}
-          className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background"
-        >
+        <Button variant="default" size="sm" onClick={onRefresh}>
           Refresh
         </Button>
       </div>

@@ -13,7 +13,6 @@ Disallow: /watchlist
 
 # Allow crawling of main content
 Allow: /
-Allow: /discover
 Allow: /search
 Allow: /movies/
 Allow: /tv/

@@ -15,9 +15,9 @@ import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useTVDetails, useTVWatchProviders } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { DetailsHero } from "@/components/ui/details-hero";
-import { CastGrid } from "@/components/ui/cast-grid";
-import { PersonCard } from "@/components/ui/person-card";
-import { MovieGrid } from "@/components/movie/movie-grid";
+import { CastGrid } from "@/components/person/cast-grid";
+import { PersonCard } from "@/components/person/person-card";
+import { TVGrid } from "@/components/tv/tv-grid";
 import { EpisodeTracker } from "@/components/tv/episode-tracker";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -269,16 +269,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   // Get keywords
   const keywords = tvShow.keywords?.results?.slice(0, 10) || [];
 
-  // Get recommendations and transform TV shows to Movie-like objects for MovieGrid
-  const recommendations =
-    tvShow.recommendations?.results?.slice(0, 10).map((show) => ({
-      ...show,
-      title: show.name,
-      release_date: show.first_air_date,
-      original_title: show.original_name,
-      adult: false,
-      video: false,
-    })) || [];
+  // Get TV recommendations
+  const recommendations = tvShow.recommendations?.results?.slice(0, 10) || [];
 
   return (
     <div className="min-h-screen relative">
@@ -586,8 +578,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <MovieGrid
-                  movies={recommendations}
+                <TVGrid
+                  tvShows={recommendations}
                   cardSize="md"
                   showYear={true}
                   showRating={true}

@@ -4,6 +4,11 @@ import { MovieGrid } from "./movie-grid";
 import { Badge } from "@/components/ui/badge";
 import { ViewAllButton } from "@/components/ui/view-all-button";
 import { cn } from "@/lib/utils";
+import {
+  VideoIcon,
+  StarFilledIcon,
+  DrawingPinFilledIcon,
+} from "@radix-ui/react-icons";
 import type { Movie, FormattedMovie } from "@/lib/types";
 
 interface MovieSectionProps {
@@ -44,11 +49,16 @@ export function MovieSection({
           {/* Enhanced badges */}
           {showTrending && (
             <Badge variant="secondary" className="gap-1.5 text-sm">
-              🔥 Trending
+              <DrawingPinFilledIcon className="h-4 w-4" />
+              Trending
             </Badge>
           )}
           {badge && (
             <Badge variant="secondary" className="gap-1.5 text-sm">
+              {badge === "In Theaters" && <VideoIcon className="h-4 w-4" />}
+              {badge === "Critics' Choice" && (
+                <StarFilledIcon className="h-4 w-4" />
+              )}
               {badge}
             </Badge>
           )}

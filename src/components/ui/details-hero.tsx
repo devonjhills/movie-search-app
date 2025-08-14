@@ -11,10 +11,10 @@ import {
 } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
 import { getImageUrl } from "@/lib/api";
-import { WatchStatusButton } from "@/components/ui/watch-status-button";
+import { WatchStatusButton } from "@/components/shared/watch-status-button";
 import { ShareButton } from "@/components/ui/share-button";
 import { Button } from "@/components/ui/button";
-import { WatchProvidersCompact } from "@/components/ui/watch-providers";
+import { WatchProvidersCompact } from "@/components/shared/watch-providers";
 import { ExternalLinks } from "@/components/ui/external-links";
 import {
   formatDate,

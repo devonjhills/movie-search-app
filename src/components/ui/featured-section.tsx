@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { StarFilledIcon, CalendarIcon } from "@radix-ui/react-icons";
+import {
+  StarFilledIcon,
+  CalendarIcon,
+  DrawingPinFilledIcon,
+} from "@radix-ui/react-icons";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
@@ -40,7 +44,8 @@ export function FeaturedSection({
           </h2>
           {showTrending && (
             <Badge variant="secondary" className="gap-1.5 text-sm">
-              🔥 Trending
+              <DrawingPinFilledIcon className="h-4 w-4" />
+              Trending
             </Badge>
           )}
         </div>
@@ -70,15 +75,6 @@ export function FeaturedSection({
               key={item.id}
               className="group relative rounded-lg overflow-hidden bg-card border border-border/50 shadow-md hover:shadow-xl transition-all duration-300"
             >
-              {/* Trending Badge */}
-              {showTrending && index < 6 && (
-                <div className="absolute top-3 right-3 z-20">
-                  <Badge variant="secondary" className="gap-1 text-xs">
-                    🔥 #{index + 1}
-                  </Badge>
-                </div>
-              )}
-
               <Link href={`/${mediaType}/${item.id}`} className="block">
                 <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] overflow-hidden">
                   {/* Backdrop Image */}
@@ -126,7 +122,7 @@ export function FeaturedSection({
                             )}
                           </div>
                           {item.overview && (
-                            <p className="text-sm sm:text-base text-white/90 line-clamp-1 sm:line-clamp-2 lg:line-clamp-3 max-w-full">
+                            <p className="text-sm text-white/90 line-clamp-1 max-w-full">
                               {item.overview}
                             </p>
                           )}

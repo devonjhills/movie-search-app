@@ -10,7 +10,7 @@ interface SearchResultsProps {
   sortBy?: string;
 }
 
-export function SearchResults({ results, sortBy }: SearchResultsProps) {
+export function SearchResults({ results }: SearchResultsProps) {
   if (!results) return null;
 
   const { movieResults, tvResults, peopleResults } = results;

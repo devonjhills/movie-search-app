@@ -78,7 +78,7 @@ export function ViewingHistoryGrid({
               asChild
               className="bg-primary/95 backdrop-blur-sm hover:bg-primary"
             >
-              <a href="/discover">Discover Content</a>
+              <a href="/search">Discover Content</a>
             </Button>
             <Button
               onClick={onRefresh}

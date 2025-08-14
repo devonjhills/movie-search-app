@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SearchPageClient } from "./search-page-client";
+import { SearchPageClient } from "@/components/search/search-page-client";
 
 export const metadata: Metadata = {
   title: "Search - FilmFatale",

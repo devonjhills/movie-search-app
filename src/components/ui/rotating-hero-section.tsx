@@ -278,10 +278,6 @@ export function RotatingHeroSection({
                       </span>
                     </div>
                   )}
-                  {/* Trending Indicator */}
-                  <Badge variant="secondary" className="gap-1 text-xs">
-                    🔥 Trending
-                  </Badge>
                 </div>
 
                 {/* Overview */}

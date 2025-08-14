@@ -4,6 +4,12 @@ import { TVGrid } from "./tv-grid";
 import { Badge } from "@/components/ui/badge";
 import { ViewAllButton } from "@/components/ui/view-all-button";
 import { cn } from "@/lib/utils";
+import {
+  ArrowUpIcon,
+  VideoIcon,
+  StarFilledIcon,
+  DrawingPinFilledIcon,
+} from "@radix-ui/react-icons";
 import type { TVShow } from "@/lib/types";
 
 interface TVSectionProps {
@@ -46,17 +52,23 @@ export function TVSection({
           {/* Enhanced badges */}
           {showTrending && (
             <Badge variant="secondary" className="gap-1.5 text-sm">
-              🔥 Hot
+              <DrawingPinFilledIcon className="h-4 w-4" />
+              Trending
             </Badge>
           )}
           {badge && (
-            <Badge variant="outline" className="text-xs font-serif">
+            <Badge variant="secondary" className="gap-1.5 text-sm">
+              {badge === "Playing Now" && <VideoIcon className="h-4 w-4" />}
+              {badge === "Critics' Choice" && (
+                <StarFilledIcon className="h-4 w-4" />
+              )}
               {badge}
             </Badge>
           )}
           {showEpisodeIndicator && (
-            <Badge variant="secondary" className="gap-1 text-xs">
-              📺 New Episodes
+            <Badge variant="secondary" className="gap-1.5 text-sm">
+              <VideoIcon className="h-4 w-4" />
+              New Episodes
             </Badge>
           )}
         </div>

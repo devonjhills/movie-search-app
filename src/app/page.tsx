@@ -71,7 +71,7 @@ export default async function Home() {
           error={null}
           href="/movies/now-playing"
           limit={10}
-          badge="🎬 In Theaters"
+          badge="In Theaters"
         />
 
         {/* Top Rated section */}
@@ -82,7 +82,7 @@ export default async function Home() {
           error={null}
           href="/movies/top-rated"
           limit={10}
-          badge="⭐ Critics' Choice"
+          badge="Critics' Choice"
         />
       </div>
     </div>

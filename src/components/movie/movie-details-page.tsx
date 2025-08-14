@@ -11,9 +11,8 @@ import {
 import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useMovieDetails, useMovieWatchProviders } from "@/lib/hooks/api-hooks";
 import { DetailsHero } from "@/components/ui/details-hero";
-import { CastGrid } from "@/components/ui/cast-grid";
+import { CastGrid } from "@/components/person/cast-grid";
 import { MovieGrid } from "@/components/movie/movie-grid";
-import { PersonCard } from "@/components/ui/person-card";
 import { Badge } from "@/components/ui/badge";
 import {
   formatDate,
@@ -26,6 +25,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { BackNavigation } from "@/components/ui/back-navigation";
+import { PersonCard } from "../person/person-card";
 
 interface MovieDetailsPageProps {
   movieId: number;

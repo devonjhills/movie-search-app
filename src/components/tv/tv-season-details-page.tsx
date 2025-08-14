@@ -12,7 +12,7 @@ import {
 import { StarFilledIcon } from "@radix-ui/react-icons";
 import { useTVSeasonDetails, useTVDetails } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
-import { PersonCard } from "@/components/ui/person-card";
+import { PersonCard } from "@/components/person/person-card";
 import { formatDate, formatVoteAverage, formatRuntime } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";

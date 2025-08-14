@@ -11,6 +11,7 @@ import { redirect } from "next/navigation";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { BackNavigation } from "@/components/ui/back-navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 export default function MyLibraryPage() {
   const { user, loading: isLoading } = useAuth();
