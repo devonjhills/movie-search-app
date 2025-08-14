@@ -61,20 +61,23 @@ export function CurrentlyWatchingSection({
             </h3>
             <p className="text-muted-foreground leading-relaxed">
               Begin tracking your movie and TV show progress. Add items to your
-              library and mark them as &quot;Currently Watching&quot; to see them here.
+              library and mark them as &quot;Currently Watching&quot; to see
+              them here.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               variant="default"
               asChild
-              className="bg-primary/95 backdrop-blur-sm hover:bg-primary">
+              className="bg-primary/95 backdrop-blur-sm hover:bg-primary"
+            >
               <a href="/discover">Discover Movies & Shows</a>
             </Button>
             <Button
               variant="outline"
               onClick={onRefresh}
-              className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background">
+              className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background"
+            >
               Refresh Library
             </Button>
           </div>
@@ -96,7 +99,8 @@ export function CurrentlyWatchingSection({
           </div>
           <Badge
             variant="secondary"
-            className="px-3 py-1 bg-secondary/90 backdrop-blur-sm border border-border/30">
+            className="px-3 py-1 bg-secondary/90 backdrop-blur-sm border border-border/30"
+          >
             {watchingItems.length}{" "}
             {watchingItems.length === 1 ? "item" : "items"}
           </Badge>
@@ -105,7 +109,8 @@ export function CurrentlyWatchingSection({
           variant="outline"
           size="sm"
           onClick={onRefresh}
-          className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background">
+          className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background"
+        >
           Refresh
         </Button>
       </div>
@@ -119,7 +124,8 @@ export function CurrentlyWatchingSection({
                 TV Shows
                 <Badge
                   variant="outline"
-                  className="text-xs bg-background/90 backdrop-blur-sm border-border/50">
+                  className="text-xs bg-background/90 backdrop-blur-sm border-border/50"
+                >
                   {tvShows.length}
                 </Badge>
               </h3>
@@ -145,7 +151,8 @@ export function CurrentlyWatchingSection({
               Movies
               <Badge
                 variant="outline"
-                className="text-xs bg-background/90 backdrop-blur-sm border-border/50">
+                className="text-xs bg-background/90 backdrop-blur-sm border-border/50"
+              >
                 {movies.length}
               </Badge>
             </h3>

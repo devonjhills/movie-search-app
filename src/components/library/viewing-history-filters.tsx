@@ -63,10 +63,12 @@ export function ViewingHistoryFilters({
           </Button>
         )}
       </div>
-      
+
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground">Status:</span>
+          <span className="text-sm font-medium text-muted-foreground">
+            Status:
+          </span>
           <Select
             value={filters.status}
             onValueChange={(value) =>
@@ -90,7 +92,9 @@ export function ViewingHistoryFilters({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground">Type:</span>
+          <span className="text-sm font-medium text-muted-foreground">
+            Type:
+          </span>
           <Select
             value={filters.mediaType}
             onValueChange={(value) =>

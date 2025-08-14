@@ -132,13 +132,14 @@ export default function MyLibraryPage() {
             <Breadcrumb items={[{ label: "My Library", current: true }]} />
             <BackNavigation fallbackHref="/" />
           </div>
-          
+
           <div className="text-center space-y-3">
             <h1 className="text-4xl font-serif font-bold tracking-tight">
               My Library
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Track your viewing progress, rate movies and shows, and manage your personal collection
+              Track your viewing progress, rate movies and shows, and manage
+              your personal collection
             </p>
           </div>
         </div>
@@ -149,10 +150,16 @@ export default function MyLibraryPage() {
           <Tabs value={activeTab} onValueChange={handleTabChange}>
             <div className="flex justify-center">
               <TabsList className="grid grid-cols-2 w-full max-w-md h-12 bg-muted/90 backdrop-blur-sm border border-border shadow-sm">
-                <TabsTrigger value="watching" className="text-sm font-medium data-[state=active]:bg-background/95 data-[state=active]:backdrop-blur-sm">
+                <TabsTrigger
+                  value="watching"
+                  className="text-sm font-medium data-[state=active]:bg-background/95 data-[state=active]:backdrop-blur-sm"
+                >
                   Currently Watching
                 </TabsTrigger>
-                <TabsTrigger value="all" className="text-sm font-medium data-[state=active]:bg-background/95 data-[state=active]:backdrop-blur-sm">
+                <TabsTrigger
+                  value="all"
+                  className="text-sm font-medium data-[state=active]:bg-background/95 data-[state=active]:backdrop-blur-sm"
+                >
                   All Library
                 </TabsTrigger>
               </TabsList>

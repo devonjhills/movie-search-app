@@ -49,21 +49,42 @@ export function ViewingHistoryGrid({
       <div className="bg-gradient-to-br from-muted/50 to-background/95 backdrop-blur-sm border border-border rounded-xl p-12 text-center shadow-sm">
         <div className="max-w-lg mx-auto space-y-6">
           <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-            <svg className="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            <svg
+              className="h-10 w-10 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              />
             </svg>
           </div>
           <div className="space-y-3">
-            <h3 className="text-xl font-serif font-semibold">Your Library Awaits</h3>
+            <h3 className="text-xl font-serif font-semibold">
+              Your Library Awaits
+            </h3>
             <p className="text-muted-foreground leading-relaxed">
-              No items match your current filters. Try adjusting your search criteria or explore new content to add to your library.
+              No items match your current filters. Try adjusting your search
+              criteria or explore new content to add to your library.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button variant="default" asChild className="bg-primary/95 backdrop-blur-sm hover:bg-primary">
+            <Button
+              variant="default"
+              asChild
+              className="bg-primary/95 backdrop-blur-sm hover:bg-primary"
+            >
               <a href="/discover">Discover Content</a>
             </Button>
-            <Button onClick={onRefresh} variant="outline" className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background">
+            <Button
+              onClick={onRefresh}
+              variant="outline"
+              className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background"
+            >
               Refresh Library
             </Button>
           </div>
@@ -88,7 +109,10 @@ export function ViewingHistoryGrid({
           <div className="bg-background/85 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-border/40 shadow-sm">
             <h2 className="text-xl font-serif font-bold">{title}</h2>
           </div>
-          <Badge variant="outline" className="px-2 py-1 bg-background/90 backdrop-blur-sm border-border/50">
+          <Badge
+            variant="outline"
+            className="px-2 py-1 bg-background/90 backdrop-blur-sm border-border/50"
+          >
             {items.length}
           </Badge>
         </div>

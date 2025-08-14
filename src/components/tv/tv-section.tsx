@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { TVGrid } from "./tv-grid";
 import { Badge } from "@/components/ui/badge";
+import { ViewAllButton } from "@/components/ui/view-all-button";
 import { cn } from "@/lib/utils";
 import type { TVShow } from "@/lib/types";
 
@@ -62,16 +61,8 @@ export function TVSection({
           )}
         </div>
 
-        {/* View All Link */}
-        {href && showViewAll && (
-          <Link
-            href={href}
-            className="flex items-center space-x-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
-          >
-            <span>View All</span>
-            <ChevronRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        )}
+        {/* View All Button */}
+        {href && showViewAll && <ViewAllButton href={href} />}
       </div>
 
       {/* TV Shows Grid */}

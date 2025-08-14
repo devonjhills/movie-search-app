@@ -159,7 +159,9 @@ export function ViewingHistoryCard({
               {item.rating && (
                 <div className="flex items-center gap-1" title="Your rating">
                   <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                  <span className="text-xs font-semibold">{item.rating}/10</span>
+                  <span className="text-xs font-semibold">
+                    {item.rating}/10
+                  </span>
                 </div>
               )}
               {item.vote_average && (
@@ -168,7 +170,9 @@ export function ViewingHistoryCard({
                   title="TMDB score"
                 >
                   <span className="text-xs font-medium">TMDB</span>
-                  <span className="text-xs">{Math.round(item.vote_average * 10) / 10}</span>
+                  <span className="text-xs">
+                    {Math.round(item.vote_average * 10) / 10}
+                  </span>
                 </div>
               )}
               {item.watch_count > 1 && (
