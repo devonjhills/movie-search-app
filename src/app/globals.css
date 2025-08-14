@@ -78,12 +78,12 @@
         0deg,
         transparent 0px,
         transparent 25px,
-        hsl(var(--noir-shadow) / 0.04) 25px,
-        hsl(var(--noir-shadow) / 0.04) 30px,
+        hsl(var(--noir-shadow) / 0.02) 25px,
+        hsl(var(--noir-shadow) / 0.02) 30px,
         transparent 30px,
         transparent 55px,
-        hsl(var(--noir-shadow) / 0.02) 55px,
-        hsl(var(--noir-shadow) / 0.02) 58px
+        hsl(var(--noir-shadow) / 0.01) 55px,
+        hsl(var(--noir-shadow) / 0.01) 58px
       ),
       /* Subtle film grain texture */
         radial-gradient(
@@ -451,12 +451,12 @@
       0deg,
       transparent 0px,
       transparent 25px,
-      hsl(var(--noir-shadow) / 0.08) 25px,
-      hsl(var(--noir-shadow) / 0.08) 30px,
+      hsl(var(--noir-shadow) / 0.04) 25px,
+      hsl(var(--noir-shadow) / 0.04) 30px,
       transparent 30px,
       transparent 55px,
-      hsl(var(--noir-shadow) / 0.04) 55px,
-      hsl(var(--noir-shadow) / 0.04) 58px
+      hsl(var(--noir-shadow) / 0.02) 55px,
+      hsl(var(--noir-shadow) / 0.02) 58px
     );
     pointer-events: none;
     z-index: 0;
@@ -468,12 +468,12 @@
       0deg,
       transparent 0px,
       transparent 25px,
-      hsl(0 0% 85% / 0.15) 25px,
-      hsl(0 0% 85% / 0.15) 30px,
+      hsl(0 0% 85% / 0.08) 25px,
+      hsl(0 0% 85% / 0.08) 30px,
       transparent 30px,
       transparent 55px,
-      hsl(0 0% 75% / 0.08) 55px,
-      hsl(0 0% 75% / 0.08) 58px
+      hsl(0 0% 75% / 0.04) 55px,
+      hsl(0 0% 75% / 0.04) 58px
     );
   }
 

@@ -27,13 +27,16 @@ export function ViewingHistoryGrid({
 }: ViewingHistoryGridProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-        {Array.from({ length: 12 }).map((_, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="animate-pulse">
-            <div className="bg-muted rounded-lg aspect-[2/3] mb-2"></div>
-            <div className="space-y-1">
-              <div className="bg-muted h-3 rounded w-3/4"></div>
-              <div className="bg-muted h-2 rounded w-1/2"></div>
+            <div className="flex gap-4 p-4 bg-muted/50 rounded-lg">
+              <div className="bg-muted rounded-md w-16 sm:w-20 aspect-[2/3] flex-shrink-0"></div>
+              <div className="flex-1 space-y-2">
+                <div className="bg-muted h-4 rounded w-3/4"></div>
+                <div className="bg-muted h-3 rounded w-1/2"></div>
+                <div className="bg-muted h-3 rounded w-2/3"></div>
+              </div>
             </div>
           </div>
         ))}
@@ -90,7 +93,7 @@ export function ViewingHistoryGrid({
           </Badge>
         </div>
       )}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {items.map((item) => (
           <ViewingHistoryCard key={item.id} item={item} onUpdate={onRefresh} />
         ))}
