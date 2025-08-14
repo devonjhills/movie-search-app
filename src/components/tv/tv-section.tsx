@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { ViewAllButton } from "@/components/ui/view-all-button";
 import { cn } from "@/lib/utils";
 import {
-  ArrowUpIcon,
   VideoIcon,
   StarFilledIcon,
   DrawingPinFilledIcon,
