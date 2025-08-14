@@ -125,7 +125,7 @@ export default function MyLibraryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background venetian-blinds">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <div className="bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-b border-border">
         <div className="container mx-auto px-4 pt-6 pb-8">

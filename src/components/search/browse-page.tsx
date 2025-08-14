@@ -127,7 +127,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
     mediaTypeFilter !== "all" || sortBy.value !== "relevance";
 
   return (
-    <div className="min-h-screen venetian-blinds">
+    <div className="min-h-screen">
       {/* Navigation */}
       <div className="container mx-auto px-4 pt-6 pb-4">
         <div className="flex items-center justify-between gap-4">
