@@ -45,7 +45,12 @@ function PersonCard({ person, className }: PersonCardProps) {
     : null;
 
   return (
-    <Card className={cn("overflow-hidden hover:shadow-lg transition-shadow", className)}>
+    <Card
+      className={cn(
+        "overflow-hidden hover:shadow-lg transition-shadow",
+        className,
+      )}
+    >
       <CardContent className="p-2 space-y-2">
         {/* Profile Image - Clickable */}
         <Link href={`/person/${person.id}`} className="group">

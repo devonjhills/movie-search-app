@@ -49,7 +49,7 @@ export async function fetchTVShows(endpoint: string): Promise<TVShow[]> {
 export async function fetchFeaturedMovies() {
   const [nowPlaying, popular, topRated] = await Promise.all([
     fetchMovies(ENDPOINTS.moviesNowPlaying),
-    fetchMovies(ENDPOINTS.moviesPopular), 
+    fetchMovies(ENDPOINTS.moviesPopular),
     fetchMovies(ENDPOINTS.moviesTopRated),
   ]);
 

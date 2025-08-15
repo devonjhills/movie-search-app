@@ -109,7 +109,10 @@ export function EpisodeProgress({
             </Tooltip>
           </div>
         ) : (
-          <Badge variant="default" className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+          <Badge
+            variant="default"
+            className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+          >
             <CheckIcon className="h-3 w-3 mr-1" />
             Complete
           </Badge>

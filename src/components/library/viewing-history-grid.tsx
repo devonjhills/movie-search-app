@@ -65,9 +65,7 @@ export function ViewingHistoryGrid({
             </svg>
           </div>
           <div className="space-y-3">
-            <h3 className="text-xl font-semibold">
-              Your Library Awaits
-            </h3>
+            <h3 className="text-xl font-semibold">Your Library Awaits</h3>
             <p className="text-muted-foreground leading-relaxed">
               No items match your current filters. Try adjusting your search
               criteria or explore new content to add to your library.

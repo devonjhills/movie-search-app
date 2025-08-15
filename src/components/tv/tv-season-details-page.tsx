@@ -81,10 +81,7 @@ function SeasonDetailsSkeleton() {
               </div>
               <div className="space-y-4">
                 {Array.from({ length: 10 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="flex gap-4 p-4 border rounded-lg"
-                  >
+                  <div key={i} className="flex gap-4 p-4 border rounded-lg">
                     <Skeleton className="aspect-video w-32 rounded-lg flex-shrink-0" />
                     <div className="flex-1 space-y-2">
                       <div className="flex items-center gap-2">

@@ -353,7 +353,9 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                       <span className="text-lg font-semibold text-primary">
                         {rating}
                       </span>
-                      <span className="text-sm text-muted-foreground">/ 10</span>
+                      <span className="text-sm text-muted-foreground">
+                        / 10
+                      </span>
                     </div>
                   </div>
                 )}
@@ -370,9 +372,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                     <h4 className="text-sm font-medium text-muted-foreground">
                       Seasons
                     </h4>
-                    <p className="text-base">
-                      {tvShow.number_of_seasons}
-                    </p>
+                    <p className="text-base">{tvShow.number_of_seasons}</p>
                   </div>
                 )}
 
@@ -381,9 +381,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                     <h4 className="text-sm font-medium text-muted-foreground">
                       Episodes
                     </h4>
-                    <p className="text-base">
-                      {tvShow.number_of_episodes}
-                    </p>
+                    <p className="text-base">{tvShow.number_of_episodes}</p>
                   </div>
                 )}
 
@@ -394,10 +392,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                     </h4>
                     <div className="space-y-1">
                       {tvShow.networks.slice(0, 2).map((network) => (
-                        <p
-                          key={network.id}
-                          className="text-base"
-                        >
+                        <p key={network.id} className="text-base">
                           {network.name}
                         </p>
                       ))}
@@ -414,7 +409,9 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {keywords.map((keyword) => (
-                      <Badge key={keyword.id} variant="secondary">{keyword.name}</Badge>
+                      <Badge key={keyword.id} variant="secondary">
+                        {keyword.name}
+                      </Badge>
                     ))}
                   </div>
                 </div>
@@ -471,7 +468,6 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                           </p>
                         )}
                       </div>
-
                     </Link>
                   ))}
                 </div>
@@ -562,9 +558,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           {recommendations.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle>
-                  You might also like
-                </CardTitle>
+                <CardTitle>You might also like</CardTitle>
               </CardHeader>
               <CardContent>
                 <TVGrid

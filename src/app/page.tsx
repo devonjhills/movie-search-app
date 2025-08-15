@@ -4,7 +4,8 @@ import { MediaSection } from "@/components/shared/media-section";
 import { fetchFeaturedMovies } from "@/lib/data-fetching";
 
 export default async function Home() {
-  const { nowPlaying, popular, topRated, featured } = await fetchFeaturedMovies();
+  const { nowPlaying, popular, topRated, featured } =
+    await fetchFeaturedMovies();
 
   return (
     <div className="min-h-screen">

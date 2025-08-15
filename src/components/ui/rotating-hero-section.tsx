@@ -70,142 +70,150 @@ export function RotatingHeroSection({
         : null;
 
   return (
-    <div className={cn("relative h-96 md:h-[500px] overflow-hidden", className)}>
-        {featuredItems.map((item, index) => {
-          const backdropUrl = item.backdrop_path
-            ? getImageUrl(item.backdrop_path, "backdrop", "w1280")
-            : null;
+    <div
+      className={cn("relative h-96 md:h-[500px] overflow-hidden", className)}
+    >
+      {featuredItems.map((item, index) => {
+        const backdropUrl = item.backdrop_path
+          ? getImageUrl(item.backdrop_path, "backdrop", "w1280")
+          : null;
 
-          const itemTitle =
-            "title" in item ? item.title : "name" in item ? item.name : "";
+        const itemTitle =
+          "title" in item ? item.title : "name" in item ? item.name : "";
 
-          return backdropUrl ? (
-            <Image
-              key={item.id}
-              src={backdropUrl}
-              alt={itemTitle}
-              fill
-              className={cn(
-                "object-cover transition-opacity duration-500",
-                index === currentIndex ? "opacity-100" : "opacity-0",
-              )}
-              priority={index === 0}
-            />
-          ) : (
-            <div
-              key={item.id}
-              className={cn(
-                "absolute inset-0 bg-muted transition-opacity duration-500",
-                index === currentIndex ? "opacity-100" : "opacity-0",
-              )}
-            />
-          );
-        })}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+        return backdropUrl ? (
+          <Image
+            key={item.id}
+            src={backdropUrl}
+            alt={itemTitle}
+            fill
+            className={cn(
+              "object-cover transition-opacity duration-500",
+              index === currentIndex ? "opacity-100" : "opacity-0",
+            )}
+            priority={index === 0}
+          />
+        ) : (
+          <div
+            key={item.id}
+            className={cn(
+              "absolute inset-0 bg-muted transition-opacity duration-500",
+              index === currentIndex ? "opacity-100" : "opacity-0",
+            )}
+          />
+        );
+      })}
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
 
-        {featuredItems.length > 1 && (
-          <>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
-              onClick={handlePrevious}
-            >
-              <ChevronLeftIcon className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
-              onClick={handleNext}
-            >
-              <ChevronRightIcon className="h-4 w-4" />
-            </Button>
-          </>
-        )}
+      {featuredItems.length > 1 && (
+        <>
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
+            onClick={handlePrevious}
+          >
+            <ChevronLeftIcon className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
+            onClick={handleNext}
+          >
+            <ChevronRightIcon className="h-4 w-4" />
+          </Button>
+        </>
+      )}
 
-        <div className="absolute inset-0 flex items-center justify-center p-12 z-10">
-          <div className="container mx-auto">
-            <div className="bg-background/60 backdrop-blur-sm rounded-lg p-8 border border-border/50 max-w-5xl mx-auto">
-              <div className="flex items-center gap-8">
-                {currentItem.poster_path ? (
-                  <div className="w-36 md:w-48 aspect-[2/3] relative rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-                    <Image
-                      src={getImageUrl(currentItem.poster_path, "poster", "w342")}
-                      alt={"title" in currentItem ? currentItem.title : currentItem.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-36 md:w-48 aspect-[2/3] bg-muted/50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    {mediaType === "movie" ? (
-                      <InfoCircledIcon className="h-16 w-16 text-muted-foreground" />
-                    ) : (
-                      <PlayIcon className="h-16 w-16 text-muted-foreground" />
-                    )}
-                  </div>
-                )}
-                
-                <div className="flex-1 space-y-4">
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                    {"title" in currentItem ? currentItem.title : currentItem.name}
-                  </h1>
-                  
-                  <div className="flex flex-wrap items-center gap-3">
-                    {currentItem.vote_average > 0 && (
-                      <Badge variant="secondary" className="gap-1">
-                        <StarFilledIcon className="h-4 w-4" />
-                        {rating}
-                      </Badge>
-                    )}
-                    {releaseDate && (
-                      <Badge variant="outline">
-                        {new Date(releaseDate).getFullYear()}
-                      </Badge>
-                    )}
-                  </div>
-                  
-                  {currentItem.overview && (
-                    <p className="text-base md:text-lg leading-relaxed line-clamp-3 max-w-3xl">
-                      {currentItem.overview}
-                    </p>
+      <div className="absolute inset-0 flex items-center justify-center p-12 z-10">
+        <div className="container mx-auto">
+          <div className="bg-background/60 backdrop-blur-sm rounded-lg p-8 border border-border/50 max-w-5xl mx-auto">
+            <div className="flex items-center gap-8">
+              {currentItem.poster_path ? (
+                <div className="w-36 md:w-48 aspect-[2/3] relative rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+                  <Image
+                    src={getImageUrl(currentItem.poster_path, "poster", "w342")}
+                    alt={
+                      "title" in currentItem
+                        ? currentItem.title
+                        : currentItem.name
+                    }
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="w-36 md:w-48 aspect-[2/3] bg-muted/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  {mediaType === "movie" ? (
+                    <InfoCircledIcon className="h-16 w-16 text-muted-foreground" />
+                  ) : (
+                    <PlayIcon className="h-16 w-16 text-muted-foreground" />
                   )}
-                  
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild>
-                      <Link href={`/${mediaType}/${currentItem.id}`}>
-                        <InfoCircledIcon className="h-4 w-4 mr-2" />
-                        View Details
-                      </Link>
-                    </Button>
-                    <Button variant="outline">
-                      <PlayIcon className="h-4 w-4 mr-2" />
-                      Trailer
-                    </Button>
-                  </div>
+                </div>
+              )}
+
+              <div className="flex-1 space-y-4">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                  {"title" in currentItem
+                    ? currentItem.title
+                    : currentItem.name}
+                </h1>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  {currentItem.vote_average > 0 && (
+                    <Badge variant="secondary" className="gap-1">
+                      <StarFilledIcon className="h-4 w-4" />
+                      {rating}
+                    </Badge>
+                  )}
+                  {releaseDate && (
+                    <Badge variant="outline">
+                      {new Date(releaseDate).getFullYear()}
+                    </Badge>
+                  )}
+                </div>
+
+                {currentItem.overview && (
+                  <p className="text-base md:text-lg leading-relaxed line-clamp-3 max-w-3xl">
+                    {currentItem.overview}
+                  </p>
+                )}
+
+                <div className="flex flex-wrap gap-3">
+                  <Button asChild>
+                    <Link href={`/${mediaType}/${currentItem.id}`}>
+                      <InfoCircledIcon className="h-4 w-4 mr-2" />
+                      View Details
+                    </Link>
+                  </Button>
+                  <Button variant="outline">
+                    <PlayIcon className="h-4 w-4 mr-2" />
+                    Trailer
+                  </Button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {featuredItems.length > 1 && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-2">
-            {featuredItems.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-200",
-                  index === currentIndex
-                    ? "bg-primary w-6"
-                    : "bg-foreground/40 hover:bg-foreground/60",
-                )}
-              />
-            ))}
-          </div>
-        )}
+      {featuredItems.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+          {featuredItems.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={cn(
+                "w-2 h-2 rounded-full transition-all duration-200",
+                index === currentIndex
+                  ? "bg-primary w-6"
+                  : "bg-foreground/40 hover:bg-foreground/60",
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

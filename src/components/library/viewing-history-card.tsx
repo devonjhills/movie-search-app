@@ -134,11 +134,7 @@ export function ViewingHistoryCard({
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0"
-                    >
+                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
                       <MoreVertical className="h-3 w-3" />
                     </Button>
                   </DropdownMenuTrigger>
@@ -197,9 +193,7 @@ export function ViewingHistoryCard({
               <div className="border-t pt-2">
                 <div className="flex items-start gap-2 text-xs text-muted-foreground p-2 bg-muted/50 rounded">
                   <StickyNote className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                  <span className="line-clamp-2">
-                    {item.notes}
-                  </span>
+                  <span className="line-clamp-2">{item.notes}</span>
                 </div>
               </div>
             )}

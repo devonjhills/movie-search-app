@@ -294,7 +294,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                       <span className="text-lg font-semibold text-primary">
                         {rating}
                       </span>
-                      <span className="text-sm text-muted-foreground">/ 10</span>
+                      <span className="text-sm text-muted-foreground">
+                        / 10
+                      </span>
                     </div>
                   </div>
                 )}

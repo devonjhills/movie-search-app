@@ -310,9 +310,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
           <Card>
             <CardContent className="p-12 text-center">
               <MagnifyingGlassIcon className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
-              <h2 className="text-2xl font-semibold mb-3">
-                Start Your Search
-              </h2>
+              <h2 className="text-2xl font-semibold mb-3">Start Your Search</h2>
               <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
                 Enter a movie title, TV show, or person&apos;s name to discover
                 your next favorite entertainment

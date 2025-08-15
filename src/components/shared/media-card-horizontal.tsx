@@ -54,10 +54,12 @@ export function MediaCardHorizontal({
 
       {/* Content */}
       <div className="flex-1 space-y-1 min-w-0">
-        <h4 className={cn(
-          "text-sm font-medium truncate",
-          showCard ? "hover:text-primary" : "group-hover:text-primary"
-        )}>
+        <h4
+          className={cn(
+            "text-sm font-medium truncate",
+            showCard ? "hover:text-primary" : "group-hover:text-primary",
+          )}
+        >
           {title}
         </h4>
         {character && (
@@ -77,9 +79,7 @@ export function MediaCardHorizontal({
   if (showCard) {
     return (
       <Link href={`/${mediaType}/${item.id}`} className={className}>
-        <Card className="flex space-x-3 p-3">
-          {content}
-        </Card>
+        <Card className="flex space-x-3 p-3">{content}</Card>
       </Link>
     );
   }

@@ -4,7 +4,8 @@ import { MediaSection } from "@/components/shared/media-section";
 import { fetchFeaturedTVShows } from "@/lib/data-fetching";
 
 export default async function TVPage() {
-  const { onTheAir, popular, topRated, featured } = await fetchFeaturedTVShows();
+  const { onTheAir, popular, topRated, featured } =
+    await fetchFeaturedTVShows();
 
   return (
     <div className="min-h-screen">

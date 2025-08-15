@@ -16,9 +16,7 @@ export default function AboutPage() {
                 className="object-contain"
               />
             </div>
-            <h1 className="text-4xl font-bold">
-              FilmFatale
-            </h1>
+            <h1 className="text-4xl font-bold">FilmFatale</h1>
           </div>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Your ultimate destination for movie and TV show discovery
@@ -27,9 +25,7 @@ export default function AboutPage() {
 
         <div className="space-y-6">
           <section>
-            <h2 className="text-2xl font-semibold mb-4">
-              What is FilmFatale?
-            </h2>
+            <h2 className="text-2xl font-semibold mb-4">What is FilmFatale?</h2>
             <p className="text-muted-foreground leading-relaxed">
               FilmFatale is a comprehensive movie and TV show discovery platform
               designed to help you find your next favorite watch. Whether
@@ -40,9 +36,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4">
-              Features
-            </h2>
+            <h2 className="text-2xl font-semibold mb-4">Features</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <h3 className="font-semibold">Discover Content</h3>
@@ -75,9 +69,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4">
-              Our Mission
-            </h2>
+            <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
             <p className="text-muted-foreground leading-relaxed">
               We believe that everyone deserves to find great entertainment that
               resonates with them. FilmFatale aims to make movie and TV show
@@ -87,9 +79,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4">
-              Powered by TMDB
-            </h2>
+            <h2 className="text-2xl font-semibold mb-4">Powered by TMDB</h2>
             <p className="text-muted-foreground leading-relaxed">
               All our movie and TV show data is sourced from{" "}
               <Link
@@ -106,9 +96,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold mb-4">
-              Get Started
-            </h2>
+            <h2 className="text-2xl font-semibold mb-4">Get Started</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Ready to discover your next favorite movie or TV show? Start
               exploring our vast collection of entertainment content, create

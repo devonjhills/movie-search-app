@@ -42,7 +42,10 @@ interface MediaSectionProps {
   showOverview?: boolean;
 }
 
-const badgeIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+const badgeIcons: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   "In Theaters": VideoIcon,
   "Playing Now": VideoIcon,
   "Critics' Choice": StarFilledIcon,
@@ -72,9 +75,7 @@ export function MediaSection({
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h2 className="text-2xl sm:text-3xl font-bold">
-            {title}
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-bold">{title}</h2>
 
           {/* Badges */}
           {showTrending && (
@@ -86,9 +87,10 @@ export function MediaSection({
 
           {badge && (
             <Badge variant="secondary" className="gap-1">
-              {badgeIcons[badge] && (
-                React.createElement(badgeIcons[badge], { className: "h-4 w-4" })
-              )}
+              {badgeIcons[badge] &&
+                React.createElement(badgeIcons[badge], {
+                  className: "h-4 w-4",
+                })}
               {badge}
             </Badge>
           )}

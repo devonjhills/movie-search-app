@@ -16,7 +16,7 @@ export function usePaginatedData(): PaginationData {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pageParam = searchParams.get("page");
-  
+
   const [currentPage, setCurrentPage] = useState(
     pageParam ? parseInt(pageParam, 10) : 1,
   );

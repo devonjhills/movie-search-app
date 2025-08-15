@@ -1,9 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  StarFilledIcon,
-  DrawingPinFilledIcon,
-} from "@radix-ui/react-icons";
+import { StarFilledIcon, DrawingPinFilledIcon } from "@radix-ui/react-icons";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
@@ -37,9 +34,7 @@ export function FeaturedSection({
     <section className={cn("space-y-6", className)}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h2 className="text-2xl md:text-3xl font-bold">
-            {title}
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
           {showTrending && (
             <Badge variant="secondary" className="gap-1">
               <DrawingPinFilledIcon className="h-3 w-3" />
@@ -83,9 +78,9 @@ export function FeaturedSection({
                     <span className="text-sm">No Image</span>
                   </div>
                 )}
-                
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                
+
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <h3 className="text-lg font-semibold text-white mb-2">
                     {title}

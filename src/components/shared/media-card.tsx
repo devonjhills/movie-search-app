@@ -45,7 +45,7 @@ export function MediaCard({
 
   const sizeClasses = {
     sm: "w-full",
-    md: "w-full", 
+    md: "w-full",
     lg: "w-full",
   };
 
@@ -96,10 +96,9 @@ export function MediaCard({
 
           {showOverview && item.overview && (
             <p className="text-xs text-muted-foreground line-clamp-3">
-              {item.overview.length > 120 
+              {item.overview.length > 120
                 ? item.overview.substring(0, 120) + "..."
-                : item.overview
-              }
+                : item.overview}
             </p>
           )}
         </div>

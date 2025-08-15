@@ -136,9 +136,7 @@ export default function MyLibraryPage() {
           </div>
 
           <div className="text-center space-y-3">
-            <h1 className="text-3xl md:text-4xl font-bold">
-              My Library
-            </h1>
+            <h1 className="text-3xl md:text-4xl font-bold">My Library</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Track your viewing progress, rate movies and shows, and manage
               your personal collection

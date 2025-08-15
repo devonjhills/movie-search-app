@@ -45,9 +45,13 @@ export function CategoryPageTemplate({
   breadcrumbParent = "Home",
   breadcrumbParentHref = "/",
   useDataHook,
-}: Omit<CategoryPageTemplateProps, 'data' | 'isLoading' | 'error' | 'totalPages' | 'totalResults'>) {
+}: Omit<
+  CategoryPageTemplateProps,
+  "data" | "isLoading" | "error" | "totalPages" | "totalResults"
+>) {
   const { currentPage, handlePageChange } = usePaginatedData();
-  const { data, isLoading, isError, totalPages, totalResults } = useDataHook(currentPage);
+  const { data, isLoading, isError, totalPages, totalResults } =
+    useDataHook(currentPage);
 
   return (
     <div className="min-h-screen">

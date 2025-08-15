@@ -52,17 +52,8 @@ export function ExternalLinks({
       {links.map((link) => {
         const IconComponent = link.icon;
         return (
-          <Button
-            key={link.name}
-            asChild
-            variant="outline"
-            size="sm"
-          >
-            <a
-              href={link.url!}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          <Button key={link.name} asChild variant="outline" size="sm">
+            <a href={link.url!} target="_blank" rel="noopener noreferrer">
               <IconComponent className="h-4 w-4 mr-2" />
               {link.name}
             </a>
