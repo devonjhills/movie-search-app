@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   StarFilledIcon,
-  CalendarIcon,
   InfoCircledIcon,
   PlayIcon,
   ChevronLeftIcon,
@@ -33,9 +32,7 @@ export function RotatingHeroSection({
   rotateInterval = 8000,
 }: RotatingHeroSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Remove duplicates and show up to 5 unique featured items
   const featuredItems = items
     .filter(
       (item, index, arr) => arr.findIndex((i) => i.id === item.id) === index,
@@ -44,57 +41,21 @@ export function RotatingHeroSection({
   const currentItem = featuredItems[currentIndex];
 
   const handleNext = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev + 1) % featuredItems.length);
+  }, [featuredItems.length]);
 
-    // Use requestAnimationFrame for smoother transitions
-    requestAnimationFrame(() => {
-      const newIndex = (currentIndex + 1) % featuredItems.length;
-      setCurrentIndex(newIndex);
-
-      // Reset transition state after animation completes
-      setTimeout(() => setIsTransitioning(false), 400);
-    });
-  }, [isTransitioning, currentIndex, featuredItems.length]);
+  const handlePrevious = () => {
+    setCurrentIndex(
+      (prev) => (prev - 1 + featuredItems.length) % featuredItems.length,
+    );
+  };
 
   useEffect(() => {
     if (!autoRotate || featuredItems.length <= 1) return;
 
-    const interval = setInterval(() => {
-      handleNext();
-    }, rotateInterval);
-
+    const interval = setInterval(handleNext, rotateInterval);
     return () => clearInterval(interval);
-  }, [
-    currentIndex,
-    autoRotate,
-    rotateInterval,
-    featuredItems.length,
-    handleNext,
-  ]);
-
-  const handlePrevious = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-
-    requestAnimationFrame(() => {
-      const newIndex =
-        (currentIndex - 1 + featuredItems.length) % featuredItems.length;
-      setCurrentIndex(newIndex);
-
-      setTimeout(() => setIsTransitioning(false), 400);
-    });
-  };
-
-  const handleDotClick = (index: number) => {
-    if (isTransitioning || index === currentIndex) return;
-    setIsTransitioning(true);
-
-    requestAnimationFrame(() => {
-      setCurrentIndex(index);
-      setTimeout(() => setIsTransitioning(false), 400);
-    });
-  };
+  }, [autoRotate, rotateInterval, featuredItems.length, handleNext]);
 
   if (!currentItem) return null;
 
@@ -109,222 +70,142 @@ export function RotatingHeroSection({
         : null;
 
   return (
-    <section
-      className={cn(
-        "relative overflow-hidden h-[450px] sm:h-[500px] md:h-[550px] border-b border-border/30 smoke-effect",
-        className,
-      )}
-    >
-      {/* Background Images with smooth crossfade */}
-      <div className="absolute inset-0 w-full h-full">
+    <div className={cn("relative h-96 md:h-[500px] overflow-hidden", className)}>
         {featuredItems.map((item, index) => {
           const backdropUrl = item.backdrop_path
             ? getImageUrl(item.backdrop_path, "backdrop", "w1280")
-            : item.poster_path
-              ? getImageUrl(item.poster_path, "poster", "w780")
-              : null;
+            : null;
 
           const itemTitle =
             "title" in item ? item.title : "name" in item ? item.name : "";
 
           return backdropUrl ? (
             <Image
-              key={`backdrop-${index}`}
+              key={item.id}
               src={backdropUrl}
               alt={itemTitle}
               fill
               className={cn(
-                "object-cover transition-opacity duration-700 ease-out",
+                "object-cover transition-opacity duration-500",
                 index === currentIndex ? "opacity-100" : "opacity-0",
               )}
-              style={{ objectPosition: "center 25%" }}
               priority={index === 0}
-              sizes="100vw"
             />
           ) : (
             <div
-              key={`gradient-${index}`}
+              key={item.id}
               className={cn(
-                "h-full w-full bg-gradient-to-br from-primary/20 to-primary/5 transition-opacity duration-700 ease-out",
+                "absolute inset-0 bg-muted transition-opacity duration-500",
                 index === currentIndex ? "opacity-100" : "opacity-0",
               )}
             />
           );
         })}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
 
-        {/* Enhanced hero backdrop */}
-        <div className="absolute inset-0 hero-backdrop" />
-      </div>
+        {featuredItems.length > 1 && (
+          <>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
+              onClick={handlePrevious}
+            >
+              <ChevronLeftIcon className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
+              onClick={handleNext}
+            >
+              <ChevronRightIcon className="h-4 w-4" />
+            </Button>
+          </>
+        )}
 
-      {/* Navigation Controls */}
-      {featuredItems.length > 1 && (
-        <>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 backdrop-blur-md hover:bg-background/90 border border-border/40 shadow-lg transition-all duration-200"
-            onClick={handlePrevious}
-            disabled={isTransitioning}
-          >
-            <ChevronLeftIcon className="h-6 w-6 text-foreground" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 backdrop-blur-md hover:bg-background/90 border border-border/40 shadow-lg transition-all duration-200"
-            onClick={handleNext}
-            disabled={isTransitioning}
-          >
-            <ChevronRightIcon className="h-6 w-6 text-foreground" />
-          </Button>
-        </>
-      )}
-
-      {/* Content */}
-      <div className="relative h-full flex items-start sm:items-center py-6 sm:py-8 justify-center">
-        <div className="px-4 w-full max-w-7xl">
-          {/* Glass backdrop container */}
-          <div className="bg-background/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 border border-border/10 shadow-2xl relative overflow-hidden">
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start sm:items-center">
-              {/* Poster */}
-              <div className="col-span-1 sm:col-span-1 lg:col-span-2">
-                <div className="relative aspect-[2/3] w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] overflow-hidden rounded-lg">
-                  {featuredItems.map((item, index) => {
-                    const itemPosterUrl = getImageUrl(
-                      item.poster_path,
-                      "poster",
-                      "w185",
-                    );
-                    const itemTitle =
-                      "title" in item
-                        ? item.title
-                        : "name" in item
-                          ? item.name
-                          : "";
-
-                    return (
-                      <div
-                        key={`poster-${index}`}
-                        className={cn(
-                          "absolute inset-0 transition-all duration-500 ease-out",
-                          index === currentIndex
-                            ? "opacity-100 scale-100"
-                            : "opacity-0 scale-105",
-                        )}
-                      >
-                        {itemPosterUrl ? (
-                          <Image
-                            src={itemPosterUrl}
-                            alt={itemTitle}
-                            fill
-                            className="object-cover shadow-2xl"
-                            sizes="(max-width: 640px) 120px, (max-width: 768px) 150px, (max-width: 1024px) 200px, 300px"
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
-                            <span className="text-xs">No Image</span>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Content Details */}
-              <div className="col-span-2 sm:col-span-3 lg:col-span-10 space-y-3 sm:space-y-4 text-foreground relative z-10">
-                {/* Title */}
-                <div className="relative min-h-[3.5rem] sm:min-h-[4.5rem] md:min-h-[6rem] mb-4">
-                  {featuredItems.map((item, index) => {
-                    const itemTitle =
-                      "title" in item
-                        ? item.title
-                        : "name" in item
-                          ? item.name
-                          : "";
-
-                    return (
-                      <h1
-                        key={`title-${index}`}
-                        className={cn(
-                          "absolute top-0 left-0 right-0 font-serif text-lg sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-normal drop-shadow-lg text-glow transition-all duration-500 ease-out whitespace-nowrap overflow-hidden text-ellipsis py-1",
-                          index === currentIndex
-                            ? "opacity-100 transform-none"
-                            : "opacity-0 translate-y-4",
-                        )}
-                      >
-                        {itemTitle}
-                      </h1>
-                    );
-                  })}
-                </div>
-
-                {/* Rating and Date */}
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                  {currentItem.vote_average > 0 && (
-                    <Badge
-                      variant="accent"
-                      className="gap-1 text-xs sm:text-sm"
-                    >
-                      <StarFilledIcon className="h-3 w-3 sm:h-4 sm:w-4" />
-                      <span>{rating}</span>
-                    </Badge>
-                  )}
-                  {releaseDate && (
-                    <div className="flex items-center gap-1.5 text-foreground/80">
-                      <CalendarIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className="font-medium text-sm sm:text-base md:text-lg drop-shadow-md">
-                        {new Date(releaseDate).getFullYear()}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Overview */}
-                {currentItem.overview && (
-                  <p className="text-sm sm:text-base md:text-lg leading-relaxed text-foreground/90 w-full drop-shadow-md line-clamp-3">
-                    {currentItem.overview}
-                  </p>
+        <div className="absolute inset-0 flex items-center justify-center p-12 z-10">
+          <div className="container mx-auto">
+            <div className="bg-background/60 backdrop-blur-sm rounded-lg p-8 border border-border/50 max-w-5xl mx-auto">
+              <div className="flex items-center gap-8">
+                {currentItem.poster_path ? (
+                  <div className="w-36 md:w-48 aspect-[2/3] relative rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+                    <Image
+                      src={getImageUrl(currentItem.poster_path, "poster", "w342")}
+                      alt={"title" in currentItem ? currentItem.title : currentItem.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-36 md:w-48 aspect-[2/3] bg-muted/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    {mediaType === "movie" ? (
+                      <InfoCircledIcon className="h-16 w-16 text-muted-foreground" />
+                    ) : (
+                      <PlayIcon className="h-16 w-16 text-muted-foreground" />
+                    )}
+                  </div>
                 )}
-
-                {/* Enhanced Action Buttons */}
-                <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3">
-                  <Button asChild size="lg">
-                    <Link href={`/${mediaType}/${currentItem.id}`}>
-                      <InfoCircledIcon className="h-4 w-4" />
-                      View Details
-                    </Link>
-                  </Button>
-
-                  <Button variant="outline" size="lg">
-                    <PlayIcon className="h-4 w-4" />
-                    Watch Trailer
-                  </Button>
+                
+                <div className="flex-1 space-y-4">
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                    {"title" in currentItem ? currentItem.title : currentItem.name}
+                  </h1>
+                  
+                  <div className="flex flex-wrap items-center gap-3">
+                    {currentItem.vote_average > 0 && (
+                      <Badge variant="secondary" className="gap-1">
+                        <StarFilledIcon className="h-4 w-4" />
+                        {rating}
+                      </Badge>
+                    )}
+                    {releaseDate && (
+                      <Badge variant="outline">
+                        {new Date(releaseDate).getFullYear()}
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  {currentItem.overview && (
+                    <p className="text-base md:text-lg leading-relaxed line-clamp-3 max-w-3xl">
+                      {currentItem.overview}
+                    </p>
+                  )}
+                  
+                  <div className="flex flex-wrap gap-3">
+                    <Button asChild>
+                      <Link href={`/${mediaType}/${currentItem.id}`}>
+                        <InfoCircledIcon className="h-4 w-4 mr-2" />
+                        View Details
+                      </Link>
+                    </Button>
+                    <Button variant="outline">
+                      <PlayIcon className="h-4 w-4 mr-2" />
+                      Trailer
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Dots Indicator - Fixed position to avoid overlap */}
-      {featuredItems.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-2 bg-background/20 backdrop-blur-sm rounded-full px-4 py-2 border border-border/20">
-          {featuredItems.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleDotClick(index)}
-              className={cn(
-                "w-2 h-2 rounded-full transition-all duration-300",
-                index === currentIndex
-                  ? "bg-primary w-8"
-                  : "bg-foreground/40 hover:bg-foreground/60",
-              )}
-              disabled={isTransitioning}
-            />
-          ))}
-        </div>
-      )}
-    </section>
+        {featuredItems.length > 1 && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+            {featuredItems.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-all duration-200",
+                  index === currentIndex
+                    ? "bg-primary w-6"
+                    : "bg-foreground/40 hover:bg-foreground/60",
+                )}
+              />
+            ))}
+          </div>
+        )}
+    </div>
   );
 }

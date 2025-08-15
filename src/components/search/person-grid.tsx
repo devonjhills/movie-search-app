@@ -14,8 +14,8 @@ interface PersonCardProps {
 
 function PersonCardSkeleton() {
   return (
-    <Card className="overflow-hidden transition-all duration-200 hover:shadow-lg bg-card/50 backdrop-blur-sm border border-border/50">
-      <CardContent className="p-3 space-y-3">
+    <Card className="overflow-hidden">
+      <CardContent className="p-2 space-y-2">
         {/* Profile Image Skeleton */}
         <div className="relative aspect-[3/4] overflow-hidden rounded-md">
           <Skeleton className="h-full w-full" />
@@ -45,55 +45,48 @@ function PersonCard({ person, className }: PersonCardProps) {
     : null;
 
   return (
-    <Link href={`/person/${person.id}`} className="group">
-      <Card
-        className={cn(
-          "overflow-hidden transition-all duration-200 hover:shadow-lg",
-          "bg-card/50 backdrop-blur-sm border border-border/50 hover:border-border",
-          "hover:-translate-y-1",
-          className,
-        )}
-      >
-        <CardContent className="p-3 space-y-3">
-          {/* Profile Image */}
-          <div className="relative aspect-[3/4] overflow-hidden rounded-md">
+    <Card className={cn("overflow-hidden hover:shadow-lg transition-shadow", className)}>
+      <CardContent className="p-2 space-y-2">
+        {/* Profile Image - Clickable */}
+        <Link href={`/person/${person.id}`} className="group">
+          <div className="relative aspect-[3/4] overflow-hidden rounded-md cursor-pointer">
             {profileUrl ? (
               <Image
                 src={profileUrl}
                 alt={person.name}
                 fill
-                className="object-cover transition-transform duration-200 group-hover:scale-105"
+                className="object-cover"
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-muted/50 text-muted-foreground border border-border/30 rounded-md">
+              <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground border rounded-md">
                 <PersonIcon className="h-8 w-8" />
               </div>
             )}
           </div>
+        </Link>
 
-          {/* Person Info */}
-          <div className="space-y-1.5">
-            <h3 className="text-sm font-medium leading-tight line-clamp-2 group-hover:text-primary transition-colors">
-              {person.name}
-            </h3>
+        {/* Person Info - Not Clickable */}
+        <div className="space-y-1.5">
+          <h3 className="text-sm font-medium leading-tight line-clamp-2">
+            {person.name}
+          </h3>
 
-            {person.known_for_department && (
-              <p className="text-xs text-muted-foreground font-medium">
-                {person.known_for_department}
-              </p>
-            )}
+          {person.known_for_department && (
+            <p className="text-xs text-muted-foreground font-medium">
+              {person.known_for_department}
+            </p>
+          )}
 
-            {/* Top Known For */}
-            {knownForTitle && (
-              <p className="text-xs text-muted-foreground line-clamp-1">
-                {knownForTitle}
-              </p>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
+          {/* Top Known For */}
+          {knownForTitle && (
+            <p className="text-xs text-muted-foreground line-clamp-1">
+              {knownForTitle}
+            </p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -127,8 +120,7 @@ export function PersonGrid({
     return (
       <div
         className={cn(
-          "grid gap-3 sm:gap-4 lg:gap-5",
-          "grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8",
+          "grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
           className,
         )}
       >
@@ -152,8 +144,7 @@ export function PersonGrid({
   return (
     <div
       className={cn(
-        "grid gap-3 sm:gap-4 lg:gap-5",
-        "grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8",
+        "grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
         className,
       )}
     >

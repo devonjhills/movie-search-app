@@ -5,6 +5,7 @@ import { ViewingHistoryCard } from "./viewing-history-card";
 import { Badge } from "@/components/ui/badge";
 import { ClockIcon, PlayIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface CurrentlyWatchingSectionProps {
   items: ViewingHistoryItem[];
@@ -25,14 +26,14 @@ export function CurrentlyWatchingSection({
     return (
       <div className="space-y-6">
         <div className="space-y-3">
-          <h2 className="text-xl font-serif font-semibold flex items-center gap-2">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
             <ClockIcon className="h-5 w-5" />
             Currently Watching
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="flex gap-4 p-4 bg-muted/50 rounded-lg">
+              <Card key={i} className="animate-pulse">
+                <div className="flex gap-4 p-4">
                   <div className="bg-muted rounded-md w-16 sm:w-20 aspect-[2/3] flex-shrink-0"></div>
                   <div className="flex-1 space-y-2">
                     <div className="bg-muted h-4 rounded w-3/4"></div>
@@ -40,7 +41,7 @@ export function CurrentlyWatchingSection({
                     <div className="bg-muted h-3 rounded w-2/3"></div>
                   </div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         </div>
@@ -50,39 +51,31 @@ export function CurrentlyWatchingSection({
 
   if (watchingItems.length === 0) {
     return (
-      <div className="bg-gradient-to-br from-muted/50 to-background/95 backdrop-blur-sm border border-border rounded-xl p-12 text-center shadow-sm">
+      <Card className="p-12 text-center">
         <div className="max-w-md mx-auto space-y-6">
           <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
             <PlayIcon className="h-10 w-10 text-primary" />
           </div>
           <div className="space-y-3">
-            <h3 className="text-xl font-serif font-semibold">
+            <h3 className="text-xl font-semibold">
               Start Your Viewing Journey
             </h3>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground">
               Begin tracking your movie and TV show progress. Add items to your
               library and mark them as &quot;Currently Watching&quot; to see
               them here.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              variant="default"
-              asChild
-              className="bg-primary/95 backdrop-blur-sm hover:bg-primary"
-            >
+            <Button variant="default" asChild>
               <a href="/search">Discover Movies & Shows</a>
             </Button>
-            <Button
-              variant="outline"
-              onClick={onRefresh}
-              className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background"
-            >
+            <Button variant="outline" onClick={onRefresh}>
               Refresh Library
             </Button>
           </div>
         </div>
-      </div>
+      </Card>
     );
   }
 
@@ -91,16 +84,11 @@ export function CurrentlyWatchingSection({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="bg-background/90 backdrop-blur-sm rounded-lg px-4 py-2 border border-border/50 shadow-sm">
-            <h2 className="text-2xl font-serif font-bold flex items-center gap-3">
-              <ClockIcon className="h-6 w-6 text-primary" />
-              Currently Watching
-            </h2>
-          </div>
-          <Badge
-            variant="secondary"
-            className="px-3 py-1 bg-secondary/90 backdrop-blur-sm border border-border/30"
-          >
+          <h2 className="text-2xl font-bold flex items-center gap-3">
+            <ClockIcon className="h-6 w-6 text-primary" />
+            Currently Watching
+          </h2>
+          <Badge variant="secondary" className="px-3 py-1">
             {watchingItems.length}{" "}
             {watchingItems.length === 1 ? "item" : "items"}
           </Badge>
@@ -113,18 +101,11 @@ export function CurrentlyWatchingSection({
       {/* TV Shows with Episode Progress */}
       {tvShows.length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="bg-background/85 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-border/40 shadow-sm">
-              <h3 className="text-lg font-serif font-semibold flex items-center gap-2">
-                TV Shows
-                <Badge
-                  variant="outline"
-                  className="text-xs bg-background/90 backdrop-blur-sm border-border/50"
-                >
-                  {tvShows.length}
-                </Badge>
-              </h3>
-            </div>
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg font-semibold">TV Shows</h3>
+            <Badge variant="outline" className="text-xs">
+              {tvShows.length}
+            </Badge>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {tvShows.map((item) => (
@@ -141,16 +122,11 @@ export function CurrentlyWatchingSection({
       {/* Movies */}
       {movies.length > 0 && (
         <div className="space-y-4">
-          <div className="bg-background/85 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-border/40 shadow-sm inline-block">
-            <h3 className="text-lg font-serif font-semibold flex items-center gap-2">
-              Movies
-              <Badge
-                variant="outline"
-                className="text-xs bg-background/90 backdrop-blur-sm border-border/50"
-              >
-                {movies.length}
-              </Badge>
-            </h3>
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg font-semibold">Movies</h3>
+            <Badge variant="outline" className="text-xs">
+              {movies.length}
+            </Badge>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {movies.map((item) => (

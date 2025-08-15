@@ -21,14 +21,11 @@ export function ViewAllButton({
       asChild
       variant={variant}
       size={size}
-      className={cn(
-        "gap-1.5 font-medium transition-all duration-200 hover:gap-2 group",
-        className,
-      )}
+      className={cn("gap-2", className)}
     >
       <Link href={href}>
         <span>View All</span>
-        <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+        <ArrowRightIcon className="h-4 w-4" />
       </Link>
     </Button>
   );

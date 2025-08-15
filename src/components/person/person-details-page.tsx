@@ -93,7 +93,7 @@ function PersonDetailsSkeleton() {
                   <Skeleton className="h-5 w-5" />
                   <Skeleton className="h-6 w-32" />
                 </div>
-                <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                   {Array.from({ length: 12 }).map((_, i) => (
                     <div
                       key={i}
@@ -124,7 +124,7 @@ function PersonDetailsSkeleton() {
                   <Skeleton className="h-5 w-5" />
                   <Skeleton className="h-6 w-32" />
                 </div>
-                <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                   {Array.from({ length: 12 }).map((_, i) => (
                     <div
                       key={i}
@@ -449,7 +449,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             {/* Name and Basic Info */}
             <div className="space-y-4">
               <div className="space-y-2">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
                   {person.name}
                 </h1>
               </div>

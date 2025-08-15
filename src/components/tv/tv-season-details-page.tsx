@@ -52,78 +52,84 @@ function SeasonDetailsSkeleton() {
       {/* Content Skeleton */}
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Season Overview Card */}
-        <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Skeleton className="h-5 w-5" />
-              <Skeleton className="h-6 w-32" />
+        <Card>
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-6 w-32" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-6 w-full" />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="space-y-2">
-                  <Skeleton className="h-4 w-20" />
-                  <Skeleton className="h-6 w-full" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Episodes List Card */}
-        <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
-          <div className="space-y-6">
-            <div className="flex items-center gap-2">
-              <Skeleton className="h-5 w-5" />
-              <Skeleton className="h-6 w-20" />
-            </div>
-            <div className="space-y-4">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="flex gap-4 p-4 border border-border/20 rounded-lg"
-                >
-                  <Skeleton className="aspect-video w-32 rounded-lg flex-shrink-0" />
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Skeleton className="h-5 w-16" />
-                      <Skeleton className="h-5 w-48" />
-                    </div>
-                    <Skeleton className="h-4 w-20" />
-                    <Skeleton className="h-12 w-full" />
-                    <div className="flex gap-2">
-                      <Skeleton className="h-4 w-16" />
-                      <Skeleton className="h-4 w-12" />
+        <Card>
+          <CardContent className="p-6">
+            <div className="space-y-6">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-6 w-20" />
+              </div>
+              <div className="space-y-4">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex gap-4 p-4 border rounded-lg"
+                  >
+                    <Skeleton className="aspect-video w-32 rounded-lg flex-shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Skeleton className="h-5 w-16" />
+                        <Skeleton className="h-5 w-48" />
+                      </div>
+                      <Skeleton className="h-4 w-20" />
+                      <Skeleton className="h-12 w-full" />
+                      <div className="flex gap-2">
+                        <Skeleton className="h-4 w-16" />
+                        <Skeleton className="h-4 w-12" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Cast Section Card */}
-        <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl p-6">
-          <div className="space-y-6">
-            <div className="flex items-center gap-2">
-              <Skeleton className="h-5 w-5" />
-              <Skeleton className="h-6 w-16" />
-            </div>
-            <div className="space-y-4">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="flex items-center space-x-3 p-3 rounded-lg"
-                >
-                  <Skeleton className="h-20 w-20 rounded-full flex-shrink-0" />
-                  <div className="min-w-0 flex-1 space-y-1">
-                    <Skeleton className="h-5 w-32" />
-                    <Skeleton className="h-4 w-24" />
+        <Card>
+          <CardContent className="p-6">
+            <div className="space-y-6">
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5" />
+                <Skeleton className="h-6 w-16" />
+              </div>
+              <div className="space-y-4">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center space-x-3 p-3 rounded-lg"
+                  >
+                    <Skeleton className="h-20 w-20 rounded-full flex-shrink-0" />
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <Skeleton className="h-5 w-32" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
@@ -171,85 +177,79 @@ export function TVSeasonDetailsPage({
 
   return (
     <div className="min-h-screen">
-      {/* Header Section */}
-      <div className="relative bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-b border-border">
-        <div className="container mx-auto px-12 py-4">
-          <div className="flex items-start gap-6">
-            {/* Season Poster */}
-            <div className="relative aspect-[2/3] w-28 flex-shrink-0">
-              {season.poster_path ? (
-                <Image
-                  src={getImageUrl(season.poster_path, "poster", "w185")}
-                  alt={season.name}
-                  fill
-                  className="object-cover rounded-lg shadow-lg"
-                  sizes="112px"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-muted rounded-lg">
-                  <VideoIcon className="h-8 w-8 text-muted-foreground" />
-                </div>
-              )}
-            </div>
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8 space-y-8">
+        {/* Navigation */}
+        <div className="flex items-center justify-between gap-4">
+          <Button variant="outline" size="sm" asChild>
+            <Link href={`/tv/${tvId}`} className="flex items-center gap-2">
+              <ArrowLeftIcon className="h-4 w-4" />
+              Back to {tvShow?.name || "TV Show"}
+            </Link>
+          </Button>
+        </div>
 
-            {/* Season Info */}
-            <div className="flex-1 space-y-4">
-              <div>
-                <h1 className="text-3xl font-bold leading-tight mb-3">
-                  {season.name}
-                </h1>
-                <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
-                  {season.vote_average > 0 && (
-                    <div className="flex items-center gap-1">
-                      <StarFilledIcon className="h-4 w-4 text-yellow-500" />
-                      <span className="font-semibold">{rating}</span>
-                    </div>
-                  )}
-                  {airDate && (
-                    <div className="flex items-center gap-1">
-                      <CalendarIcon className="h-4 w-4" />
-                      <span>{airDate}</span>
-                    </div>
-                  )}
-                  {season.episodes && season.episodes.length > 0 && (
-                    <span>
-                      {season.episodes.length} episode
-                      {season.episodes.length !== 1 ? "s" : ""}
-                    </span>
-                  )}
-                </div>
+        {/* Season Header */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row gap-6">
+              {/* Season Poster */}
+              <div className="relative aspect-[2/3] w-32 md:w-40 mx-auto md:mx-0 flex-shrink-0">
+                {season.poster_path ? (
+                  <Image
+                    src={getImageUrl(season.poster_path, "poster", "w185")}
+                    alt={season.name}
+                    fill
+                    className="object-cover rounded-lg"
+                    sizes="160px"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-muted rounded-lg">
+                    <VideoIcon className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                )}
               </div>
 
-              {season.overview && (
-                <p className="text-base leading-relaxed text-foreground/90 max-w-3xl">
-                  {season.overview}
-                </p>
-              )}
+              {/* Season Info */}
+              <div className="flex-1 space-y-4 text-center md:text-left">
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-bold mb-3">
+                    {season.name}
+                  </h1>
+                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-muted-foreground">
+                    {season.vote_average > 0 && (
+                      <div className="flex items-center gap-1">
+                        <StarFilledIcon className="h-4 w-4" />
+                        <span>{rating}</span>
+                      </div>
+                    )}
+                    {airDate && (
+                      <div className="flex items-center gap-1">
+                        <CalendarIcon className="h-4 w-4" />
+                        <span>{airDate}</span>
+                      </div>
+                    )}
+                    {season.episodes && season.episodes.length > 0 && (
+                      <span>
+                        {season.episodes.length} episode
+                        {season.episodes.length !== 1 ? "s" : ""}
+                      </span>
+                    )}
+                  </div>
+                </div>
 
-              <Button
-                variant="outline"
-                size="sm"
-                asChild
-                className="mt-4 -ml-2"
-              >
-                <Link
-                  href={`/tv/${tvId}`}
-                  className="inline-flex items-center gap-2"
-                >
-                  <ArrowLeftIcon className="h-4 w-4" />
-                  <span>Back to {tvShow?.name || "TV Show"}</span>
-                </Link>
-              </Button>
+                {season.overview && (
+                  <p className="text-base text-muted-foreground">
+                    {season.overview}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content - Aligned with header */}
-      <div className="container mx-auto px-6 py-8 space-y-8">
+          </CardContent>
+        </Card>
         {/* Episodes */}
         {season.episodes && season.episodes.length > 0 && (
-          <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+          <Card>
             <CardHeader>
               <CardTitle>Episodes</CardTitle>
             </CardHeader>
@@ -258,10 +258,10 @@ export function TVSeasonDetailsPage({
                 {season.episodes.map((episode) => (
                   <div
                     key={episode.id}
-                    className="flex space-x-4 p-5 rounded-xl bg-gradient-to-r from-background to-muted/30 border border-border/50 hover:border-border transition-all duration-300 hover:shadow-lg hover:shadow-primary/5"
+                    className="flex gap-4 p-4 border rounded-lg hover:shadow-lg transition-shadow"
                   >
                     {/* Episode Still */}
-                    <div className="relative w-32 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-muted shadow-md">
+                    <div className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden bg-muted">
                       {episode.still_path ? (
                         <Image
                           src={getImageUrl(
@@ -272,7 +272,7 @@ export function TVSeasonDetailsPage({
                           alt={episode.name}
                           fill
                           className="object-cover"
-                          sizes="128px"
+                          sizes="96px"
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center">
@@ -282,20 +282,20 @@ export function TVSeasonDetailsPage({
                     </div>
 
                     {/* Episode Info */}
-                    <div className="flex-1 space-y-3 min-w-0">
+                    <div className="flex-1 space-y-2">
                       <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-lg text-foreground mb-1">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-base">
                             {episode.episode_number}. {episode.name}
                           </h3>
                           <p className="text-sm text-muted-foreground">
                             {episode.air_date && formatDate(episode.air_date)}
                           </p>
                         </div>
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground flex-shrink-0">
+                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
                           {episode.vote_average > 0 && (
                             <div className="flex items-center gap-1">
-                              <StarFilledIcon className="h-3 w-3 text-yellow-500" />
+                              <StarFilledIcon className="h-3 w-3" />
                               <span>
                                 {formatVoteAverage(episode.vote_average)}
                               </span>
@@ -311,7 +311,7 @@ export function TVSeasonDetailsPage({
                       </div>
 
                       {episode.overview && (
-                        <p className="text-sm text-foreground/80 line-clamp-2 leading-relaxed">
+                        <p className="text-sm text-muted-foreground">
                           {episode.overview}
                         </p>
                       )}
@@ -325,7 +325,7 @@ export function TVSeasonDetailsPage({
 
         {/* Season Cast */}
         {seasonCast.length > 0 && (
-          <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+          <Card>
             <CardHeader>
               <CardTitle>Season Cast</CardTitle>
             </CardHeader>
@@ -346,7 +346,7 @@ export function TVSeasonDetailsPage({
 
         {/* Season Crew */}
         {seasonCrew.length > 0 && (
-          <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+          <Card>
             <CardHeader>
               <CardTitle>Season Crew</CardTitle>
             </CardHeader>

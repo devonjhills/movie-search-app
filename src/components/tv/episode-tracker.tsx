@@ -10,7 +10,6 @@ import {
   CheckIcon,
   CircleIcon,
   PlayIcon,
-  ChevronRightIcon,
   ClockIcon,
   BookmarkIcon,
 } from "@radix-ui/react-icons";
@@ -161,26 +160,21 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
   );
 
   return (
-    <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+    <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-display-sm flex items-center gap-3">
+          <CardTitle className="flex items-center gap-2">
             <ClockIcon className="h-5 w-5" />
             Episode Tracker
             {progress?.next_episode && (
-              <Badge variant="secondary" className="gap-1.5">
-                <PlayIcon className="h-3 w-3" />
+              <Badge variant="secondary">
+                <PlayIcon className="h-3 w-3 mr-1" />
                 Next: S{progress.next_episode.season_number}E
                 {progress.next_episode.episode_number}
               </Badge>
             )}
           </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            asChild
-            className="text-muted-foreground hover:text-primary"
-          >
+          <Button variant="ghost" size="sm" asChild>
             <Link href="/library?tab=watching">
               <BookmarkIcon className="h-4 w-4 mr-1" />
               My Library
@@ -192,14 +186,14 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
           <div className="space-y-3">
             <div className="flex justify-between text-sm font-medium">
               <span className="text-muted-foreground">Overall Progress</span>
-              <span className="text-primary font-semibold">
+              <span>
                 {progress.watched_episodes}/{progress.total_episodes} episodes (
                 {Math.round(progress.completion_percentage)}%)
               </span>
             </div>
-            <div className="h-3 w-full bg-muted/50 rounded-full overflow-hidden">
+            <div className="h-3 w-full bg-muted rounded-full overflow-hidden">
               <div
-                className="h-full bg-primary transition-all duration-500 rounded-full"
+                className="h-full bg-primary rounded-full"
                 style={{ width: `${progress.completion_percentage}%` }}
               />
             </div>
@@ -212,10 +206,8 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
           value={selectedSeason.toString()}
           onValueChange={(value) => setSelectedSeason(parseInt(value))}
         >
-          {/* Enhanced Season Selector */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-2">
-              <ChevronRightIcon className="h-4 w-4" />
+            <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
               Select Season
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -231,51 +223,28 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                   <button
                     key={season.season_number}
                     onClick={() => setSelectedSeason(season.season_number)}
-                    className={`relative group flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg min-w-[80px] ${
+                    className={`flex flex-col items-center gap-2 p-3 rounded-lg border transition-colors min-w-[70px] ${
                       isSelected
-                        ? "border-primary bg-primary/10 shadow-md shadow-primary/20"
-                        : "border-border hover:border-primary/50 bg-background hover:bg-primary/5"
+                        ? "border-primary bg-primary/10"
+                        : "border-border hover:border-primary"
                     }`}
                   >
-                    <div
-                      className={`text-lg font-bold transition-colors ${
-                        isSelected
-                          ? "text-primary"
-                          : "text-foreground group-hover:text-primary"
-                      }`}
-                    >
+                    <div className="text-lg font-bold">
                       S{season.season_number}
                     </div>
 
                     {seasonProgress && (
                       <>
-                        <div
-                          className={`text-xs font-semibold transition-colors ${
-                            isSelected
-                              ? "text-primary"
-                              : "text-muted-foreground group-hover:text-foreground"
-                          }`}
-                        >
+                        <div className="text-xs font-semibold">
                           {Math.round(completionPercentage)}%
                         </div>
-
-                        {/* Progress Ring */}
-                        <div className="relative w-8 h-2 bg-muted rounded-full overflow-hidden">
+                        <div className="w-8 h-2 bg-muted rounded-full overflow-hidden">
                           <div
-                            className={`absolute left-0 top-0 h-full transition-all duration-500 rounded-full ${
-                              isSelected
-                                ? "bg-primary"
-                                : "bg-primary/60 group-hover:bg-primary"
-                            }`}
+                            className="h-full bg-primary rounded-full"
                             style={{ width: `${completionPercentage}%` }}
                           />
                         </div>
                       </>
-                    )}
-
-                    {/* Selected indicator */}
-                    {isSelected && (
-                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full border-2 border-background" />
                     )}
                   </button>
                 );
@@ -300,7 +269,6 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                       onClick={() =>
                         markSeasonWatched(season.season_number, true)
                       }
-                      className="border-green-200 text-green-700 hover:bg-green-50 hover:border-green-300 dark:border-green-800 dark:text-green-400 dark:hover:bg-green-950"
                     >
                       <CheckIcon className="h-4 w-4 mr-1" />
                       Mark All Watched
@@ -311,7 +279,6 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                       onClick={() =>
                         markSeasonWatched(season.season_number, false)
                       }
-                      className="border-orange-200 text-orange-700 hover:bg-orange-50 hover:border-orange-300 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950"
                     >
                       <CircleIcon className="h-4 w-4 mr-1" />
                       Mark All Unwatched
@@ -320,12 +287,12 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                 </div>
 
                 {currentSeasonProgress && (
-                  <div className="space-y-3 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                  <div className="space-y-3 p-4 bg-muted/50 rounded-lg">
                     <div className="flex justify-between text-sm font-medium">
                       <span className="text-muted-foreground">
                         Season Progress
                       </span>
-                      <span className="text-primary font-semibold">
+                      <span>
                         {currentSeasonProgress.watched_episodes}/
                         {currentSeasonProgress.total_episodes} episodes (
                         {Math.round(
@@ -334,9 +301,9 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                         %)
                       </span>
                     </div>
-                    <div className="h-3 w-full bg-muted/50 rounded-full overflow-hidden">
+                    <div className="h-3 w-full bg-muted rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-primary transition-all duration-500 rounded-full"
+                        className="h-full bg-primary rounded-full"
                         style={{
                           width: `${currentSeasonProgress.completion_percentage}%`,
                         }}
@@ -349,7 +316,7 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                   <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Episodes ({season.episode_count} total)
                   </h4>
-                  <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-15 gap-3">
+                  <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
                     {Array.from({ length: season.episode_count }, (_, i) => {
                       const episode_number = i + 1;
                       const episodeProgress = episodes.find(
@@ -364,11 +331,7 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                           key={episode_number}
                           variant={isWatched ? "default" : "outline"}
                           size="sm"
-                          className={`relative h-12 w-full p-0 transition-all duration-200 hover:scale-105 ${
-                            isWatched
-                              ? "bg-primary hover:bg-primary/90 shadow-md shadow-primary/20"
-                              : "border-2 hover:border-primary/60 hover:bg-primary/5"
-                          }`}
+                          className="h-12 w-full p-0"
                           onClick={() =>
                             toggleEpisode(
                               season.season_number,
@@ -378,32 +341,15 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                           }
                         >
                           <div className="flex flex-col items-center justify-center gap-1">
-                            <div
-                              className={`transition-all duration-200 ${
-                                isWatched ? "scale-110" : "scale-100"
-                              }`}
-                            >
-                              {isWatched ? (
-                                <CheckIcon className="h-4 w-4" />
-                              ) : (
-                                <CircleIcon className="h-3 w-3 opacity-60" />
-                              )}
-                            </div>
-                            <span
-                              className={`text-xs font-medium ${
-                                isWatched
-                                  ? "text-primary-foreground"
-                                  : "text-muted-foreground"
-                              }`}
-                            >
+                            {isWatched ? (
+                              <CheckIcon className="h-4 w-4" />
+                            ) : (
+                              <CircleIcon className="h-3 w-3 opacity-60" />
+                            )}
+                            <span className="text-xs font-medium">
                               {episode_number}
                             </span>
                           </div>
-
-                          {/* Watched indicator */}
-                          {isWatched && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-background" />
-                          )}
                         </Button>
                       );
                     })}

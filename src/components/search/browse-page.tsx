@@ -7,7 +7,7 @@ import {
   MixerHorizontalIcon,
 } from "@radix-ui/react-icons";
 import { useMultiSearch } from "@/lib/hooks/api-hooks";
-import { debounce, cn } from "@/lib/utils";
+import { debounce } from "@/lib/utils";
 import { SearchResults } from "./search-results";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -139,7 +139,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
       <div className="container mx-auto px-4 pb-8 space-y-8">
         {/* Header */}
         <div className="space-y-4">
-          <h1 className="text-3xl md:text-4xl font-serif font-bold">
+          <h1 className="text-3xl md:text-4xl font-bold">
             Search Movies, TV Shows & People
           </h1>
           <p className="text-muted-foreground text-lg">
@@ -149,7 +149,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
         </div>
 
         {/* Search Input */}
-        <Card className="bg-card/95 backdrop-blur-sm border border-border shadow-sm">
+        <Card>
           <CardContent className="p-6">
             <div className="space-y-6">
               {/* Search Box */}
@@ -160,12 +160,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
                   placeholder="Search for movies, TV shows, people..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className={cn(
-                    "w-full rounded-lg border border-input bg-background pl-12 pr-12 py-4 text-lg",
-                    "placeholder:text-muted-foreground",
-                    "focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20",
-                    "transition-colors",
-                  )}
+                  className="w-full rounded-lg border border-input bg-background pl-12 pr-12 py-4 text-lg placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
                 />
                 {query && (
                   <button
@@ -182,28 +177,23 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
               <div className="border-t pt-4">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <MixerHorizontalIcon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                    <h3 className="text-sm font-medium leading-none m-0 p-0">
-                      Filters
-                    </h3>
+                    <MixerHorizontalIcon className="h-4 w-4 text-muted-foreground" />
+                    <h3 className="text-sm font-medium">Filters</h3>
                   </div>
-                  <div className="h-7 flex items-center">
-                    {hasActiveFilters && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={handleResetFilters}
-                        className="h-7 px-3 text-xs bg-background hover:bg-muted border-border text-foreground hover:text-foreground"
-                      >
-                        Reset Filters
-                      </Button>
-                    )}
-                  </div>
+                  {hasActiveFilters && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleResetFilters}
+                    >
+                      Reset Filters
+                    </Button>
+                  )}
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Media Type Filter */}
                   <div className="space-y-3">
-                    <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Media Type
                     </label>
                     <div className="flex flex-wrap gap-2">
@@ -225,8 +215,8 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
                   </div>
 
                   {/* Sort By */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  <div className="space-y-3">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Sort By
                     </label>
                     <Select
@@ -238,7 +228,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
                         if (option) setSortBy(option);
                       }}
                     >
-                      <SelectTrigger className="h-9">
+                      <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -261,7 +251,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
           <div className="space-y-6">
             {/* Results Header */}
             <div className="flex items-center gap-3">
-              <h2 className="text-xl font-serif font-semibold">
+              <h2 className="text-xl font-semibold">
                 Search Results for &quot;{debouncedQuery}&quot;
               </h2>
               {!searchLoading && (
@@ -274,35 +264,41 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
 
             {/* Search Results */}
             {searchLoading ? (
-              <div className="bg-card/95 backdrop-blur-sm border border-border rounded-xl p-12 text-center shadow-sm">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-                <p className="text-muted-foreground">Searching...</p>
-              </div>
+              <Card>
+                <CardContent className="p-12 text-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+                  <p className="text-muted-foreground">Searching...</p>
+                </CardContent>
+              </Card>
             ) : searchError ? (
-              <div className="bg-destructive/20 backdrop-blur-sm border border-destructive/30 rounded-xl p-12 text-center shadow-sm">
-                <div className="text-destructive mb-2 text-2xl">⚠️</div>
-                <h3 className="text-lg font-semibold mb-2">Search Error</h3>
-                <p className="text-muted-foreground">
-                  Something went wrong while searching. Please try again.
-                </p>
-              </div>
+              <Card className="border-destructive">
+                <CardContent className="p-12 text-center">
+                  <div className="text-destructive mb-2 text-2xl">⚠️</div>
+                  <h3 className="text-lg font-semibold mb-2">Search Error</h3>
+                  <p className="text-muted-foreground">
+                    Something went wrong while searching. Please try again.
+                  </p>
+                </CardContent>
+              </Card>
             ) : totalSearchResults === 0 ? (
-              <div className="bg-gradient-to-br from-muted/50 to-background/95 backdrop-blur-sm border border-border rounded-xl p-12 text-center shadow-sm">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-serif font-semibold mb-2">
-                  No Results Found
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  {hasActiveFilters
-                    ? "Try adjusting your filters or search terms"
-                    : "Try different keywords or check your spelling"}
-                </p>
-                {hasActiveFilters && (
-                  <Button variant="outline" onClick={handleResetFilters}>
-                    Clear Filters
-                  </Button>
-                )}
-              </div>
+              <Card>
+                <CardContent className="p-12 text-center">
+                  <div className="text-6xl mb-4">🔍</div>
+                  <h3 className="text-xl font-semibold mb-2">
+                    No Results Found
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    {hasActiveFilters
+                      ? "Try adjusting your filters or search terms"
+                      : "Try different keywords or check your spelling"}
+                  </p>
+                  {hasActiveFilters && (
+                    <Button variant="outline" onClick={handleResetFilters}>
+                      Clear Filters
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
             ) : (
               <SearchResults results={filteredResults} sortBy={sortBy.value} />
             )}
@@ -311,16 +307,18 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
 
         {/* Empty State */}
         {!debouncedQuery && (
-          <div className="bg-gradient-to-br from-muted/50 to-background/95 backdrop-blur-sm border border-border rounded-xl p-12 text-center shadow-sm">
-            <MagnifyingGlassIcon className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
-            <h2 className="text-2xl font-serif font-semibold mb-3">
-              Start Your Search
-            </h2>
-            <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
-              Enter a movie title, TV show, or person&apos;s name to discover
-              your next favorite entertainment
-            </p>
-          </div>
+          <Card>
+            <CardContent className="p-12 text-center">
+              <MagnifyingGlassIcon className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
+              <h2 className="text-2xl font-semibold mb-3">
+                Start Your Search
+              </h2>
+              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
+                Enter a movie title, TV show, or person&apos;s name to discover
+                your next favorite entertainment
+              </p>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

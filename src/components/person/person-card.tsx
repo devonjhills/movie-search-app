@@ -26,29 +26,28 @@ export function PersonCard({ person, role, href, mediaType }: PersonCardProps) {
     .slice(0, 2);
 
   return (
-    <Link
-      href={linkPath}
-      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 hover:shadow-noir-soft transition-all duration-300 group"
-    >
-      {/* Person Avatar */}
-      <Avatar className="h-20 w-20 flex-shrink-0">
-        <AvatarImage
-          src={
-            person.profile_path
-              ? getImageUrl(person.profile_path, "profile", "w185")
-              : undefined
-          }
-          alt={person.name}
-          className="object-cover object-center"
-        />
-        <AvatarFallback className="text-base font-semibold">
-          {fallbackInitials}
-        </AvatarFallback>
-      </Avatar>
+    <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 hover:shadow-sm transition-all duration-300 group">
+      {/* Person Avatar - Clickable */}
+      <Link href={linkPath}>
+        <Avatar className="h-20 w-20 flex-shrink-0 cursor-pointer">
+          <AvatarImage
+            src={
+              person.profile_path
+                ? getImageUrl(person.profile_path, "profile", "w185")
+                : undefined
+            }
+            alt={person.name}
+            className="object-cover object-center"
+          />
+          <AvatarFallback className="text-base font-semibold">
+            {fallbackInitials}
+          </AvatarFallback>
+        </Avatar>
+      </Link>
 
-      {/* Person Info */}
+      {/* Person Info - Not Clickable */}
       <div className="min-w-0 flex-1">
-        <p className="font-serif text-lg font-medium text-foreground mb-1 group-hover:text-glow transition-all duration-300">
+        <p className="text-lg font-medium text-foreground mb-1 transition-all duration-300">
           {person.name}
         </p>
         <p className="text-sm text-muted-foreground mb-1">{role}</p>
@@ -59,6 +58,6 @@ export function PersonCard({ person, role, href, mediaType }: PersonCardProps) {
           </p>
         )}
       </div>
-    </Link>
+    </div>
   );
 }

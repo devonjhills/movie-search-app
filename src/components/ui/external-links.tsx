@@ -2,6 +2,8 @@
 
 import { ExternalLinkIcon, VideoIcon, GlobeIcon } from "@radix-ui/react-icons";
 import { getRottenTomatoesSearchUrl, formatYear } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 import type { ExternalIds } from "@/lib/types";
 
@@ -18,7 +20,7 @@ export function ExternalLinks({
   homepage,
   title,
   releaseDate,
-  className = "",
+  className,
 }: ExternalLinksProps) {
   const year = releaseDate ? formatYear(releaseDate) : undefined;
   const rottenTomatoesUrl = getRottenTomatoesSearchUrl(title, year);
@@ -46,20 +48,25 @@ export function ExternalLinks({
   if (links.length === 0) return null;
 
   return (
-    <div className={`flex flex-wrap gap-4 ${className}`}>
+    <div className={cn("flex flex-wrap gap-2", className)}>
       {links.map((link) => {
         const IconComponent = link.icon;
         return (
-          <a
+          <Button
             key={link.name}
-            href={link.url!}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 underline underline-offset-4 hover:underline-offset-2 transition-all duration-200 font-medium text-sm"
+            asChild
+            variant="outline"
+            size="sm"
           >
-            <IconComponent className="h-4 w-4" />
-            {link.name}
-          </a>
+            <a
+              href={link.url!}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IconComponent className="h-4 w-4 mr-2" />
+              {link.name}
+            </a>
+          </Button>
         );
       })}
     </div>

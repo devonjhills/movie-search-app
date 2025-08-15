@@ -1,14 +1,4 @@
-"use client";
-
-import { MovieGrid } from "./movie-grid";
-import { Badge } from "@/components/ui/badge";
-import { ViewAllButton } from "@/components/ui/view-all-button";
-import { cn } from "@/lib/utils";
-import {
-  VideoIcon,
-  StarFilledIcon,
-  DrawingPinFilledIcon,
-} from "@radix-ui/react-icons";
+import { MediaSection } from "@/components/shared/media-section";
 import type { Movie, FormattedMovie } from "@/lib/types";
 
 interface MovieSectionProps {
@@ -24,60 +14,20 @@ interface MovieSectionProps {
   badge?: string;
 }
 
-export function MovieSection({
-  title,
-  movies,
-  isLoading = false,
-  error,
-  href,
-  className,
-  showViewAll = true,
-  limit = 12,
-  showTrending = false,
-  badge,
-}: MovieSectionProps) {
-  const displayMovies = movies.slice(0, limit);
-
+export function MovieSection(props: MovieSectionProps) {
   return (
-    <section className={cn("space-y-6", className)}>
-      {/* Section Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-foreground text-glow">
-            {title}
-          </h2>
-          {/* Enhanced badges */}
-          {showTrending && (
-            <Badge variant="secondary" className="gap-1.5 text-sm">
-              <DrawingPinFilledIcon className="h-4 w-4" />
-              Trending
-            </Badge>
-          )}
-          {badge && (
-            <Badge variant="secondary" className="gap-1.5 text-sm">
-              {badge === "In Theaters" && <VideoIcon className="h-4 w-4" />}
-              {badge === "Critics' Choice" && (
-                <StarFilledIcon className="h-4 w-4" />
-              )}
-              {badge}
-            </Badge>
-          )}
-        </div>
-
-        {/* View All Button */}
-        {href && showViewAll && <ViewAllButton href={href} />}
-      </div>
-
-      {/* Movies Grid */}
-      <MovieGrid
-        movies={displayMovies}
-        isLoading={isLoading}
-        error={error}
-        cardSize="md"
-        showYear={true}
-        showRating={true}
-        showOverview={false}
-      />
-    </section>
+    <MediaSection
+      title={props.title}
+      items={props.movies}
+      mediaType="movie"
+      isLoading={props.isLoading}
+      error={props.error}
+      href={props.href}
+      className={props.className}
+      showViewAll={props.showViewAll}
+      limit={props.limit}
+      showTrending={props.showTrending}
+      badge={props.badge}
+    />
   );
 }

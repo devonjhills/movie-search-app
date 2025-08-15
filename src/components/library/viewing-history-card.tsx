@@ -65,7 +65,7 @@ export function ViewingHistoryCard({
 
   return (
     <>
-      <Card className="group hover:shadow-lg hover:shadow-primary/5 transition-all duration-200 border-border hover:border-border overflow-hidden bg-card/95 backdrop-blur-sm">
+      <Card className="group hover:shadow-lg transition-shadow overflow-hidden">
         <div className="flex gap-4 p-4">
           {/* Poster - Smaller, Fixed Size */}
           <div className="relative flex-shrink-0">
@@ -81,7 +81,7 @@ export function ViewingHistoryCard({
                       src={validImageUrl}
                       alt={item.title}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover"
                       sizes="(max-width: 640px) 64px, 80px"
                     />
                   ) : (
@@ -122,24 +122,24 @@ export function ViewingHistoryCard({
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button
-                  variant="secondary"
+                  variant="ghost"
                   size="sm"
-                  className="h-6 w-6 p-0 shadow-sm backdrop-blur-sm bg-background/95 hover:bg-background"
+                  className="h-6 w-6 p-0"
                   onClick={() => setShowStatusDialog(true)}
                   title="Update status, rating & notes"
                 >
-                  <Edit3 className="h-2.5 w-2.5" />
+                  <Edit3 className="h-3 w-3" />
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      variant="secondary"
+                      variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 shadow-sm backdrop-blur-sm bg-background/95 hover:bg-background"
+                      className="h-6 w-6 p-0"
                     >
-                      <MoreVertical className="h-2.5 w-2.5" />
+                      <MoreVertical className="h-3 w-3" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
@@ -194,10 +194,10 @@ export function ViewingHistoryCard({
 
             {/* Notes Section */}
             {item.notes && (
-              <div className="border-t border-border/30 pt-2">
-                <div className="flex items-start gap-2 text-xs text-muted-foreground p-2 bg-muted/40 backdrop-blur-sm rounded-md">
-                  <StickyNote className="h-3 w-3 mt-0.5 flex-shrink-0 text-primary/70" />
-                  <span className="line-clamp-2 leading-relaxed">
+              <div className="border-t pt-2">
+                <div className="flex items-start gap-2 text-xs text-muted-foreground p-2 bg-muted/50 rounded">
+                  <StickyNote className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                  <span className="line-clamp-2">
                     {item.notes}
                   </span>
                 </div>

@@ -12,6 +12,7 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { BackNavigation } from "@/components/ui/back-navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function MyLibraryPage() {
   const { user, loading: isLoading } = useAuth();
@@ -125,9 +126,9 @@ export default function MyLibraryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-b border-border">
+    <div className="min-h-screen">
+      {/* Header Section */}
+      <div className="border-b">
         <div className="container mx-auto px-4 pt-6 pb-8">
           <div className="flex items-center justify-between gap-4 mb-6">
             <Breadcrumb items={[{ label: "My Library", current: true }]} />
@@ -135,7 +136,7 @@ export default function MyLibraryPage() {
           </div>
 
           <div className="text-center space-y-3">
-            <h1 className="text-4xl font-serif font-bold tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-bold">
               My Library
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -150,17 +151,11 @@ export default function MyLibraryPage() {
         <div className="max-w-7xl mx-auto space-y-8">
           <Tabs value={activeTab} onValueChange={handleTabChange}>
             <div className="flex justify-center">
-              <TabsList className="grid grid-cols-2 w-full max-w-md h-12 bg-muted/90 backdrop-blur-sm border border-border shadow-sm">
-                <TabsTrigger
-                  value="watching"
-                  className="text-sm font-medium data-[state=active]:bg-background/95 data-[state=active]:backdrop-blur-sm"
-                >
+              <TabsList className="grid grid-cols-2 w-full max-w-md">
+                <TabsTrigger value="watching" className="text-sm font-medium">
                   Currently Watching
                 </TabsTrigger>
-                <TabsTrigger
-                  value="all"
-                  className="text-sm font-medium data-[state=active]:bg-background/95 data-[state=active]:backdrop-blur-sm"
-                >
+                <TabsTrigger value="all" className="text-sm font-medium">
                   All Library
                 </TabsTrigger>
               </TabsList>
@@ -168,18 +163,20 @@ export default function MyLibraryPage() {
 
             <TabsContent value="watching" className="mt-8">
               {error ? (
-                <div className="bg-destructive/20 backdrop-blur-sm border border-destructive/30 rounded-lg p-8 text-center shadow-sm">
-                  <div className="space-y-3">
-                    <p className="text-destructive font-medium">{error}</p>
-                    <Button
-                      onClick={fetchViewingHistory}
-                      variant="outline"
-                      size="sm"
-                    >
-                      Try again
-                    </Button>
-                  </div>
-                </div>
+                <Card className="border-destructive">
+                  <CardContent className="p-8 text-center">
+                    <div className="space-y-3">
+                      <p className="text-destructive font-medium">{error}</p>
+                      <Button
+                        onClick={fetchViewingHistory}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Try again
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               ) : (
                 <CurrentlyWatchingSection
                   items={viewingHistory}
@@ -190,26 +187,30 @@ export default function MyLibraryPage() {
             </TabsContent>
 
             <TabsContent value="all" className="mt-8 space-y-6">
-              <div className="bg-card/95 backdrop-blur-sm border border-border rounded-lg p-6 shadow-sm">
-                <ViewingHistoryFilters
-                  filters={filters}
-                  onFiltersChange={handleFiltersChange}
-                />
-              </div>
+              <Card>
+                <CardContent className="p-6">
+                  <ViewingHistoryFilters
+                    filters={filters}
+                    onFiltersChange={handleFiltersChange}
+                  />
+                </CardContent>
+              </Card>
 
               {error ? (
-                <div className="bg-destructive/20 backdrop-blur-sm border border-destructive/30 rounded-lg p-8 text-center shadow-sm">
-                  <div className="space-y-3">
-                    <p className="text-destructive font-medium">{error}</p>
-                    <Button
-                      onClick={fetchViewingHistory}
-                      variant="outline"
-                      size="sm"
-                    >
-                      Try again
-                    </Button>
-                  </div>
-                </div>
+                <Card className="border-destructive">
+                  <CardContent className="p-8 text-center">
+                    <div className="space-y-3">
+                      <p className="text-destructive font-medium">{error}</p>
+                      <Button
+                        onClick={fetchViewingHistory}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Try again
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               ) : (
                 <ViewingHistoryGrid
                   items={viewingHistory}

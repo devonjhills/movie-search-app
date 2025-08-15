@@ -27,7 +27,7 @@ export function SearchResults({ results }: SearchResultsProps) {
       {totalMovies > 0 && (
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <h3 className="text-xl font-serif font-semibold">Movies</h3>
+            <h3 className="text-xl font-semibold">Movies</h3>
             <span className="text-sm text-muted-foreground">
               ({totalMovies} result{totalMovies !== 1 ? "s" : ""})
             </span>
@@ -46,7 +46,7 @@ export function SearchResults({ results }: SearchResultsProps) {
       {totalTV > 0 && (
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <h3 className="text-xl font-serif font-semibold">TV Shows</h3>
+            <h3 className="text-xl font-semibold">TV Shows</h3>
             <span className="text-sm text-muted-foreground">
               ({totalTV} result{totalTV !== 1 ? "s" : ""})
             </span>
@@ -65,7 +65,7 @@ export function SearchResults({ results }: SearchResultsProps) {
       {totalPeople > 0 && (
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <h3 className="text-xl font-serif font-semibold">People</h3>
+            <h3 className="text-xl font-semibold">People</h3>
             <span className="text-sm text-muted-foreground">
               ({totalPeople} result{totalPeople !== 1 ? "s" : ""})
             </span>

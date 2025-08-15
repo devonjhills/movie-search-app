@@ -35,107 +35,79 @@ function MovieDetailsSkeleton() {
   return (
     <div className="min-h-screen relative">
       {/* Hero Skeleton */}
-      <div className="relative h-[75vh] md:h-[85vh] bg-muted">
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-        <div className="absolute inset-0 container mx-auto px-4 flex items-end pb-16">
+      <div className="relative h-96 bg-muted">
+        <div className="absolute inset-0 container mx-auto px-4 flex items-end pb-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 w-full">
             <div className="md:col-span-3">
               <Skeleton className="aspect-[2/3] w-full max-w-xs mx-auto md:mx-0" />
             </div>
             <div className="md:col-span-9 space-y-4">
-              <Skeleton className="h-14 w-full max-w-2xl" />
+              <Skeleton className="h-12 w-full max-w-2xl" />
               <div className="flex flex-wrap gap-2">
                 <Skeleton className="h-6 w-16" />
                 <Skeleton className="h-6 w-20" />
                 <Skeleton className="h-6 w-24" />
               </div>
-              <Skeleton className="h-20 w-full max-w-3xl" />
-              <div className="flex gap-3">
-                <Skeleton className="h-12 w-40" />
-                <Skeleton className="h-12 w-32" />
-                <Skeleton className="h-12 w-12 rounded-full" />
-              </div>
+              <Skeleton className="h-16 w-full max-w-3xl" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content Skeleton */}
-      <div className="relative container mx-auto px-4 pt-16 pb-12">
-        <div className="space-y-8">
-          {/* Movie Details Card */}
-          <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl">
-            <div className="p-6 space-y-6">
-              <div className="flex items-center gap-2">
-                <Skeleton className="h-5 w-5" />
-                <Skeleton className="h-6 w-32" />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className="space-y-2">
-                    <Skeleton className="h-4 w-20" />
-                    <Skeleton className="h-6 w-full" />
-                  </div>
-                ))}
-              </div>
+      <div className="container mx-auto px-4 py-8 space-y-8">
+        {/* Movie Details Card */}
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-6 w-32" />
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="space-y-2">
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-6 w-full" />
+                </div>
+              ))}
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          {/* Cast Section */}
-          <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl">
-            <div className="p-6 space-y-6">
-              <div className="flex items-center gap-2">
-                <Skeleton className="h-5 w-5" />
-                <Skeleton className="h-6 w-16" />
-              </div>
-              <div className="space-y-4">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center space-x-3 p-3 rounded-lg"
-                  >
-                    <Skeleton className="h-20 w-20 rounded-full flex-shrink-0" />
-                    <div className="min-w-0 flex-1 space-y-1">
-                      <Skeleton className="h-5 w-32" />
-                      <Skeleton className="h-4 w-24" />
-                    </div>
-                  </div>
-                ))}
-              </div>
+        {/* Cast Section */}
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-6 w-16" />
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="text-center space-y-2">
+                  <Skeleton className="h-20 w-20 rounded-full mx-auto" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-3 w-3/4 mx-auto" />
+                </div>
+              ))}
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          {/* Recommendations Section */}
-          <div className="bg-background/80 backdrop-blur-sm border border-border/20 rounded-lg shadow-2xl">
-            <div className="p-6 space-y-6">
-              <div className="flex items-center gap-2">
-                <Skeleton className="h-5 w-5" />
-                <Skeleton className="h-6 w-32" />
-              </div>
-              <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                {Array.from({ length: 12 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="overflow-hidden bg-card border border-border/50 rounded-lg h-full flex flex-col transition-all duration-200 w-48"
-                  >
-                    <div className="p-3 space-y-3 flex-1 flex flex-col">
-                      <div className="relative overflow-hidden rounded-lg aspect-[2/3]">
-                        <Skeleton className="h-full w-full" />
-                        <div className="absolute top-2 right-2">
-                          <Skeleton className="h-6 w-12 rounded-full" />
-                        </div>
-                      </div>
-                      <div className="space-y-1 flex-1 flex flex-col">
-                        <Skeleton className="h-10 w-full" />
-                        <Skeleton className="h-5 w-24" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+        {/* Recommendations Section */}
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-6 w-32" />
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div key={i} className="space-y-2">
+                  <Skeleton className="aspect-[2/3] w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-3 w-1/2" />
+                </div>
+              ))}
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
@@ -258,10 +230,10 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           <BackNavigation fallbackHref="/" />
         </div>
         <div className="space-y-8">
-          {/* Movie Details - Full Width */}
-          <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+          {/* Movie Details */}
+          <Card>
             <CardHeader>
-              <CardTitle className="text-display-sm flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2">
                 <VideoIcon className="h-5 w-5" />
                 Movie Details
               </CardTitle>
@@ -270,12 +242,12 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {director && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-medium text-muted-foreground">
                       Director
                     </h4>
                     <Link
                       href={`/person/${director.id}`}
-                      className="text-lg font-medium text-primary hover:text-primary/80 transition-colors"
+                      className="text-base font-medium text-primary hover:text-primary/80"
                     >
                       {director.name}
                     </Link>
@@ -284,84 +256,75 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
                 {movie.release_date && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                       <CalendarIcon className="h-3 w-3" />
                       Release Date
                     </h4>
-                    <p className="text-base font-medium">{releaseDate}</p>
+                    <p className="text-base">{releaseDate}</p>
                   </div>
                 )}
 
                 {runtime && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                       <ClockIcon className="h-3 w-3" />
                       Runtime
                     </h4>
-                    <p className="text-base font-medium">{runtime}</p>
+                    <p className="text-base">{runtime}</p>
                   </div>
                 )}
 
                 {usCertification && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                       <InfoCircledIcon className="h-3 w-3" />
                       Rating
                     </h4>
-                    <div className="inline-flex px-2.5 py-1 rounded-md text-xs font-bold border-2 border-primary/80 text-primary bg-background shadow-sm">
-                      {usCertification}
-                    </div>
+                    <Badge variant="outline">{usCertification}</Badge>
                   </div>
                 )}
 
                 {movie.vote_average > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-1">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
                       <StarFilledIcon className="h-3 w-3" />
-                      TMDB Score
+                      Rating
                     </h4>
                     <div className="flex items-center gap-2">
-                      <span className="text-xl font-bold text-primary">
+                      <span className="text-lg font-semibold text-primary">
                         {rating}
                       </span>
-                      <span className="text-base text-muted-foreground">
-                        / 10
-                      </span>
+                      <span className="text-sm text-muted-foreground">/ 10</span>
                     </div>
                   </div>
                 )}
 
                 {movie.budget > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-medium text-muted-foreground">
                       Budget
                     </h4>
-                    <p className="text-base font-medium">{budget}</p>
+                    <p className="text-base">{budget}</p>
                   </div>
                 )}
 
                 {movie.revenue > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-medium text-muted-foreground">
                       Revenue
                     </h4>
-                    <p className="text-base font-medium text-green-600">
-                      {revenue}
-                    </p>
+                    <p className="text-base text-green-600">{revenue}</p>
                   </div>
                 )}
 
                 {movie.production_companies.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-medium text-muted-foreground">
                       Production
                     </h4>
                     <div className="space-y-1">
                       {movie.production_companies.slice(0, 2).map((company) => (
-                        <p
-                          key={company.id}
-                          className="text-sm text-foreground/90"
-                        >
+                        <p key={company.id} className="text-sm">
                           {company.name}
                         </p>
                       ))}
@@ -370,15 +333,17 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 )}
               </div>
 
-              {/* Keywords - Full Width Row */}
+              {/* Keywords */}
               {keywords.length > 0 && (
-                <div className="space-y-3 pt-6 border-t border-border/50 mt-6">
-                  <h4 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                <div className="space-y-3 pt-6 border-t mt-6">
+                  <h4 className="text-sm font-medium text-muted-foreground">
                     Keywords
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {keywords.map((keyword) => (
-                      <Badge key={keyword.id}>{keyword.name}</Badge>
+                      <Badge key={keyword.id} variant="secondary">
+                        {keyword.name}
+                      </Badge>
                     ))}
                   </div>
                 </div>
@@ -386,11 +351,11 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
             </CardContent>
           </Card>
 
-          {/* Cast - Full Width */}
+          {/* Cast */}
           {mainCast.length > 0 && (
-            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+            <Card>
               <CardHeader>
-                <CardTitle className="text-display-sm">Cast</CardTitle>
+                <CardTitle>Cast</CardTitle>
               </CardHeader>
               <CardContent>
                 <CastGrid
@@ -402,14 +367,14 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
             </Card>
           )}
 
-          {/* Key Crew - Full Width */}
+          {/* Key Crew */}
           {keyCrew.length > 0 && (
-            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+            <Card>
               <CardHeader>
-                <CardTitle className="text-display-sm">Key Crew</CardTitle>
+                <CardTitle>Key Crew</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                   {keyCrew.map((person) => (
                     <PersonCard
                       key={`${person.id}-${person.job}`}
@@ -422,13 +387,11 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
             </Card>
           )}
 
-          {/* Recommendations - Full Width */}
+          {/* Recommendations */}
           {recommendations.length > 0 && (
-            <Card className="bg-background/80 backdrop-blur-sm border-border/20 shadow-2xl">
+            <Card>
               <CardHeader>
-                <CardTitle className="text-display-sm">
-                  You might also like
-                </CardTitle>
+                <CardTitle>You might also like</CardTitle>
               </CardHeader>
               <CardContent>
                 <MovieGrid

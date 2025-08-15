@@ -7,20 +7,16 @@ import { cn } from "@/lib/utils";
 
 interface BackNavigationProps {
   fallbackHref?: string;
-  fallbackLabel?: string;
   className?: string;
   variant?: "default" | "ghost" | "outline";
   size?: "default" | "sm" | "lg";
-  overlay?: boolean;
 }
 
 export function BackNavigation({
   fallbackHref = "/",
-  fallbackLabel = "Home", // eslint-disable-line @typescript-eslint/no-unused-vars
   className,
   variant = "ghost",
   size = "default",
-  overlay = false,
 }: BackNavigationProps) {
   const router = useRouter();
 
@@ -36,15 +32,10 @@ export function BackNavigation({
 
   return (
     <Button
-      variant={overlay ? "outline" : variant}
+      variant={variant}
       size={size}
       onClick={handleBack}
-      className={cn(
-        "gap-2",
-        overlay &&
-          "bg-black/20 backdrop-blur-sm border-white/10 text-white hover:bg-black/30 hover:text-white",
-        className,
-      )}
+      className={cn("gap-2", className)}
     >
       <ArrowLeftIcon className="h-4 w-4" />
       <span className="hidden sm:inline">Back</span>

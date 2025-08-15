@@ -4,6 +4,7 @@ import { ViewingHistoryItem } from "@/lib/types";
 import { ViewingHistoryCard } from "./viewing-history-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
 interface ViewingHistoryGridProps {
@@ -27,7 +28,7 @@ export function ViewingHistoryGrid({
 }: ViewingHistoryGridProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="animate-pulse">
             <div className="flex gap-4 p-4 bg-muted/50 rounded-lg">
@@ -46,7 +47,7 @@ export function ViewingHistoryGrid({
 
   if (items.length === 0) {
     return (
-      <div className="bg-gradient-to-br from-muted/50 to-background/95 backdrop-blur-sm border border-border rounded-xl p-12 text-center shadow-sm">
+      <Card className="p-12 text-center">
         <div className="max-w-lg mx-auto space-y-6">
           <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
             <svg
@@ -64,7 +65,7 @@ export function ViewingHistoryGrid({
             </svg>
           </div>
           <div className="space-y-3">
-            <h3 className="text-xl font-serif font-semibold">
+            <h3 className="text-xl font-semibold">
               Your Library Awaits
             </h3>
             <p className="text-muted-foreground leading-relaxed">
@@ -73,23 +74,15 @@ export function ViewingHistoryGrid({
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              variant="default"
-              asChild
-              className="bg-primary/95 backdrop-blur-sm hover:bg-primary"
-            >
+            <Button variant="default" asChild>
               <a href="/search">Discover Content</a>
             </Button>
-            <Button
-              onClick={onRefresh}
-              variant="outline"
-              className="bg-background/90 backdrop-blur-sm border-border/70 hover:bg-background"
-            >
+            <Button onClick={onRefresh} variant="outline">
               Refresh Library
             </Button>
           </div>
         </div>
-      </div>
+      </Card>
     );
   }
 
@@ -105,19 +98,14 @@ export function ViewingHistoryGrid({
   const renderGrid = (items: ViewingHistoryItem[], title?: string) => (
     <div className="space-y-6">
       {title && (
-        <div className="flex items-center gap-3 pb-2 border-b border-border/30">
-          <div className="bg-background/85 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-border/40 shadow-sm">
-            <h2 className="text-xl font-serif font-bold">{title}</h2>
-          </div>
-          <Badge
-            variant="outline"
-            className="px-2 py-1 bg-background/90 backdrop-blur-sm border-border/50"
-          >
+        <div className="flex items-center gap-3 pb-2 border-b">
+          <h2 className="text-xl font-bold">{title}</h2>
+          <Badge variant="outline" className="px-2 py-1">
             {items.length}
           </Badge>
         </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {items.map((item) => (
           <ViewingHistoryCard key={item.id} item={item} onUpdate={onRefresh} />
         ))}
@@ -142,7 +130,7 @@ export function ViewingHistoryGrid({
       )}
 
       {totalPages > 1 && (
-        <div className="bg-muted/60 backdrop-blur-sm rounded-lg p-6 border border-border shadow-sm">
+        <Card className="p-6">
           <div className="flex justify-center items-center space-x-3">
             <Button
               variant="outline"
@@ -193,7 +181,7 @@ export function ViewingHistoryGrid({
               <ChevronRightIcon className="h-4 w-4" />
             </Button>
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );

@@ -61,35 +61,31 @@ export function EpisodeProgress({
 
   return (
     <TooltipProvider>
-      <div className="space-y-1.5 mt-2">
+      <div className="space-y-2 mt-2">
         {/* Progress Bar */}
         <div className="space-y-1">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-medium text-foreground">Progress</span>
-            <span className="text-foreground">
+            <span className="font-medium">Progress</span>
+            <span>
               {progress.watched_episodes}/{progress.total_episodes}
             </span>
           </div>
-          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+          <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div
-              className="h-full bg-primary transition-all duration-300"
+              className="h-full bg-primary"
               style={{ width: `${completionPercentage}%` }}
             />
           </div>
         </div>
 
-        {/* Current Status and Action on Same Line */}
+        {/* Current Status and Action */}
         {progress.next_episode ? (
           <div className="flex items-center justify-between gap-2">
-            <Badge
-              variant="secondary"
-              className="gap-1 text-xs flex-shrink-0 font-medium"
-            >
+            <Badge variant="secondary" className="text-xs">
               Next: S{progress.next_episode.season_number}E
               {progress.next_episode.episode_number}
             </Badge>
 
-            {/* Icon-based Mark Watched Toggle */}
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -97,7 +93,7 @@ export function EpisodeProgress({
                   variant="outline"
                   onClick={markNextEpisodeWatched}
                   disabled={isUpdating}
-                  className="h-6 w-6 p-0 border-primary/40 hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                  className="h-6 w-6 p-0"
                 >
                   {isUpdating ? (
                     <div className="h-3 w-3 animate-spin rounded-full border border-current border-t-transparent" />
@@ -113,18 +109,15 @@ export function EpisodeProgress({
             </Tooltip>
           </div>
         ) : (
-          <Badge
-            variant="default"
-            className="gap-1 text-xs w-fit bg-green-500/10 text-green-700 dark:bg-green-500/20 dark:text-green-400 border-green-500/20"
-          >
-            <CheckIcon className="h-3 w-3" />
+          <Badge variant="default" className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+            <CheckIcon className="h-3 w-3 mr-1" />
             Complete
           </Badge>
         )}
 
-        {/* Season Progress Summary (for shows with multiple seasons) */}
+        {/* Season Progress Summary */}
         {progress.total_seasons > 1 && (
-          <div className="text-xs text-foreground/70 font-medium">
+          <div className="text-xs text-muted-foreground">
             {
               progress.seasons.filter((s) => s.completion_percentage === 100)
                 .length

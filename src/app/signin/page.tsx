@@ -53,11 +53,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Background with backdrop blur - consistent with site theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5" />
-
-      <div className="relative min-h-screen flex items-start justify-center pt-20 pb-12 px-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           {/* Logo and branding */}
           <div className="text-center mb-8">
@@ -69,7 +65,7 @@ export default function SignInPage() {
                 height={48}
                 className="h-12 w-12"
               />
-              <span className="text-2xl font-display font-bold text-glow">
+              <span className="text-2xl font-bold">
                 FilmFatale
               </span>
             </Link>
@@ -78,7 +74,7 @@ export default function SignInPage() {
             </p>
           </div>
 
-          <Card className="border-border/50 shadow-lg backdrop-blur-sm bg-card/95">
+          <Card>
             <CardHeader className="text-center">
               <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
               <p className="text-muted-foreground">
@@ -112,7 +108,6 @@ export default function SignInPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="h-11"
                   />
                 </div>
 
@@ -129,13 +124,12 @@ export default function SignInPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="h-11"
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full h-11"
+                  className="w-full"
                   disabled={loading}
                 >
                   {loading ? "Signing in..." : "Sign in"}
@@ -156,7 +150,7 @@ export default function SignInPage() {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full h-11"
+                className="w-full"
                 onClick={handleGoogleSignIn}
                 disabled={loading}
               >
@@ -201,6 +195,5 @@ export default function SignInPage() {
           </p>
         </div>
       </div>
-    </div>
   );
 }

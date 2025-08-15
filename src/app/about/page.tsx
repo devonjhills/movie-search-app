@@ -16,7 +16,7 @@ export default function AboutPage() {
                 className="object-contain"
               />
             </div>
-            <h1 className="text-4xl font-display font-bold text-glow">
+            <h1 className="text-4xl font-bold">
               FilmFatale
             </h1>
           </div>
@@ -27,7 +27,7 @@ export default function AboutPage() {
 
         <div className="space-y-6">
           <section>
-            <h2 className="text-2xl font-display font-semibold mb-4">
+            <h2 className="text-2xl font-semibold mb-4">
               What is FilmFatale?
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -40,7 +40,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-display font-semibold mb-4">
+            <h2 className="text-2xl font-semibold mb-4">
               Features
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
@@ -75,7 +75,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-display font-semibold mb-4">
+            <h2 className="text-2xl font-semibold mb-4">
               Our Mission
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -87,7 +87,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-display font-semibold mb-4">
+            <h2 className="text-2xl font-semibold mb-4">
               Powered by TMDB
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -106,7 +106,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-display font-semibold mb-4">
+            <h2 className="text-2xl font-semibold mb-4">
               Get Started
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">

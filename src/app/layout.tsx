@@ -92,19 +92,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${merriweather.variable} ${jetbrains.variable} font-sans antialiased min-h-screen flex flex-col`}
-      >
+        className={`${inter.variable} ${merriweather.variable} ${jetbrains.variable} font-sans antialiased min-h-screen flex flex-col`}>
         <AuthProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
-            disableTransitionOnChange
-          >
+            disableTransitionOnChange>
             <TooltipProvider>
-              <a href="#main-content" className="skip-link">
-                Skip to main content
-              </a>
               <Navigation />
               <main id="main-content" className="flex-1">
                 {children}

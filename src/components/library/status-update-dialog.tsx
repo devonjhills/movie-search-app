@@ -121,14 +121,14 @@ export function StatusUpdateDialog({
                     key={i}
                     type="button"
                     onClick={() => handleRatingClick(starValue)}
-                    className="p-1 hover:scale-110 transition-transform"
+                    className="p-1 hover:bg-muted rounded"
                     title={`Rate ${starValue} star${starValue !== 1 ? "s" : ""}`}
                   >
                     <Star
                       className={`h-5 w-5 ${
                         starValue <= rating
                           ? "fill-yellow-400 text-yellow-400"
-                          : "text-gray-300 hover:text-yellow-200"
+                          : "text-muted-foreground"
                       }`}
                     />
                   </button>

@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { MediaGrid } from "@/components/shared/media-grid";
+import { MediaGrid } from "./media-grid";
 import { Pagination } from "@/components/ui/pagination";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { BackNavigation } from "@/components/ui/back-navigation";
+import { usePaginatedData } from "@/hooks/usePaginatedData";
 
 interface MediaItem {
   id: number;
@@ -17,7 +18,7 @@ interface MediaItem {
   first_air_date?: string;
 }
 
-interface CategoryPageProps {
+interface CategoryPageTemplateProps {
   title: string;
   description?: string;
   mediaType: "movie" | "tv";
@@ -26,30 +27,27 @@ interface CategoryPageProps {
   error: Error | null;
   totalPages: number;
   totalResults: number;
-  currentPage: number;
-  onPageChange: (page: number) => void;
   breadcrumbParent?: string;
   breadcrumbParentHref?: string;
+  useDataHook: (page: number) => {
+    data: MediaItem[];
+    isLoading: boolean;
+    isError: Error | null;
+    totalPages: number;
+    totalResults: number;
+  };
 }
 
-export function CategoryPage({
+export function CategoryPageTemplate({
   title,
   description,
   mediaType,
-  data,
-  isLoading,
-  error,
-  totalPages,
-  totalResults,
-  currentPage,
-  onPageChange,
   breadcrumbParent = "Home",
   breadcrumbParentHref = "/",
-}: CategoryPageProps) {
-  // Combine local page change handler with external handler
-  const handlePageChange = (page: number) => {
-    onPageChange(page);
-  };
+  useDataHook,
+}: Omit<CategoryPageTemplateProps, 'data' | 'isLoading' | 'error' | 'totalPages' | 'totalResults'>) {
+  const { currentPage, handlePageChange } = usePaginatedData();
+  const { data, isLoading, isError, totalPages, totalResults } = useDataHook(currentPage);
 
   return (
     <div className="min-h-screen">
@@ -86,14 +84,14 @@ export function CategoryPage({
             items={data}
             mediaType={mediaType}
             isLoading={isLoading}
-            error={error}
+            error={isError}
             cardSize="md"
             showYear={true}
             showRating={true}
           />
 
           {/* Pagination */}
-          {!isLoading && !error && totalPages > 1 && (
+          {!isLoading && !isError && totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

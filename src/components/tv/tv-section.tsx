@@ -1,14 +1,4 @@
-"use client";
-
-import { TVGrid } from "./tv-grid";
-import { Badge } from "@/components/ui/badge";
-import { ViewAllButton } from "@/components/ui/view-all-button";
-import { cn } from "@/lib/utils";
-import {
-  VideoIcon,
-  StarFilledIcon,
-  DrawingPinFilledIcon,
-} from "@radix-ui/react-icons";
+import { MediaSection } from "@/components/shared/media-section";
 import type { TVShow } from "@/lib/types";
 
 interface TVSectionProps {
@@ -25,67 +15,20 @@ interface TVSectionProps {
   showEpisodeIndicator?: boolean;
 }
 
-export function TVSection({
-  title,
-  tvShows,
-  isLoading = false,
-  error,
-  href,
-  className,
-  showViewAll = true,
-  limit = 12,
-  showTrending = false,
-  badge,
-  showEpisodeIndicator = false,
-}: TVSectionProps) {
-  const displayTVShows = tvShows.slice(0, limit);
-
+export function TVSection(props: TVSectionProps) {
   return (
-    <section className={cn("space-y-6", className)}>
-      {/* Section Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-foreground text-glow">
-            {title}
-          </h2>
-          {/* Enhanced badges */}
-          {showTrending && (
-            <Badge variant="secondary" className="gap-1.5 text-sm">
-              <DrawingPinFilledIcon className="h-4 w-4" />
-              Trending
-            </Badge>
-          )}
-          {badge && (
-            <Badge variant="secondary" className="gap-1.5 text-sm">
-              {badge === "Playing Now" && <VideoIcon className="h-4 w-4" />}
-              {badge === "Critics' Choice" && (
-                <StarFilledIcon className="h-4 w-4" />
-              )}
-              {badge}
-            </Badge>
-          )}
-          {showEpisodeIndicator && (
-            <Badge variant="secondary" className="gap-1.5 text-sm">
-              <VideoIcon className="h-4 w-4" />
-              New Episodes
-            </Badge>
-          )}
-        </div>
-
-        {/* View All Button */}
-        {href && showViewAll && <ViewAllButton href={href} />}
-      </div>
-
-      {/* TV Shows Grid */}
-      <TVGrid
-        tvShows={displayTVShows}
-        isLoading={isLoading}
-        error={error}
-        cardSize="md"
-        showYear={true}
-        showRating={true}
-        showOverview={false}
-      />
-    </section>
+    <MediaSection
+      title={props.title}
+      items={props.tvShows}
+      mediaType="tv"
+      isLoading={props.isLoading}
+      error={props.error}
+      href={props.href}
+      className={props.className}
+      showViewAll={props.showViewAll}
+      limit={props.limit}
+      showTrending={props.showTrending}
+      badge={props.badge}
+    />
   );
 }

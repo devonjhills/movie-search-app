@@ -4,20 +4,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground shadow-noir-soft hover:bg-primary/80 hover:shadow-noir-crimson",
+          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground shadow-noir-soft hover:bg-secondary/80 hover:shadow-noir-medium",
+          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
         destructive:
-          "border-transparent bg-destructive text-destructive-foreground shadow-noir-soft hover:bg-destructive/80 hover:shadow-noir-medium",
+          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline:
-          "text-foreground border-border bg-background shadow-noir-soft hover:bg-accent hover:text-accent-foreground hover:shadow-noir-medium",
+          "text-foreground",
         accent:
-          "border-transparent bg-accent text-accent-foreground shadow-noir-gold hover:bg-accent/80 hover:shadow-noir-gold",
+          "border-transparent bg-accent text-accent-foreground hover:bg-accent/80",
       },
     },
     defaultVariants: {
