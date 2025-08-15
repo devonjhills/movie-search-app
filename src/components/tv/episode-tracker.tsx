@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
-  CheckIcon,
-  CircleIcon,
-  PlayIcon,
-  ClockIcon,
-  BookmarkIcon,
-} from "@radix-ui/react-icons";
+  Check,
+  Circle,
+  Play,
+  Clock,
+  Bookmark,
+} from "lucide-react";
 import Link from "next/link";
 
 interface EpisodeTrackerProps {
@@ -164,11 +164,11 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <ClockIcon className="h-5 w-5" />
+            <Clock className="h-5 w-5" />
             Episode Tracker
             {progress?.next_episode && (
               <Badge variant="secondary">
-                <PlayIcon className="h-3 w-3 mr-1" />
+                <Play className="h-3 w-3 mr-1" />
                 Next: S{progress.next_episode.season_number}E
                 {progress.next_episode.episode_number}
               </Badge>
@@ -176,7 +176,7 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
           </CardTitle>
           <Button variant="ghost" size="sm" asChild>
             <Link href="/library?tab=watching">
-              <BookmarkIcon className="h-4 w-4 mr-1" />
+              <Bookmark className="h-4 w-4 mr-1" />
               My Library
             </Link>
           </Button>
@@ -270,7 +270,7 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                         markSeasonWatched(season.season_number, true)
                       }
                     >
-                      <CheckIcon className="h-4 w-4 mr-1" />
+                      <Check className="h-4 w-4 mr-1" />
                       Mark All Watched
                     </Button>
                     <Button
@@ -280,7 +280,7 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                         markSeasonWatched(season.season_number, false)
                       }
                     >
-                      <CircleIcon className="h-4 w-4 mr-1" />
+                      <Circle className="h-4 w-4 mr-1" />
                       Mark All Unwatched
                     </Button>
                   </div>
@@ -342,9 +342,9 @@ export function EpisodeTracker({ tmdb_id, seasons }: EpisodeTrackerProps) {
                         >
                           <div className="flex flex-col items-center justify-center gap-1">
                             {isWatched ? (
-                              <CheckIcon className="h-4 w-4" />
+                              <Check className="h-4 w-4" />
                             ) : (
-                              <CircleIcon className="h-3 w-3 opacity-60" />
+                              <Circle className="h-3 w-3 opacity-60" />
                             )}
                             <span className="text-xs font-medium">
                               {episode_number}

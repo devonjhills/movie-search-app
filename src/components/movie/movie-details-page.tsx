@@ -2,13 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import {
-  CalendarIcon,
-  ClockIcon,
-  VideoIcon,
-  InfoCircledIcon,
-} from "@radix-ui/react-icons";
-import { StarFilledIcon } from "@radix-ui/react-icons";
+import { Calendar, Clock, Film, Info, Star } from "lucide-react";
 import { useMovieDetails, useMovieWatchProviders } from "@/lib/hooks/api-hooks";
 import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/person/cast-grid";
@@ -125,7 +119,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <VideoIcon className="h-16 w-16 text-muted-foreground mx-auto" />
+          <Film className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">Movie Not Found</h1>
           <p className="text-muted-foreground">
             The movie you&apos;re looking for doesn&apos;t exist or has been
@@ -234,7 +228,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <VideoIcon className="h-5 w-5" />
+                <Film className="h-5 w-5" />
                 Movie Details
               </CardTitle>
             </CardHeader>
@@ -257,7 +251,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 {movie.release_date && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <CalendarIcon className="h-3 w-3" />
+                      <Calendar className="h-3 w-3" />
                       Release Date
                     </h4>
                     <p className="text-base">{releaseDate}</p>
@@ -267,7 +261,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 {runtime && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <ClockIcon className="h-3 w-3" />
+                      <Clock className="h-3 w-3" />
                       Runtime
                     </h4>
                     <p className="text-base">{runtime}</p>
@@ -277,7 +271,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 {usCertification && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <InfoCircledIcon className="h-3 w-3" />
+                      <Info className="h-3 w-3" />
                       Rating
                     </h4>
                     <Badge variant="outline">{usCertification}</Badge>
@@ -287,7 +281,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
                 {movie.vote_average > 0 && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <StarFilledIcon className="h-3 w-3" />
+                      <Star className="h-3 w-3 fill-current" />
                       Rating
                     </h4>
                     <div className="flex items-center gap-2">

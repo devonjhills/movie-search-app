@@ -10,12 +10,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  ChevronDownIcon,
-  PlayIcon,
-  CheckIcon,
-  Cross2Icon,
-  ClockIcon,
-} from "@radix-ui/react-icons";
+  ChevronDown,
+  Play,
+  Check,
+  X,
+  Clock,
+} from "lucide-react";
 
 interface WatchStatusButtonProps {
   tmdb_id: number;
@@ -32,19 +32,19 @@ const statusOptions = [
   {
     value: "plan_to_watch",
     label: "Plan to Watch",
-    icon: ClockIcon,
+    icon: Clock,
     color: "text-gray-600",
   },
   {
     value: "watching",
     label: "Watching",
-    icon: PlayIcon,
+    icon: Play,
     color: "text-blue-600",
   },
   {
     value: "completed",
     label: "Completed",
-    icon: CheckIcon,
+    icon: Check,
     color: "text-green-600",
   },
 ] as const;
@@ -140,7 +140,7 @@ export function WatchStatusButton({
   const currentOption = statusOptions.find(
     (option) => option.value === currentStatus,
   );
-  const CurrentIcon = currentOption?.icon || ClockIcon;
+  const CurrentIcon = currentOption?.icon || Clock;
 
   return (
     <DropdownMenu>
@@ -153,7 +153,7 @@ export function WatchStatusButton({
         >
           <CurrentIcon className="h-4 w-4" />
           {loading ? "Updating..." : currentOption?.label || "Add to List"}
-          <ChevronDownIcon className="h-3 w-3" />
+          <ChevronDown className="h-3 w-3" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -181,7 +181,7 @@ export function WatchStatusButton({
               onClick={handleRemove}
               className="text-destructive gap-2"
             >
-              <Cross2Icon className="h-4 w-4" />
+              <X className="h-4 w-4" />
               Remove from History
             </DropdownMenuItem>
           </>

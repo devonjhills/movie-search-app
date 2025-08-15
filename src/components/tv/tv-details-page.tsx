@@ -3,14 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  CalendarIcon,
-  VideoIcon,
-  BookmarkIcon,
-  PersonIcon,
-  ClockIcon,
-} from "@radix-ui/react-icons";
-import { StarFilledIcon } from "@radix-ui/react-icons";
+import { Calendar, Film, Bookmark, User, Clock, Star } from "lucide-react";
 import { useTVDetails, useTVWatchProviders } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { DetailsHero } from "@/components/ui/details-hero";
@@ -180,7 +173,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <VideoIcon className="h-16 w-16 text-muted-foreground mx-auto" />
+          <Film className="h-16 w-16 text-muted-foreground mx-auto" />
           <h1 className="text-2xl font-bold">TV Show Not Found</h1>
           <p className="text-muted-foreground">
             The TV show you&apos;re looking for doesn&apos;t exist or has been
@@ -298,7 +291,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <VideoIcon className="h-5 w-5" />
+                <Film className="h-5 w-5" />
                 TV Show Details
               </CardTitle>
             </CardHeader>
@@ -326,7 +319,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 {tvShow.first_air_date && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <CalendarIcon className="h-3 w-3" />
+                      <Calendar className="h-3 w-3" />
                       First Aired
                     </h4>
                     <p className="text-base">{firstAirDate}</p>
@@ -336,7 +329,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 {tvShow.last_air_date && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <CalendarIcon className="h-3 w-3" />
+                      <Calendar className="h-3 w-3" />
                       Last Aired
                     </h4>
                     <p className="text-base">{lastAirDate}</p>
@@ -346,7 +339,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 {tvShow.vote_average > 0 && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <StarFilledIcon className="h-3 w-3" />
+                      <Star className="h-3 w-3 fill-current" />
                       Rating
                     </h4>
                     <div className="flex items-center gap-2">
@@ -448,7 +441,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center">
-                            <VideoIcon className="h-6 w-6 text-muted-foreground" />
+                            <Film className="h-6 w-6 text-muted-foreground" />
                           </div>
                         )}
                       </div>
@@ -485,7 +478,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                   <CardContent className="p-8">
                     <div className="text-center space-y-6">
                       <div className="mx-auto w-16 h-16 bg-muted rounded-full flex items-center justify-center">
-                        <ClockIcon className="h-8 w-8" />
+                        <Clock className="h-8 w-8" />
                       </div>
 
                       <div className="space-y-2">
@@ -501,13 +494,13 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                       <div className="flex flex-col sm:flex-row gap-3 justify-center">
                         <Button asChild size="lg">
                           <Link href="/signin">
-                            <PersonIcon className="h-4 w-4 mr-2" />
+                            <User className="h-4 w-4 mr-2" />
                             Sign In to Track Episodes
                           </Link>
                         </Button>
                         <Button variant="outline" size="lg" asChild>
                           <Link href="/library">
-                            <BookmarkIcon className="h-4 w-4 mr-2" />
+                            <Bookmark className="h-4 w-4 mr-2" />
                             View My Library
                           </Link>
                         </Button>

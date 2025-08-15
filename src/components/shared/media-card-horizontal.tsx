@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { VideoIcon } from "@radix-ui/react-icons";
+import { Film } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
@@ -47,7 +47,7 @@ export function MediaCardHorizontal({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-muted rounded">
-            <VideoIcon className="h-4 w-4 text-muted-foreground" />
+            <Film className="h-4 w-4 text-muted-foreground" />
           </div>
         )}
       </div>

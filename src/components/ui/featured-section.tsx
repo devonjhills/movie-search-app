@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { StarFilledIcon, DrawingPinFilledIcon } from "@radix-ui/react-icons";
+import { Star, Pin } from "lucide-react";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
@@ -37,7 +37,7 @@ export function FeaturedSection({
           <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
           {showTrending && (
             <Badge variant="secondary" className="gap-1">
-              <DrawingPinFilledIcon className="h-3 w-3" />
+              <Pin className="h-3 w-3 fill-current" />
               Trending
             </Badge>
           )}
@@ -88,7 +88,7 @@ export function FeaturedSection({
                   <div className="flex items-center gap-2 text-sm">
                     {item.vote_average > 0 && (
                       <Badge variant="secondary" className="gap-1">
-                        <StarFilledIcon className="h-3 w-3" />
+                        <Star className="h-3 w-3 fill-current" />
                         {rating}
                       </Badge>
                     )}

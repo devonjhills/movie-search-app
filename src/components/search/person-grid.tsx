@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PersonIcon } from "@radix-ui/react-icons";
+import { User } from "lucide-react";
 import { getImageUrl } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -65,7 +65,7 @@ function PersonCard({ person, className }: PersonCardProps) {
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground border rounded-md">
-                <PersonIcon className="h-8 w-8" />
+                <User className="h-8 w-8" />
               </div>
             )}
           </div>

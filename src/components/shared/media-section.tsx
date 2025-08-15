@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
-  VideoIcon,
-  StarFilledIcon,
-  DrawingPinFilledIcon,
-  ArrowRightIcon,
-} from "@radix-ui/react-icons";
+  Film,
+  Star,
+  Pin,
+  ArrowRight,
+} from "lucide-react";
 
 interface MediaItem {
   id: number;
@@ -46,9 +46,9 @@ const badgeIcons: Record<
   string,
   React.ComponentType<{ className?: string }>
 > = {
-  "In Theaters": VideoIcon,
-  "Playing Now": VideoIcon,
-  "Critics' Choice": StarFilledIcon,
+  "In Theaters": Film,
+  "Playing Now": Film,
+  "Critics' Choice": Star,
 };
 
 export function MediaSection({
@@ -80,7 +80,7 @@ export function MediaSection({
           {/* Badges */}
           {showTrending && (
             <Badge variant="secondary" className="gap-1">
-              <DrawingPinFilledIcon className="h-4 w-4" />
+              <Pin className="h-4 w-4 fill-current" />
               Trending
             </Badge>
           )}
@@ -101,7 +101,7 @@ export function MediaSection({
           <Button variant="outline" asChild>
             <Link href={href}>
               View All
-              <ArrowRightIcon className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         )}

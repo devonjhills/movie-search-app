@@ -17,14 +17,14 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useAuth } from "@/components/providers/auth-provider";
 import {
-  MoonIcon,
-  SunIcon,
-  ExitIcon,
-  PersonIcon,
-  BookmarkIcon,
-  HamburgerMenuIcon,
-  Cross1Icon,
-} from "@radix-ui/react-icons";
+  Moon,
+  Sun,
+  LogOut,
+  User,
+  Bookmark,
+  Menu,
+  X,
+} from "lucide-react";
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);
@@ -105,9 +105,9 @@ export function Navigation() {
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
-                <Cross1Icon className="h-7 w-7" />
+                <X className="h-7 w-7" />
               ) : (
-                <HamburgerMenuIcon className="h-7 w-7" />
+                <Menu className="h-7 w-7" />
               )}
             </Button>
             {/* Auth Dropdown */}
@@ -132,7 +132,7 @@ export function Navigation() {
                       <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-green-500 border-2 border-background" />
                     </div>
                   ) : (
-                    <PersonIcon className="h-7 w-7" />
+                    <User className="h-7 w-7" />
                   )}
                 </Button>
               </DropdownMenuTrigger>
@@ -161,14 +161,14 @@ export function Navigation() {
                       onClick={() => router.push("/library")}
                       className="flex items-center py-2.5"
                     >
-                      <BookmarkIcon className="h-4 w-4 mr-3 text-muted-foreground" />
+                      <Bookmark className="h-4 w-4 mr-3 text-muted-foreground" />
                       <span>My Library</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => signOut()}
                       className="flex items-center py-2.5 text-destructive focus:text-destructive"
                     >
-                      <ExitIcon className="h-4 w-4 mr-3" />
+                      <LogOut className="h-4 w-4 mr-3" />
                       <span>Sign Out</span>
                     </DropdownMenuItem>
                   </>
@@ -177,7 +177,7 @@ export function Navigation() {
                     onClick={() => router.push("/signin")}
                     className="flex items-center py-2.5"
                   >
-                    <PersonIcon className="h-4 w-4 mr-3 text-muted-foreground" />
+                    <User className="h-4 w-4 mr-3 text-muted-foreground" />
                     <span>Sign In</span>
                   </DropdownMenuItem>
                 )}
@@ -195,9 +195,9 @@ export function Navigation() {
                 // Show a neutral icon during SSR to prevent hydration mismatch
                 <div className="h-7 w-7" />
               ) : theme === "dark" ? (
-                <SunIcon className="h-7 w-7 stroke-2" />
+                <Sun className="h-7 w-7 stroke-2" />
               ) : (
-                <MoonIcon className="h-7 w-7 stroke-2" />
+                <Moon className="h-7 w-7 stroke-2" />
               )}
             </Button>
           </div>

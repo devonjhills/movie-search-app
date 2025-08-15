@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import {
-  CalendarIcon,
-  ClockIcon,
-  PlayIcon,
-  ReaderIcon as FilmIcon,
-  VideoIcon as TvIcon,
-  StarFilledIcon,
-} from "@radix-ui/react-icons";
+  Calendar,
+  Clock,
+  Play,
+  Film as FilmIcon,
+  MonitorPlay as TvIcon,
+  Star,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getImageUrl } from "@/lib/api";
 import { WatchStatusButton } from "@/components/shared/watch-status-button";
@@ -139,7 +139,7 @@ export function DetailsHero({
                   <div className="flex flex-wrap items-center gap-2">
                     {item.vote_average > 0 && (
                       <Badge variant="secondary" className="gap-1">
-                        <StarFilledIcon className="h-3 w-3" />
+                        <Star className="h-3 w-3 fill-current" />
                         <span>{rating}</span>
                       </Badge>
                     )}
@@ -149,7 +149,7 @@ export function DetailsHero({
                     <div className="flex flex-wrap items-center gap-3">
                       {releaseDate && (
                         <div className="flex items-center gap-1">
-                          <CalendarIcon className="h-4 w-4" />
+                          <Calendar className="h-4 w-4" />
                           <span>
                             {new Date(
                               isMovieDetails(item)
@@ -162,7 +162,7 @@ export function DetailsHero({
 
                       {runtime && (
                         <div className="flex items-center gap-1">
-                          <ClockIcon className="h-4 w-4" />
+                          <Clock className="h-4 w-4" />
                           <span>{runtime}</span>
                         </div>
                       )}
@@ -217,7 +217,7 @@ export function DetailsHero({
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <PlayIcon className="h-4 w-4" />
+                        <Play className="h-4 w-4" />
                         Watch Trailer
                       </a>
                     </Button>

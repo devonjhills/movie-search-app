@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { VideoIcon } from "@radix-ui/react-icons";
+import { Film } from "lucide-react";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center space-y-6 max-w-md mx-auto px-4">
         <div className="space-y-4">
-          <VideoIcon className="h-24 w-24 text-muted-foreground mx-auto" />
+          <Film className="h-24 w-24 text-muted-foreground mx-auto" />
           <h1 className="text-6xl font-bold text-primary">404</h1>
         </div>
 

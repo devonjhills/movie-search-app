@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PersonCard } from "@/components/person/person-card";
 
@@ -56,12 +56,12 @@ export function CastGrid({
             {showAll ? (
               <>
                 Show Less Cast
-                <ChevronUpIcon className="h-4 w-4" />
+                <ChevronUp className="h-4 w-4" />
               </>
             ) : (
               <>
                 Show {cast.length - initialDisplayCount} More Cast
-                <ChevronDownIcon className="h-4 w-4" />
+                <ChevronDown className="h-4 w-4" />
               </>
             )}
           </Button>

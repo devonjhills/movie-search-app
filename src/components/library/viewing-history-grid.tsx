@@ -5,7 +5,7 @@ import { ViewingHistoryCard } from "./viewing-history-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ViewingHistoryGridProps {
   items: ViewingHistoryItem[];
@@ -137,7 +137,7 @@ export function ViewingHistoryGrid({
               disabled={page === 1}
               className="gap-2"
             >
-              <ChevronLeftIcon className="h-4 w-4" />
+              <ChevronLeft className="h-4 w-4" />
               Previous
             </Button>
 
@@ -176,7 +176,7 @@ export function ViewingHistoryGrid({
               className="gap-2"
             >
               Next
-              <ChevronRightIcon className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
         </Card>

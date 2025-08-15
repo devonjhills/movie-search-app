@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { StarFilledIcon } from "@radix-ui/react-icons";
+import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn, formatVoteAverage } from "@/lib/utils";
@@ -74,7 +74,7 @@ export function MediaCard({
             {showRating && item.vote_average > 0 && (
               <div className="absolute top-2 right-2">
                 <Badge className="gap-1">
-                  <StarFilledIcon className="h-3 w-3" />
+                  <Star className="h-3 w-3 fill-current" />
                   <span>{rating}</span>
                 </Badge>
               </div>

@@ -4,12 +4,12 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  StarFilledIcon,
-  InfoCircledIcon,
-  PlayIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@radix-ui/react-icons";
+  Star,
+  Info,
+  Play,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
@@ -113,7 +113,7 @@ export function RotatingHeroSection({
             className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
             onClick={handlePrevious}
           >
-            <ChevronLeftIcon className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
@@ -121,7 +121,7 @@ export function RotatingHeroSection({
             className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
             onClick={handleNext}
           >
-            <ChevronRightIcon className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" />
           </Button>
         </>
       )}
@@ -146,9 +146,9 @@ export function RotatingHeroSection({
               ) : (
                 <div className="w-36 md:w-48 aspect-[2/3] bg-muted/50 rounded-lg flex items-center justify-center flex-shrink-0">
                   {mediaType === "movie" ? (
-                    <InfoCircledIcon className="h-16 w-16 text-muted-foreground" />
+                    <Info className="h-16 w-16 text-muted-foreground" />
                   ) : (
-                    <PlayIcon className="h-16 w-16 text-muted-foreground" />
+                    <Play className="h-16 w-16 text-muted-foreground" />
                   )}
                 </div>
               )}
@@ -163,7 +163,7 @@ export function RotatingHeroSection({
                 <div className="flex flex-wrap items-center gap-3">
                   {currentItem.vote_average > 0 && (
                     <Badge variant="secondary" className="gap-1">
-                      <StarFilledIcon className="h-4 w-4" />
+                      <Star className="h-4 w-4 fill-current" />
                       {rating}
                     </Badge>
                   )}
@@ -183,12 +183,12 @@ export function RotatingHeroSection({
                 <div className="flex flex-wrap gap-3">
                   <Button asChild>
                     <Link href={`/${mediaType}/${currentItem.id}`}>
-                      <InfoCircledIcon className="h-4 w-4 mr-2" />
+                      <Info className="h-4 w-4 mr-2" />
                       View Details
                     </Link>
                   </Button>
                   <Button variant="outline">
-                    <PlayIcon className="h-4 w-4 mr-2" />
+                    <Play className="h-4 w-4 mr-2" />
                     Trailer
                   </Button>
                 </div>
