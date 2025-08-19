@@ -4,7 +4,6 @@ import Image from "next/image";
 import {
   Calendar,
   Clock,
-  Play,
   Film as FilmIcon,
   MonitorPlay as TvIcon,
   Star,
@@ -13,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { getImageUrl } from "@/lib/api";
 import { WatchStatusButton } from "@/components/shared/watch-status-button";
 import { ShareButton } from "@/components/ui/share-button";
-import { Button } from "@/components/ui/button";
+import { TrailerModal } from "@/components/ui/trailer-modal";
 import { WatchProvidersCompact } from "@/components/shared/watch-providers";
 import { ExternalLinks } from "@/components/ui/external-links";
 import {
@@ -254,16 +253,7 @@ export function DetailsHero({
                 {/* Actions */}
                 <div className="flex flex-wrap gap-3">
                   {trailer && (
-                    <Button size="lg" asChild>
-                      <a
-                        href={`https://www.youtube.com/watch?v=${trailer.key}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Play className="h-5 w-5" />
-                        Watch Trailer
-                      </a>
-                    </Button>
+                    <TrailerModal trailer={trailer} title={title} size="lg" />
                   )}
 
                   <WatchStatusButton
