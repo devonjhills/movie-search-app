@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Calendar, Clock, Film, Info, Star } from "lucide-react";
+import { Calendar, Clock, Film, Info, Star, DollarSign, Building2, Tag, Users, Clapperboard } from "lucide-react";
 import { useMovieDetails, useMovieWatchProviders } from "@/lib/hooks/api-hooks";
 import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/person/cast-grid";
@@ -17,7 +17,7 @@ import {
 } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BreadcrumbNavigation } from "@/components/ui/breadcrumb-navigation";
 import { BackNavigation } from "@/components/ui/back-navigation";
 import { PersonCard } from "../person/person-card";
 
@@ -27,7 +27,7 @@ interface MovieDetailsPageProps {
 
 function MovieDetailsSkeleton() {
   return (
-    <div className="min-h-screen relative">
+    <div className="detail-page">
       {/* Hero Skeleton */}
       <div className="relative h-96 bg-muted">
         <div className="absolute inset-0 container mx-auto px-4 flex items-end pb-8">
@@ -202,7 +202,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
   const recommendations = movie.recommendations?.results?.slice(0, 10) || [];
 
   return (
-    <div className="min-h-screen relative">
+    <div className="detail-page">
       {/* Hero Section */}
       <DetailsHero
         item={movie}
@@ -215,7 +215,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
       <div className="relative container mx-auto px-4 pt-4 pb-12">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center justify-between gap-4 mb-8">
-          <Breadcrumb
+          <BreadcrumbNavigation
             items={[
               { label: "Movies", href: "/" },
               { label: movie.title, current: true },
@@ -225,9 +225,9 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
         </div>
         <div className="space-y-8">
           {/* Movie Details */}
-          <Card>
+          <Card className="glass">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-xl font-bold">
                 <Film className="h-5 w-5" />
                 Movie Details
               </CardTitle>
@@ -236,7 +236,8 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {director && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+                      <Clapperboard className="h-3 w-3" />
                       Director
                     </h4>
                     <Link
@@ -297,7 +298,8 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
                 {movie.budget > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+                      <DollarSign className="h-3 w-3" />
                       Budget
                     </h4>
                     <p className="text-base">{budget}</p>
@@ -306,7 +308,8 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
                 {movie.revenue > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+                      <DollarSign className="h-3 w-3" />
                       Revenue
                     </h4>
                     <p className="text-base text-green-600">{revenue}</p>
@@ -315,7 +318,8 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
                 {movie.production_companies.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground">
+                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+                      <Building2 className="h-3 w-3" />
                       Production
                     </h4>
                     <div className="space-y-1">
@@ -332,7 +336,8 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
               {/* Keywords */}
               {keywords.length > 0 && (
                 <div className="space-y-3 pt-6 border-t mt-6">
-                  <h4 className="text-sm font-medium text-muted-foreground">
+                  <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+                    <Tag className="h-3 w-3" />
                     Keywords
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -349,9 +354,12 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
           {/* Cast */}
           {mainCast.length > 0 && (
-            <Card>
+            <Card className="glass">
               <CardHeader>
-                <CardTitle>Cast</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-xl font-bold">
+                  <Users className="h-5 w-5" />
+                  Cast
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <CastGrid
@@ -365,9 +373,12 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
           {/* Key Crew */}
           {keyCrew.length > 0 && (
-            <Card>
+            <Card className="glass">
               <CardHeader>
-                <CardTitle>Key Crew</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-xl font-bold">
+                  <Users className="h-5 w-5" />
+                  Key Crew
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -385,9 +396,12 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
 
           {/* Recommendations */}
           {recommendations.length > 0 && (
-            <Card>
+            <Card className="glass">
               <CardHeader>
-                <CardTitle>You might also like</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-xl font-bold">
+                  <Film className="h-5 w-5" />
+                  You might also like
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <MovieGrid

@@ -29,46 +29,49 @@ export function MediaCardHorizontal({
   character,
   showCard = true,
 }: MediaCardHorizontalProps) {
-  const imageUrl = getImageUrl(item.poster_path || null, "poster", "w92");
+  const imageUrl = getImageUrl(item.poster_path || null, "poster", "w154");
   const title = item.title || item.name || "";
   const releaseDate = item.release_date || item.first_air_date;
 
   const content = (
     <>
-      {/* Poster */}
-      <div className="relative w-12 h-18 flex-shrink-0">
+      {/* Poster - Larger for better visibility */}
+      <div className="relative w-20 h-28 flex-shrink-0">
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={title}
             fill
-            className="object-cover rounded"
-            sizes="48px"
+            className="object-cover rounded-md transition-transform duration-300 group-hover:scale-105"
+            sizes="80px"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-muted rounded">
-            <Film className="h-4 w-4 text-muted-foreground" />
+          <div className="flex h-full w-full items-center justify-center bg-muted rounded-md">
+            <Film className="h-6 w-6 text-muted-foreground" />
           </div>
         )}
       </div>
 
-      {/* Content */}
-      <div className="flex-1 space-y-1 min-w-0">
-        <h4
-          className={cn(
-            "text-sm font-medium truncate",
+      {/* Content - More spacious layout */}
+      <div className="flex-1 space-y-3 min-w-0 flex flex-col justify-center px-2">
+        <div className="space-y-2">
+          <h4 className={cn(
+            "card-title text-base leading-tight line-clamp-2",
             showCard ? "hover:text-primary" : "group-hover:text-primary",
+            "transition-colors duration-200"
+          )}>
+            {title}
+          </h4>
+          
+          {character && (
+            <p className="text-sm text-muted-foreground line-clamp-1 text-body">
+              <span className="text-accent font-medium">as</span> {character}
+            </p>
           )}
-        >
-          {title}
-        </h4>
-        {character && (
-          <p className="text-xs text-muted-foreground truncate">
-            as {character}
-          </p>
-        )}
+        </div>
+        
         {releaseDate && (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground text-body">
             {new Date(releaseDate).getFullYear()}
           </p>
         )}
@@ -79,7 +82,12 @@ export function MediaCardHorizontal({
   if (showCard) {
     return (
       <Link href={`/${mediaType}/${item.id}`} className={className}>
-        <Card className="flex space-x-3 p-3">{content}</Card>
+        <Card className={cn(
+          "flex space-x-5 p-5 glass overflow-hidden transition-all duration-300 hover:shadow-md hover:scale-[1.01] group",
+          "min-h-[140px] w-full"
+        )}>
+          {content}
+        </Card>
       </Link>
     );
   }
@@ -88,7 +96,8 @@ export function MediaCardHorizontal({
     <Link
       href={`/${mediaType}/${item.id}`}
       className={cn(
-        "group flex space-x-3 p-3 rounded-lg hover:bg-muted transition-colors",
+        "group flex space-x-5 p-5 rounded-lg hover:bg-muted/50 transition-all duration-300",
+        "min-h-[140px] items-center w-full",
         className,
       )}
     >

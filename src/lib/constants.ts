@@ -30,34 +30,74 @@ export const ENDPOINTS = {
   searchMulti: `${TMDB_BASE_URL}/search/multi`,
 } as const;
 
-// Image URL builders - Only sizes actually used in the codebase
+// Image URL builders - Optimized sizes for responsive design
 export const IMAGE_URLS = {
-  // Poster sizes
+  // Poster sizes - optimized for different viewports
   poster: {
-    w92: (path: string) => `${TMDB_IMAGE_BASE_URL}/w92${path}`, // Horizontal cards
-    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Card components
-    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`, // Split layout sections
-    w342: (path: string) => `${TMDB_IMAGE_BASE_URL}/w342${path}`, // Hero sections
-    w500: (path: string) => `${TMDB_IMAGE_BASE_URL}/w500${path}`, // Formatted movie results
-    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Large hero displays
+    w92: (path: string) => `${TMDB_IMAGE_BASE_URL}/w92${path}`, // Thumbnail/small cards
+    w154: (path: string) => `${TMDB_IMAGE_BASE_URL}/w154${path}`, // Mobile cards
+    w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Default card size
+    w342: (path: string) => `${TMDB_IMAGE_BASE_URL}/w342${path}`, // Large cards/hero
+    w500: (path: string) => `${TMDB_IMAGE_BASE_URL}/w500${path}`, // Detail pages
+    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // High-res displays
+    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // Maximum quality
   },
 
-  // Backdrop sizes
+  // Backdrop sizes - optimized for different screen sizes
   backdrop: {
-    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Featured sections
-    w1280: (path: string) => `${TMDB_IMAGE_BASE_URL}/w1280${path}`, // Hero sections
+    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`, // Mobile backdrops
+    w780: (path: string) => `${TMDB_IMAGE_BASE_URL}/w780${path}`, // Tablet/desktop
+    w1280: (path: string) => `${TMDB_IMAGE_BASE_URL}/w1280${path}`, // Large screens
+    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // 4K displays
   },
 
   // Profile sizes (for person images)
   profile: {
+    w45: (path: string) => `${TMDB_IMAGE_BASE_URL}/w45${path}`, // Tiny avatars
     w185: (path: string) => `${TMDB_IMAGE_BASE_URL}/w185${path}`, // Person cards
     h632: (path: string) => `${TMDB_IMAGE_BASE_URL}/h632${path}`, // Person details
+    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // High quality
   },
 
   // Logo sizes
   logo: {
-    w154: (path: string) => `${TMDB_IMAGE_BASE_URL}/w154${path}`, // Watch providers
-    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`, // Watch providers
+    w45: (path: string) => `${TMDB_IMAGE_BASE_URL}/w45${path}`, // Small icons
+    w92: (path: string) => `${TMDB_IMAGE_BASE_URL}/w92${path}`, // Medium icons
+    w154: (path: string) => `${TMDB_IMAGE_BASE_URL}/w154${path}`, // Large icons
+    w300: (path: string) => `${TMDB_IMAGE_BASE_URL}/w300${path}`, // Extra large
+    original: (path: string) => `${TMDB_IMAGE_BASE_URL}/original${path}`, // Vector quality
+  },
+} as const;
+
+// Responsive image size mappings
+export const RESPONSIVE_SIZES = {
+  card: {
+    // Media cards in grids
+    sizes: "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1536px) 25vw, 20vw",
+    mobile: "w154",
+    tablet: "w185",
+    desktop: "w342",
+  },
+  hero: {
+    // Hero section posters
+    sizes: "(max-width: 768px) 40vw, 30vw",
+    mobile: "w185",
+    tablet: "w342",
+    desktop: "w500",
+  },
+  backdrop: {
+    // Background images
+    sizes: "100vw",
+    mobile: "w780",
+    tablet: "w1280",
+    desktop: "original",
+  },
+  detail: {
+    // Detail page posters
+    sizes: "(max-width: 768px) 50vw, 25vw",
+    mobile: "w342",
+    tablet: "w500",
+    desktop: "w780",
   },
 } as const;
 

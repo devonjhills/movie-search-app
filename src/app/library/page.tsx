@@ -8,7 +8,7 @@ import { ViewingHistoryFilters } from "@/components/library/viewing-history-filt
 import { CurrentlyWatchingSection } from "@/components/library/currently-watching-section";
 import { useAuth } from "@/hooks/useAuth";
 import { redirect } from "next/navigation";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BreadcrumbNavigation } from "@/components/ui/breadcrumb-navigation";
 import { BackNavigation } from "@/components/ui/back-navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -42,7 +42,7 @@ export default function MyLibraryPage() {
       if (tabParam === "watching") {
         setFilters({ status: "watching", mediaType: "all" });
       } else {
-        setFilters({ status: "all", mediaType: "all" });
+        setFilters({ status: "plan_to_watch", mediaType: "all" });
       }
     } else {
       // Set filters based on URL params if no tab specified
@@ -110,7 +110,7 @@ export default function MyLibraryPage() {
     if (value === "watching") {
       setFilters({ status: "watching", mediaType: "all" });
     } else {
-      setFilters({ status: "all", mediaType: "all" });
+      setFilters({ status: "plan_to_watch", mediaType: "all" });
     }
     setPage(1);
   };
@@ -131,7 +131,7 @@ export default function MyLibraryPage() {
       <div className="border-b">
         <div className="container mx-auto px-4 pt-6 pb-8">
           <div className="flex items-center justify-between gap-4 mb-6">
-            <Breadcrumb items={[{ label: "My Library", current: true }]} />
+            <BreadcrumbNavigation items={[{ label: "My Library", current: true }]} />
             <BackNavigation fallbackHref="/" />
           </div>
 

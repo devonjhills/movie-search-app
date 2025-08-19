@@ -65,15 +65,15 @@ export function ViewingHistoryCard({
 
   return (
     <>
-      <Card className="group hover:shadow-lg transition-shadow overflow-hidden">
+      <Card className="group glass overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
         <div className="flex gap-4 p-4">
-          {/* Poster - Smaller, Fixed Size */}
+          {/* Poster Section */}
           <div className="relative flex-shrink-0">
-            <div className="relative w-16 sm:w-20 aspect-[2/3] overflow-hidden rounded-md">
-              <Link
-                href={`/${item.media_type}/${item.tmdb_id}`}
-                className="block w-full h-full relative"
-              >
+            <Link
+              href={`/${item.media_type}/${item.tmdb_id}`}
+              className="block w-20 aspect-[2/3] relative"
+            >
+              <div className="relative w-full h-full rounded-md overflow-hidden">
                 {(() => {
                   const validImageUrl = getValidImageUrl(item.poster_path);
                   return validImageUrl ? (
@@ -81,122 +81,128 @@ export function ViewingHistoryCard({
                       src={validImageUrl}
                       alt={item.title}
                       fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 64px, 80px"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="80px"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-muted/50 to-muted flex items-center justify-center">
-                      <span className="text-xs text-muted-foreground font-medium text-center">
+                      <span className="text-xs text-muted-foreground font-medium text-center text-body">
                         No Image
                       </span>
                     </div>
                   );
                 })()}
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
 
-          {/* Content - Takes up remaining space */}
-          <div className="flex-1 min-w-0 space-y-3">
-            {/* Header Row */}
-            <div className="flex items-start justify-between gap-2">
-              <div className="flex-1 min-w-0">
+          {/* Content Section */}
+          <div className="flex-1 min-w-0 flex flex-col justify-between">
+            {/* Header Section */}
+            <div className="space-y-3">
+              {/* Title and Action Buttons */}
+              <div className="flex items-start justify-between gap-3">
                 <Link
                   href={`/${item.media_type}/${item.tmdb_id}`}
-                  className="block hover:text-primary transition-colors"
+                  className="block hover:text-primary transition-colors flex-1 min-w-0"
                 >
-                  <h3 className="font-semibold text-sm line-clamp-2 leading-tight">
+                  <h3 className="text-noir-subheading text-lg line-clamp-2 leading-tight">
                     {item.title}
                   </h3>
                 </Link>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs text-muted-foreground capitalize font-medium">
-                    {item.media_type}
-                  </span>
-                  <Badge
-                    className={`${statusColors[item.status]} text-xs px-1.5 py-0.5 font-medium`}
+                
+                {/* Action Buttons */}
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-7 w-7 p-0"
+                    onClick={() => setShowStatusDialog(true)}
+                    title="Update status, rating & notes"
                   >
-                    {statusLabels[item.status]}
-                  </Badge>
+                    <Edit3 className="h-3 w-3" />
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                        <MoreVertical className="h-3 w-3" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={handleRemove}
+                        className="text-destructive"
+                      >
+                        Remove from Library
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-6 w-6 p-0"
-                  onClick={() => setShowStatusDialog(true)}
-                  title="Update status, rating & notes"
+              {/* Media Type and Status */}
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-muted-foreground font-medium text-body">
+                  {item.media_type === "movie" ? "Movie" : "TV Show"}
+                </span>
+                <Badge
+                  className={`${statusColors[item.status]} text-xs px-2 py-1 font-medium`}
                 >
-                  <Edit3 className="h-3 w-3" />
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                      <MoreVertical className="h-3 w-3" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem
-                      onClick={handleRemove}
-                      className="text-destructive"
-                    >
-                      Remove from Library
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                  {statusLabels[item.status]}
+                </Badge>
+              </div>
+
+              {/* Ratings and Metadata */}
+              <div className="flex items-center flex-wrap gap-3">
+                {item.rating && (
+                  <div className="flex items-center gap-1" title="Your rating">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-semibold text-readable">
+                      {item.rating}/10
+                    </span>
+                  </div>
+                )}
+                {item.vote_average && (
+                  <div
+                    className="flex items-center gap-1 text-muted-foreground"
+                    title="TMDB score"
+                  >
+                    <span className="text-sm font-medium text-body">TMDB</span>
+                    <span className="text-sm text-body">
+                      {Math.round(item.vote_average * 10) / 10}
+                    </span>
+                  </div>
+                )}
+                {item.watch_count > 1 && (
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <RotateCcw className="h-4 w-4" />
+                    <span className="font-medium text-body">{item.watch_count}x</span>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Ratings and Metadata Row */}
-            <div className="flex items-center flex-wrap gap-2">
-              {item.rating && (
-                <div className="flex items-center gap-1" title="Your rating">
-                  <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                  <span className="text-xs font-semibold">
-                    {item.rating}/10
-                  </span>
-                </div>
+            {/* Bottom Section */}
+            <div className="space-y-2 mt-2">
+              {/* Episode Progress for TV Shows */}
+              {item.media_type === "tv" && item.episode_progress && (
+                <EpisodeProgress
+                  progress={item.episode_progress}
+                  tmdbId={item.tmdb_id}
+                  onEpisodeUpdate={onUpdate}
+                />
               )}
-              {item.vote_average && (
-                <div
-                  className="flex items-center gap-1 text-muted-foreground/70"
-                  title="TMDB score"
-                >
-                  <span className="text-xs font-medium">TMDB</span>
-                  <span className="text-xs">
-                    {Math.round(item.vote_average * 10) / 10}
-                  </span>
-                </div>
-              )}
-              {item.watch_count > 1 && (
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <RotateCcw className="h-3 w-3" />
-                  <span className="font-medium">{item.watch_count}x</span>
+
+              {/* Notes Section */}
+              {item.notes && (
+                <div className="border-t pt-2">
+                  <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <StickyNote className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                    <span className="line-clamp-2 text-body">{item.notes}</span>
+                  </div>
                 </div>
               )}
             </div>
-
-            {/* Episode Progress for TV Shows */}
-            {item.media_type === "tv" && item.episode_progress && (
-              <EpisodeProgress
-                progress={item.episode_progress}
-                tmdbId={item.tmdb_id}
-                onEpisodeUpdate={onUpdate}
-              />
-            )}
-
-            {/* Notes Section */}
-            {item.notes && (
-              <div className="border-t pt-2">
-                <div className="flex items-start gap-2 text-xs text-muted-foreground p-2 bg-muted/50 rounded">
-                  <StickyNote className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                  <span className="line-clamp-2">{item.notes}</span>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </Card>

@@ -2,8 +2,8 @@
 
 import React from "react";
 import { MediaGrid } from "./media-grid";
-import { Pagination } from "@/components/ui/pagination";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { PaginatedContent } from "@/components/ui/paginated-content";
+import { BreadcrumbNavigation } from "@/components/ui/breadcrumb-navigation";
 import { BackNavigation } from "@/components/ui/back-navigation";
 import { usePaginatedData } from "@/hooks/usePaginatedData";
 
@@ -58,7 +58,7 @@ export function CategoryPageTemplate({
       {/* Navigation */}
       <div className="container mx-auto px-4 pt-6 pb-4">
         <div className="flex items-center justify-between gap-4">
-          <Breadcrumb
+          <BreadcrumbNavigation
             items={[
               { label: breadcrumbParent, href: breadcrumbParentHref },
               { label: title, current: true },
@@ -96,7 +96,7 @@ export function CategoryPageTemplate({
 
           {/* Pagination */}
           {!isLoading && !isError && totalPages > 1 && (
-            <Pagination
+            <PaginatedContent
               currentPage={currentPage}
               totalPages={totalPages}
               totalResults={totalResults}

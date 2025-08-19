@@ -47,11 +47,13 @@ export function DetailsHero({
   trailer,
   watchProviders,
 }: DetailsHeroProps) {
-  const backdropUrl = getImageUrl(item.backdrop_path, "backdrop", "w1280");
-  const posterUrl = getImageUrl(item.poster_path, "poster", "w342");
+  // Use highest quality backdrop for CSS background
+  const backdropUrl = getImageUrl(item.backdrop_path, "backdrop", "original");
+  // Use higher quality poster for larger display
+  const posterUrl = getImageUrl(item.poster_path, "poster", "w500");
   const rating = formatVoteAverage(item.vote_average);
   const releaseDate = formatDate(
-    isMovieDetails(item) ? item.release_date : item.first_air_date,
+    isMovieDetails(item) ? item.release_date : item.first_air_date
   );
   const runtime = isMovieDetails(item) ? formatRuntime(item.runtime) : null;
   const title = isMovieDetails(item) ? item.title : item.name;
@@ -68,68 +70,107 @@ export function DetailsHero({
 
   return (
     <>
-      {/* Backdrop Background */}
-      <div className="absolute inset-0 -z-10">
-        {backdropUrl ? (
-          <Image
-            src={backdropUrl}
-            alt={title}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
+      {/* Fixed Backdrop Background */}
+      {backdropUrl && (
+        <>
+          <div
+            className="backdrop-container"
+            style={{
+              backgroundImage: `url(${backdropUrl})`,
+            }}
+            role="img"
+            aria-label={`${title} backdrop`}
           />
-        ) : (
-          <div className="h-full w-full bg-muted" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/60 to-background/30" />
-      </div>
+          <div className="backdrop-overlay" />
+        </>
+      )}
 
       {/* Hero Section */}
-      <div className="relative py-16">
+      <div className="relative py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-card/95 rounded-lg p-6 border">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="glass-strong rounded-lg p-8 md:p-10">
+            <div className="flex flex-col md:flex-row gap-8">
               {/* Poster */}
-              <div className="md:col-span-1">
-                <div className="relative aspect-[2/3] w-48 mx-auto">
-                  {posterUrl ? (
-                    <Image
-                      src={posterUrl}
-                      alt={title}
-                      fill
-                      className="object-cover rounded-lg"
-                      sizes="200px"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-muted rounded-lg">
-                      {mediaType === "movie" ? (
-                        <FilmIcon className="h-16 w-16 text-muted-foreground" />
-                      ) : (
-                        <TvIcon className="h-16 w-16 text-muted-foreground" />
-                      )}
+              <div className="flex-shrink-0">
+                <div className="space-y-0">
+                  {/* Poster Image */}
+                  <div className="relative w-56 md:w-64 lg:w-72 aspect-[2/3] mx-auto md:mx-0 max-h-[600px]">
+                    {posterUrl ? (
+                      <Image
+                        src={posterUrl}
+                        alt={title}
+                        fill
+                        className={`object-cover shadow-xl ${
+                          watchProviders?.flatrate?.length
+                            ? "rounded-t-lg rounded-b-none"
+                            : "rounded-lg"
+                        }`}
+                        sizes="(max-width: 768px) 224px, (max-width: 1024px) 256px, 288px"
+                        priority
+                      />
+                    ) : (
+                      <div
+                        className={`flex h-full w-full items-center justify-center bg-muted shadow-xl ${
+                          watchProviders?.flatrate?.length
+                            ? "rounded-t-lg rounded-b-none"
+                            : "rounded-lg"
+                        }`}>
+                        {mediaType === "movie" ? (
+                          <FilmIcon className="h-24 w-24 text-muted-foreground" />
+                        ) : (
+                          <TvIcon className="h-24 w-24 text-muted-foreground" />
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Watch Now Footer - Seamlessly attached */}
+                  {watchProviders?.flatrate?.length && (
+                    <div className="w-56 md:w-64 lg:w-72 mx-auto md:mx-0">
+                      <div
+                        className="rounded-b-lg rounded-t-none p-3 shadow-xl border-t-0"
+                        style={{
+                          background: "hsl(var(--glass-bg))",
+                          backdropFilter: "blur(16px) saturate(180%)",
+                          border: "1px solid hsl(var(--glass-border))",
+                          borderTop: "none",
+                          boxShadow:
+                            "0 8px 32px hsl(var(--glass-shadow)), inset 0 1px 0 hsl(var(--glass-border))",
+                        }}>
+                        <div className="flex items-center justify-center gap-2">
+                          <div className="text-center space-y-0.5">
+                            <div className="text-[10px] text-muted-foreground leading-tight">
+                              Now Streaming
+                            </div>
+                            <div className="text-xs font-medium leading-tight">
+                              Watch On
+                            </div>
+                          </div>
+                          <WatchProvidersCompact providers={watchProviders} />
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Title and Content */}
-              <div className="md:col-span-3 space-y-4">
+              <div className="flex-1 space-y-6">
                 {/* Primary Information */}
                 <div className="space-y-4">
                   <div>
-                    <h1 className="text-3xl font-bold leading-tight">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl text-noir-heading leading-tight">
                       {title}
                     </h1>
                     {((isMovieDetails(item) && item.tagline) ||
                       (isTVShowDetails(item) && item.tagline)) && (
-                      <p className="text-lg italic text-muted-foreground">
+                      <p className="text-xl md:text-2xl text-elegant text-muted-foreground italic mt-3">
                         &ldquo;
                         {isMovieDetails(item)
                           ? item.tagline
                           : isTVShowDetails(item)
-                            ? item.tagline
-                            : ""}
+                          ? item.tagline
+                          : ""}
                         &rdquo;
                       </p>
                     )}
@@ -154,7 +195,7 @@ export function DetailsHero({
                             {new Date(
                               isMovieDetails(item)
                                 ? item.release_date
-                                : item.first_air_date,
+                                : item.first_air_date
                             ).getFullYear()}
                           </span>
                         </div>
@@ -184,15 +225,15 @@ export function DetailsHero({
                     (isMovieDetails(item)
                       ? item.genres
                       : isTVShowDetails(item)
-                        ? item.genres
-                        : []
+                      ? item.genres
+                      : []
                     ).length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {(isMovieDetails(item)
                           ? item.genres
                           : isTVShowDetails(item)
-                            ? item.genres
-                            : []
+                          ? item.genres
+                          : []
                         ).map((genre: { id: number; name: string }) => (
                           <Badge key={genre.id} variant="outline">
                             {genre.name}
@@ -202,7 +243,7 @@ export function DetailsHero({
                     )}
 
                   {item.overview && (
-                    <p className="text-base leading-relaxed max-w-2xl">
+                    <p className="text-lg md:text-xl leading-relaxed max-w-4xl text-body">
                       {item.overview}
                     </p>
                   )}
@@ -211,13 +252,12 @@ export function DetailsHero({
                 {/* Actions */}
                 <div className="flex flex-wrap gap-3">
                   {trailer && (
-                    <Button asChild>
+                    <Button size="lg" asChild>
                       <a
                         href={`https://www.youtube.com/watch?v=${trailer.key}`}
                         target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Play className="h-4 w-4" />
+                        rel="noopener noreferrer">
+                        <Play className="h-5 w-5" />
                         Watch Trailer
                       </a>
                     </Button>
@@ -231,6 +271,7 @@ export function DetailsHero({
                     overview={item.overview}
                     release_date={rawReleaseDate}
                     vote_average={item.vote_average}
+                    size="lg"
                   />
 
                   <ShareButton
@@ -244,39 +285,29 @@ export function DetailsHero({
                 </div>
 
                 {/* Additional Info */}
-                {(watchProviders?.flatrate?.length ||
-                  (isMovieDetails(item) && item.external_ids?.imdb_id) ||
+                {((isMovieDetails(item) && item.external_ids?.imdb_id) ||
                   (isTVShowDetails(item) && item.external_ids?.imdb_id) ||
                   (isMovieDetails(item) && item.homepage) ||
                   (isTVShowDetails(item) && item.homepage)) && (
                   <div className="pt-4 border-t">
-                    <div className="flex flex-col gap-4">
-                      <ExternalLinks
-                        externalIds={
-                          isMovieDetails(item)
-                            ? item.external_ids
-                            : isTVShowDetails(item)
-                              ? item.external_ids
-                              : undefined
-                        }
-                        homepage={
-                          isMovieDetails(item)
-                            ? item.homepage
-                            : isTVShowDetails(item)
-                              ? item.homepage
-                              : undefined
-                        }
-                        title={title}
-                        releaseDate={rawReleaseDate}
-                      />
-
-                      {watchProviders?.flatrate?.length && (
-                        <div className="flex items-center gap-3">
-                          <span className="font-medium">Watch now</span>
-                          <WatchProvidersCompact providers={watchProviders} />
-                        </div>
-                      )}
-                    </div>
+                    <ExternalLinks
+                      externalIds={
+                        isMovieDetails(item)
+                          ? item.external_ids
+                          : isTVShowDetails(item)
+                          ? item.external_ids
+                          : undefined
+                      }
+                      homepage={
+                        isMovieDetails(item)
+                          ? item.homepage
+                          : isTVShowDetails(item)
+                          ? item.homepage
+                          : undefined
+                      }
+                      title={title}
+                      releaseDate={rawReleaseDate}
+                    />
                   </div>
                 )}
               </div>

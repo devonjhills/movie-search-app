@@ -110,7 +110,7 @@ export function RotatingHeroSection({
           <Button
             variant="outline"
             size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 glass"
             onClick={handlePrevious}
           >
             <ChevronLeft className="h-4 w-4" />
@@ -118,7 +118,7 @@ export function RotatingHeroSection({
           <Button
             variant="outline"
             size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 glass"
             onClick={handleNext}
           >
             <ChevronRight className="h-4 w-4" />
@@ -128,7 +128,7 @@ export function RotatingHeroSection({
 
       <div className="absolute inset-0 flex items-center justify-center p-12 z-10">
         <div className="container mx-auto">
-          <div className="bg-background/60 backdrop-blur-sm rounded-lg p-8 border border-border/50 max-w-5xl mx-auto">
+          <div className="glass-strong rounded-lg p-8 max-w-5xl mx-auto">
             <div className="flex items-center gap-8">
               {currentItem.poster_path ? (
                 <div className="w-36 md:w-48 aspect-[2/3] relative rounded-lg overflow-hidden shadow-lg flex-shrink-0">
@@ -154,7 +154,7 @@ export function RotatingHeroSection({
               )}
 
               <div className="flex-1 space-y-4">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl text-noir-heading leading-tight">
                   {"title" in currentItem
                     ? currentItem.title
                     : currentItem.name}
@@ -175,7 +175,7 @@ export function RotatingHeroSection({
                 </div>
 
                 {currentItem.overview && (
-                  <p className="text-base md:text-lg leading-relaxed line-clamp-3 max-w-3xl">
+                  <p className="text-base md:text-lg leading-relaxed line-clamp-3 max-w-3xl text-body">
                     {currentItem.overview}
                   </p>
                 )}

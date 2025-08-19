@@ -19,7 +19,7 @@ export default async function Home() {
       )}
 
       {/* Movie Sections */}
-      <div className="container mx-auto px-4 space-y-10 md:space-y-16 pb-8 md:pb-12">
+      <div className="container mx-auto px-4 space-y-10 md:space-y-16 pb-8 md:pb-12 relative">
         {/* Trending This Week - Featured Layout */}
         <FeaturedSection
           title="Trending This Week"

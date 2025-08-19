@@ -75,23 +75,23 @@ export function MediaSection({
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h2 className="text-2xl sm:text-3xl font-bold">{title}</h2>
+          <h2 className="text-3xl sm:text-4xl text-noir-heading">{title}</h2>
 
           {/* Badges */}
           {showTrending && (
-            <Badge variant="secondary" className="gap-1">
-              <Pin className="h-4 w-4 fill-current" />
-              Trending
+            <Badge variant="secondary" className="gap-1 glass-subtle">
+              <Pin className="h-3 w-3 fill-current" />
+              <span className="text-readable">Trending</span>
             </Badge>
           )}
 
           {badge && (
-            <Badge variant="secondary" className="gap-1">
+            <Badge variant="secondary" className="gap-1 glass-subtle">
               {badgeIcons[badge] &&
                 React.createElement(badgeIcons[badge], {
-                  className: "h-4 w-4",
+                  className: "h-3 w-3",
                 })}
-              {badge}
+              <span className="text-readable">{badge}</span>
             </Badge>
           )}
         </div>

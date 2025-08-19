@@ -11,6 +11,10 @@ import {
   Film,
   ChevronDown,
   ChevronUp,
+  Info,
+  Tv,
+  FileText,
+  Link as LinkIcon,
 } from "lucide-react";
 import { usePersonDetails } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
@@ -20,9 +24,9 @@ import type { Movie, TVShow } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BreadcrumbNavigation } from "@/components/ui/breadcrumb-navigation";
 import { BackNavigation } from "@/components/ui/back-navigation";
-import { Pagination } from "@/components/ui/pagination";
+import { PaginatedContent } from "@/components/ui/paginated-content";
 import { Badge } from "@/components/ui/badge";
 import { MovieCardHorizontal } from "@/components/movie/movie-card-horizontal";
 import { TVCardHorizontal } from "@/components/tv/tv-card-horizontal";
@@ -284,7 +288,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
       {/* Navigation */}
       <div className="container mx-auto px-4 pt-6 pb-4">
         <div className="flex items-center justify-between gap-4">
-          <Breadcrumb
+          <BreadcrumbNavigation
             items={[
               { label: "People", href: "/search?tab=people" },
               { label: person.name, current: true },
@@ -318,7 +322,10 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             {/* Personal Info */}
             <Card>
               <CardHeader>
-                <CardTitle>Personal Info</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+                  <Info className="h-4 w-4" />
+                  Personal Info
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {allDepartments.length > 0 && (
@@ -403,7 +410,10 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             {person.external_ids && (
               <Card>
                 <CardHeader>
-                  <CardTitle>External Links</CardTitle>
+                  <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+                    <LinkIcon className="h-4 w-4" />
+                    External Links
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   {person.external_ids.imdb_id && (
@@ -475,7 +485,10 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             {person.biography && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Biography</CardTitle>
+                  <CardTitle className="flex items-center gap-2 text-xl font-bold">
+                    <FileText className="h-5 w-5" />
+                    Biography
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="prose prose-sm max-w-none text-foreground/90">
@@ -494,7 +507,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center space-x-2">
+                    <CardTitle className="flex items-center gap-2 text-xl font-bold">
                       <Film className="h-5 w-5" />
                       <span>Movie Credits</span>
                       <span className="text-sm font-normal text-muted-foreground">
@@ -542,7 +555,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                   {/* Pagination for expanded view */}
                   {movieCreditsExpanded && movieTotalPages > 1 && (
                     <div className="mt-6">
-                      <Pagination
+                      <PaginatedContent
                         currentPage={movieCreditsPage}
                         totalPages={movieTotalPages}
                         totalResults={movieCredits.length}
@@ -569,8 +582,8 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center space-x-2">
-                      <Film className="h-5 w-5" />
+                    <CardTitle className="flex items-center gap-2 text-xl font-bold">
+                      <Tv className="h-5 w-5" />
                       <span>TV Credits</span>
                       <span className="text-sm font-normal text-muted-foreground">
                         ({tvCredits.length} total)
@@ -617,7 +630,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                   {/* Pagination for expanded view */}
                   {tvCreditsExpanded && tvTotalPages > 1 && (
                     <div className="mt-6">
-                      <Pagination
+                      <PaginatedContent
                         currentPage={tvCreditsPage}
                         totalPages={tvTotalPages}
                         totalResults={tvCredits.length}

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Merriweather, JetBrains_Mono } from "next/font/google";
+import { Inter, Crimson_Pro, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
+import { BackgroundProvider } from "@/components/providers/background-provider";
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,11 +16,11 @@ const inter = Inter({
   display: "swap", // Performance optimization
 });
 
-// Merriweather - Classic, readable serif perfect for film noir with excellent legibility
-const merriweather = Merriweather({
+// Crimson Pro - Elegant serif with better readability, perfect for film noir aesthetic
+const crimsonPro = Crimson_Pro({
   subsets: ["latin"],
   variable: "--font-serif",
-  weight: ["300", "400", "700", "900"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
   style: ["normal", "italic"],
 });
@@ -92,7 +93,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${merriweather.variable} ${jetbrains.variable} font-sans antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} ${crimsonPro.variable} ${jetbrains.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <AuthProvider>
           <ThemeProvider
@@ -102,8 +103,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <TooltipProvider>
+              <BackgroundProvider />
               <Navigation />
-              <main id="main-content" className="flex-1">
+              <main id="main-content" className="flex-1 pt-16">
                 {children}
               </main>
               <Footer />

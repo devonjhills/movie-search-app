@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import {
@@ -9,6 +10,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 import type { WatchProviderRegion, WatchProvider } from "@/lib/types";
 
 interface WatchProvidersProps {
@@ -205,12 +212,17 @@ export function WatchProvidersCompact({
     return null;
   }
 
+  const maxVisible = 3; // Show max 3 badges initially
+  const hasOverflow = providers.flatrate.length > maxVisible;
+  const visibleProviders = providers.flatrate.slice(0, maxVisible);
+  const hiddenProviders = providers.flatrate.slice(maxVisible);
+
   return (
-    <div className={cn("flex items-center gap-2 flex-wrap", className)}>
-      {providers.flatrate.map((provider) => (
+    <div className={cn("flex items-center gap-1.5", className)}>
+      {visibleProviders.map((provider) => (
         <Tooltip key={provider.provider_id}>
           <TooltipTrigger asChild>
-            <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-white dark:bg-gray-900 shadow-sm hover:scale-105 transition-transform duration-200 cursor-pointer">
+            <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-white dark:bg-gray-900 shadow-sm hover:scale-105 transition-transform duration-200 cursor-pointer">
               <div className="absolute inset-0 p-1">
                 <Image
                   src={getImageUrl(provider.logo_path, "logo", "w154")}
@@ -228,6 +240,45 @@ export function WatchProvidersCompact({
           </TooltipContent>
         </Tooltip>
       ))}
+      
+      {hasOverflow && (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-10 w-10 p-0"
+            >
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-fit p-2">
+            <div className="flex flex-wrap gap-1.5 max-w-48">
+              {hiddenProviders.map((provider) => (
+                <Tooltip key={provider.provider_id}>
+                  <TooltipTrigger asChild>
+                    <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-white dark:bg-gray-900 shadow-sm hover:scale-105 transition-transform duration-200 cursor-pointer">
+                      <div className="absolute inset-0 p-1">
+                        <Image
+                          src={getImageUrl(provider.logo_path, "logo", "w154")}
+                          alt={provider.provider_name}
+                          fill
+                          className="object-contain"
+                          sizes="40px"
+                          quality={90}
+                        />
+                      </div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <p>{provider.provider_name}</p>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
     </div>
   );
 }

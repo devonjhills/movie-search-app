@@ -4,6 +4,7 @@ import { Star, Pin } from "lucide-react";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { ViewAllButton } from "@/components/ui/view-all-button";
 import type { Movie, TVShow } from "@/lib/types";
 
@@ -34,9 +35,9 @@ export function FeaturedSection({
     <section className={cn("space-y-6", className)}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+          <h2 className="text-3xl md:text-4xl text-noir-heading">{title}</h2>
           {showTrending && (
-            <Badge variant="secondary" className="gap-1">
+            <Badge variant="secondary" className="gap-1 glass-subtle">
               <Pin className="h-3 w-3 fill-current" />
               Trending
             </Badge>
@@ -45,7 +46,7 @@ export function FeaturedSection({
         {viewAllHref && <ViewAllButton href={viewAllHref} />}
       </div>
 
-      <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {featuredItems.map((item, index) => {
           const title =
             "title" in item ? item.title : "name" in item ? item.name : "";
@@ -64,42 +65,52 @@ export function FeaturedSection({
 
           return (
             <Link key={item.id} href={`/${mediaType}/${item.id}`}>
-              <div className="group relative aspect-video rounded-lg overflow-hidden border bg-card">
-                {backdropUrl ? (
-                  <Image
-                    src={backdropUrl}
-                    alt={title}
-                    fill
-                    className="object-cover"
-                    priority={index < 3}
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
-                    <span className="text-sm">No Image</span>
-                  </div>
-                )}
+              <Card className="group glass transition-all duration-300 hover:shadow-lg hover:scale-[1.02] h-[220px] overflow-hidden">
+                <div className="relative h-full">
+                  {backdropUrl ? (
+                    <Image
+                      src={backdropUrl}
+                      alt={title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      priority={index < 3}
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
+                      <span className="text-sm text-body">No Image</span>
+                    </div>
+                  )}
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  {/* Enhanced gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    {title}
-                  </h3>
-                  <div className="flex items-center gap-2 text-sm">
-                    {item.vote_average > 0 && (
-                      <Badge variant="secondary" className="gap-1">
-                        <Star className="h-3 w-3 fill-current" />
-                        {rating}
-                      </Badge>
-                    )}
-                    {releaseDate && (
-                      <Badge variant="outline">
-                        {new Date(releaseDate).getFullYear()}
-                      </Badge>
-                    )}
+                  {/* Content positioning */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-4">
+                    <div className="space-y-3">
+                      <h3 className="text-noir-subheading text-xl text-white leading-tight line-clamp-2">
+                        {title}
+                      </h3>
+                      
+                      <div className="flex items-center gap-2">
+                        {item.vote_average > 0 && (
+                          <Badge variant="secondary" className="gap-1 glass-subtle text-xs">
+                            <Star className="h-3 w-3 fill-current" />
+                            <span className="text-readable">{rating}</span>
+                          </Badge>
+                        )}
+                        {releaseDate && (
+                          <Badge variant="outline" className="text-xs glass-subtle border-white/30 text-white">
+                            {new Date(releaseDate).getFullYear()}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
                   </div>
+
+                  {/* Hover effect overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-              </div>
+              </Card>
             </Link>
           );
         })}

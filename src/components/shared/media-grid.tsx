@@ -34,15 +34,30 @@ export function MediaGrid({
   showOverview = false,
   columns = { sm: 2, md: 3, lg: 4, xl: 5 },
 }: MediaGridProps) {
+  const cardSizeMap = {
+    sm: "w-[160px]",
+    md: "w-[185px]",
+    lg: "w-[210px]",
+  };
+
+  const cardHeightMap = {
+    sm: "h-[340px]",
+    md: "h-[378px]",
+    lg: "h-[415px]",
+  };
+
   // Handle loading state
   if (isLoading) {
     return (
-      <div className={cn("grid gap-4", getGridClasses(columns), className)}>
+      <div className={cn("grid gap-6 justify-items-center", getGridClasses(columns), className)}>
         {Array.from({ length: 10 }).map((_, i) => (
-          <div key={i} className="space-y-2">
-            <Skeleton className="aspect-[2/3] w-full" />
-            <Skeleton className="h-4 w-3/4" />
-            <Skeleton className="h-3 w-1/2" />
+          <div key={i} className={cn("flex flex-col glass rounded-lg overflow-hidden", cardSizeMap[cardSize], cardHeightMap[cardSize])}>
+            <Skeleton className="aspect-[2/3] w-full flex-1" />
+            <div className="p-4 space-y-2">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-3 w-1/2" />
+            </div>
           </div>
         ))}
       </div>
@@ -53,9 +68,9 @@ export function MediaGrid({
   if (error) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="text-center space-y-2">
-          <p className="text-destructive font-medium">Failed to load content</p>
-          <p className="text-sm text-muted-foreground">
+        <div className="text-center space-y-3 glass p-6 rounded-lg">
+          <p className="text-destructive card-title">Failed to load content</p>
+          <p className="text-sm text-muted-foreground text-body">
             {error.message || "Something went wrong"}
           </p>
         </div>
@@ -67,8 +82,8 @@ export function MediaGrid({
   if (!items.length) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="text-center space-y-2">
-          <p className="text-muted-foreground">
+        <div className="text-center space-y-3 glass p-6 rounded-lg">
+          <p className="text-muted-foreground text-body">
             No {mediaType === "movie" ? "movies" : "TV shows"} found
           </p>
         </div>
@@ -77,7 +92,7 @@ export function MediaGrid({
   }
 
   return (
-    <div className={cn("grid gap-4", getGridClasses(columns), className)}>
+    <div className={cn("grid gap-6 justify-items-center", getGridClasses(columns), className)}>
       {items.map((item, index) => (
         <MediaCard
           key={item.id}
@@ -95,10 +110,20 @@ export function MediaGrid({
 }
 
 function getGridClasses(columns: MediaGridProps["columns"]) {
+  // Adjusted for larger cards - fewer columns per breakpoint
+  const smCols = columns?.sm || 2;
+  const mdCols = columns?.md || 3;
+  const lgCols = columns?.lg || 4;
+  const xlCols = columns?.xl || 5;
+  
   return cn([
-    `grid-cols-${columns?.sm || 2}`,
-    `sm:grid-cols-${columns?.md || 3}`,
-    `md:grid-cols-${columns?.lg || 4}`,
-    `lg:grid-cols-${columns?.xl || 5}`,
+    // Mobile: 1-2 columns
+    smCols === 1 ? "grid-cols-1" : "grid-cols-2",
+    // Small tablets: 2-3 columns  
+    mdCols === 2 ? "sm:grid-cols-2" : mdCols === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2",
+    // Medium screens: 3-4 columns
+    lgCols === 3 ? "md:grid-cols-3" : lgCols === 4 ? "md:grid-cols-4" : "md:grid-cols-3",
+    // Large screens: 4-5 columns
+    xlCols === 4 ? "lg:grid-cols-4" : xlCols === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4",
   ]);
 }

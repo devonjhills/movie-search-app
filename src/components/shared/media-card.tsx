@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
+import { RESPONSIVE_SIZES } from "@/lib/constants";
 
 export interface MediaItem {
   id: number;
@@ -38,69 +39,97 @@ export function MediaCard({
   showOverview = false,
   priority = false,
 }: MediaCardProps) {
-  const imageUrl = getImageUrl(item.poster_path || null, "poster", "w185");
+  // Responsive image optimization
+  const getResponsiveImageUrl = (size: "mobile" | "tablet" | "desktop") => {
+    const sizeKey = RESPONSIVE_SIZES.card[size] as keyof typeof import("@/lib/constants").IMAGE_URLS.poster;
+    return getImageUrl(item.poster_path || null, "poster", sizeKey);
+  };
+  
+  const imageUrl = getResponsiveImageUrl("tablet");
   const rating = formatVoteAverage(item.vote_average);
   const title = item.title || item.name || "";
   const releaseDate = item.release_date || item.first_air_date;
 
   const sizeClasses = {
-    sm: "w-full",
-    md: "w-full",
-    lg: "w-full",
+    sm: "w-[160px]",
+    md: "w-[185px]", 
+    lg: "w-[210px]",
+  };
+
+  const cardHeights = {
+    sm: "h-[340px]", // 160*1.5 + 100px for content = 340px
+    md: "h-[378px]", // 185*1.5 + 100px for content = 378px  
+    lg: "h-[415px]", // 210*1.5 + 100px for content = 415px
   };
 
   return (
-    <Card className={cn(sizeClasses[size], "h-full flex flex-col", className)}>
-      <CardContent className="p-2 space-y-2 flex-1 flex flex-col">
-        {/* Poster Image - Clickable */}
-        <Link href={`/${mediaType}/${item.id}`}>
-          <div className="relative aspect-[2/3] overflow-hidden rounded cursor-pointer">
-            {imageUrl ? (
-              <Image
-                src={imageUrl}
-                alt={title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                priority={priority}
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
-                <span className="text-xs text-center p-2">No Image</span>
-              </div>
+    <Card className={cn(
+      sizeClasses[size], 
+      cardHeights[size],
+      "flex flex-col glass overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group",
+      className
+    )}>
+      <CardContent className="p-0 flex flex-col h-full">
+        {/* Poster Image - Takes up poster space only */}
+        <div className="relative">
+          <Link href={`/${mediaType}/${item.id}`} className="block">
+            <div className="relative aspect-[2/3] overflow-hidden cursor-pointer w-full">
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  alt={title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes={RESPONSIVE_SIZES.card.sizes}
+                  priority={priority}
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
+                  <span className="text-xs text-center p-2 text-body">No Image</span>
+                </div>
+              )}
+
+              {/* Rating Badge */}
+              {showRating && item.vote_average > 0 && (
+                <div className="absolute top-3 right-3">
+                  <Badge variant="secondary" className="gap-1 glass-subtle text-xs">
+                    <Star className="h-3 w-3 fill-current" />
+                    <span className="text-readable">{rating}</span>
+                  </Badge>
+                </div>
+              )}
+
+              {/* Gradient overlay for better text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+          </Link>
+        </div>
+
+        {/* Text Content Area - Fixed 100px height */}
+        <div className="h-[100px] p-4 flex flex-col justify-between">
+          {/* Top section - Title */}
+          <div>
+            <h3 className="text-noir-subheading text-base leading-tight line-clamp-2 mb-2">
+              {title}
+            </h3>
+          </div>
+          
+          {/* Bottom section - Year with guaranteed space */}
+          <div className="mt-auto">
+            {showYear && releaseDate && (
+              <p className="text-sm text-muted-foreground text-body">
+                {new Date(releaseDate).getFullYear()}
+              </p>
             )}
 
-            {/* Rating Badge */}
-            {showRating && item.vote_average > 0 && (
-              <div className="absolute top-2 right-2">
-                <Badge className="gap-1">
-                  <Star className="h-3 w-3 fill-current" />
-                  <span>{rating}</span>
-                </Badge>
-              </div>
+            {showOverview && item.overview && (
+              <p className="text-xs text-muted-foreground line-clamp-1 text-body mt-1">
+                {item.overview.length > 60
+                  ? item.overview.substring(0, 60) + "..."
+                  : item.overview}
+              </p>
             )}
           </div>
-        </Link>
-
-        {/* Media Info - Not Clickable */}
-        <div className="space-y-1 flex-1 flex flex-col">
-          <h3 className="text-sm font-medium leading-tight line-clamp-2">
-            {title}
-          </h3>
-
-          {showYear && releaseDate && (
-            <p className="text-xs text-muted-foreground">
-              {new Date(releaseDate).getFullYear()}
-            </p>
-          )}
-
-          {showOverview && item.overview && (
-            <p className="text-xs text-muted-foreground line-clamp-3">
-              {item.overview.length > 120
-                ? item.overview.substring(0, 120) + "..."
-                : item.overview}
-            </p>
-          )}
         </div>
       </CardContent>
     </Card>

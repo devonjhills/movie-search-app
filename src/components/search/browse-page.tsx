@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BreadcrumbNavigation } from "@/components/ui/breadcrumb-navigation";
 import { BackNavigation } from "@/components/ui/back-navigation";
 
 interface BrowsePageProps {
@@ -131,7 +131,7 @@ export function BrowsePage({ initialQuery = "" }: BrowsePageProps) {
       {/* Navigation */}
       <div className="container mx-auto px-4 pt-6 pb-4">
         <div className="flex items-center justify-between gap-4">
-          <Breadcrumb items={[{ label: "Search", current: true }]} />
+          <BreadcrumbNavigation items={[{ label: "Search", current: true }]} />
           <BackNavigation fallbackHref="/" />
         </div>
       </div>
