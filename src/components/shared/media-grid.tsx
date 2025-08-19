@@ -1,7 +1,7 @@
 "use client";
 
 import { MediaCard, type MediaItem } from "./media-card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { MediaCardSkeleton } from "@/components/ui/optimized-skeleton";
 import { cn } from "@/lib/utils";
 
 interface MediaGridProps {
@@ -34,44 +34,18 @@ export function MediaGrid({
   showOverview = false,
   columns = { sm: 2, md: 4, lg: 5, xl: 6 },
 }: MediaGridProps) {
-  const cardSizeMap = {
-    sm: "w-[160px]",
-    md: "w-[185px]",
-    lg: "w-[210px]",
-  };
-
-  const cardHeightMap = {
-    sm: "h-[340px]",
-    md: "h-[378px]",
-    lg: "h-[415px]",
-  };
-
   // Handle loading state
   if (isLoading) {
     return (
       <div
         className={cn(
-          "grid gap-6 justify-items-center px-2",
+          "grid gap-6 justify-items-center px-2 layout-stable",
           getGridClasses(columns),
           className,
         )}
       >
         {Array.from({ length: 12 }).map((_, i) => (
-          <div
-            key={i}
-            className={cn(
-              "flex flex-col noir-card rounded-lg overflow-hidden",
-              cardSizeMap[cardSize],
-              cardHeightMap[cardSize],
-            )}
-          >
-            <Skeleton className="aspect-[2/3] w-full flex-1" />
-            <div className="p-4 space-y-2">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-3/4" />
-              <Skeleton className="h-3 w-1/2" />
-            </div>
-          </div>
+          <MediaCardSkeleton key={i} size={cardSize} />
         ))}
       </div>
     );

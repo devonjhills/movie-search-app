@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Star, Info, Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import type { Movie, FormattedMovie, TVShow } from "@/lib/types";
 
 interface RotatingHeroSectionProps {
@@ -65,7 +65,10 @@ export function RotatingHeroSection({
 
   return (
     <div
-      className={cn("relative h-96 md:h-[500px] overflow-hidden", className)}
+      className={cn(
+        "relative h-96 md:h-[500px] overflow-hidden layout-stable",
+        className,
+      )}
     >
       {featuredItems.map((item, index) => {
         const backdropUrl = item.backdrop_path
@@ -76,17 +79,24 @@ export function RotatingHeroSection({
           "title" in item ? item.title : "name" in item ? item.name : "";
 
         return backdropUrl ? (
-          <Image
+          <div
             key={item.id}
-            src={backdropUrl}
-            alt={itemTitle}
-            fill
             className={cn(
-              "object-cover transition-opacity duration-500",
+              "absolute inset-0 transition-opacity duration-500",
               index === currentIndex ? "opacity-100" : "opacity-0",
             )}
-            priority={index === 0}
-          />
+          >
+            <OptimizedImage
+              key={`hero-backdrop-${item.id}`}
+              src={backdropUrl}
+              alt={itemTitle}
+              fill
+              className="object-cover"
+              priority={index === 0}
+              quality={90}
+              sizes="100vw"
+            />
+          </div>
         ) : (
           <div
             key={item.id}
@@ -126,7 +136,8 @@ export function RotatingHeroSection({
             <div className="flex items-center gap-8">
               {currentItem.poster_path ? (
                 <div className="w-36 md:w-48 aspect-[2/3] relative rounded-lg overflow-hidden shadow-lg flex-shrink-0">
-                  <Image
+                  <OptimizedImage
+                    key={`hero-poster-${currentItem.id}`}
                     src={getImageUrl(currentItem.poster_path, "poster", "w342")}
                     alt={
                       "title" in currentItem
@@ -134,7 +145,10 @@ export function RotatingHeroSection({
                         : currentItem.name
                     }
                     fill
+                    aspectRatio="poster"
                     className="object-cover"
+                    quality={85}
+                    priority
                   />
                 </div>
               ) : (

@@ -4,6 +4,7 @@ import React from "react";
 import { MediaGrid } from "./media-grid";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { InViewAnimation } from "@/components/ui/progressive-loader";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Film, Star, Pin, ArrowRight } from "lucide-react";
@@ -66,53 +67,55 @@ export function MediaSection({
   const displayItems = items.slice(0, limit);
 
   return (
-    <section className={cn("space-y-6", className)}>
-      {/* Section Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h2 className="text-3xl sm:text-4xl text-noir-heading">{title}</h2>
+    <InViewAnimation animation="fadeUp" delay={100}>
+      <section className={cn("space-y-6 layout-stable", className)}>
+        {/* Section Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <h2 className="text-3xl sm:text-4xl text-noir-heading">{title}</h2>
 
-          {/* Badges */}
-          {showTrending && (
-            <Badge variant="secondary" className="gap-1 glass-subtle">
-              <Pin className="h-3 w-3 fill-current" />
-              <span className="text-readable">Trending</span>
-            </Badge>
-          )}
+            {/* Badges */}
+            {showTrending && (
+              <Badge variant="secondary" className="gap-1 glass-subtle">
+                <Pin className="h-3 w-3 fill-current" />
+                <span className="text-readable">Trending</span>
+              </Badge>
+            )}
 
-          {badge && (
-            <Badge variant="secondary" className="gap-1 glass-subtle">
-              {badgeIcons[badge] &&
-                React.createElement(badgeIcons[badge], {
-                  className: "h-3 w-3",
-                })}
-              <span className="text-readable">{badge}</span>
-            </Badge>
+            {badge && (
+              <Badge variant="secondary" className="gap-1 glass-subtle">
+                {badgeIcons[badge] &&
+                  React.createElement(badgeIcons[badge], {
+                    className: "h-3 w-3",
+                  })}
+                <span className="text-readable">{badge}</span>
+              </Badge>
+            )}
+          </div>
+
+          {/* View All Button */}
+          {href && showViewAll && (
+            <Button variant="outline" asChild>
+              <Link href={href}>
+                View All
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           )}
         </div>
 
-        {/* View All Button */}
-        {href && showViewAll && (
-          <Button variant="outline" asChild>
-            <Link href={href}>
-              View All
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        )}
-      </div>
-
-      {/* Media Grid */}
-      <MediaGrid
-        items={displayItems}
-        mediaType={mediaType}
-        isLoading={isLoading}
-        error={error}
-        cardSize={cardSize}
-        showYear={showYear}
-        showRating={showRating}
-        showOverview={showOverview}
-      />
-    </section>
+        {/* Media Grid */}
+        <MediaGrid
+          items={displayItems}
+          mediaType={mediaType}
+          isLoading={isLoading}
+          error={error}
+          cardSize={cardSize}
+          showYear={showYear}
+          showRating={showRating}
+          showOverview={showOverview}
+        />
+      </section>
+    </InViewAnimation>
   );
 }
