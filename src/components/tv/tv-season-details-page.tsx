@@ -10,6 +10,8 @@ import { formatDate, formatVoteAverage, formatRuntime } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { BreadcrumbNavigation } from "@/components/ui/breadcrumb-navigation";
+import { BackNavigation } from "@/components/ui/back-navigation";
 
 interface TVSeasonDetailsPageProps {
   tvId: number;
@@ -165,20 +167,31 @@ export function TVSeasonDetailsPage({
   const seasonCast = season.credits?.cast || [];
   const seasonCrew = season.credits?.crew || [];
 
+  // Prepare breadcrumb items
+  const breadcrumbItems = [
+    { label: "TV Shows", href: "/tv" },
+    {
+      label: tvShow?.name || "TV Show",
+      href: `/tv/${tvId}`,
+    },
+    {
+      label: `Season ${seasonNumber}`,
+      current: true,
+    },
+  ];
+
   return (
     <div className="min-h-screen">
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-8 space-y-8">
-        {/* Navigation */}
+      {/* Navigation */}
+      <div className="container mx-auto px-4 pt-6 pb-4">
         <div className="flex items-center justify-between gap-4">
-          <Button variant="outline" size="sm" asChild>
-            <Link href={`/tv/${tvId}`} className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to {tvShow?.name || "TV Show"}
-            </Link>
-          </Button>
+          <BreadcrumbNavigation items={breadcrumbItems} />
+          <BackNavigation fallbackHref={`/tv/${tvId}`} />
         </div>
+      </div>
 
+      {/* Main Content */}
+      <div className="container mx-auto px-4 pb-8 space-y-8">
         {/* Season Header */}
         <Card>
           <CardContent className="p-6">

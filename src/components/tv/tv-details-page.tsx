@@ -275,7 +275,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
   const keywords = tvShow.keywords?.results?.slice(0, 10) || [];
 
   // Get TV recommendations
-  const recommendations = tvShow.recommendations?.results?.slice(0, 10) || [];
+  const recommendations = tvShow.recommendations?.results?.slice(0, 12) || [];
 
   return (
     <div className="detail-page">

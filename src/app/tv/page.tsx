@@ -36,7 +36,7 @@ export default async function TVPage() {
           items={onTheAir}
           mediaType="tv"
           href="/tv/on-the-air"
-          limit={10}
+          limit={12}
           badge="Playing Now"
         />
 
@@ -46,7 +46,7 @@ export default async function TVPage() {
           items={topRated}
           mediaType="tv"
           href="/tv/top-rated"
-          limit={10}
+          limit={12}
           badge="Critics' Choice"
         />
       </div>

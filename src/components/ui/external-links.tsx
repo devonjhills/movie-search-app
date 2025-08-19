@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, Film, Globe } from "lucide-react";
+import { Film, Globe, Popcorn } from "lucide-react";
 import { getRottenTomatoesSearchUrl, formatYear } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -41,7 +41,7 @@ export function ExternalLinks({
     {
       name: "Rotten Tomatoes",
       url: rottenTomatoesUrl,
-      icon: ExternalLink,
+      icon: Popcorn,
     },
   ].filter((link) => link.url);
 

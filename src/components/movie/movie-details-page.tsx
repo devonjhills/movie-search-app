@@ -210,7 +210,7 @@ export function MovieDetailsPage({ movieId }: MovieDetailsPageProps) {
       .slice(0, 8) || [];
 
   // Get recommendations
-  const recommendations = movie.recommendations?.results?.slice(0, 10) || [];
+  const recommendations = movie.recommendations?.results?.slice(0, 12) || [];
 
   return (
     <div className="detail-page">

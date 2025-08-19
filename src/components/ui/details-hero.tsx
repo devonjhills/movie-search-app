@@ -85,15 +85,15 @@ export function DetailsHero({
       )}
 
       {/* Hero Section */}
-      <div className="relative py-20">
+      <div className="relative py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="glass-strong rounded-lg p-8 md:p-10">
-            <div className="flex flex-col md:flex-row gap-8">
+          <div className="glass-strong rounded-xl p-8 md:p-12">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
               {/* Poster */}
               <div className="flex-shrink-0">
                 <div className="space-y-0">
                   {/* Poster Image */}
-                  <div className="relative w-56 md:w-64 lg:w-72 aspect-[2/3] mx-auto md:mx-0 max-h-[600px]">
+                  <div className="relative w-60 md:w-72 lg:w-80 aspect-[2/3] mx-auto lg:mx-0 max-h-[600px]">
                     {posterUrl ? (
                       <Image
                         src={posterUrl}
@@ -104,7 +104,7 @@ export function DetailsHero({
                             ? "rounded-t-lg rounded-b-none"
                             : "rounded-lg"
                         }`}
-                        sizes="(max-width: 768px) 224px, (max-width: 1024px) 256px, 288px"
+                        sizes="(max-width: 768px) 240px, (max-width: 1024px) 288px, 320px"
                         priority
                       />
                     ) : (
@@ -126,7 +126,7 @@ export function DetailsHero({
 
                   {/* Watch Now Footer - Seamlessly attached */}
                   {watchProviders?.flatrate?.length && (
-                    <div className="w-56 md:w-64 lg:w-72 mx-auto md:mx-0">
+                    <div className="w-60 md:w-72 lg:w-80 mx-auto lg:mx-0">
                       <div
                         className="rounded-b-lg rounded-t-none p-3 shadow-xl border-t-0"
                         style={{
@@ -156,16 +156,16 @@ export function DetailsHero({
               </div>
 
               {/* Title and Content */}
-              <div className="flex-1 space-y-6">
+              <div className="flex-1 space-y-8">
                 {/* Primary Information */}
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl text-noir-heading leading-tight">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-noir-heading leading-tight">
                       {title}
                     </h1>
                     {((isMovieDetails(item) && item.tagline) ||
                       (isTVShowDetails(item) && item.tagline)) && (
-                      <p className="text-xl md:text-2xl text-elegant text-muted-foreground italic mt-3">
+                      <p className="text-xl md:text-2xl lg:text-3xl text-elegant text-muted-foreground italic mt-4">
                         &ldquo;
                         {isMovieDetails(item)
                           ? item.tagline
@@ -178,7 +178,7 @@ export function DetailsHero({
                   </div>
 
                   {/* Metadata */}
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2.5">
                     {item.vote_average > 0 && (
                       <Badge variant="secondary" className="gap-1">
                         <Star className="h-3 w-3 fill-current" />
@@ -188,39 +188,37 @@ export function DetailsHero({
 
                     {usCertification && <Badge>{usCertification}</Badge>}
 
-                    <div className="flex flex-wrap items-center gap-3">
-                      {releaseDate && (
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          <span>
-                            {new Date(
-                              isMovieDetails(item)
-                                ? item.release_date
-                                : item.first_air_date,
-                            ).getFullYear()}
-                          </span>
-                        </div>
-                      )}
-
-                      {runtime && (
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
-                          <span>{runtime}</span>
-                        </div>
-                      )}
-
-                      {isTVShowDetails(item) && item.number_of_seasons && (
+                    {releaseDate && (
+                      <Badge variant="outline" className="gap-1">
+                        <Calendar className="h-3 w-3" />
                         <span>
-                          {item.number_of_seasons} Season
-                          {item.number_of_seasons !== 1 ? "s" : ""}
+                          {new Date(
+                            isMovieDetails(item)
+                              ? item.release_date
+                              : item.first_air_date,
+                          ).getFullYear()}
                         </span>
-                      )}
-                    </div>
+                      </Badge>
+                    )}
+
+                    {runtime && (
+                      <Badge variant="outline" className="gap-1">
+                        <Clock className="h-3 w-3" />
+                        <span>{runtime}</span>
+                      </Badge>
+                    )}
+
+                    {isTVShowDetails(item) && item.number_of_seasons && (
+                      <Badge variant="outline">
+                        {item.number_of_seasons} Season
+                        {item.number_of_seasons !== 1 ? "s" : ""}
+                      </Badge>
+                    )}
                   </div>
                 </div>
 
                 {/* Genres and Overview */}
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {((isMovieDetails(item) && item.genres) ||
                     (isTVShowDetails(item) && item.genres)) &&
                     (isMovieDetails(item)
@@ -244,14 +242,14 @@ export function DetailsHero({
                     )}
 
                   {item.overview && (
-                    <p className="text-lg md:text-xl leading-relaxed max-w-4xl text-body">
+                    <p className="text-base md:text-lg lg:text-xl leading-relaxed max-w-5xl text-body">
                       {item.overview}
                     </p>
                   )}
                 </div>
 
                 {/* Actions */}
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-4">
                   {trailer && (
                     <TrailerModal trailer={trailer} title={title} size="lg" />
                   )}

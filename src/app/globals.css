@@ -322,25 +322,54 @@
       0 8px 10px -6px hsl(var(--glass-shadow));
   }
 
-  /* Enhanced film noir card styling */
+  /* Enhanced film noir card styling with dramatic lighting */
   .noir-card {
     background: hsl(var(--glass-bg));
     backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid hsl(var(--glass-border));
     box-shadow:
       0 8px 32px hsl(var(--glass-shadow)),
-      inset 0 1px 0 hsl(var(--glass-border));
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      0 2px 8px hsl(var(--foreground) / 0.05),
+      inset 0 1px 0 hsl(var(--glass-border)),
+      inset 0 -1px 0 hsl(var(--foreground) / 0.02);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .noir-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--accent) / 0.2) 30%,
+      hsl(var(--accent) / 0.4) 50%,
+      hsl(var(--accent) / 0.2) 70%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
   }
 
   .noir-card:hover {
     background: hsl(var(--glass-bg));
     border-color: hsl(var(--accent) / 0.3);
     box-shadow:
-      0 12px 40px hsl(var(--glass-shadow)),
-      0 4px 16px hsl(var(--accent) / 0.1),
-      inset 0 1px 0 hsl(var(--foreground) / 0.1);
-    transform: translateY(-3px) scale(1.02);
+      0 16px 48px hsl(var(--glass-shadow)),
+      0 6px 20px hsl(var(--accent) / 0.08),
+      0 2px 8px hsl(var(--foreground) / 0.1),
+      inset 0 1px 0 hsl(var(--foreground) / 0.1),
+      inset 1px 0 0 hsl(var(--accent) / 0.15),
+      inset -1px 0 0 hsl(var(--accent) / 0.15);
+    transform: translateY(-4px) scale(1.025);
+  }
+
+  .noir-card:hover::before {
+    opacity: 1;
   }
 
   /* Typography consistency for cards */

@@ -69,7 +69,7 @@ export function MediaCard({
       className={cn(
         sizeClasses[size],
         cardHeights[size],
-        "flex flex-col glass overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group",
+        "flex flex-col noir-card overflow-hidden group",
         className,
       )}
     >
@@ -108,8 +108,10 @@ export function MediaCard({
                 </div>
               )}
 
-              {/* Gradient overlay for better text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Enhanced noir gradient overlay with atmospheric lighting */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Subtle rim lighting effect on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             </div>
           </Link>
         </div>

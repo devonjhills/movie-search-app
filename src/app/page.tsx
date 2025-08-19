@@ -36,7 +36,7 @@ export default async function Home() {
           items={nowPlaying}
           mediaType="movie"
           href="/movies/now-playing"
-          limit={10}
+          limit={12}
           badge="In Theaters"
         />
 
@@ -46,7 +46,7 @@ export default async function Home() {
           items={topRated}
           mediaType="movie"
           href="/movies/top-rated"
-          limit={10}
+          limit={12}
           badge="Critics' Choice"
         />
       </div>
