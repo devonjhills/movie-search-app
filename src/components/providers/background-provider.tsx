@@ -8,9 +8,9 @@ export function BackgroundProvider() {
 
   useEffect(() => {
     // Check if current page is a detail page
-    const isDetailPage = 
-      pathname.startsWith("/movie/") || 
-      pathname.startsWith("/tv/") || 
+    const isDetailPage =
+      pathname.startsWith("/movie/") ||
+      pathname.startsWith("/tv/") ||
       pathname.startsWith("/person/");
 
     // Apply venetian blinds class for non-detail pages

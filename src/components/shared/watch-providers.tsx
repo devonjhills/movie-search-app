@@ -240,15 +240,11 @@ export function WatchProvidersCompact({
           </TooltipContent>
         </Tooltip>
       ))}
-      
+
       {hasOverflow && (
         <Popover>
           <PopoverTrigger asChild>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-10 w-10 p-0"
-            >
+            <Button variant="ghost" size="sm" className="h-10 w-10 p-0">
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </PopoverTrigger>

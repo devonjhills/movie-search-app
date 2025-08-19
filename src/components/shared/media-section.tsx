@@ -6,12 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import {
-  Film,
-  Star,
-  Pin,
-  ArrowRight,
-} from "lucide-react";
+import { Film, Star, Pin, ArrowRight } from "lucide-react";
 
 interface MediaItem {
   id: number;

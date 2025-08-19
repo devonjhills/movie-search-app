@@ -2,14 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  Film,
-  Play,
-  Star,
-} from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Film, Play, Star } from "lucide-react";
 import { useTVSeasonDetails, useTVDetails } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { PersonCard } from "@/components/person/person-card";

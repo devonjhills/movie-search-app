@@ -42,9 +42,9 @@ export function usePaginatedData(): PaginationData {
     const newUrl = search ? `?${search}` : "";
     router.push(newUrl, { scroll: false });
     setCurrentPage(page);
-    
+
     // Scroll to top of content area
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return {

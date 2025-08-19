@@ -2,7 +2,18 @@
 
 import React from "react";
 import Link from "next/link";
-import { Calendar, Clock, Film, Info, Star, DollarSign, Building2, Tag, Users, Clapperboard } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  Film,
+  Info,
+  Star,
+  DollarSign,
+  Building2,
+  Tag,
+  Users,
+  Clapperboard,
+} from "lucide-react";
 import { useMovieDetails, useMovieWatchProviders } from "@/lib/hooks/api-hooks";
 import { DetailsHero } from "@/components/ui/details-hero";
 import { CastGrid } from "@/components/person/cast-grid";

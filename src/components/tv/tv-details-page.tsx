@@ -3,7 +3,20 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, Film, Bookmark, User, Clock, Star, Users, Tv, Play, Wifi, Tag, Clapperboard } from "lucide-react";
+import {
+  Calendar,
+  Film,
+  Bookmark,
+  User,
+  Clock,
+  Star,
+  Users,
+  Tv,
+  Play,
+  Wifi,
+  Tag,
+  Clapperboard,
+} from "lucide-react";
 import { useTVDetails, useTVWatchProviders } from "@/lib/hooks/api-hooks";
 import { getImageUrl } from "@/lib/api";
 import { DetailsHero } from "@/components/ui/details-hero";

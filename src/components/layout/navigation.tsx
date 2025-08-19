@@ -16,15 +16,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useAuth } from "@/components/providers/auth-provider";
-import {
-  Moon,
-  Sun,
-  LogOut,
-  User,
-  Bookmark,
-  Menu,
-  X,
-} from "lucide-react";
+import { Moon, Sun, LogOut, User, Bookmark, Menu, X } from "lucide-react";
 
 export function Navigation() {
   const [mounted, setMounted] = useState(false);

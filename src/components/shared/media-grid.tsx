@@ -49,9 +49,22 @@ export function MediaGrid({
   // Handle loading state
   if (isLoading) {
     return (
-      <div className={cn("grid gap-6 justify-items-center", getGridClasses(columns), className)}>
+      <div
+        className={cn(
+          "grid gap-6 justify-items-center",
+          getGridClasses(columns),
+          className,
+        )}
+      >
         {Array.from({ length: 10 }).map((_, i) => (
-          <div key={i} className={cn("flex flex-col glass rounded-lg overflow-hidden", cardSizeMap[cardSize], cardHeightMap[cardSize])}>
+          <div
+            key={i}
+            className={cn(
+              "flex flex-col glass rounded-lg overflow-hidden",
+              cardSizeMap[cardSize],
+              cardHeightMap[cardSize],
+            )}
+          >
             <Skeleton className="aspect-[2/3] w-full flex-1" />
             <div className="p-4 space-y-2">
               <Skeleton className="h-4 w-full" />
@@ -92,7 +105,13 @@ export function MediaGrid({
   }
 
   return (
-    <div className={cn("grid gap-6 justify-items-center", getGridClasses(columns), className)}>
+    <div
+      className={cn(
+        "grid gap-6 justify-items-center",
+        getGridClasses(columns),
+        className,
+      )}
+    >
       {items.map((item, index) => (
         <MediaCard
           key={item.id}
@@ -115,15 +134,27 @@ function getGridClasses(columns: MediaGridProps["columns"]) {
   const mdCols = columns?.md || 3;
   const lgCols = columns?.lg || 4;
   const xlCols = columns?.xl || 5;
-  
+
   return cn([
     // Mobile: 1-2 columns
     smCols === 1 ? "grid-cols-1" : "grid-cols-2",
-    // Small tablets: 2-3 columns  
-    mdCols === 2 ? "sm:grid-cols-2" : mdCols === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2",
+    // Small tablets: 2-3 columns
+    mdCols === 2
+      ? "sm:grid-cols-2"
+      : mdCols === 3
+        ? "sm:grid-cols-3"
+        : "sm:grid-cols-2",
     // Medium screens: 3-4 columns
-    lgCols === 3 ? "md:grid-cols-3" : lgCols === 4 ? "md:grid-cols-4" : "md:grid-cols-3",
+    lgCols === 3
+      ? "md:grid-cols-3"
+      : lgCols === 4
+        ? "md:grid-cols-4"
+        : "md:grid-cols-3",
     // Large screens: 4-5 columns
-    xlCols === 4 ? "lg:grid-cols-4" : xlCols === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4",
+    xlCols === 4
+      ? "lg:grid-cols-4"
+      : xlCols === 5
+        ? "lg:grid-cols-5"
+        : "lg:grid-cols-4",
   ]);
 }

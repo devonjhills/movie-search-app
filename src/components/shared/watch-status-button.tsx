@@ -9,13 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  ChevronDown,
-  Play,
-  Check,
-  X,
-  Clock,
-} from "lucide-react";
+import { ChevronDown, Play, Check, X, Clock } from "lucide-react";
 
 interface WatchStatusButtonProps {
   tmdb_id: number;

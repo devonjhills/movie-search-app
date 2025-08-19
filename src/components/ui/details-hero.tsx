@@ -53,7 +53,7 @@ export function DetailsHero({
   const posterUrl = getImageUrl(item.poster_path, "poster", "w500");
   const rating = formatVoteAverage(item.vote_average);
   const releaseDate = formatDate(
-    isMovieDetails(item) ? item.release_date : item.first_air_date
+    isMovieDetails(item) ? item.release_date : item.first_air_date,
   );
   const runtime = isMovieDetails(item) ? formatRuntime(item.runtime) : null;
   const title = isMovieDetails(item) ? item.title : item.name;
@@ -114,7 +114,8 @@ export function DetailsHero({
                           watchProviders?.flatrate?.length
                             ? "rounded-t-lg rounded-b-none"
                             : "rounded-lg"
-                        }`}>
+                        }`}
+                      >
                         {mediaType === "movie" ? (
                           <FilmIcon className="h-24 w-24 text-muted-foreground" />
                         ) : (
@@ -136,7 +137,8 @@ export function DetailsHero({
                           borderTop: "none",
                           boxShadow:
                             "0 8px 32px hsl(var(--glass-shadow)), inset 0 1px 0 hsl(var(--glass-border))",
-                        }}>
+                        }}
+                      >
                         <div className="flex items-center justify-center gap-2">
                           <div className="text-center space-y-0.5">
                             <div className="text-[10px] text-muted-foreground leading-tight">
@@ -169,8 +171,8 @@ export function DetailsHero({
                         {isMovieDetails(item)
                           ? item.tagline
                           : isTVShowDetails(item)
-                          ? item.tagline
-                          : ""}
+                            ? item.tagline
+                            : ""}
                         &rdquo;
                       </p>
                     )}
@@ -195,7 +197,7 @@ export function DetailsHero({
                             {new Date(
                               isMovieDetails(item)
                                 ? item.release_date
-                                : item.first_air_date
+                                : item.first_air_date,
                             ).getFullYear()}
                           </span>
                         </div>
@@ -225,15 +227,15 @@ export function DetailsHero({
                     (isMovieDetails(item)
                       ? item.genres
                       : isTVShowDetails(item)
-                      ? item.genres
-                      : []
+                        ? item.genres
+                        : []
                     ).length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {(isMovieDetails(item)
                           ? item.genres
                           : isTVShowDetails(item)
-                          ? item.genres
-                          : []
+                            ? item.genres
+                            : []
                         ).map((genre: { id: number; name: string }) => (
                           <Badge key={genre.id} variant="outline">
                             {genre.name}
@@ -256,7 +258,8 @@ export function DetailsHero({
                       <a
                         href={`https://www.youtube.com/watch?v=${trailer.key}`}
                         target="_blank"
-                        rel="noopener noreferrer">
+                        rel="noopener noreferrer"
+                      >
                         <Play className="h-5 w-5" />
                         Watch Trailer
                       </a>
@@ -295,15 +298,15 @@ export function DetailsHero({
                         isMovieDetails(item)
                           ? item.external_ids
                           : isTVShowDetails(item)
-                          ? item.external_ids
-                          : undefined
+                            ? item.external_ids
+                            : undefined
                       }
                       homepage={
                         isMovieDetails(item)
                           ? item.homepage
                           : isTVShowDetails(item)
-                          ? item.homepage
-                          : undefined
+                            ? item.homepage
+                            : undefined
                       }
                       title={title}
                       releaseDate={rawReleaseDate}

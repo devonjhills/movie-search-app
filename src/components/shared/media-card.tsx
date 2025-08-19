@@ -41,10 +41,12 @@ export function MediaCard({
 }: MediaCardProps) {
   // Responsive image optimization
   const getResponsiveImageUrl = (size: "mobile" | "tablet" | "desktop") => {
-    const sizeKey = RESPONSIVE_SIZES.card[size] as keyof typeof import("@/lib/constants").IMAGE_URLS.poster;
+    const sizeKey = RESPONSIVE_SIZES.card[
+      size
+    ] as keyof typeof import("@/lib/constants").IMAGE_URLS.poster;
     return getImageUrl(item.poster_path || null, "poster", sizeKey);
   };
-  
+
   const imageUrl = getResponsiveImageUrl("tablet");
   const rating = formatVoteAverage(item.vote_average);
   const title = item.title || item.name || "";
@@ -52,23 +54,25 @@ export function MediaCard({
 
   const sizeClasses = {
     sm: "w-[160px]",
-    md: "w-[185px]", 
+    md: "w-[185px]",
     lg: "w-[210px]",
   };
 
   const cardHeights = {
     sm: "h-[340px]", // 160*1.5 + 100px for content = 340px
-    md: "h-[378px]", // 185*1.5 + 100px for content = 378px  
+    md: "h-[378px]", // 185*1.5 + 100px for content = 378px
     lg: "h-[415px]", // 210*1.5 + 100px for content = 415px
   };
 
   return (
-    <Card className={cn(
-      sizeClasses[size], 
-      cardHeights[size],
-      "flex flex-col glass overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group",
-      className
-    )}>
+    <Card
+      className={cn(
+        sizeClasses[size],
+        cardHeights[size],
+        "flex flex-col glass overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group",
+        className,
+      )}
+    >
       <CardContent className="p-0 flex flex-col h-full">
         {/* Poster Image - Takes up poster space only */}
         <div className="relative">
@@ -85,14 +89,19 @@ export function MediaCard({
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
-                  <span className="text-xs text-center p-2 text-body">No Image</span>
+                  <span className="text-xs text-center p-2 text-body">
+                    No Image
+                  </span>
                 </div>
               )}
 
               {/* Rating Badge */}
               {showRating && item.vote_average > 0 && (
                 <div className="absolute top-3 right-3">
-                  <Badge variant="secondary" className="gap-1 glass-subtle text-xs">
+                  <Badge
+                    variant="secondary"
+                    className="gap-1 glass-subtle text-xs"
+                  >
                     <Star className="h-3 w-3 fill-current" />
                     <span className="text-readable">{rating}</span>
                   </Badge>
@@ -113,7 +122,7 @@ export function MediaCard({
               {title}
             </h3>
           </div>
-          
+
           {/* Bottom section - Year with guaranteed space */}
           <div className="mt-auto">
             {showYear && releaseDate && (

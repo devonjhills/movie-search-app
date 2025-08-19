@@ -90,16 +90,22 @@ export function FeaturedSection({
                       <h3 className="text-noir-subheading text-xl text-white leading-tight line-clamp-2">
                         {title}
                       </h3>
-                      
+
                       <div className="flex items-center gap-2">
                         {item.vote_average > 0 && (
-                          <Badge variant="secondary" className="gap-1 glass-subtle text-xs">
+                          <Badge
+                            variant="secondary"
+                            className="gap-1 glass-subtle text-xs"
+                          >
                             <Star className="h-3 w-3 fill-current" />
                             <span className="text-readable">{rating}</span>
                           </Badge>
                         )}
                         {releaseDate && (
-                          <Badge variant="outline" className="text-xs glass-subtle border-white/30 text-white">
+                          <Badge
+                            variant="outline"
+                            className="text-xs glass-subtle border-white/30 text-white"
+                          >
                             {new Date(releaseDate).getFullYear()}
                           </Badge>
                         )}

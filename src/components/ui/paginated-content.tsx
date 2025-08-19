@@ -31,7 +31,7 @@ export function PaginatedContent({
   const getVisiblePages = () => {
     const delta = 2; // Number of pages to show on each side of current page
     const pages: (number | string)[] = [];
-    
+
     // Always show first page
     if (totalPages <= 7) {
       // Show all pages if 7 or fewer
@@ -41,7 +41,7 @@ export function PaginatedContent({
     } else {
       // More complex logic for many pages
       pages.push(1);
-      
+
       if (currentPage <= 3) {
         // Near the beginning
         for (let i = 2; i <= Math.min(5, totalPages - 1); i++) {
@@ -66,13 +66,13 @@ export function PaginatedContent({
         }
         pages.push("ellipsis");
       }
-      
+
       // Always show last page
       if (totalPages > 1) {
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   };
 
@@ -100,7 +100,7 @@ export function PaginatedContent({
                 handlePageClick(currentPage - 1);
               }}
               className={cn(
-                currentPage <= 1 && "pointer-events-none opacity-50"
+                currentPage <= 1 && "pointer-events-none opacity-50",
               )}
             />
           </PaginationItem>
@@ -132,13 +132,13 @@ export function PaginatedContent({
                 handlePageClick(currentPage + 1);
               }}
               className={cn(
-                currentPage >= totalPages && "pointer-events-none opacity-50"
+                currentPage >= totalPages && "pointer-events-none opacity-50",
               )}
             />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-      
+
       {totalResults > 0 && (
         <p className="text-sm text-muted-foreground text-center">
           Showing {((currentPage - 1) * 20 + 1).toLocaleString()} to{" "}

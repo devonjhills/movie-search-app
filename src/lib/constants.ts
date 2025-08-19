@@ -73,7 +73,8 @@ export const IMAGE_URLS = {
 export const RESPONSIVE_SIZES = {
   card: {
     // Media cards in grids
-    sizes: "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1536px) 25vw, 20vw",
+    sizes:
+      "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1536px) 25vw, 20vw",
     mobile: "w154",
     tablet: "w185",
     desktop: "w342",

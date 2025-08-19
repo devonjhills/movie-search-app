@@ -131,7 +131,9 @@ export default function MyLibraryPage() {
       <div className="border-b">
         <div className="container mx-auto px-4 pt-6 pb-8">
           <div className="flex items-center justify-between gap-4 mb-6">
-            <BreadcrumbNavigation items={[{ label: "My Library", current: true }]} />
+            <BreadcrumbNavigation
+              items={[{ label: "My Library", current: true }]}
+            />
             <BackNavigation fallbackHref="/" />
           </div>
 

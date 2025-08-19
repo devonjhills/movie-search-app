@@ -110,7 +110,7 @@ export function ViewingHistoryCard({
                     {item.title}
                   </h3>
                 </Link>
-                
+
                 {/* Action Buttons */}
                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
                   <Button
@@ -176,7 +176,9 @@ export function ViewingHistoryCard({
                 {item.watch_count > 1 && (
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
                     <RotateCcw className="h-4 w-4" />
-                    <span className="font-medium text-body">{item.watch_count}x</span>
+                    <span className="font-medium text-body">
+                      {item.watch_count}x
+                    </span>
                   </div>
                 )}
               </div>

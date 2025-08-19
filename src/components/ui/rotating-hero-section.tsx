@@ -3,13 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Star,
-  Info,
-  Play,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Star, Info, Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";

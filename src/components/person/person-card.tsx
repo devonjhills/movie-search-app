@@ -21,13 +21,13 @@ interface PersonCardProps {
   className?: string;
 }
 
-export function PersonCard({ 
-  person, 
-  role, 
-  href, 
+export function PersonCard({
+  person,
+  role,
+  href,
   mediaType,
   variant = "horizontal",
-  className 
+  className,
 }: PersonCardProps) {
   const linkPath = href || `/person/${person.id}`;
 
@@ -63,14 +63,15 @@ export function PersonCard({
               <h4 className="text-noir-subheading text-base leading-tight line-clamp-2 transition-colors duration-300 group-hover:text-primary">
                 {person.name}
               </h4>
-              
+
               <p className="text-xs text-muted-foreground line-clamp-2 text-body">
                 {role}
               </p>
-              
+
               {mediaType === "tv" && person.episode_count && (
                 <Badge variant="outline" className="text-xs">
-                  {person.episode_count} ep{person.episode_count !== 1 ? "s" : ""}
+                  {person.episode_count} ep
+                  {person.episode_count !== 1 ? "s" : ""}
                 </Badge>
               )}
             </div>
@@ -82,10 +83,12 @@ export function PersonCard({
 
   return (
     <Link href={linkPath} className={className}>
-      <Card className={cn(
-        "glass transition-all duration-300 hover:shadow-md hover:scale-[1.01] group",
-        "min-h-[100px]"
-      )}>
+      <Card
+        className={cn(
+          "glass transition-all duration-300 hover:shadow-md hover:scale-[1.01] group",
+          "min-h-[100px]",
+        )}
+      >
         <div className="flex items-center space-x-4 p-4">
           {/* Person Avatar */}
           <Avatar className="h-16 w-16 flex-shrink-0">
@@ -108,14 +111,15 @@ export function PersonCard({
             <h4 className="text-noir-subheading text-lg leading-tight line-clamp-1 transition-colors duration-300 group-hover:text-primary">
               {person.name}
             </h4>
-            
+
             <p className="text-sm text-muted-foreground line-clamp-1 text-body">
               {role}
             </p>
-            
+
             {mediaType === "tv" && person.episode_count && (
               <Badge variant="outline" className="text-xs">
-                {person.episode_count} episode{person.episode_count !== 1 ? "s" : ""}
+                {person.episode_count} episode
+                {person.episode_count !== 1 ? "s" : ""}
               </Badge>
             )}
           </div>

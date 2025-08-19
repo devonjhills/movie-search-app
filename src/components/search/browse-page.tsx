@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import {
-  Search,
-  X,
-  SlidersHorizontal,
-} from "lucide-react";
+import { Search, X, SlidersHorizontal } from "lucide-react";
 import { useMultiSearch } from "@/lib/hooks/api-hooks";
 import { debounce } from "@/lib/utils";
 import { SearchResults } from "./search-results";
