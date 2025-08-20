@@ -303,8 +303,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           {/* TV Show Details - Full Width */}
           <Card className="glass">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                <Tv className="h-5 w-5" />
+              <CardTitle className="flex items-center gap-3 text-2xl font-serif font-bold text-foreground">
+                <Tv className="h-6 w-6 text-primary" />
                 TV Show Details
               </CardTitle>
             </CardHeader>
@@ -312,8 +312,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {creators.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <Clapperboard className="h-3 w-3" />
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                      <Clapperboard className="h-4 w-4" />
                       Creator{creators.length > 1 ? "s" : ""}
                     </h4>
                     <div className="space-y-1">
@@ -332,8 +332,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
                 {tvShow.first_air_date && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <Calendar className="h-3 w-3" />
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                      <Calendar className="h-4 w-4" />
                       First Aired
                     </h4>
                     <p className="text-base">{firstAirDate}</p>
@@ -342,8 +342,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
                 {tvShow.last_air_date && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <Calendar className="h-3 w-3" />
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                      <Calendar className="h-4 w-4" />
                       Last Aired
                     </h4>
                     <p className="text-base">{lastAirDate}</p>
@@ -352,8 +352,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
                 {tvShow.vote_average > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <Star className="h-3 w-3 fill-current" />
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                      <Star className="h-4 w-4 fill-current" />
                       Rating
                     </h4>
                     <div className="flex items-center gap-2">
@@ -368,8 +368,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                 )}
 
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                    <Play className="h-3 w-3" />
+                  <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                    <Play className="h-4 w-4" />
                     Status
                   </h4>
                   <p className="text-base">{tvShow.status}</p>
@@ -377,8 +377,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
                 {tvShow.number_of_seasons && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <Tv className="h-3 w-3" />
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                      <Tv className="h-4 w-4" />
                       Seasons
                     </h4>
                     <p className="text-base">{tvShow.number_of_seasons}</p>
@@ -387,8 +387,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
                 {tvShow.number_of_episodes && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <Play className="h-3 w-3" />
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                      <Play className="h-4 w-4" />
                       Episodes
                     </h4>
                     <p className="text-base">{tvShow.number_of_episodes}</p>
@@ -397,8 +397,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
 
                 {tvShow.networks && tvShow.networks.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                      <Wifi className="h-3 w-3" />
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                      <Wifi className="h-4 w-4" />
                       Network
                     </h4>
                     <div className="space-y-1">
@@ -415,8 +415,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
               {/* Keywords */}
               {keywords.length > 0 && (
                 <div className="space-y-3 pt-6 border-t mt-6">
-                  <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-1">
-                    <Tag className="h-3 w-3" />
+                  <h4 className="text-sm font-serif font-semibold text-muted-foreground flex items-center gap-1.5 tracking-wide">
+                    <Tag className="h-4 w-4" />
                     Keywords
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -435,8 +435,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           {tvShow.seasons && tvShow.seasons.length > 0 && (
             <Card className="glass">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                  <Tv className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-3 text-2xl font-serif font-bold text-foreground">
+                  <Tv className="h-6 w-6 text-primary" />
                   Seasons
                 </CardTitle>
               </CardHeader>
@@ -468,7 +468,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                         )}
                       </div>
                       <div className="flex-1 space-y-2 min-w-0">
-                        <h4 className="font-semibold text-base">
+                        <h4 className="font-serif font-semibold text-lg text-foreground">
                           {season.name}
                         </h4>
                         <p className="text-sm text-muted-foreground">
@@ -504,7 +504,7 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
                       </div>
 
                       <div className="space-y-2">
-                        <h3 className="text-2xl font-bold">
+                        <h3 className="text-3xl font-serif font-bold text-foreground">
                           Track Your Progress
                         </h3>
                         <p className="text-muted-foreground max-w-md mx-auto">
@@ -538,8 +538,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           {mainCast.length > 0 && (
             <Card className="glass">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                  <Users className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-3 text-2xl font-serif font-bold text-foreground">
+                  <Users className="h-6 w-6 text-primary" />
                   Cast
                 </CardTitle>
               </CardHeader>
@@ -556,8 +556,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           {keyCrew.length > 0 && (
             <Card className="glass">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                  <Users className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-3 text-2xl font-serif font-bold text-foreground">
+                  <Users className="h-6 w-6 text-primary" />
                   Key Crew
                 </CardTitle>
               </CardHeader>
@@ -579,8 +579,8 @@ export function TVDetailsPage({ tvId }: TVDetailsPageProps) {
           {recommendations.length > 0 && (
             <Card className="glass">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                  <Tv className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-3 text-2xl font-serif font-bold text-foreground">
+                  <Tv className="h-6 w-6 text-primary" />
                   You might also like
                 </CardTitle>
               </CardHeader>

@@ -44,7 +44,7 @@ export function MediaGrid({
           className,
         )}
       >
-        {Array.from({ length: 12 }).map((_, i) => (
+        {Array.from({ length: 15 }).map((_, i) => (
           <MediaCardSkeleton key={i} size={cardSize} />
         ))}
       </div>
@@ -55,9 +55,11 @@ export function MediaGrid({
   if (error) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="text-center space-y-3 noir-card p-6 rounded-lg">
-          <p className="text-destructive card-title">Failed to load content</p>
-          <p className="text-sm text-muted-foreground text-body">
+        <div className="text-center space-y-3 border rounded-lg p-6">
+          <p className="text-destructive font-semibold">
+            Failed to load content
+          </p>
+          <p className="text-sm text-muted-foreground">
             {error.message || "Something went wrong"}
           </p>
         </div>
@@ -69,8 +71,8 @@ export function MediaGrid({
   if (!items.length) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="text-center space-y-3 noir-card p-6 rounded-lg">
-          <p className="text-muted-foreground text-body">
+        <div className="text-center space-y-3 border rounded-lg p-6">
+          <p className="text-muted-foreground">
             No {mediaType === "movie" ? "movies" : "TV shows"} found
           </p>
         </div>
@@ -81,12 +83,12 @@ export function MediaGrid({
   return (
     <div
       className={cn(
-        "grid gap-6 justify-items-center px-2",
+        "grid gap-4 md:gap-6 justify-items-center px-2 film-noir-grid",
         getGridClasses(columns),
         className,
       )}
     >
-      {items.slice(0, 18).map((item, index) => (
+      {items.slice(0, 20).map((item, index) => (
         <MediaCard
           key={item.id}
           item={item}
@@ -95,7 +97,7 @@ export function MediaGrid({
           showYear={showYear}
           showRating={showRating}
           showOverview={showOverview}
-          priority={index < 6} // Prioritize first 6 images
+          priority={index < 8} // Prioritize first 8 images for better top row coverage
         />
       ))}
     </div>
@@ -103,7 +105,7 @@ export function MediaGrid({
 }
 
 function getGridClasses(columns: MediaGridProps["columns"]) {
-  // More columns per breakpoint to reduce empty space
+  // Film noir card layout - max 6 columns at largest screens
   const smCols = columns?.sm || 2;
   const mdCols = columns?.md || 4;
   const lgCols = columns?.lg || 5;
@@ -128,7 +130,7 @@ function getGridClasses(columns: MediaGridProps["columns"]) {
         : lgCols === 5
           ? "md:grid-cols-5"
           : "md:grid-cols-4",
-    // Large screens: 5-6 columns
+    // Large screens: max 6 columns
     xlCols === 4
       ? "lg:grid-cols-4"
       : xlCols === 5

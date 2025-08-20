@@ -28,8 +28,7 @@ import { BreadcrumbNavigation } from "@/components/ui/breadcrumb-navigation";
 import { BackNavigation } from "@/components/ui/back-navigation";
 import { PaginatedContent } from "@/components/ui/paginated-content";
 import { Badge } from "@/components/ui/badge";
-import { MovieCardHorizontal } from "@/components/movie/movie-card-horizontal";
-import { TVCardHorizontal } from "@/components/tv/tv-card-horizontal";
+import { PersonCreditsCard } from "./person-credits-card";
 
 interface PersonDetailsPageProps {
   personId: number;
@@ -322,15 +321,15 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             {/* Personal Info */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-                  <Info className="h-4 w-4" />
+                <CardTitle className="flex items-center gap-3 text-xl font-serif font-bold text-foreground">
+                  <Info className="h-5 w-5 text-primary" />
                   Personal Info
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {allDepartments.length > 0 && (
                   <div className="space-y-2">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground tracking-wide">
                       Known For
                     </h4>
                     <div className="flex flex-wrap gap-1">
@@ -349,7 +348,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
 
                 {person.birthday && (
                   <div className="space-y-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground tracking-wide">
                       Born
                     </h4>
                     <div className="text-base font-medium space-y-1">
@@ -374,7 +373,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
 
                 {person.deathday && (
                   <div className="space-y-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground tracking-wide">
                       Died
                     </h4>
                     <div className="text-base font-medium">
@@ -393,7 +392,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
 
                 {person.also_known_as && person.also_known_as.length > 0 && (
                   <div className="space-y-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <h4 className="text-sm font-serif font-semibold text-muted-foreground tracking-wide">
                       Also Known As
                     </h4>
                     <div className="text-base font-medium space-y-1">
@@ -410,8 +409,8 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             {person.external_ids && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-                    <LinkIcon className="h-4 w-4" />
+                  <CardTitle className="flex items-center gap-3 text-xl font-serif font-bold text-foreground">
+                    <LinkIcon className="h-5 w-5 text-primary" />
                     External Links
                   </CardTitle>
                 </CardHeader>
@@ -421,7 +420,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                       href={`https://www.imdb.com/name/${person.external_ids.imdb_id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-sm text-blue-500 hover:text-blue-400 transition-colors"
+                      className="flex items-center space-x-2 text-sm text-primary hover:text-primary/80 transition-colors"
                     >
                       <ExternalLink className="h-4 w-4" />
                       <span>IMDB</span>
@@ -432,7 +431,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                       href={`https://www.instagram.com/${person.external_ids.instagram_id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-sm text-blue-500 hover:text-blue-400 transition-colors"
+                      className="flex items-center space-x-2 text-sm text-primary hover:text-primary/80 transition-colors"
                     >
                       <ExternalLink className="h-4 w-4" />
                       <span>Instagram</span>
@@ -443,7 +442,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                       href={`https://www.twitter.com/${person.external_ids.twitter_id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-sm text-blue-500 hover:text-blue-400 transition-colors"
+                      className="flex items-center space-x-2 text-sm text-primary hover:text-primary/80 transition-colors"
                     >
                       <ExternalLink className="h-4 w-4" />
                       <span>Twitter</span>
@@ -459,7 +458,7 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             {/* Name and Basic Info */}
             <div className="space-y-4">
               <div className="space-y-2">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+                <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
                   {person.name}
                 </h1>
               </div>
@@ -485,8 +484,8 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
             {person.biography && (
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                    <FileText className="h-5 w-5" />
+                  <CardTitle className="flex items-center gap-3 text-2xl font-serif font-bold text-foreground">
+                    <FileText className="h-6 w-6 text-primary" />
                     Biography
                   </CardTitle>
                 </CardHeader>
@@ -507,10 +506,10 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                      <Film className="h-5 w-5" />
+                    <CardTitle className="flex items-center gap-3 text-2xl font-serif font-bold text-foreground">
+                      <Film className="h-6 w-6 text-primary" />
                       <span>Movie Credits</span>
-                      <span className="text-sm font-normal text-muted-foreground">
+                      <span className="text-base font-medium text-muted-foreground ml-2 font-sans">
                         ({movieCredits.length} total)
                       </span>
                     </CardTitle>
@@ -542,12 +541,11 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {displayedMovies.map((movie) => (
-                      <MovieCardHorizontal
+                      <PersonCreditsCard
                         key={`${movie.id}-${movie.credit_id}`}
-                        movie={movie}
-                        character={movie.character}
+                        credit={{ ...movie, media_type: "movie" }}
                       />
                     ))}
                   </div>
@@ -582,10 +580,10 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2 text-xl font-bold">
-                      <Tv className="h-5 w-5" />
+                    <CardTitle className="flex items-center gap-3 text-2xl font-serif font-bold text-foreground">
+                      <Tv className="h-6 w-6 text-primary" />
                       <span>TV Credits</span>
-                      <span className="text-sm font-normal text-muted-foreground">
+                      <span className="text-base font-medium text-muted-foreground ml-2 font-sans">
                         ({tvCredits.length} total)
                       </span>
                     </CardTitle>
@@ -617,12 +615,11 @@ export function PersonDetailsPage({ personId }: PersonDetailsPageProps) {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {displayedTV.map((show) => (
-                      <TVCardHorizontal
+                      <PersonCreditsCard
                         key={`${show.id}-${show.credit_id}`}
-                        tvShow={show}
-                        character={show.character}
+                        credit={{ ...show, media_type: "tv" }}
                       />
                     ))}
                   </div>

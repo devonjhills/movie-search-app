@@ -52,28 +52,28 @@ export function MediaCardHorizontal({
         )}
       </div>
 
-      {/* Content - More spacious layout */}
+      {/* Content - Film noir typography */}
       <div className="flex-1 space-y-3 min-w-0 flex flex-col justify-center px-2">
         <div className="space-y-2">
           <h4
             className={cn(
-              "card-title text-base leading-tight line-clamp-2",
+              "font-serif font-semibold text-base leading-tight line-clamp-2 tracking-wide",
               showCard ? "hover:text-primary" : "group-hover:text-primary",
-              "transition-colors duration-200",
+              "transition-colors duration-300",
             )}
           >
             {title}
           </h4>
 
           {character && (
-            <p className="text-sm text-muted-foreground line-clamp-1 text-body">
-              <span className="text-accent font-medium">as</span> {character}
+            <p className="text-sm text-muted-foreground line-clamp-1 italic">
+              <span className="font-medium not-italic">as</span> {character}
             </p>
           )}
         </div>
 
         {releaseDate && (
-          <p className="text-sm text-muted-foreground text-body">
+          <p className="text-sm text-muted-foreground font-medium">
             {new Date(releaseDate).getFullYear()}
           </p>
         )}
@@ -86,8 +86,8 @@ export function MediaCardHorizontal({
       <Link href={`/${mediaType}/${item.id}`} className={className}>
         <Card
           className={cn(
-            "flex space-x-5 p-5 glass overflow-hidden transition-all duration-300 hover:shadow-md hover:scale-[1.01] group",
-            "min-h-[140px] w-full",
+            "flex space-x-4 p-4 border border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden transition-all duration-500 hover:shadow-lg hover:scale-[1.02] hover:border-primary/30 group",
+            "min-h-[120px] w-full",
           )}
         >
           {content}
@@ -100,8 +100,8 @@ export function MediaCardHorizontal({
     <Link
       href={`/${mediaType}/${item.id}`}
       className={cn(
-        "group flex space-x-5 p-5 rounded-lg hover:bg-muted/50 transition-all duration-300",
-        "min-h-[140px] items-center w-full",
+        "group flex space-x-4 p-4 rounded-lg bg-background/30 backdrop-blur-sm border border-border/30 hover:bg-background/60 hover:border-primary/40 transition-all duration-500",
+        "min-h-[120px] items-center w-full",
         className,
       )}
     >

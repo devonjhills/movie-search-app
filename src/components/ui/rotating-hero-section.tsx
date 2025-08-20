@@ -66,7 +66,7 @@ export function RotatingHeroSection({
   return (
     <div
       className={cn(
-        "relative h-96 md:h-[500px] overflow-hidden layout-stable",
+        "relative h-[400px] md:h-[600px] lg:h-[700px] overflow-hidden layout-stable shadow-2xl",
         className,
       )}
     >
@@ -132,10 +132,11 @@ export function RotatingHeroSection({
 
       <div className="absolute inset-0 flex items-center justify-center p-12 z-10">
         <div className="container mx-auto">
-          <div className="glass-strong rounded-lg p-8 max-w-5xl mx-auto">
+          <div className="glass-strong rounded-xl p-8 md:p-12 max-w-6xl mx-auto">
             <div className="flex items-center gap-8">
-              {currentItem.poster_path ? (
-                <div className="w-36 md:w-48 aspect-[2/3] relative rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+              {/* Poster Container with Multiple Images */}
+              <div className="w-36 md:w-48 aspect-[2/3] relative rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+                {currentItem.poster_path ? (
                   <OptimizedImage
                     key={`hero-poster-${currentItem.id}`}
                     src={getImageUrl(currentItem.poster_path, "poster", "w342")}
@@ -149,20 +150,24 @@ export function RotatingHeroSection({
                     className="object-cover"
                     quality={85}
                     priority
+                    sizes="(max-width: 768px) 144px, 192px"
                   />
-                </div>
-              ) : (
-                <div className="w-36 md:w-48 aspect-[2/3] bg-muted/50 rounded-lg flex items-center justify-center flex-shrink-0">
-                  {mediaType === "movie" ? (
-                    <Info className="h-16 w-16 text-muted-foreground" />
-                  ) : (
-                    <Play className="h-16 w-16 text-muted-foreground" />
-                  )}
-                </div>
-              )}
+                ) : null}
+
+                {/* Fallback for items without posters */}
+                {!currentItem.poster_path && (
+                  <div className="absolute inset-0 bg-muted/50 rounded-lg flex items-center justify-center">
+                    {mediaType === "movie" ? (
+                      <Info className="h-16 w-16 text-muted-foreground" />
+                    ) : (
+                      <Play className="h-16 w-16 text-muted-foreground" />
+                    )}
+                  </div>
+                )}
+              </div>
 
               <div className="flex-1 space-y-4">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl text-noir-heading leading-tight">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-serif-heading leading-tight drop-shadow-2xl">
                   {"title" in currentItem
                     ? currentItem.title
                     : currentItem.name}

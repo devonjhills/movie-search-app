@@ -31,30 +31,39 @@ export function BreadcrumbNavigation({
   }
 
   return (
-    <Breadcrumb className={className}>
-      <BreadcrumbList>
-        {items.map((item, index) => {
-          const isLast = index === items.length - 1;
-          const isCurrent = item.current || isLast;
+    <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-full px-4 py-2 shadow-sm">
+      <Breadcrumb className={className}>
+        <BreadcrumbList>
+          {items.map((item, index) => {
+            const isLast = index === items.length - 1;
+            const isCurrent = item.current || isLast;
 
-          return (
-            <React.Fragment key={index}>
-              <BreadcrumbItem>
-                {isCurrent ? (
-                  <BreadcrumbPage>{item.label}</BreadcrumbPage>
-                ) : item.href ? (
-                  <BreadcrumbLink asChild>
-                    <Link href={item.href}>{item.label}</Link>
-                  </BreadcrumbLink>
-                ) : (
-                  <span>{item.label}</span>
-                )}
-              </BreadcrumbItem>
-              {!isLast && <BreadcrumbSeparator />}
-            </React.Fragment>
-          );
-        })}
-      </BreadcrumbList>
-    </Breadcrumb>
+            return (
+              <React.Fragment key={index}>
+                <BreadcrumbItem>
+                  {isCurrent ? (
+                    <BreadcrumbPage className="font-serif font-semibold">
+                      {item.label}
+                    </BreadcrumbPage>
+                  ) : item.href ? (
+                    <BreadcrumbLink asChild>
+                      <Link
+                        href={item.href}
+                        className="font-serif hover:text-primary transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    </BreadcrumbLink>
+                  ) : (
+                    <span className="font-serif">{item.label}</span>
+                  )}
+                </BreadcrumbItem>
+                {!isLast && <BreadcrumbSeparator />}
+              </React.Fragment>
+            );
+          })}
+        </BreadcrumbList>
+      </Breadcrumb>
+    </div>
   );
 }

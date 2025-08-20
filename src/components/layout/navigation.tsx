@@ -73,7 +73,7 @@ export function Navigation() {
                 href="/search"
                 className="nav-link inline-flex h-10 w-max items-center justify-center rounded-lg px-4 py-2 text-sm text-readable transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                Browse
+                Search
               </NextLink>
               {user && (
                 <NextLink
@@ -218,7 +218,7 @@ export function Navigation() {
                 className="block px-4 py-3 text-sm text-readable text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg mx-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Browse
+                Search
               </NextLink>
               {user && (
                 <NextLink

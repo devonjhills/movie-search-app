@@ -39,30 +39,42 @@ function OptimizedSkeleton({
   );
 }
 
-// Specialized skeleton components for better UX
+// Film noir inspired skeleton for compact cards
 function MediaCardSkeleton({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
   const sizeClasses = {
-    sm: "w-[160px] h-[340px]",
-    md: "w-[185px] h-[378px]",
-    lg: "w-[210px] h-[415px]",
+    sm: "w-[160px] h-[280px]",
+    md: "w-[180px] h-[310px]",
+    lg: "w-[200px] h-[340px]",
   };
 
   return (
-    <div
-      className={cn(
-        "flex flex-col rounded-lg overflow-hidden",
-        sizeClasses[size],
-      )}
-    >
-      {/* Poster skeleton with exact aspect ratio */}
-      <OptimizedSkeleton variant="shimmer" className="aspect-[2/3] w-full" />
-      {/* Content area - matches actual layout */}
-      <div className="h-[100px] p-4 flex flex-col justify-between">
-        <div className="space-y-2">
-          <OptimizedSkeleton className="h-4 w-full" variant="shimmer" />
-          <OptimizedSkeleton className="h-4 w-3/4" variant="shimmer" />
+    <div className={cn("group", sizeClasses[size])}>
+      <div className="relative overflow-hidden rounded-lg shadow-lg bg-black/10">
+        {/* Poster skeleton with noir overlay */}
+        <OptimizedSkeleton variant="shimmer" className="aspect-[2/3] w-full" />
+
+        {/* Noir gradient overlay skeleton */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+        {/* Rating skeleton */}
+        <div className="absolute top-2 right-2">
+          <OptimizedSkeleton
+            className="h-6 w-12 rounded-md bg-black/40"
+            variant="shimmer"
+          />
         </div>
-        <OptimizedSkeleton className="h-3 w-1/2 mt-auto" variant="shimmer" />
+
+        {/* Text overlay skeleton at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-3">
+          <OptimizedSkeleton
+            className="h-4 w-full mb-1 bg-white/20"
+            variant="shimmer"
+          />
+          <OptimizedSkeleton
+            className="h-3 w-1/2 bg-amber-200/20"
+            variant="shimmer"
+          />
+        </div>
       </div>
     </div>
   );
@@ -126,8 +138,8 @@ function MediaSectionSkeleton({ cardCount = 6 }: { cardCount?: number }) {
         <OptimizedSkeleton className="h-6 w-16" variant="shimmer" />
       </div>
 
-      {/* Cards grid skeleton */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 justify-items-center px-2">
+      {/* Cards grid skeleton - film noir layout max 6 columns */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6 justify-items-center px-2">
         {Array.from({ length: cardCount }).map((_, i) => (
           <MediaCardSkeleton key={i} />
         ))}

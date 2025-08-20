@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface EpisodeProgressProps {
   progress: TVShowProgress;
@@ -24,6 +24,20 @@ export function EpisodeProgress({
   onEpisodeUpdate,
 }: EpisodeProgressProps) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [animatedWidth, setAnimatedWidth] = useState(0);
+
+  const completionPercentage = progress
+    ? Math.round(progress.completion_percentage)
+    : 0;
+
+  // Animate progress bar fill on load
+  useEffect(() => {
+    if (!progress) return;
+    const timer = setTimeout(() => {
+      setAnimatedWidth(completionPercentage);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [completionPercentage, progress]);
 
   const markNextEpisodeWatched = async () => {
     if (!progress.next_episode || isUpdating) return;
@@ -57,31 +71,34 @@ export function EpisodeProgress({
     return null;
   }
 
-  const completionPercentage = Math.round(progress.completion_percentage);
-
   return (
     <TooltipProvider>
       <div className="space-y-2 mt-2">
-        {/* Progress Bar */}
-        <div className="space-y-1">
+        {/* Enhanced Progress Bar */}
+        <div className="space-y-2">
           <div className="flex items-center justify-between text-xs">
-            <span className="font-medium">Progress</span>
-            <span>
-              {progress.watched_episodes}/{progress.total_episodes}
+            <span className="font-serif font-semibold text-foreground">
+              Progress
+            </span>
+            <span className="font-medium text-muted-foreground">
+              {progress.watched_episodes}/{progress.total_episodes} episodes
             </span>
           </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div className="relative h-3 bg-muted/80 rounded-full overflow-hidden shadow-inner border border-border/40">
             <div
-              className="h-full bg-primary"
-              style={{ width: `${completionPercentage}%` }}
-            />
+              className="h-full bg-primary rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
+              style={{ width: `${animatedWidth}%` }}
+            >
+              {/* Animated shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" />
+            </div>
           </div>
         </div>
 
-        {/* Current Status and Action */}
+        {/* Enhanced Status and Action */}
         {progress.next_episode ? (
           <div className="flex items-center justify-between gap-2">
-            <Badge variant="secondary" className="text-xs">
+            <Badge variant="secondary" className="text-xs font-medium">
               Next: S{progress.next_episode.season_number}E
               {progress.next_episode.episode_number}
             </Badge>
@@ -93,12 +110,12 @@ export function EpisodeProgress({
                   variant="outline"
                   onClick={markNextEpisodeWatched}
                   disabled={isUpdating}
-                  className="h-6 w-6 p-0"
+                  className="h-7 w-7 p-0 hover:bg-accent hover:border-primary transition-colors duration-200"
                 >
                   {isUpdating ? (
-                    <div className="h-3 w-3 animate-spin rounded-full border border-current border-t-transparent" />
+                    <div className="h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
                   ) : (
-                    <Check className="h-3 w-3" />
+                    <Check className="h-4 w-4 text-primary" />
                   )}
                 </Button>
               </TooltipTrigger>
@@ -109,10 +126,7 @@ export function EpisodeProgress({
             </Tooltip>
           </div>
         ) : (
-          <Badge
-            variant="default"
-            className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-          >
+          <Badge variant="default" className="text-xs font-medium">
             <Check className="h-3 w-3 mr-1" />
             Complete
           </Badge>

@@ -110,6 +110,7 @@ interface InViewAnimationProps {
   duration?: number;
   threshold?: number;
   className?: string;
+  startVisible?: boolean;
 }
 
 export function InViewAnimation({
@@ -119,11 +120,15 @@ export function InViewAnimation({
   duration = 300,
   threshold = 0.1,
   className,
+  startVisible = false,
 }: InViewAnimationProps) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(startVisible);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // If already visible, skip intersection observer
+    if (startVisible) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -145,7 +150,7 @@ export function InViewAnimation({
       }
       observer.disconnect();
     };
-  }, [delay, threshold]);
+  }, [delay, threshold, startVisible]);
 
   const animations = {
     fadeUp: isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",

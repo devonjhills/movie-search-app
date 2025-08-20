@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getImageUrl } from "@/lib/api";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
 
 interface PersonCardProps {
   person: {
@@ -40,58 +39,66 @@ export function PersonCard({
   if (variant === "vertical") {
     return (
       <Link href={linkPath} className={className}>
-        <Card className="glass transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group w-[140px] h-[240px] flex flex-col">
-          <div className="p-3 flex flex-col items-center text-center h-full">
-            {/* Person Avatar */}
-            <Avatar className="h-20 w-20 flex-shrink-0 mb-3">
-              <AvatarImage
-                src={
-                  person.profile_path
-                    ? getImageUrl(person.profile_path, "profile", "w185")
-                    : undefined
-                }
-                alt={person.name}
-                className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
-              />
-              <AvatarFallback className="text-sm font-semibold card-title">
-                {fallbackInitials}
-              </AvatarFallback>
-            </Avatar>
+        <div className="group cursor-pointer w-[140px]">
+          <Card className="relative overflow-hidden border-0 bg-transparent transition-all duration-500 hover:scale-[1.03] h-[240px] flex flex-col">
+            {/* Person Photo */}
+            <div className="relative flex-1 rounded-lg overflow-hidden shadow-lg">
+              <Avatar className="w-full h-full rounded-lg">
+                <AvatarImage
+                  src={
+                    person.profile_path
+                      ? getImageUrl(person.profile_path, "profile", "w185")
+                      : undefined
+                  }
+                  alt={person.name}
+                  className="object-cover transition-all duration-500 group-hover:brightness-110 w-full h-full rounded-lg"
+                />
+                <AvatarFallback className="text-lg font-serif font-semibold w-full h-full rounded-lg bg-muted flex items-center justify-center">
+                  {fallbackInitials}
+                </AvatarFallback>
+              </Avatar>
 
-            {/* Person Info */}
-            <div className="flex-1 flex flex-col justify-center space-y-2">
-              <h4 className="text-noir-subheading text-base leading-tight line-clamp-2 transition-colors duration-300 group-hover:text-primary">
-                {person.name}
-              </h4>
+              {/* Noir gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
-              <p className="text-xs text-muted-foreground line-clamp-2 text-body">
-                {role}
-              </p>
-
+              {/* Episode count badge for TV */}
               {mediaType === "tv" && person.episode_count && (
-                <Badge variant="outline" className="text-xs">
-                  {person.episode_count} ep
-                  {person.episode_count !== 1 ? "s" : ""}
-                </Badge>
+                <div className="absolute top-2 right-2">
+                  <Badge
+                    variant="secondary"
+                    className="text-xs bg-background/90 backdrop-blur-sm"
+                  >
+                    {person.episode_count} ep
+                    {person.episode_count !== 1 ? "s" : ""}
+                  </Badge>
+                </div>
               )}
+
+              {/* Text overlay at bottom */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-3">
+                <h4 className="font-serif font-semibold text-white text-sm leading-tight line-clamp-2 mb-1 drop-shadow-lg">
+                  {person.name}
+                </h4>
+                <p className="text-xs text-white/80 line-clamp-1 font-medium">
+                  {role}
+                </p>
+              </div>
+
+              {/* Subtle border glow */}
+              <div className="absolute inset-0 rounded-lg border border-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
       </Link>
     );
   }
 
   return (
     <Link href={linkPath} className={className}>
-      <Card
-        className={cn(
-          "glass transition-all duration-300 hover:shadow-md hover:scale-[1.01] group",
-          "min-h-[100px]",
-        )}
-      >
-        <div className="flex items-center space-x-4 p-4">
-          {/* Person Avatar */}
-          <Avatar className="h-16 w-16 flex-shrink-0">
+      <div className="group cursor-pointer flex items-center space-x-4 p-3 rounded-full bg-background/30 backdrop-blur-sm border border-border/30 transition-all duration-500 hover:bg-background/60 hover:shadow-lg hover:border-primary/40">
+        {/* Person Avatar with noir styling */}
+        <div className="relative">
+          <Avatar className="h-16 w-16 flex-shrink-0 ring-2 ring-border/20 group-hover:ring-primary/50 transition-all duration-500">
             <AvatarImage
               src={
                 person.profile_path
@@ -99,32 +106,35 @@ export function PersonCard({
                   : undefined
               }
               alt={person.name}
-              className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
+              className="object-cover object-center transition-all duration-500 group-hover:brightness-110 group-hover:scale-105"
             />
-            <AvatarFallback className="text-sm font-semibold card-title">
+            <AvatarFallback className="text-sm font-serif font-semibold bg-muted">
               {fallbackInitials}
             </AvatarFallback>
           </Avatar>
 
-          {/* Person Info */}
-          <div className="min-w-0 flex-1 space-y-1">
-            <h4 className="text-noir-subheading text-lg leading-tight line-clamp-1 transition-colors duration-300 group-hover:text-primary">
-              {person.name}
-            </h4>
-
-            <p className="text-sm text-muted-foreground line-clamp-1 text-body">
-              {role}
-            </p>
-
-            {mediaType === "tv" && person.episode_count && (
-              <Badge variant="outline" className="text-xs">
-                {person.episode_count} episode
-                {person.episode_count !== 1 ? "s" : ""}
-              </Badge>
-            )}
-          </div>
+          {/* Subtle glow effect */}
+          <div className="absolute inset-0 rounded-full bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
         </div>
-      </Card>
+
+        {/* Person Info with enhanced typography */}
+        <div className="min-w-0 flex-1 space-y-1">
+          <h4 className="font-serif font-semibold text-lg leading-tight line-clamp-1 transition-colors duration-300 group-hover:text-primary tracking-wide">
+            {person.name}
+          </h4>
+
+          <p className="text-sm text-muted-foreground line-clamp-1 font-medium italic">
+            {role}
+          </p>
+
+          {mediaType === "tv" && person.episode_count && (
+            <Badge variant="outline" className="text-xs font-medium">
+              {person.episode_count} episode
+              {person.episode_count !== 1 ? "s" : ""}
+            </Badge>
+          )}
+        </div>
+      </div>
     </Link>
   );
 }

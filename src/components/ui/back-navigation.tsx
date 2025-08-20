@@ -31,14 +31,19 @@ export function BackNavigation({
   };
 
   return (
-    <Button
-      variant={variant}
-      size={size}
-      onClick={handleBack}
-      className={cn("gap-2", className)}
-    >
-      <ArrowLeftIcon className="h-4 w-4" />
-      <span className="hidden sm:inline">Back</span>
-    </Button>
+    <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-full shadow-sm">
+      <Button
+        variant={variant}
+        size={size}
+        onClick={handleBack}
+        className={cn(
+          "gap-2 font-serif border-0 bg-transparent hover:bg-background/60 hover:text-primary transition-all duration-300",
+          className,
+        )}
+      >
+        <ArrowLeftIcon className="h-4 w-4" />
+        <span className="hidden sm:inline">Back</span>
+      </Button>
+    </div>
   );
 }

@@ -67,7 +67,7 @@
   }
 
   body {
-    @apply bg-background text-foreground text-body;
+    @apply bg-background text-foreground;
     /* Improve overall text rendering */
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -91,47 +91,114 @@
       );
   }
 
-  /* Venetian blinds noir background for non-detail pages */
-  body.venetian-blinds {
+  /* Film noir atmospheric background for non-detail pages */
+  body.film-noir-bg {
     background-image: 
-      /* Venetian blinds effect */
+      /* Art deco diamond mesh pattern */
       repeating-linear-gradient(
-        0deg,
-        hsl(var(--background)) 0px,
-        hsl(var(--background)) 18px,
-        hsl(var(--foreground) / 0.03) 18px,
-        hsl(var(--foreground) / 0.03) 22px,
-        hsl(var(--background)) 22px,
-        hsl(var(--background)) 26px,
-        hsl(var(--foreground) / 0.08) 26px,
-        hsl(var(--foreground) / 0.08) 30px
+        45deg,
+        transparent 0px,
+        transparent 15px,
+        hsl(var(--foreground) / 0.12) 15px,
+        hsl(var(--foreground) / 0.12) 16px,
+        transparent 16px,
+        transparent 31px
       ),
-      /* Subtle light rays */
-        linear-gradient(
-          45deg,
-          transparent 0%,
-          hsl(var(--accent) / 0.02) 25%,
-          transparent 50%,
-          hsl(var(--accent) / 0.02) 75%,
-          transparent 100%
+      repeating-linear-gradient(
+        -45deg,
+        transparent 0px,
+        transparent 15px,
+        hsl(var(--foreground) / 0.1) 15px,
+        hsl(var(--foreground) / 0.1) 16px,
+        transparent 16px,
+        transparent 31px
+      ),
+      /* Dramatic street light beams */
+        conic-gradient(
+          from 45deg at 25% 25%,
+          transparent 0deg,
+          hsl(var(--accent) / 0.15) 15deg,
+          transparent 30deg,
+          transparent 150deg,
+          hsl(var(--accent) / 0.1) 165deg,
+          transparent 180deg
         ),
-      /* Base atmospheric backdrop */
+      /* Film noir fog banks */
         radial-gradient(
-          circle at 30% 70%,
+          ellipse 80% 30% at 30% 80%,
+          hsl(var(--muted) / 0.2) 0%,
+          transparent 60%
+        ),
+      radial-gradient(
+        ellipse 60% 40% at 70% 20%,
+        hsl(var(--primary) / 0.12) 0%,
+        transparent 70%
+      );
+    background-size:
+      31px 31px,
+      31px 31px,
+      100% 100%,
+      100% 100%,
+      100% 100%;
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+  }
+
+  /* Enhanced visibility for dark mode */
+  .dark body.film-noir-bg {
+    background-image: 
+      /* More visible art deco pattern in dark mode */
+      repeating-linear-gradient(
+        45deg,
+        transparent 0px,
+        transparent 15px,
+        hsl(var(--foreground) / 0.18) 15px,
+        hsl(var(--foreground) / 0.18) 16px,
+        transparent 16px,
+        transparent 31px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent 0px,
+        transparent 15px,
+        hsl(var(--foreground) / 0.15) 15px,
+        hsl(var(--foreground) / 0.15) 16px,
+        transparent 16px,
+        transparent 31px
+      ),
+      /* Brighter spotlight in dark mode */
+        conic-gradient(
+          from 45deg at 25% 25%,
+          transparent 0deg,
+          hsl(var(--accent) / 0.25) 15deg,
+          transparent 30deg,
+          transparent 150deg,
+          hsl(var(--accent) / 0.18) 165deg,
+          transparent 180deg
+        ),
+      /* Enhanced atmospheric effects */
+        radial-gradient(
+          ellipse 80% 30% at 30% 80%,
           hsl(var(--muted) / 0.3) 0%,
           transparent 60%
         ),
       radial-gradient(
-        circle at 70% 30%,
-        hsl(var(--accent) / 0.04) 0%,
-        transparent 60%
+        ellipse 60% 40% at 70% 20%,
+        hsl(var(--primary) / 0.2) 0%,
+        transparent 70%
       );
     background-size:
-      100% 30px,
-      200% 200%,
+      31px 31px,
+      31px 31px,
+      100% 100%,
       100% 100%,
       100% 100%;
     background-position:
+      0 0,
       0 0,
       0 0,
       0 0,
@@ -148,40 +215,10 @@
     @apply leading-tight;
     font-weight: 600;
   }
-
-  p {
-    @apply text-body;
-  }
-
-  /* Button text improvements */
-  button {
-    @apply text-readable;
-  }
-
-  /* Navigation improvements */
-  nav a {
-    @apply text-readable;
-  }
 }
 
 @layer utilities {
-  /* Glassmorphic utility classes - increased transparency */
-  .glass {
-    background: hsl(var(--glass-bg));
-    backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid hsl(var(--glass-border));
-    box-shadow:
-      0 8px 32px hsl(var(--glass-shadow)),
-      inset 0 1px 0 hsl(var(--glass-border));
-  }
-
-  .glass-subtle {
-    background: hsl(var(--background) / 0.4);
-    backdrop-filter: blur(12px) saturate(150%);
-    border: 1px solid hsl(var(--glass-border));
-    box-shadow: 0 4px 16px hsl(var(--glass-shadow));
-  }
-
+  /* Keep only essential utility classes */
   .glass-strong {
     background: hsl(var(--card) / 0.7);
     backdrop-filter: blur(20px) saturate(200%);
@@ -191,44 +228,13 @@
       inset 0 1px 0 hsl(var(--foreground) / 0.1);
   }
 
-  /* Film noir typography utilities - enhanced readability */
-  .text-noir-heading {
+  /* Elegant Crimson Pro serif typography for headings */
+  .text-serif-heading {
     @apply font-serif font-bold tracking-tight leading-tight;
-    text-shadow: 0 2px 4px hsl(var(--foreground) / 0.1);
-    font-weight: 700;
   }
 
-  .text-noir-subheading {
-    @apply font-serif font-semibold tracking-wide leading-relaxed;
-    font-weight: 600;
-  }
-
-  .text-elegant {
-    @apply font-serif font-normal;
-    letter-spacing: 0.01em;
-    line-height: 1.7;
-    font-weight: 400;
-  }
-
-  /* Card title - highly readable */
-  .card-title {
-    @apply font-sans font-semibold leading-snug;
-    text-shadow: 0 1px 2px hsl(var(--background) / 0.8);
-    font-weight: 600;
-    letter-spacing: 0.005em;
-  }
-
-  /* Global typography improvements */
-  .text-readable {
-    @apply font-sans font-medium leading-relaxed;
-    font-weight: 500;
-    letter-spacing: 0.003em;
-  }
-
-  .text-body {
-    @apply font-sans leading-relaxed;
-    font-weight: 400;
-    letter-spacing: 0.002em;
+  .text-serif-subheading {
+    @apply font-serif font-semibold tracking-wide leading-tight;
   }
 
   /* Fixed backdrop for detail pages - true fixed background */
@@ -293,103 +299,6 @@
   html,
   body {
     overflow-x: hidden;
-  }
-
-  /* Media card optimization - enhanced consistency */
-  .media-card-optimized {
-    width: fit-content;
-    min-width: 160px;
-    max-width: 220px;
-  }
-
-  /* Card grid layout improvements */
-  .card-grid-container {
-    display: grid;
-    gap: 1rem;
-    align-items: start;
-    justify-items: center;
-  }
-
-  /* Consistent card hover effects */
-  .card-hover-effect {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .card-hover-effect:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow:
-      0 10px 25px -5px hsl(var(--glass-shadow)),
-      0 8px 10px -6px hsl(var(--glass-shadow));
-  }
-
-  /* Enhanced film noir card styling with dramatic lighting */
-  .noir-card {
-    background: hsl(var(--glass-bg));
-    backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid hsl(var(--glass-border));
-    box-shadow:
-      0 8px 32px hsl(var(--glass-shadow)),
-      0 2px 8px hsl(var(--foreground) / 0.05),
-      inset 0 1px 0 hsl(var(--glass-border)),
-      inset 0 -1px 0 hsl(var(--foreground) / 0.02);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-  }
-
-  .noir-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      hsl(var(--accent) / 0.2) 30%,
-      hsl(var(--accent) / 0.4) 50%,
-      hsl(var(--accent) / 0.2) 70%,
-      transparent 100%
-    );
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .noir-card:hover {
-    background: hsl(var(--glass-bg));
-    border-color: hsl(var(--accent) / 0.3);
-    box-shadow:
-      0 16px 48px hsl(var(--glass-shadow)),
-      0 6px 20px hsl(var(--accent) / 0.08),
-      0 2px 8px hsl(var(--foreground) / 0.1),
-      inset 0 1px 0 hsl(var(--foreground) / 0.1),
-      inset 1px 0 0 hsl(var(--accent) / 0.15),
-      inset -1px 0 0 hsl(var(--accent) / 0.15);
-    transform: translateY(-4px) scale(1.025);
-  }
-
-  .noir-card:hover::before {
-    opacity: 1;
-  }
-
-  /* Typography consistency for cards */
-  .card-title-consistency {
-    font-weight: 600;
-    letter-spacing: 0.005em;
-    line-height: 1.3;
-    text-shadow: 0 1px 2px hsl(var(--background) / 0.8);
-  }
-
-  /* Person card specific styling */
-  .person-card-avatar {
-    box-shadow: 0 4px 12px hsl(var(--glass-shadow));
-    border: 2px solid hsl(var(--glass-border));
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .person-card-avatar:hover {
-    border-color: hsl(var(--accent) / 0.5);
-    box-shadow: 0 6px 20px hsl(var(--glass-shadow));
   }
 
   /* Performance optimized skeleton animations */

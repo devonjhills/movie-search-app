@@ -32,12 +32,14 @@ export function FeaturedSection({
   if (featuredItems.length === 0) return null;
 
   return (
-    <section className={cn("space-y-6", className)}>
+    <section className={cn("space-y-8", className)}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h2 className="text-3xl md:text-4xl text-noir-heading">{title}</h2>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-serif-heading">
+            {title}
+          </h2>
           {showTrending && (
-            <Badge variant="secondary" className="gap-1 glass-subtle">
+            <Badge variant="secondary" className="gap-1">
               <Pin className="h-3 w-3 fill-current" />
               Trending
             </Badge>
@@ -65,7 +67,7 @@ export function FeaturedSection({
 
           return (
             <Link key={item.id} href={`/${mediaType}/${item.id}`}>
-              <Card className="group glass transition-all duration-300 hover:shadow-lg hover:scale-[1.02] h-[220px] overflow-hidden">
+              <Card className="group transition-all duration-300 hover:shadow-lg hover:scale-[1.02] h-[240px] overflow-hidden">
                 <div className="relative h-full">
                   {backdropUrl ? (
                     <Image
@@ -87,7 +89,7 @@ export function FeaturedSection({
                   {/* Content positioning */}
                   <div className="absolute inset-0 flex flex-col justify-end p-4">
                     <div className="space-y-3">
-                      <h3 className="text-noir-subheading text-xl text-white leading-tight line-clamp-2">
+                      <h3 className="text-serif-subheading text-xl text-white leading-tight line-clamp-2">
                         {title}
                       </h3>
 
@@ -104,7 +106,7 @@ export function FeaturedSection({
                         {releaseDate && (
                           <Badge
                             variant="outline"
-                            className="text-xs glass-subtle border-white/30 text-white"
+                            className="text-xs border-white/30 text-white"
                           >
                             {new Date(releaseDate).getFullYear()}
                           </Badge>

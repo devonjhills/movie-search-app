@@ -160,12 +160,12 @@ export function DetailsHero({
                 {/* Primary Information */}
                 <div className="space-y-6">
                   <div>
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-noir-heading leading-tight">
+                    <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[0.9] tracking-tight text-foreground drop-shadow-2xl">
                       {title}
                     </h1>
                     {((isMovieDetails(item) && item.tagline) ||
                       (isTVShowDetails(item) && item.tagline)) && (
-                      <p className="text-xl md:text-2xl lg:text-3xl text-elegant text-muted-foreground italic mt-4">
+                      <p className="font-serif text-lg md:text-xl lg:text-2xl text-muted-foreground italic mt-6 leading-relaxed drop-shadow-lg">
                         &ldquo;
                         {isMovieDetails(item)
                           ? item.tagline
@@ -242,7 +242,7 @@ export function DetailsHero({
                     )}
 
                   {item.overview && (
-                    <p className="text-base md:text-lg lg:text-xl leading-relaxed max-w-5xl text-body">
+                    <p className="text-base md:text-lg leading-relaxed max-w-4xl text-foreground/90 font-light">
                       {item.overview}
                     </p>
                   )}

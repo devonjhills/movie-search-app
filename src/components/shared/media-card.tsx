@@ -1,12 +1,9 @@
 import Link from "next/link";
 import { Star } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { InViewAnimation } from "@/components/ui/progressive-loader";
 import { cn, formatVoteAverage } from "@/lib/utils";
 import { getImageUrl } from "@/lib/api";
-import { RESPONSIVE_SIZES } from "@/lib/constants";
 
 export interface MediaItem {
   id: number;
@@ -37,32 +34,26 @@ export function MediaCard({
   size = "md",
   showYear = true,
   showRating = true,
-  showOverview = false,
   priority = false,
 }: MediaCardProps) {
-  // Responsive image optimization
-  const getResponsiveImageUrl = (size: "mobile" | "tablet" | "desktop") => {
-    const sizeKey = RESPONSIVE_SIZES.card[
-      size
-    ] as keyof typeof import("@/lib/constants").IMAGE_URLS.poster;
-    return getImageUrl(item.poster_path || null, "poster", sizeKey);
-  };
-
-  const imageUrl = getResponsiveImageUrl("tablet");
+  // Optimized image sizes for performance
+  const imageUrl = getImageUrl(item.poster_path || null, "poster", "w185");
   const rating = formatVoteAverage(item.vote_average);
   const title = item.title || item.name || "";
   const releaseDate = item.release_date || item.first_air_date;
 
+  // Film noir inspired sizing - prioritize poster visibility
   const sizeClasses = {
     sm: "w-[160px]",
-    md: "w-[185px]",
-    lg: "w-[210px]",
+    md: "w-[180px]",
+    lg: "w-[200px]",
   };
 
+  // Compact cards with minimal text footprint
   const cardHeights = {
-    sm: "h-[340px]", // 160*1.5 + 100px for content = 340px
-    md: "h-[378px]", // 185*1.5 + 100px for content = 378px
-    lg: "h-[415px]", // 210*1.5 + 100px for content = 415px
+    sm: "h-[280px]", // 160*1.5 + 40px compact text = 280px
+    md: "h-[310px]", // 180*1.5 + 40px compact text = 310px
+    lg: "h-[340px]", // 200*1.5 + 40px compact text = 340px
   };
 
   return (
@@ -70,88 +61,79 @@ export function MediaCard({
       animation="fadeUp"
       delay={priority ? 0 : 100}
       className="w-full"
+      startVisible={priority}
     >
-      <Card
-        className={cn(
-          sizeClasses[size],
-          cardHeights[size],
-          "flex flex-col noir-card overflow-hidden group layout-stable",
-          className,
-        )}
-      >
-        <CardContent className="p-0 flex flex-col h-full">
-          {/* Poster Image - Takes up poster space only */}
-          <div className="relative">
-            <Link href={`/${mediaType}/${item.id}`} className="block">
-              <div className="relative aspect-[2/3] overflow-hidden cursor-pointer w-full">
+      <div className={cn(sizeClasses[size], "group cursor-pointer")}>
+        <Link href={`/${mediaType}/${item.id}`} className="block">
+          <div
+            className={cn(
+              cardHeights[size],
+              "relative overflow-hidden transition-all duration-500 ease-out",
+              "hover:scale-[1.03] hover:z-10",
+              className,
+            )}
+          >
+            <div className="p-0 h-full relative">
+              {/* Main Poster Image */}
+              <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-lg">
                 {imageUrl ? (
                   <OptimizedImage
                     src={imageUrl}
                     alt={title}
                     fill
                     aspectRatio="poster"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    sizes={RESPONSIVE_SIZES.card.sizes}
+                    className="object-cover transition-all duration-500 group-hover:brightness-110"
+                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 20vw"
                     priority={priority}
-                    quality={85}
+                    quality={90}
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
-                    <span className="text-xs text-center p-2 text-body">
+                  <div className="flex h-full w-full items-center justify-center bg-black/20 border border-border/50 rounded-lg">
+                    <span className="text-xs text-muted-foreground p-2 text-center">
                       No Image
                     </span>
                   </div>
                 )}
 
+                {/* Film Noir Shadow Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-500" />
+
                 {/* Rating Badge */}
                 {showRating && item.vote_average > 0 && (
-                  <div className="absolute top-3 right-3">
-                    <Badge
-                      variant="secondary"
-                      className="gap-1 glass-subtle text-xs"
-                    >
-                      <Star className="h-3 w-3 fill-current" />
-                      <span className="text-readable">{rating}</span>
-                    </Badge>
+                  <div className="absolute top-2 right-2 z-10">
+                    <div className="bg-background/90 backdrop-blur-sm rounded-md px-2 py-1 border border-border shadow-lg">
+                      <div className="flex items-center gap-1">
+                        <Star className="h-3 w-3 fill-primary text-primary" />
+                        <span className="text-xs font-medium text-foreground">
+                          {rating}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 )}
 
-                {/* Enhanced noir gradient overlay with atmospheric lighting */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                {/* Subtle rim lighting effect on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                {/* Compact Text Overlay at Bottom */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-3">
+                  <h3 className="font-serif font-semibold text-white text-base leading-tight line-clamp-2 mb-1 drop-shadow-lg">
+                    {title}
+                  </h3>
+                  {showYear && releaseDate && (
+                    <p className="text-xs text-white/80 font-medium tracking-wider">
+                      {new Date(releaseDate).getFullYear()}
+                    </p>
+                  )}
+                </div>
+
+                {/* Subtle Border Glow on Hover */}
+                <div className="absolute inset-0 rounded-lg border border-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* Noir Light Reflection */}
+                <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-white/10 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </div>
-            </Link>
-          </div>
-
-          {/* Text Content Area - Fixed 100px height for layout stability */}
-          <div className="h-[100px] p-4 flex flex-col justify-between">
-            {/* Top section - Title */}
-            <div>
-              <h3 className="text-noir-subheading text-base leading-tight line-clamp-2 mb-2">
-                {title}
-              </h3>
-            </div>
-
-            {/* Bottom section - Year with guaranteed space */}
-            <div className="mt-auto">
-              {showYear && releaseDate && (
-                <p className="text-sm text-muted-foreground text-body">
-                  {new Date(releaseDate).getFullYear()}
-                </p>
-              )}
-
-              {showOverview && item.overview && (
-                <p className="text-xs text-muted-foreground line-clamp-1 text-body mt-1">
-                  {item.overview.length > 60
-                    ? item.overview.substring(0, 60) + "..."
-                    : item.overview}
-                </p>
-              )}
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </Link>
+      </div>
     </InViewAnimation>
   );
 }
