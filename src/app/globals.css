@@ -4,60 +4,58 @@
 
 @layer base {
   :root {
-    /* Film Noir Light Theme - Enhanced contrast */
-    --background: 42 10% 92%; /* Cooler, slightly darker cream */
-    --foreground: 220 13% 9%; /* Deep charcoal */
-    --card: 0 0% 100%; /* Pure white for cards */
-    --card-foreground: 220 13% 9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 9%;
-    --primary: 220 39% 11%; /* Deep navy blue */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 11% 71%; /* Sophisticated gray */
-    --secondary-foreground: 220 13% 9%;
-    --muted: 210 11% 85%; /* Slightly darker muted */
-    --muted-foreground: 220 9% 46%;
-    --accent: 357 75% 47%; /* Classic film noir red */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 210 12% 80%; /* Stronger borders */
-    --input: 210 12% 89%;
-    --ring: 220 39% 11%;
+    /* Film Noir Femme Fatale Light Theme */
+    --background: 30 8% 94%; /* Warm pearl white */
+    --foreground: 210 22% 8%; /* Deep midnight blue */
+    --card: 0 0% 98%; /* Pristine white cards */
+    --card-foreground: 210 22% 8%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 210 22% 8%;
+    --primary: 210 65% 12%; /* Rich midnight navy */
+    --primary-foreground: 30 15% 95%;
+    --secondary: 210 12% 16%; /* Charcoal gray */
+    --secondary-foreground: 30 8% 94%;
+    --muted: 210 8% 88%; /* Soft gray */
+    --muted-foreground: 210 15% 35%;
+    --accent: 348 83% 47%; /* Femme fatale crimson */
+    --accent-foreground: 30 15% 95%;
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 30 15% 95%;
+    --border: 210 12% 82%;
+    --input: 210 8% 92%;
+    --ring: 348 83% 47%;
     --radius: 0.75rem;
-
-    /* Enhanced glassmorphic effect variables */
-    --glass-bg: 0 0% 100% / 0.85; /* More opaque white cards */
-    --glass-border: 210 12% 75% / 0.4;
-    --glass-shadow: 220 13% 9% / 0.12;
+    
+    /* Film noir gold accent */
+    --gold: 45 86% 58%; /* Vintage gold */
+    --gold-foreground: 210 22% 8%;
   }
 
   .dark {
-    /* Film Noir Dark Theme - Enhanced contrast */
-    --background: 220 13% 6%; /* Darker background */
-    --foreground: 45 15% 93%; /* Warm off-white */
-    --card: 220 13% 14%; /* Lighter cards for contrast */
-    --card-foreground: 45 15% 93%;
-    --popover: 220 13% 14%;
-    --popover-foreground: 45 15% 93%;
-    --primary: 45 25% 88%; /* Warm light for contrast */
-    --primary-foreground: 220 13% 9%;
-    --secondary: 220 9% 24%; /* Lighter dark gray */
-    --secondary-foreground: 45 15% 93%;
-    --muted: 220 9% 18%; /* Lighter muted dark */
-    --muted-foreground: 210 11% 71%;
-    --accent: 357 85% 55%; /* Brighter red for dark mode */
-    --accent-foreground: 220 13% 9%;
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 45 15% 93%;
-    --border: 220 9% 25%;
-    --input: 220 9% 18%;
-    --ring: 45 25% 88%;
-
-    /* Enhanced dark mode glassmorphic variables */
-    --glass-bg: 220 13% 14% / 0.9; /* More opaque dark cards */
-    --glass-border: 220 9% 25% / 0.5;
-    --glass-shadow: 220 13% 3% / 0.3;
+    /* Film Noir Femme Fatale Dark Theme */
+    --background: 210 22% 4%; /* Deep noir black */
+    --foreground: 30 15% 92%; /* Warm ivory */
+    --card: 210 20% 8%; /* Shadowy card background */
+    --card-foreground: 30 15% 92%;
+    --popover: 210 20% 8%;
+    --popover-foreground: 30 15% 92%;
+    --primary: 30 25% 88%; /* Warm light */
+    --primary-foreground: 210 22% 8%;
+    --secondary: 210 15% 12%; /* Deep charcoal */
+    --secondary-foreground: 30 15% 92%;
+    --muted: 210 15% 10%; /* Dark muted */
+    --muted-foreground: 210 8% 65%;
+    --accent: 348 90% 58%; /* Vibrant crimson */
+    --accent-foreground: 210 22% 8%;
+    --destructive: 0 75% 58%;
+    --destructive-foreground: 30 15% 92%;
+    --border: 210 15% 15%;
+    --input: 210 15% 10%;
+    --ring: 348 90% 58%;
+    
+    /* Film noir gold accent */
+    --gold: 45 100% 68%; /* Bright vintage gold */
+    --gold-foreground: 210 22% 8%;
   }
 }
 
@@ -74,135 +72,59 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Default background for detail pages */
+  /* Clean film noir background */
   body {
-    /* Film noir atmospheric backdrop */
-    background-image:
-      radial-gradient(circle at 20% 80%, hsl(var(--muted)) 0%, transparent 50%),
-      radial-gradient(
-        circle at 80% 20%,
-        hsl(var(--accent) / 0.05) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 40% 40%,
-        hsl(var(--primary) / 0.03) 0%,
-        transparent 50%
-      );
+    background: 
+      radial-gradient(ellipse at top, hsl(var(--muted) / 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, hsl(var(--accent) / 0.08) 0%, transparent 60%);
   }
 
-  /* Film noir atmospheric background for non-detail pages */
+  /* Elegant noir pattern for non-detail pages */
   body.film-noir-bg {
-    background-image: 
-      /* Art deco diamond mesh pattern */
+    background: 
+      /* Subtle art deco lines */
       repeating-linear-gradient(
         45deg,
         transparent 0px,
-        transparent 15px,
-        hsl(var(--foreground) / 0.12) 15px,
-        hsl(var(--foreground) / 0.12) 16px,
-        transparent 16px,
-        transparent 31px
+        transparent 40px,
+        hsl(var(--foreground) / 0.06) 40px,
+        hsl(var(--foreground) / 0.06) 41px
       ),
-      repeating-linear-gradient(
-        -45deg,
-        transparent 0px,
-        transparent 15px,
-        hsl(var(--foreground) / 0.1) 15px,
-        hsl(var(--foreground) / 0.1) 16px,
-        transparent 16px,
-        transparent 31px
-      ),
-      /* Dramatic street light beams */
-        conic-gradient(
-          from 45deg at 25% 25%,
-          transparent 0deg,
-          hsl(var(--accent) / 0.15) 15deg,
-          transparent 30deg,
-          transparent 150deg,
-          hsl(var(--accent) / 0.1) 165deg,
-          transparent 180deg
-        ),
-      /* Film noir fog banks */
-        radial-gradient(
-          ellipse 80% 30% at 30% 80%,
-          hsl(var(--muted) / 0.2) 0%,
-          transparent 60%
-        ),
+      /* Atmospheric fog */
       radial-gradient(
-        ellipse 60% 40% at 70% 20%,
-        hsl(var(--primary) / 0.12) 0%,
+        ellipse 100% 60% at 20% 80%, 
+        hsl(var(--muted) / 0.15) 0%, 
         transparent 70%
+      ),
+      radial-gradient(
+        ellipse 80% 50% at 80% 20%, 
+        hsl(var(--accent) / 0.08) 0%, 
+        transparent 80%
       );
-    background-size:
-      31px 31px,
-      31px 31px,
-      100% 100%,
-      100% 100%,
-      100% 100%;
-    background-position:
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0;
   }
 
-  /* Enhanced visibility for dark mode */
+  /* Enhanced dark mode atmosphere */
   .dark body.film-noir-bg {
-    background-image: 
-      /* More visible art deco pattern in dark mode */
+    background: 
+      /* More visible lines in dark */
       repeating-linear-gradient(
         45deg,
         transparent 0px,
-        transparent 15px,
-        hsl(var(--foreground) / 0.18) 15px,
-        hsl(var(--foreground) / 0.18) 16px,
-        transparent 16px,
-        transparent 31px
+        transparent 40px,
+        hsl(var(--foreground) / 0.1) 40px,
+        hsl(var(--foreground) / 0.1) 41px
       ),
-      repeating-linear-gradient(
-        -45deg,
-        transparent 0px,
-        transparent 15px,
-        hsl(var(--foreground) / 0.15) 15px,
-        hsl(var(--foreground) / 0.15) 16px,
-        transparent 16px,
-        transparent 31px
-      ),
-      /* Brighter spotlight in dark mode */
-        conic-gradient(
-          from 45deg at 25% 25%,
-          transparent 0deg,
-          hsl(var(--accent) / 0.25) 15deg,
-          transparent 30deg,
-          transparent 150deg,
-          hsl(var(--accent) / 0.18) 165deg,
-          transparent 180deg
-        ),
-      /* Enhanced atmospheric effects */
-        radial-gradient(
-          ellipse 80% 30% at 30% 80%,
-          hsl(var(--muted) / 0.3) 0%,
-          transparent 60%
-        ),
+      /* Dramatic lighting */
       radial-gradient(
-        ellipse 60% 40% at 70% 20%,
-        hsl(var(--primary) / 0.2) 0%,
+        ellipse 100% 60% at 20% 80%, 
+        hsl(var(--muted) / 0.2) 0%, 
         transparent 70%
+      ),
+      radial-gradient(
+        ellipse 80% 50% at 80% 20%, 
+        hsl(var(--accent) / 0.12) 0%, 
+        transparent 80%
       );
-    background-size:
-      31px 31px,
-      31px 31px,
-      100% 100%,
-      100% 100%,
-      100% 100%;
-    background-position:
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0;
   }
 
   /* Apply readable typography to common elements */
@@ -218,23 +140,34 @@
 }
 
 @layer utilities {
-  /* Keep only essential utility classes */
+  /* Essential glass effect for film noir cards */
   .glass-strong {
-    background: hsl(var(--card) / 0.7);
-    backdrop-filter: blur(20px) saturate(200%);
-    border: 1px solid hsl(var(--border) / 0.6);
-    box-shadow:
-      0 12px 40px hsl(var(--glass-shadow)),
-      inset 0 1px 0 hsl(var(--foreground) / 0.1);
+    background: hsl(var(--card) / 0.8);
+    backdrop-filter: blur(12px) saturate(150%);
+    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: 0 8px 32px hsl(var(--foreground) / 0.08);
   }
 
-  /* Elegant Crimson Pro serif typography for headings */
+  /* Film noir typography */
   .text-serif-heading {
     @apply font-serif font-bold tracking-tight leading-tight;
   }
 
   .text-serif-subheading {
     @apply font-serif font-semibold tracking-wide leading-tight;
+  }
+
+  /* Femme fatale accent utilities */
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+  
+  .bg-gold {
+    background-color: hsl(var(--gold));
+  }
+  
+  .border-gold {
+    border-color: hsl(var(--gold));
   }
 
   /* Fixed backdrop for detail pages - true fixed background */
@@ -301,59 +234,7 @@
     overflow-x: hidden;
   }
 
-  /* Performance optimized skeleton animations */
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  @keyframes gradient {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
-  @keyframes wave {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-  }
-
-  /* Layout shift prevention */
-  .layout-stable {
-    contain: layout style;
-  }
-
-  /* Optimized image loading states */
-  .image-loading {
-    background: linear-gradient(
-      90deg,
-      hsl(var(--muted)) 0%,
-      hsl(var(--muted) / 0.8) 50%,
-      hsl(var(--muted)) 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-  }
-
-  /* Progressive loading enhancement */
-  .progressive-enhance {
-    opacity: 0;
-    animation: fadeIn 0.3s ease-in-out forwards;
-  }
-
+  /* Essential animations */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -365,17 +246,14 @@
     }
   }
 
-  /* Reduce motion for accessibility */
-  @media (prefers-reduced-motion: reduce) {
-    .shimmer-animation,
-    .wave-animation,
-    .progressive-enhance {
-      animation: none;
-    }
+  .fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
 
-    .card-hover-effect,
-    .noir-card {
-      transition: none;
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in {
+      animation: none;
     }
   }
 }
